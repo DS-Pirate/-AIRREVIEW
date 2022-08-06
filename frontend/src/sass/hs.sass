@@ -1,0 +1,180 @@
+$navbar-padding-y:                  $spacer * 0.5
+$navbar-padding-x:                  null
+$navbar-nav-link-padding-x:         .5rem
+$navbar-brand-font-size:            $font-size-lg
+$nav-link-height:                   $font-size-base * $line-height-base + $nav-link-padding-y * 2
+$navbar-brand-height:               $navbar-brand-font-size * $line-height-base
+$navbar-brand-padding-y:            ($nav-link-height - $navbar-brand-height) * .5
+$navbar-brand-margin-end:           1rem
+
+$navbar-toggler-padding-y:          .25rem
+$navbar-toggler-padding-x:          .75rem
+$navbar-toggler-font-size:          $font-size-lg
+$navbar-toggler-border-radius:      $btn-border-radius
+$navbar-toggler-focus-width:        $btn-focus-width
+$navbar-toggler-transition:         box-shadow .15s ease-in-out
+$offcanvas-horizontal-width:        200px
+$btn-link-color:                    none
+$btn-active-border-color:           none
+$btn-active-border:                 none
+$btn-focus-shadow-rgb: none !important
+$card-border-radius:                none
+
+
+
+.maincards
+  .img-fluid
+    height: 100%
+
+.content-area
+  padding-left: 6.5px
+  width: 50px
+  display: flex
+  gap: 2rem
+  
+.content-area
+  subNav
+    margin-top: $spacer * 3
+    ul
+      background-color: $main-color
+    li
+      background-color: $main-color
+      border: none
+      margin-bottom: $spacer * 3
+      svg
+        filter: invert(100%)
+
+.offcanvas-body
+  ul
+    a
+      text-decoration: none
+    margin-top: $spacer * 1
+    li
+      border: none
+      margin-bottom: $spacer * 3
+      
+
+.offcanvas-header
+  z-index: 100
+
+
+  
+nav
+  .container-fluid
+    .navv-leftside
+      width: 5%
+      display: flex
+      justify-content: space-between
+      gap: 2vw
+      
+    
+    .navv-middle
+      width: 35%
+
+    .navv-right
+      width: 5%
+      display: flex
+      justify-content: flex-end
+
+.absolutebar
+  background-color: $main-color
+  width: 67px
+  position: absolute
+  left: 0
+  top: 0
+  height: 100vh
+  z-index: -100
+
+.navmenubarabsolute
+  background-color: $main-color
+  width: 67px
+  height: 105%
+  position: absolute
+  left: 0
+  top: 0
+
+.youhavetobeonsupertop
+  z-index: 1022
+  svg
+    filter: invert(100%)
+
+
+  
+.mainviewpage
+    
+  position: fixed
+  left: 70px
+  right: 0px
+  width: 100vw
+  height: 94vh
+  box-sizing: border-box
+  padding-top: 1vh
+  padding-right: 6.5vw  
+  padding-left: 2vw
+  overflow: scroll
+  background-color: #f3f3f3
+  &::-webkit-scrollbar
+    display: none
+
+
+.subscribelist
+  padding: 0
+  li
+    padding: 0
+  ul
+    padding: 0
+
+login
+  .btn-outline-primary
+    --bs-btn-focus-box-shadow: none
+    --bs-btn-active-color: none
+    --bs-btn-focus-shadow-rgb: none !important
+  .utlpart
+    font-size: 0.75rem
+    a
+      text-decoration: none
+      color: black
+      transition: all 0.2s ease-in-out
+    a:visited
+      text-decoration: none
+      color: black
+    a:hover
+      color: $main-color
+
+      
+  .login
+    a
+      cursor: pointer
+      transition: all 0.2s ease-in-out
+    width: 40%
+    input
+      text-align: center
+      transition: all 0.2s ease-in-out
+    background-color: #FFF
+    input::placeholder
+      text-align: center
+    input:focus::placeholder
+      transition: all 0.2s ease-in-out
+      color: transparent
+      
+
+Favorite
+  .fav
+    height: 82.5vh
+
+channelpage
+  .ch_img
+    height: 30vh
+
+writeeditor
+  .title
+    height: 7.5vh
+    font-size: 2rem
+  input
+    transition: all 0.1s ease-in-out
+  input:focus::placeholder
+    transition: all 0.1s ease-in-out
+    color: transparent
+  .ck-editor__editable_inline 
+    min-height: 40vh
+

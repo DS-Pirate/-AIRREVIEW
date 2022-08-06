@@ -1,0 +1,30 @@
+//Font set
+#app
+  font-family: Nanum Gothic, Oxygen, Noto Sans JP, sans-serif
+
+//Maincolor
+$main-color : #3041a9
+
+//Remove activity borders for buttons, input
+.btn-link
+  --bs-btn-focus-box-shadow: none
+  --bs-btn-active-color: none
+  --bs-btn-focus-shadow-rgb: none !important
+input
+  &:hover
+    box-shadow: none  !important
+
+  &:focus
+    box-shadow: none  !important
+  &:active
+    box-shadow: none  !important
+        
+  
+  
+@import "../../node_modules/bootstrap/scss/bootstrap"
+@import "hs.sass"
+@import "dh.sass"
+@import "jy.sass"
+@import "../../node_modules/bootstrap/scss/bootstrap"
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Sans+JP:wght@100;400;900&family=Oxygen&display=swap')
+
