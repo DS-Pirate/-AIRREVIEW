@@ -1,16 +1,16 @@
 <template>
-	<Join class="d-flex justify-content-center align-items-center">
-		<div class="join rounded-3 p-5 shadow-sm">
-			<div class="joinlogo text-center"><img class="img-fluid" src="@/assets/airreviewlogo.png" alt="" srcset=""></div>
-			<SiteJoin></SiteJoin>
+	<Service class="d-flex justify-content-center align-items-center ">
+		<div class="service rounded-3 p-4 shadow-sm px-5 w-100 h-75 bg-white">
+            <div class="service rounded-3 py-3 shadow-sm d-flex justify-content-center align-items-center"><h2 class="display-6 fw-bold">고객센터</h2></div>
+			<SiteService></SiteService>
 		</div>
-	</Join>
+	</Service>
 </template>
 <script>
-import SiteJoin from "../components/SiteJoin.vue";
+import SiteService from "../components/SiteService.vue";
 import { reactive} from "vue";
 export default {
-	components: { SiteJoin },
+	components: { SiteService },
 
 	setup() {
         let state = reactive({
