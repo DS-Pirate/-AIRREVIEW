@@ -21,14 +21,11 @@
 					<font-awesome-icon icon="fa-solid fa-clock-rotate-left" />
 				</li>
 			</router-link>
+			<li class="d-flex align-items-center gap-3 list-group-item list-group-flush" data-bs-toggle="modal" data-bs-target="#question"><font-awesome-icon icon="fa-solid fa-circle-question" /></li>
 		</ul>
-
 	</subNav>
 </template>
 <script>
-export default {
-
-};
+export default {};
 </script>
-<style>
-</style>
+<style></style>
