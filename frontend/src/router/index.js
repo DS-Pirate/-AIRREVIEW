@@ -1,8 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginPage from '../views/LoginPage.vue'
+import ReadReview from '../views/ReadReview.vue'
+import SearchList from '../views/SearchList.vue'
+import MyAccountSettings from '../views/MyAccountSettings.vue'
 import JoinPage from '../views/JoinPage.vue'
-import ServicePage from '../views/ServicePage.vue'
+import AccountFind from '../views/AccountFindPage.vue'
+import Favorite from '../views/FavoritePage.vue'
+import Saved from '../views/SavedPage.vue'
+import Mypage from '../views/MychannelPage.vue'
+import Write from "../views/ArticleWritePage.vue"
 
 const routes = [
   {
@@ -10,6 +17,7 @@ const routes = [
     name: 'home',
     component: HomeView
   },
+
   {
     path:'/login',
     name: 'login',
@@ -21,9 +29,46 @@ const routes = [
     component: JoinPage
   },
   {
-    path:'/service',
-    name: 'service',
-    component: ServicePage
+    path:'/find',
+    name:'AccountFind',
+    component: AccountFind
+  },
+  {
+    path: '/fav',
+    name: 'favorite',
+    component: Favorite
+
+  },
+  {
+    path: '/save',
+    name: 'saved',
+    component: Saved
+  },
+  {
+    path: '/mypage',
+    name: 'mypage',
+    component: Mypage
+  },
+  {
+    path: '/newpost',
+    name: 'write',
+    component: Write
+  },
+  {
+    path: '/read',
+    name: 'readReview',
+    component: ReadReview
+  },
+
+  {
+    path: '/search',
+    name: 'SearchList',
+    component: SearchList
+  },
+  {
+    path: '/account',
+    name: 'MyAccountSettings',
+    component: MyAccountSettings
   },
   // {
   //   path: '/about',
