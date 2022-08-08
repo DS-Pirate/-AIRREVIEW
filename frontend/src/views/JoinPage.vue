@@ -8,7 +8,7 @@
 </template>
 <script>
 import SiteJoin from "../components/SiteJoin.vue";
-import { reactive} from "vue";
+import {reactive} from "vue";
 export default {
 	components: { SiteJoin },
 

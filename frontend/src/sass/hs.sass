@@ -46,10 +46,13 @@ $card-border-radius:                none
 
 .offcanvas-body
   ul
+    a
+      text-decoration: none
     margin-top: $spacer * 1
     li
       border: none
       margin-bottom: $spacer * 3
+      
 
 .offcanvas-header
   z-index: 100
@@ -75,7 +78,7 @@ nav
 
 .absolutebar
   background-color: $main-color
-  width: 70px
+  width: 67px
   position: absolute
   left: 0
   top: 0
@@ -84,7 +87,7 @@ nav
 
 .navmenubarabsolute
   background-color: $main-color
-  width: 70px
+  width: 67px
   height: 105%
   position: absolute
   left: 0
@@ -103,11 +106,11 @@ nav
   left: 70px
   right: 0px
   width: 100vw
-  height: 95vh
+  height: 94vh
   box-sizing: border-box
   padding-top: 1vh
-  padding-right: 5vw  
-  padding-left: 1.25vw
+  padding-right: 6.5vw  
+  padding-left: 2vw
   overflow: scroll
   background-color: #f3f3f3
   &::-webkit-scrollbar
@@ -128,6 +131,17 @@ login
     --bs-btn-focus-shadow-rgb: none !important
   .utlpart
     font-size: 0.75rem
+    a
+      text-decoration: none
+      color: black
+      transition: all 0.2s ease-in-out
+    a:visited
+      text-decoration: none
+      color: black
+    a:hover
+      color: $main-color
+
+      
   .login
     a
       cursor: pointer
@@ -143,3 +157,24 @@ login
       transition: all 0.2s ease-in-out
       color: transparent
       
+
+Favorite
+  .fav
+    height: 82.5vh
+
+channelpage
+  .ch_img
+    height: 30vh
+
+writeeditor
+  .title
+    height: 7.5vh
+    font-size: 2rem
+  input
+    transition: all 0.1s ease-in-out
+  input:focus::placeholder
+    transition: all 0.1s ease-in-out
+    color: transparent
+  .ck-editor__editable_inline 
+    min-height: 40vh
+
