@@ -28,14 +28,14 @@ target/
 
 
 ### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
+backend/nbproject/private/
+backend/nbbuild/
+backend/dist/
+backend/nbdist/
+backend/.nb-gradle/
+backend/build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/
+backend/.vscode/
