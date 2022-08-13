@@ -1,6 +1,6 @@
 <template>
 	<channelpage>
-		<div class="chimg  p-3 m-0 shadow-sm w-100 bg-white">
+		<div class="chimg  p-3 m-0 shadow-sm bg-white">
 			<img src="@/assets/longdummy2.jpeg" class="ch_img w-100" alt="" />
 		</div>
 		<div class="chcategory  p-1 my-3 shadow-sm bg-white d-flex justify-content-center">
