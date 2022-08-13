@@ -4,10 +4,12 @@
 		<div class="routing-section w-85">
 			<div class="routing-header mb-5 mt-4 border-bottom d-flex justify-content-end sticky-top">
 				<ul class="list-group list-group-horizontal">
-					<li class="list-group-item border-0">Login</li>
-					<li class="list-group-item border-0">New Article</li>
-					<li class="list-group-item border-0">My Page</li>
-					<li class="list-group-item border-0">Setting</li>
+					<router-link to="/login"><li class="list-group-item border-0">Login</li></router-link>
+					<router-link to="/loout"><li class="list-group-item border-0">Logout</li></router-link>
+					<router-link to="/join"><li class="list-group-item border-0">Join</li></router-link>
+					<router-link to="/newpost"><li class="list-group-item border-0">New Article</li></router-link>
+					<router-link to="/mypage"><li class="list-group-item border-0">My Page</li></router-link>
+					<router-link to="/setting"><li class="list-group-item border-0">Setting</li></router-link>
 				</ul>
 			</div>
 			<router-view/>

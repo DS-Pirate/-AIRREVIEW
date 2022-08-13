@@ -1,5 +1,5 @@
 <template>
-	<writeeditor class="w-100">
+	<writeeditor>
 		<input type="text" placeholder="제목" class="form-control my-3 rounded-0 title" v-model="title" id="title" />
 		<ckeditor @ready="onReady" :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
 		<input type="text" v-model="tag" v-on:keyup.space="makingTag" placeholder="태그" class="form-control my-3 rounded-0 hashtag" />

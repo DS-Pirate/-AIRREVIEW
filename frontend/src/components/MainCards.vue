@@ -153,6 +153,7 @@ h3{
 	.text {
 		height: 4.5rem;
 		margin: 0;
+		color : black;
 	}
 
 	input[type='checkbox'] {
