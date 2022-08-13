@@ -22,30 +22,27 @@ $card-border-radius:                none
 
 
 
-.maincards
-  a
-    text-decoration: none
-    color: black
-  .img-fluid
-    height: 100%
-
-.content-area
-  padding-left: 6.5px
-  width: 50px
-  display: flex
-  gap: 2rem
+.routing-header
+  background-color: white
   
-.content-area
-  subNav
-    margin-top: $spacer * 3
+
+subnav
+  .navlogo
+    a
+      text-decoration: none
+
+  .navbody
+    font-size: 1.5rem
+    a
+      text-decoration: none
     ul
-      background-color: $main-color
-    li
-      background-color: $main-color
-      border: none
-      margin-bottom: $spacer * 3
-      svg
-        filter: invert(100%)
+      li
+        cursor: pointer
+        border: none
+        transition: all ease-in-out 0.35s
+      li:hover
+        color: #aaa
+
 
 .offcanvas-body
   ul
@@ -103,21 +100,6 @@ nav
 
 
   
-.mainviewpage
-    
-  position: fixed
-  left: 70px
-  right: 0px
-  width: 100vw
-  height: 94vh
-  box-sizing: border-box
-  padding-top: 1vh
-  padding-right: 6.5vw  
-  padding-left: 2vw
-  overflow: scroll
-  background-color: #f3f3f3
-  &::-webkit-scrollbar
-    display: none
 
 
 .subscribelist
@@ -163,9 +145,7 @@ login
 hashtags
   margin-bottom: 2rem
 
-Favorite
-  .fav
-    height: 82.5vh
+
 
 channelpage
   .ch_img
@@ -207,5 +187,15 @@ writeeditor
       width: 60%
   .tagwarning
     margin-bottom: 2rem
+
+.maincards
+  opacity: 0.9
+  transition: 0.3s ease-in-out all
+  &:hover
+    opacity: 1
+    transform: translateY(-0.5rem)
+  a
+  text-decoration: none
+  color: black
 
 

@@ -1,6 +1,6 @@
 <template>
 	<Login class="d-flex justify-content-center align-items-center">
-		<div class="login rounded-3 p-5 shadow-sm">
+		<div class="login  p-5 ">
 			<div class="loginlogo text-center"><img class="img-fluid px-5" src="@/assets/airreviewlogo.png" alt="" srcset=""></div>
 			
 
