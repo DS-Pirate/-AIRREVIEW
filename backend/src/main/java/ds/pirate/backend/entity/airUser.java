@@ -17,37 +17,38 @@ public class airUser  extends DateEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userid;
 
-    @Column
+    @Column(nullable = false)
     private String passwd;
 
-    @Column
+    @Column(nullable = false)
     private String eMail;
 
-    @Column
+    @Column(nullable = false)
     private String airName;
 
-    @Column
+    @Column(nullable = false)
     private int phone;
 
-    @Column
+    @Column(nullable = false)
     private LocalDateTime birthDay;
 
-    @Column
+    @Column(nullable = false)
     private int gender;
 
-    @Column
+    @Column(nullable = false)
     private String auth;
 
-    @Column
+    @Column(nullable = false)
     private String recentArticles;
 
-    @Column
+    @Column(nullable = false)
     private String q1;
-    @Column
+    @Column(nullable = false)
     private String q2;
-    @Column
+    @Column(nullable = false)
     private String q3;
-    @Column
+
+    @Column(nullable = false)
     private String userIntro;
 
 

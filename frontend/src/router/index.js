@@ -66,7 +66,7 @@ const routes = [
     component: SearchList
   },
   {
-    path: '/account',
+    path: '/setting',
     name: 'MyAccountSettings',
     component: MyAccountSettings
   },

@@ -1,6 +1,7 @@
 package ds.pirate.backend.entity;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -18,13 +19,13 @@ public class QuestionsList {
     @ManyToOne(fetch = FetchType.LAZY)
     private airUser userid;
 
-    @Column
+    @Column(nullable = false)
     private String title;
 
-    @Column
+    @Column(nullable = false)
     private String context;
 
-    @Column
+    @ColumnDefault("0")
     private boolean answered;
 
     @Column

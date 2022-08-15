@@ -18,19 +18,19 @@ public class ArticlesList extends DateEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long aid;
 
-    @Column
+    @Column(nullable = false)
     private String atitle;
 
-    @Column
+    @Column(nullable = false)
     private String context;
 
     @Column
     private Long alike;
 
-    @Column
+    @ColumnDefault("0")
     private Long aunlike;
 
-    @Column
+    @ColumnDefault("0")
     private Long reports;
 
     @Column
