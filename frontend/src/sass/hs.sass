@@ -22,110 +22,30 @@ $card-border-radius:                none
 
 
 
-.maincards
+.routing-header
+  background-color: white
   a
     text-decoration: none
-    color: black
-  .img-fluid
-    height: 100%
 
-.content-area
-  padding-left: 6.5px
-  width: 50px
-  display: flex
-  gap: 2rem
-  
-.content-area
-  subNav
-    margin-top: $spacer * 3
-    ul
-      background-color: $main-color
-    li
-      background-color: $main-color
-      border: none
-      margin-bottom: $spacer * 3
-      svg
-        filter: invert(100%)
-
-.offcanvas-body
-  ul
+subnav
+  .navlogo
     a
       text-decoration: none
-    margin-top: $spacer * 1
-    li
-      border: none
-      margin-bottom: $spacer * 3
+
+  .navbody
+    font-size: 1.5rem
+    a
+      text-decoration: none
+    ul
+      li
+        cursor: pointer
+        border: none
+        transition: all ease-in-out 0.35s
+      li:hover
+        color: #aaa
+
+
       
-
-.offcanvas-header
-  z-index: 100
-
-
-  
-nav
-  .container-fluid
-    .navv-leftside
-      width: 5%
-      display: flex
-      justify-content: space-between
-      gap: 2vw
-      
-    
-    .navv-middle
-      width: 35%
-
-    .navv-right
-      width: 5%
-      display: flex
-      justify-content: flex-end
-
-.absolutebar
-  background-color: $main-color
-  width: 67px
-  position: absolute
-  left: 0
-  top: 0
-  height: 100vh
-  z-index: -100
-
-.navmenubarabsolute
-  background-color: $main-color
-  width: 67px
-  height: 105%
-  position: absolute
-  left: 0
-  top: 0
-
-.youhavetobeonsupertop
-  z-index: 1022
-  svg
-    filter: invert(100%)
-
-
-  
-.mainviewpage
-    
-  position: fixed
-  left: 70px
-  right: 0px
-  width: 100vw
-  height: 94vh
-  box-sizing: border-box
-  padding-top: 1vh
-  padding-right: 6.5vw  
-  padding-left: 2vw
-  overflow: scroll
-  background-color: #f3f3f3
-  &::-webkit-scrollbar
-    display: none
-
-
-.subscribelist
-  padding: 0
-  li
-    padding: 0
-  ul
-    padding: 0
 
 login
   .btn-outline-primary
@@ -163,9 +83,7 @@ login
 hashtags
   margin-bottom: 2rem
 
-Favorite
-  .fav
-    height: 82.5vh
+
 
 channelpage
   .ch_img
@@ -207,5 +125,15 @@ writeeditor
       width: 60%
   .tagwarning
     margin-bottom: 2rem
+
+.maincards
+  opacity: 0.9
+  transition: 0.3s ease-in-out all
+  &:hover
+    opacity: 1
+    transform: translateY(-0.5rem)
+  a
+  text-decoration: none
+  color: black
 
 

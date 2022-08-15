@@ -1,47 +1,37 @@
 <template>
-	<Nav></Nav>
-	<div class="content-area">
-		<SubNavigationBar/>
-		<router-view class="mainviewpage" />
-	</div>
-	<div class="absolutebar"></div>
-	<div class="modal" id="question" tabindex="-1" aria-labelledby="question" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="question">문의하기</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<form>
-						<div class="mb-3">
-							<label for="recipient-name" class="col-form-label">문의 제목</label>
-							<input type="text" class="form-control" id="recipient-name" />
-						</div>
-						<div class="mb-3">
-							<label for="message-text" class="col-form-label">문의 내용</label>
-							<textarea class="form-control" id="message-text"></textarea>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary">문의 보내기</button>
-				</div>
+	<div class="content-area container-fluid d-flex justify-content-between p-5 gap-3">
+		<SubNavigationBar class="w-15" />
+		<div class="routing-section w-85">
+			<div class="routing-header mb-5 mt-4 border-bottom d-flex justify-content-end sticky-top">
+				<ul class="list-group list-group-horizontal">
+					<router-link to="/login"><li class="list-group-item border-0">Login</li></router-link>
+					<router-link to="/loout"><li class="list-group-item border-0">Logout</li></router-link>
+					<router-link to="/join"><li class="list-group-item border-0">Join</li></router-link>
+					<router-link to="/newpost"><li class="list-group-item border-0">New Article</li></router-link>
+					<router-link to="/mypage"><li class="list-group-item border-0">My Page</li></router-link>
+					<router-link to="/setting"><li class="list-group-item border-0">Setting</li></router-link>
+				</ul>
 			</div>
+			<router-view/>
 		</div>
 	</div>
+	<QuestionModal/>
 </template>
 <script>
-// @ is an alias to /src
-import Nav from "@/components/NavigationBar.vue";
 import SubNavigationBar from "./components/SubNavigationBar.vue";
+import QuestionModal from "./components/QuestionModal.vue";
 
 export default {
 	name: "TopOfPage",
 	components: {
-		Nav,
 		SubNavigationBar,
+		QuestionModal
 	},
 };
 </script>
+
+<style>
+#app::-webkit-scrollbar {
+	display: hidden;
+}
+</style>

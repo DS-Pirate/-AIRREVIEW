@@ -17,6 +17,8 @@ import CKEditor from '@ckeditor/ckeditor5-vue';
 // Bootstrap importing
 import "bootstrap/dist/css/bootstrap.css"
 import "bootstrap"
+        //Bootstrap Icon https://icons.getbootstrap.com/
+        import 'bootstrap-icons/font/bootstrap-icons.css'
 
 // import custom.scss for sass
 import './sass/custom.sass'

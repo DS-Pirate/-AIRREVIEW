@@ -1,6 +1,6 @@
 <template>
 	<Join class="d-flex justify-content-center align-items-center">
-		<div class="join rounded-3 p-5 shadow-sm">
+		<div class="join ">
 			<div class="joinlogo text-center"><img class="img-fluid" src="@/assets/airreviewlogo.png" alt="" srcset=""></div>
 			<SiteJoin></SiteJoin>
 		</div>
