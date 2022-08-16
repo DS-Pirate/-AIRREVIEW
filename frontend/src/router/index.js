@@ -10,6 +10,8 @@ import Favorite from '../views/FavoritePage.vue'
 import Saved from '../views/SavedPage.vue'
 import Mypage from '../views/MychannelPage.vue'
 import Write from "../views/ArticleWritePage.vue"
+import PostListPage from "../views/PostListPage.vue"
+import ReportPage from "../views/ReportPage.vue"
 
 const routes = [
   {
@@ -69,6 +71,16 @@ const routes = [
     path: '/setting',
     name: 'MyAccountSettings',
     component: MyAccountSettings
+  },
+  {
+    path: '/list',
+    name: 'list',
+    component: PostListPage
+  },
+  {
+    path: '/report',
+    name: 'report',
+    component: ReportPage
   },
   // {
   //   path: '/about',
