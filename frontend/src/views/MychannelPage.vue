@@ -16,18 +16,21 @@
 			<span>list</span>
 		</div>
 		<div class="chcategory  p-3 my-3 shadow-sm bg-white d-flex h-50" v-else-if="(state.form == 'category')">
-			<span>cate</span>
+			<SubInfo/>
 		</div>
 		<div class="chcategory  p-3 my-3 shadow-sm bg-white d-flex h-50" v-else-if="(state.form == 'channelinfo')">
 			<span>info</span>
 		</div>
 	</channelpage>
-</template>ƒ
+</template>
 <script>
 import { reactive } from "vue";
+import SubInfo from '@/components/SubscriptionInfo.vue'
 
 export default {
-	components: { },
+	components: { 
+		SubInfo
+	},
 
 	setup() {
 		let state = reactive({
