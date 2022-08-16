@@ -18,7 +18,7 @@ public class ChannelInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chid;
 
-    @Column
+    @Column(nullable = false)
     private String chName;
 
     @Column
