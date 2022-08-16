@@ -57,7 +57,7 @@
             </button>
           </li>
           <li>
-            <button><span>Share</span></button>
+            <button class="border-0 bg-white" data-bs-toggle="modal" data-bs-target="#share"><span>Share</span></button>
           </li>
           <li>
             <button><span>Save</span></button>

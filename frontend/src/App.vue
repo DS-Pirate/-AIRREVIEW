@@ -16,16 +16,20 @@
 		</div>
 	</div>
 	<QuestionModal/>
+	<ShareModal/>
 </template>
 <script>
 import SubNavigationBar from "./components/SubNavigationBar.vue";
 import QuestionModal from "./components/QuestionModal.vue";
+import ShareModal from "./components/ShareModal.vue";
 
 export default {
 	name: "TopOfPage",
 	components: {
 		SubNavigationBar,
-		QuestionModal
+		QuestionModal,
+		ShareModal
+
 	},
 };
 </script>
