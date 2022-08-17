@@ -19,6 +19,7 @@
 				<h6>Proeject by Team Pirate</h6>
 				<h6><a href="https://github.com/DS-Pirate" class="bi bi-github">&nbsp;Project repository</a></h6>
 				<h6><i class="bi bi-funnel-fill"></i>&nbsp;Busan, Korea</h6>
+				<h6><a href="https://github.com/B-HS" class="bi bi-github">&nbsp;Hyunseok Byun</a></h6>
 			</div>
 		</div>
 		<SubscribeOffcanvas />
