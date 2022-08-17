@@ -12,6 +12,7 @@ import Mypage from '../views/MychannelPage.vue'
 import Write from "../views/ArticleWritePage.vue"
 import PostListPage from "../views/PostListPage.vue"
 import ReportPage from "../views/ReportPage.vue"
+import RecentPage from "../views/RecentList.vue"
 
 const routes = [
   {
@@ -82,6 +83,11 @@ const routes = [
     name: 'report',
     component: ReportPage
   },
+  {
+    path: '/recent',
+    name: 'recent',
+    component: RecentPage
+  }
   // {
   //   path: '/about',
   //   name: 'about',
