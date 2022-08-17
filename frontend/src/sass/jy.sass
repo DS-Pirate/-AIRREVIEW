@@ -330,76 +330,92 @@
   font-family: sans-serif
 
   .index-post
-    width: 1124px
-    height: 364px
     overflow: hidden
     margin: auto
     display: block
-    margin-top: 10%
 
-  .contener
-    float: left
-    margin: 20px
-    display: flex
-    align-items: center
-    flex-direction: column
-    width: 240px
-    height: 320px
-    overflow: hidden
-    background: #fff
-    border-radius: 5px
-    box-shadow: 0 0 3px 0 #00000073
+    .col
+      text-align : center
 
-    &:hover
-      transform: translateY(-6px)
-      box-shadow: 0 11px 14px rgb(0 0 0 / 25%), 0 8px 20px rgb(0 0 0 / 10%)
+    .detailNumbers
+      font-weight: bold 
 
-  .image-contener
-    display: block
-    width: 100%
-    height: 140px
-    overflow: hidden
+    .detailWriting
+      font-size: 4px
 
-    img
-      width: 100%
-
-  .meta-contener
-    display: flex
-    align-items: center
-    flex-direction: column
-    height: 110px
-    padding: 10px 20px
-
-    .title
-      padding: 0
-      margin: 10px 0
-      font-size: 22px
-      color: #0076b6
-
-    .desc
-      font-size: 13px
-      text-align: center
-      color: #373737
-
-  .button-contener
-    display: flex
-    align-items: center
-    width: 80%
-    text-align: center
-    height: 40px
-
-    .button
-      width: 100%
-      padding: 6px 0
-      text-decoration: none
-      background: black
-      color: #fff
+    .contener
+      float: left
+      margin: 20px
+      display: flex
+      align-items: center
+      flex-direction: column
+      width: 240px
+      height: 340px
+      overflow: hidden
+      background: #fff
       border-radius: 5px
-      font-size: 14px
-      transition: all 0.3s
+      box-shadow: 0 0 3px 0 #00000073
 
       &:hover
-        padding-left: 15px
+        transform: translateY(-6px)
+        box-shadow: 0 11px 14px rgb(0 0 0 / 25%), 0 8px 20px rgb(0 0 0 / 10%)
+
+    .image-contener
+      display: block
+      width: 100%
+      height: 140px
+      overflow: hidden
+
+      img
+        width: 100%
+
+    .meta-contener
+      display: flex
+      align-items: center
+      flex-direction: column
+      height: 100px
+      padding: 10px 20px
+
+      .title
+        padding: 0
+        margin: 10px 0
+        font-size: 22px
+        color: black
+        font-weight: bold 
+
+
+      .desc
+        font-size: 13px
+        text-align: center
+        color: #373737
+
+    .button-contener
+      display: flex
+      align-items: center
+      width: 80%
+      text-align: center
+      height: 40px
+
+      .button
+        width: 45%
+        padding: 6px 0px
+        margin: 0px 5px
+        text-decoration: none
+        border-radius: 5px
+        font-size: 14px
+        transition: all 0.3s
+
+        &:hover
+          padding-left: 15px
+
+      .unfollow
+        background: #fff
+        color : black
+        border: 2px solid black
+
+      .readMore, .followBtn
+        background: black
+        color: #fff
 
   @media screen and (max-width: 1124px)
     .index-post
@@ -411,4 +427,13 @@
       width: 281px
       height: 1496px
 
+/*내 정보*/
+.myInfo
+  padding-top: 30px
+  margin: 0
+  .col
+    height: 50vh
 
+    .about
+      font-weight: bolder
+      font-size : 30px
