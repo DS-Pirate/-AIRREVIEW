@@ -13,7 +13,7 @@
 			</ul>
 		</div>
 		<div class="chcategory  p-3 my-3 shadow-sm bg-white d-flex h-50" v-if="(state.form == 'list')">
-			<span>list</span>
+			<PostList/>
 		</div>
 		<div class="chcategory  p-3 my-3 shadow-sm bg-white d-flex h-50" v-else-if="(state.form == 'category')">
 			<SubInfo/>
@@ -26,10 +26,13 @@
 <script>
 import { reactive } from "vue";
 import SubInfo from '@/components/SubscriptionInfo.vue'
+import PostList from '@/components/PostList.vue'
+
 
 export default {
 	components: { 
-		SubInfo
+		SubInfo,
+		PostList
 	},
 
 	setup() {
