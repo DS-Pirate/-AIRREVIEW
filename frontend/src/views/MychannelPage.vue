@@ -19,17 +19,19 @@
 			<SubInfo/>
 		</div>
 		<div class="chcategory  p-3 my-3 shadow-sm bg-white d-flex h-50" v-else-if="(state.form == 'channelinfo')">
-			<span>info</span>
+			<MyInfo/>
 		</div>
 	</channelpage>
 </template>
 <script>
 import { reactive } from "vue";
 import SubInfo from '@/components/SubscriptionInfo.vue'
+import MyInfo from '@/components/MyInfo.vue'
 
 export default {
 	components: { 
-		SubInfo
+		SubInfo,
+		MyInfo
 	},
 
 	setup() {
