@@ -6,16 +6,46 @@
           <h5 class="modal-title" id="share">글 퍼가기</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        
-        <div class="modal-body d-flex">
-            <div class="bg-primary w-30">
-              <div class="md-nav"><span>퍼가기</span> | <span>embaded</span></div>
-              <div class="radios">a<br>b<br></div>
 
-            </div>
-            <div class="bg-warning w-70">
-              <div class="h-50">textarea</div>
-              <div class="h-50">preview</div>
+        <div class="modal-body d-flex">
+          <div class="d-flex flex-column justify-content-between w-25">
+            <div class="md-nav"><span>퍼가기</span> | <span>embaded</span></div><br>
+            <div class="form-check form-switch">
+              <input class="form-check-input rounded-3" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+                checked>
+              <label class="form-check-label" for="flexSwitchCheckChecked">제목</label>
+            </div><br>
+
+            <div class="form-check form-switch">
+              <input class="form-check-input rounded-3" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+                checked>
+              <label class="form-check-label" for="flexSwitchCheckChecked">썸네일</label>
+            </div><br>
+
+            <div class="form-check form-switch">
+              <input class="form-check-input rounded-3" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+                checked>
+              <label class="form-check-label" for="flexSwitchCheckChecked">날짜</label>
+            </div><br>
+
+            <div class="form-check form-switch">
+              <input class="form-check-input rounded-3" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+                checked>
+              <label class="form-check-label" for="flexSwitchCheckChecked">평점</label>
+            </div><br>
+
+            <div class="form-check form-switch">
+              <input class="form-check-input rounded-3" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+                checked>
+              <label class="form-check-label" for="flexSwitchCheckChecked">좋아요</label>
+            </div><br>
+          </div>
+
+          <div class="preview">
+            <form>
+              <textarea class="content" required><iframe width="560" height="315" src="https://www.youtube.com/embed/92volEdYcCQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></textarea>
+            </form>
+            <div class="sharePreview">지영누나 자리</div>
 
             </div>
 
@@ -32,7 +62,11 @@ export default {
 
 }
 </script>
-<style>
+<style scoped>
+.modal-content {
+  min-height: 80vh !important;
+}
+
 .modal-btn {
   position: relative;
   background-color: white;
@@ -79,10 +113,34 @@ export default {
   background-color: #ebe8e8;
 }
 
-
-.modal-content{
-  min-height: 50vh;
+.modal-content {
+  min-height: 60vh;
   min-width: 720px;
   transform: translateX(-15vh);
+}
+
+.content {
+  font-family:Segoe UI;
+  display: block;
+  border: none;
+  border-bottom: solid 1px black;
+  -webkit-transition: all 0.5s cubic-bezier(0.64, 0.09, 0.08, 1);
+  transition: all 0.5s cubic-bezier(0.64, 0.09, 0.08, 1);
+  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 98%, black 10px);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 98%, black 10px);
+  background-repeat: no-repeat;
+  color: black;
+  resize: none;
+  overflow: hidden;
+  width: 500px;
+  height: 120px;
+  background-position: -500px 0;
+  background-size: 500 100%;
+}
+
+.content:focus, .content:valid {
+  box-shadow: none;
+  outline: none;
+  background-position: 0 0;
 }
 </style>
