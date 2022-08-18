@@ -10,12 +10,12 @@
         <span>article</span>
       </div>
 
-      <div class="report section bg-primary py-5 px-3" id="report">
-        <span>report</span>
+      <div class="report section py-5 px-3" id="report">
+        <ReportList/>
       </div>
 
       <div class="qa section bg-warning py-5 px-3" id="qa">
-        <span>qa</span>
+        <QnA/>
       </div>
     </div>
     <div class="subnav mb-5 mt-4 border-bottom d-flex justify-content-end sticky-bottom">
@@ -32,11 +32,14 @@
 </template>
 
 <script>
+import ReportList from '@/components/ReportList.vue'
+import QnA from '@/components/QnA.vue'
 export default {
   name: 'MyAccountSettings',
   components: {
-
-  }
+    ReportList,
+    QnA
+}
 }
 </script>
 
