@@ -46,12 +46,32 @@ export default {
 		QuestionModal,
 		ShareModal
 	},
+	setup(){
+		return{  }
+	}
 
 
 };
 </script>
 
 <style>
+@media(max-width:1200px){
+	.content-area{
+		flex-direction: column;
+	}
+}
+
+@media(min-width:1201px){
+	.visually-hidden{
+		display: inline-block !important;
+	}
+
+
+}
+body{
+	min-width: 1100px;
+}
+
 #app::-webkit-scrollbar {
 	display: hidden;
 	
@@ -60,4 +80,5 @@ export default {
 	cursor:pointer;
 
 }
+
 </style>
