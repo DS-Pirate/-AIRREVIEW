@@ -53,17 +53,17 @@
         <!-- 버튼 -->
         <ul class="actions">
           <li>
-            <button><span>Like</span>
+            <button class="border-0 bg-white"><span>Like</span>
             </button>
           </li>
           <li>
             <button class="border-0 bg-white" data-bs-toggle="modal" data-bs-target="#share"><span>Share</span></button>
           </li>
           <li>
-            <button><span>Save</span></button>
+            <button class="border-0 bg-white"><span>Save</span></button>
           </li>
           <li>
-            <button><span>Report</span>
+            <button class="border-0 bg-white"><span>Report</span>
             </button>
           </li>
         </ul>

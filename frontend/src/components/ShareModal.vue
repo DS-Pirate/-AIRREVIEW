@@ -45,8 +45,8 @@
             <form>
               <textarea class="content" required><iframe width="560" height="315" src="https://www.youtube.com/embed/92volEdYcCQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></textarea>
             </form>
-            <div class="sharePreview">지영누나 자리</div>
-
+            <div class="sharePreview"><ShareForm/></div>
+              
             </div>
 
         </div>
@@ -58,8 +58,11 @@
   </div>
 </template>
 <script>
+  import ShareForm from "@/components/ShareForm.vue";
 export default {
-
+	components: {
+		ShareForm
+	},
 }
 </script>
 <style scoped>
@@ -143,4 +146,10 @@ export default {
   outline: none;
   background-position: 0 0;
 }
+
+.sharePreview{
+  padding-top: 20px;
+}
+
+/*  */
 </style>
