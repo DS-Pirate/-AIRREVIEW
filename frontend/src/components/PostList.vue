@@ -1,6 +1,6 @@
 <template>
-<form class="d-flex flex-column" action="postlist" method="post">
-<table class="table table-hover success h-50">
+<form class="d-flex flex-column align-items-center w-100" action="postlist" method="post">
+<table class="w-100 table table-hover success">
   <thead>
     <tr class="table-white">
       <th scope="col">No</th>
@@ -50,7 +50,5 @@ export default {
 }
 </script>
 <style>
-  .table {
-    min-width: 135vh !important;
-  }
+  
 </style>

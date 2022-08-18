@@ -2,7 +2,7 @@
 <form class="d-flex flex-column pt-5" action="report" method="post">
 <table class="table table-hover">
   <thead>
-    <tr class="table-secondary">
+    <tr class="table-header">
       <th scope="col">No</th>
       <th scope="col">신고 제목</th>
       <th scope="col">신고 내용</th>
