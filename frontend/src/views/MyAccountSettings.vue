@@ -2,8 +2,8 @@
   <div class="MyAccountSettings">
     <!-- 컴포넌트작업이 끝났을 경우bg-~삭제 -->
     <div class="settingpage">
-      <div class="myaccount section bg-primary py-5 px-3" id="myaccount">
-        <span>account</span>
+      <div class="myaccount section py-5 px-3" id="myaccount">
+        <MyAccount/>
       </div>
 
       <div class="articles section bg-warning py-5 px-3" id="articles">
@@ -34,11 +34,14 @@
 <script>
 import ReportList from '@/components/ReportList.vue'
 import QnA from '@/components/QnA.vue'
+import MyAccount from '@/components/MyAccount.vue'
+
 export default {
   name: 'MyAccountSettings',
   components: {
     ReportList,
-    QnA
+    QnA,
+    MyAccount,
 }
 }
 </script>
