@@ -176,6 +176,10 @@
     .panel-body
       padding: 25px 20px
 
+      .form-control
+        height: 20%
+        resize: none
+
     .media-block
       .media-left
         display: block
@@ -459,3 +463,48 @@
   @media screen and (min-width: 1000px) 
     .row align-items-start
       flex-direction: row
+
+
+/*계정 설정*/
+.myAccount
+  width: 100%
+  height: 100%
+  background: white
+  border: 1px solid black
+  padding: 10%
+  
+  .imgBox 
+    width: 150px
+    height: 150px
+    border-radius: 70%
+    overflow: hidden
+    text-align: center
+    margin: auto
+
+    .picDiv
+      bottom: 0px
+      background: gray
+      height: 28%
+      width:100%
+      opacity:0.8
+      z-index:9
+
+      .picIcon
+        color: white
+        left: 40%
+        bottom: 10%
+        opacity: 1
+        font-size: 30px
+        z-index: 10
+
+    .imgIcon 
+        width: 100%
+        height: 100%
+        object-fit: cover
+
+  .nameDiv
+    text-align: center
+    font-weight: bold
+
+
+
