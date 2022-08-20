@@ -2,8 +2,14 @@
   <div class="myAccount p-5">
     <!-- 이미지 -->
     <div class="imgBox position-relative">
-      <div class="picDiv position-absolute" type="file">
-        <i class="bi bi-camera picIcon position-absolute"></i>
+      <div class="picDiv position-absolute">
+        <div class="filebox">
+          <label
+            for="ex_file"
+            class="bi bi-camera picIcon position-absolute"
+          ></label>
+          <input type="file" id="ex_file" />
+        </div>
       </div>
       <img class="imgIcon" src="../assets/dummy.webp" />
     </div>
@@ -12,15 +18,17 @@
     </div>
 
     <!-- 폼 -->
-    <form class="row g-3 mt-3 myAccountForm p-5">
-      <div class="col-md-6 w-50">
+    <form class="row g-3 mt-3 myAccountForm pe-5 ps-5">
+      <div class="col-md-3 w-50">
         <label for="inputEmail4" class="form-label">이름</label>
         <input type="email" class="form-control" id="inputEmail4" />
       </div>
+
       <div class="col-md-6 w-50">
         <label for="inputEmail4" class="form-label">닉네임</label>
         <input type="email" class="form-control" id="inputEmail4" />
       </div>
+
       <div class="col-12">
         <label for="inputAddress" class="form-label">자기소개</label>
         <textarea
@@ -29,45 +37,46 @@
           rows="3"
         ></textarea>
       </div>
-      <div class="col-md-2 w-20">
+
+      <div class="col-md-2 w-15">
         <label for="inputState" class="form-label">생년월일</label>
-          <select id="inputState" class="form-select col-md-2">
-            <option selected>년도</option>
-            <option v-for="i in 82" :key="i">{{ i + 1940 }}</option>
-          </select>
+        <select id="inputState" class="form-select">
+          <option selected>년도</option>
+          <option v-for="i in 82" :key="i">{{ i + 1940 }}</option>
+        </select>
       </div>
 
-      <div class="col-md-2 w-20">
+      <div class="col-md-2 w-15">
         <label for="inputState" class="form-label"> </label>
-          <select id="inputState" class="form-select col-md-2 mt-2">
-            <option selected>월</option>
-            <option v-for="i in 12" :key="i">{{ i }}</option>
-          </select>
+        <select id="inputState" class="form-select mt-2">
+          <option selected>월</option>
+          <option v-for="i in 12" :key="i">{{ i }}</option>
+        </select>
       </div>
-      <div class="col-md-2 w-20">
+      <div class="col-md-2 w-15">
         <label for="inputState" class="form-label"> </label>
-          <select id="inputState" class="form-select col-md-2 mt-2">
-            <option selected>일</option>
-            <option v-for="i in 31" :key="i">{{ i + 1940 }}</option>
-          </select>
+        <select id="inputState" class="form-select mt-2">
+          <option selected>일</option>
+          <option v-for="i in 31" :key="i">{{ i + 1940 }}</option>
+        </select>
       </div>
 
-
-      <div class="col-md-2 number w-20" >
+      <div class="col-md-2 number w-15">
         <label for="inputState" class="form-label">전화번호</label>
-          <select id="inputState" class="form-select col-md-2" >
-            <option selected>번호</option>
-            <option>010</option>
-            <option>011</option>
-          </select>
+        <select id="inputState" class="form-select">
+          <option selected>번호</option>
+          <option>010</option>
+          <option>011</option>
+        </select>
       </div>
-      <div class="col-md-2 number w-20" >
+      <div class="col-md-2 number w-15">
         <label for="inputState" class="form-label"></label>
-          <input type="text" class="form-control col-md-2 mt-2" id="inputZip" />
+        <input type="text" class="form-control mt-2" id="inputZip" />
       </div>
-      <div class="col-md-2 number w-20" >
+
+      <div class="col-md-2 number w-15">
         <label for="inputState" class="form-label"></label>
-          <input type="text" class="form-control col-md-2 mt-2" id="inputZip" />
+        <input type="text" class="form-control mt-2" id="inputZip" />
       </div>
 
       <div class="col-md-6 w-50">
