@@ -1,10 +1,8 @@
 package ds.pirate.backend.entity;
 
 import lombok.*;
-
 import javax.persistence.*;
 
-import static javax.persistence.FetchType.*;
 
 @Entity
 @Builder

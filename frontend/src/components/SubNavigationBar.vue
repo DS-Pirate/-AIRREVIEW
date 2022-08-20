@@ -21,7 +21,7 @@
 					<h6><a href="https://github.com/DS-Pirate" class="bi bi-github">&nbsp;Project repository</a></h6>
 					<h6><i class="bi bi-funnel-fill"></i>&nbsp;Busan, Korea</h6>
 					<hr style="opacity: 0.8;">
-					<h6><a href="https://github.com/B-HS" class="bi bi-github">&nbsp;Hyunseok Byun</a></h6>
+					<h6><a href="https://github.com/B-HS" class="bi bi-github">&nbsp;HYUNSEOK BYUN</a></h6>
 					<h6><a href="https://github.com/sjiyeong12" class="bi bi-github">&nbsp;JIYEONG SONG</a></h6>
 					<h6><a href="https://github.com/Kim-DH0" class="bi bi-github">&nbsp;DOHYEON KIM</a></h6>
 				</div>

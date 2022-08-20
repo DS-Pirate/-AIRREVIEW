@@ -27,9 +27,6 @@ public class airUser  extends DateEntity{
     private String airName;
 
     @Column(nullable = false)
-    private int phone;
-
-    @Column(nullable = false)
     private LocalDateTime birthDay;
 
     @Column(nullable = false)
