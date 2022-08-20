@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Builder

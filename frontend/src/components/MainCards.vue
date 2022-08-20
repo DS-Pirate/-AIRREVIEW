@@ -24,7 +24,7 @@
 								<a href="#" class="bi bi-bookmark"></a>
 							</li>
 							<li><a href="#" class="bi bi-suit-heart-fill"><span>47</span></a></li>
-							<li><a href="#" class="bi bi-chat-left-text"><span>8</span></a></li>
+							<li><a href="#" class="bi bi-exclamation-lg"><span></span></a></li>
 						</ul>
 					</div>
 				</div>
