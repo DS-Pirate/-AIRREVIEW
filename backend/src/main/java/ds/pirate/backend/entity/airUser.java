@@ -5,7 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -33,7 +35,7 @@ public class airUser  extends DateEntity{
     private int gender;
 
     @Column(nullable = false)
-    private String auth;
+    private boolean auth;
 
     @Column(nullable = false)
     private String recentArticles;
@@ -48,7 +50,9 @@ public class airUser  extends DateEntity{
     @Column(nullable = false)
     private String userIntro;
 
-
+    @ElementCollection(fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<MemberRole> roleSet = new HashSet<>();
 
     @OneToMany(mappedBy = "airuser", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<uImagesList> userImg = new ArrayList<>();

@@ -1,0 +1,7 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.project.referencedLibraries": [
+        "backend/src/main/java/ds/pirate/backend/lib/json-simple.jar",
+        "lib/**/*.jar",
+    ]
+}
