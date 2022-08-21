@@ -26,16 +26,16 @@ public class acomments extends DateEntity{
     @JoinColumn(name = "airuser", referencedColumnName = "userid")
     private airUser airuser;
 
-    @Column
+    @Column(nullable = false)
     private Long commentGroup;
 
-    @Column
+    @Column(nullable = false)
     private Long commnetDepth;
 
-    @Column
+    @Column(nullable = false)
     private Long commentSorts;
 
-    @Column
+    @Column(nullable = false)
     private Long commentContext;
 
 
@@ -43,6 +43,10 @@ public class acomments extends DateEntity{
     @Column
     @ColumnDefault("0") //default 0
     private Integer rate;
+
+    @Column(nullable = false) // 글 평점용 컬럼
+    @ColumnDefault("0")
+    private Integer articleRate;
 
 
 

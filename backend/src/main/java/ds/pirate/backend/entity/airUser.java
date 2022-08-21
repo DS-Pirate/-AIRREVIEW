@@ -14,6 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@ToString(exclude = {"roleSet", "commentList"})
 public class airUser  extends DateEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +50,9 @@ public class airUser  extends DateEntity{
 
     @Column(nullable = false)
     private String userIntro;
+
+    @Column(nullable = false)
+    private String chName;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
