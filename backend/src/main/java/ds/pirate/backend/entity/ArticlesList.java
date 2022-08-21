@@ -24,22 +24,6 @@ public class ArticlesList extends DateEntity{
     @Column(nullable = false)
     private String context;
 
-    @Column
-    private Long alike;
-
-    @ColumnDefault("0")
-    private Long aunlike;
-
-    @ColumnDefault("0")
-    private Long reports;
-
-    @Column
-    private String hashTag;
-
-    @Column
-    @ColumnDefault("0") //default 0
-    private Integer rate;
-
     @OneToMany(mappedBy = "articles", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<ImagesList> images = new ArrayList<>();
 

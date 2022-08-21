@@ -20,4 +20,5 @@ public class SessionDTO {
     private String curl;
     private boolean fromSocial;
     private Map<String, Object> attr; //OAuth from Social
+    //세션발급용
 }

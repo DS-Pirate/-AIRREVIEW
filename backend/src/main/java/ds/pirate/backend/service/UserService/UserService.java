@@ -1,4 +1,4 @@
-package ds.pirate.backend.service;
+package ds.pirate.backend.service.UserService;
 
 import ds.pirate.backend.dto.UserApiDTO;
 
