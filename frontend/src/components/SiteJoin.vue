@@ -1,8 +1,7 @@
 <template>
-
     <form class="d-flex flex-column" action="join" method="post">
-        <div class="input-group idsection px-5 my-2 ">
-            <input class="form-control" type="text" name="id" id="id" required placeholder="아이디">    
+        <div class="input-group idsection px-5 my-2">
+            <input class="form-control" type="text" name="id" id="id" placeholder="아이디" required>    
         </div>
         
         <div class="input-group passwordsection px-5 my-2 w-100">
@@ -13,12 +12,12 @@
             <input class="form-control" type="password" name="repassword" id="repassword" placeholder="비밀번호 재확인" required>    
         </div>
 
-        <div class="input-group idsection px-5 my-2 ">
-            <input class="form-control" type="text" name="name" id="name" required placeholder="이름">    
+        <div class="input-group idsection px-5 my-2">
+            <input class="form-control" type="text" name="name" id="name" placeholder="이름" required>    
         </div>
 
-        <div class="input-group idsection px-5 my-2 ">
-            <input class="form-control" type="text" name="name" id="name" required placeholder="년">  
+        <div class="input-group idsection px-5 my-2">
+            <input class="form-control" type="text" name="name" id="name" placeholder="년" required>  
             <select class="form-select"  aria-label="Default select example" name="select" id="select">
                 <option selected>월</option>
                 <option value="1">1</option>
@@ -37,22 +36,27 @@
             <input class="form-control" type="text" name="name" id="name" required placeholder="일">  
         </div>
 
-        <div class="input-group idsection px-5 my-2 ">
-            <select class="form-select"  aria-label="Default select example" name="select" id="select">
+        <div class="input-group idsection px-5 my-2">
+            <select class="form-select" aria-label="Default select example" name="select" id="select">
                 <option selected>성별</option>
                 <option value="1">남자</option>
                 <option value="2">여자</option>
-                <option value="3">선택 안함</option>
+                <option value="3">상여자</option>
+                <option value="4">하남자</option>
+                <option value="5">선택 안함</option>
             </select>
         </div>
 
-        <div class="input-group idsection px-5 my-2 ">
+        <div class="input-group idsection px-5 my-2">
             <input class="form-control" type="text" name="email" id="eamil" required placeholder="본인 확인 이메일">    
         </div>
 
-        <div class="input-group idsection px-5 my-2 d-flex justify-content-center justalign-item-center w-100">
-            <input class="form-control" type="text" name="mobile" id="mobile" required placeholder="휴대전화">
-            <button type="button" class="btn btn-outline-primary w-auto">인증번호 받기</button>
+        <div class="input-group questionsection px-5 my-2">
+            <input class="form-control" type="text" name="email" id="eamil" required placeholder="나의 보물 1호는?">    
+        </div>
+        
+        <div class="input-group questionsection px-5 my-2">
+            <input class="form-control" type="text" name="email" id="eamil" required placeholder="기억에 남는 추억의 장소는?">    
         </div>
         
         <div class="px-5 my-4">

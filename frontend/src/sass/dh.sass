@@ -3,32 +3,40 @@ join
     --bs-btn-focus-box-shadow: none
     --bs-btn-active-color: none
     --bs-btn-focus-shadow-rgb: none !important
+
   .utlpart
     font-size: 0.75rem
+
   .join
     a
       cursor: pointer
       transition: all 0.2s ease-in-out
-    width: 40%
+      width: 40%
+
     input
-      text-align: left
+      text-align: center
       transition: all 0.2s ease-in-out
-    background-color: #FFF
+      background-color: #FFF
+
     input::placeholder
-      text-align: left
+      text-align: center
+
     input:focus::placeholder
       transition: all 0.2s ease-in-out
       color: transparent
-.btn-link
-  --bs-btn-focus-box-shadow: none
-  --bs-btn-active-color: none
-  --bs-btn-focus-shadow-rgb: none !important
+    
+    option
+      text-align: center
+    
+    .btn-link
+      --bs-btn-focus-box-shadow: none
+      --bs-btn-active-color: none
+      --bs-btn-focus-shadow-rgb: none !important
   
-select
-  &:hover
-    box-shadow: none  !important
-
-  &:focus
-    box-shadow: none  !important
-  &:active
-    box-shadow: none  !important
+    select
+      &:hover
+        box-shadow: none  !important
+      &:focus
+        box-shadow: none  !important
+      &:active
+        box-shadow: none  !important
