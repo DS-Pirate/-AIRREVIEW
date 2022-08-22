@@ -1,5 +1,5 @@
 <template>
-  <div class="modal " id="share" tabindex="-1" aria-labelledby="share" aria-hidden="true">
+  <div class="modal" id="share" tabindex="-1" aria-labelledby="share" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content rounded-0">
         <div class="modal-header">
@@ -8,8 +8,8 @@
         </div>
 
         <div class="modal-body d-flex">
-          <div class="d-flex flex-column justify-content-between w-25">
-            <div class="md-nav"><span>퍼가기</span> | <span>embaded</span></div><br>
+          <div class="d-flex flex-column justify-content-between w-20">
+            <div class="md-nav"><span>퍼가기</span> | <span>embed</span></div><br>
             <div class="form-check form-switch">
               <input class="form-check-input rounded-3" type="checkbox" role="switch" id="flexSwitchCheckChecked"
                 checked>
@@ -66,10 +66,6 @@ export default {
 }
 </script>
 <style scoped>
-.modal-content {
-  min-height: 80vh !important;
-}
-
 .modal-btn {
   position: relative;
   background-color: white;
@@ -117,9 +113,9 @@ export default {
 }
 
 .modal-content {
-  min-height: 60vh;
-  min-width: 720px;
-  transform: translateX(-15vh);
+  min-width: 900px;
+  transform: translateX(-30vh);
+  min-height: 80vh !important;
 }
 
 .content {
@@ -135,10 +131,10 @@ export default {
   color: black;
   resize: none;
   overflow: hidden;
-  width: 500px;
+  width: 680px;
   height: 120px;
-  background-position: -500px 0;
-  background-size: 500 100%;
+  background-position: -690px 0;
+  background-size: 680 100%;
 }
 
 .content:focus, .content:valid {
@@ -150,6 +146,4 @@ export default {
 .sharePreview{
   padding-top: 20px;
 }
-
-/*  */
 </style>
