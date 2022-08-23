@@ -96,7 +96,7 @@ export default {
 				tags: this.taghistory,
 				isOpened: this.isOpened,
                 shareable: this.shareable,
-				token:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjEyMTY3NjUsImV4cCI6MTY2MzgwODc2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.JPVhAVGUiBwF_BShoLK_glsKLGor1MI8vHndWAIqPH0",
+				token:"",
 
 			}
 			console.log()
