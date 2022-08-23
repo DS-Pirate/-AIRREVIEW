@@ -30,4 +30,9 @@ public class HashTags {
     @JoinColumn(name = "articles_id", referencedColumnName = "aid")
     private ArticlesList articles;
     
+
+    //as mentioned about entity, set by manually
+    public void updateArticles(ArticlesList list){
+        this.articles = list;
+    }
 }

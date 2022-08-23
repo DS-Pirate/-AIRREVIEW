@@ -20,9 +20,9 @@ public interface ArticleService {
         return entity;
     }
 
-    default HashTags listToHSEntity(List<String> hashlist){
+    default HashTags listToHSEntity(String hashlist){
         
-        HashTags tags = HashTags.builder().build();
+        HashTags tags = HashTags.builder().hashTagName(hashlist).build();
         return tags;
     }
 

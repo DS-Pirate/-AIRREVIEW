@@ -5,6 +5,7 @@ const path = require( 'path' );
 const CKEditorWebpackPlugin = require( '@ckeditor/ckeditor5-dev-webpack-plugin' );
 const { styles } = require( '@ckeditor/ckeditor5-dev-utils' );
 
+
 const target = 'http://localhost:9090'
 module.exports = defineConfig(
     

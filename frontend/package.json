@@ -11,6 +11,7 @@
     "@ckeditor/ckeditor5-build-classic": "^35.0.1",
     "@ckeditor/ckeditor5-dev-utils": "^30.4.0",
     "@ckeditor/ckeditor5-dev-webpack-plugin": "^30.4.0",
+    "@ckeditor/ckeditor5-upload": "^35.0.1",
     "@ckeditor/ckeditor5-vue": "^4.0.1",
     "@fortawesome/fontawesome-svg-core": "^6.1.2",
     "@fortawesome/free-brands-svg-icons": "^6.1.2",

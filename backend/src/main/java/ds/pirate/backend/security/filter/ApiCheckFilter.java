@@ -55,6 +55,7 @@ public class ApiCheckFilter extends OncePerRequestFilter {
 
     private boolean checkAuthHeader(HttpServletRequest request) {
         boolean checkResult = false;
+        log.info("requesttttttttttttttt"+request);
         String authHeader = request.getHeader("Authorization");
         log.info(authHeader);
         log.info("Authorization: " + authHeader);
