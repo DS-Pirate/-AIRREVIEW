@@ -24,6 +24,13 @@ public class ArticlesList extends DateEntity{
     @Column(nullable = false)
     private String context;
 
+    @Column(nullable = false)
+    private boolean opend;
+
+    @Column(nullable = false)
+    private boolean shareable;
+
+
     @OneToMany(mappedBy = "articles", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<ImagesList> images = new ArrayList<>();
 

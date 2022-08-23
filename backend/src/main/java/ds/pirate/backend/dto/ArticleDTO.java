@@ -18,6 +18,8 @@ public class ArticleDTO {
     private Long aid;
     private String atitle;
     private String context;
+    private boolean opend;
+    private boolean shareable;
     private List<ImagesList> images;
     private List<acomments> cgroup;
 }
