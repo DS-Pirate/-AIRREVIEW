@@ -29,7 +29,11 @@ public class ArticlesList extends DateEntity{
 
     @Column(nullable = false)
     private boolean shareable;
+    
+    // private List<String> tags;
 
+    @OneToMany(mappedBy = "articles", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<HashTags> tags = new ArrayList<>();
 
     @OneToMany(mappedBy = "articles", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<ImagesList> images = new ArrayList<>();
