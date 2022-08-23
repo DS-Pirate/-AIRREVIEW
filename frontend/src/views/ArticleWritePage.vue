@@ -91,22 +91,24 @@ export default {
 		},
 		submit: async function () {
 			const page = {
-				title: this.title,
+				atitle: this.title,
 				context: this.editorData,
 				tags: this.taghistory,
-				isOpened: this.isOpened,
+				opened: this.openable,
                 shareable: this.shareable,
-				token:"",
+				token:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjEyMjg1ODYsImV4cCI6MTY2MzgyMDU4Niwic3ViIjoiMWFhYUBhYWEuY29tIn0.xrDxqeXKceqDtSI3yme49Z6RG5i1ImPYbBixu1OVZyo",
 
 			}
-			console.log()
 			let result = JSON.stringify(page)
+			console.log(result)
+			result
+			
 
 			const url     = "/airreview/api/article/write"
 			const headers = { "Content-Type": "application/json; charset=utf-8", 
 								"token": page.token, "Authorization": page.token}
 			const body    = result
-			await axios.post(url, body, {headers}).then(function(res){
+			await axios.post(url, body,  {headers}).then(function(res){
 				console.log(res);
 			}).catch((e)=>{
 				console.log(e+ "통신실패");

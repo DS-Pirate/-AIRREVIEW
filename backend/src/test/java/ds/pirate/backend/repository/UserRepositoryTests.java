@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import ds.pirate.backend.entity.ArticlesList;
+import ds.pirate.backend.entity.HashTags;
 import ds.pirate.backend.entity.airUser;
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +26,31 @@ public class UserRepositoryTests {
     @Autowired
     PasswordEncoder encoder;
 
+    @Autowired
+    ArticleRepository arepo;
+
+    @Autowired
+    HashTagRepository hrepo;
+
+    @Test
+    public void insertArticles(){
+        IntStream.rangeClosed(1, 10).forEach(i->{
+            ArticlesList entity = ArticlesList.builder()
+                                    .atitle(i+"번글")
+                                    .context(i+"번글 내용")
+                                    .opend(false)
+                                    .shareable(false)
+                                    .build();
+
+            arepo.save(entity);
+            HashTags hentity = HashTags.builder()
+                                .hashTagName("hashTagName"+i)
+                                .articles(entity)
+                                .build();
+            hrepo.save(hentity);
+            
+        });
+    }
 
     @Test
     public void insertAccounts(){
