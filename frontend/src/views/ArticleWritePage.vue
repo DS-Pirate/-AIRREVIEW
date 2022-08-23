@@ -2,9 +2,11 @@
 	<writeeditor>
 		<input type="text" placeholder="제목" class="form-control my-3 rounded-0 title" v-model="title" id="title" />
 		<ckeditor @ready="onReady" :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
-		<input type="text" v-model="tag" v-on:keyup.space="makingTag" placeholder="태그" class="form-control my-3 rounded-0 hashtag" />
+		<input type="text" v-model="tag" v-on:keyup.space="makingTag" placeholder="태그"
+			class="form-control my-3 rounded-0 hashtag" />
 		<hashtags class="hashtags d-flex g-4 overflow-auto">
-			<div class="tag d-flex justify-content-center align-items-center" v-for="(item, i) in taghistory" :key="item">
+			<div class="tag d-flex justify-content-center align-items-center" v-for="(item, i) in taghistory"
+				:key="item">
 				<span class="m-1">#{{ item }}</span>
 				<button class="delbtn d-flex justify-content-center align-items-center px-1">
 					<span v-on:click="deleteTag(i)">x</span>
@@ -12,24 +14,28 @@
 			</div>
 		</hashtags>
 		<div class="tagwarning" ref="warning"></div>
-		<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">글쓰기</button>
+		<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom"
+			aria-controls="offcanvasBottom">글쓰기</button>
 
-		<div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+		<div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+			aria-labelledby="offcanvasBottomLabel">
 			<div class="offcanvas-header">
 				<h5 class="offcanvas-title" id="offcanvasBottomLabel">글쓰기</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 			</div>
 			<hr />
 			<div class="offcanvas-body small">
-                <!-- this secton will arranged after devate about article options -->
+				<!-- this secton will arranged after devate about article options -->
 				<div class="articlestatus">
 					<div class="form-check form-switch">
-						<input class="form-check-input" type="checkbox" v-model="openable" role="switch" id="openable" />
+						<input class="form-check-input" type="checkbox" v-model="openable" role="switch"
+							id="openable" />
 						<label class="form-check-label" for="openable" v-if="openable">공개</label>
 						<label class="form-check-label" for="openable" v-else>비공개</label>
 					</div>
 					<div class="form-check form-switch">
-						<input class="form-check-input" type="checkbox" v-model="shareable" role="switch" id="shareable" />
+						<input class="form-check-input" type="checkbox" v-model="shareable" role="switch"
+							id="shareable" />
 						<label class="form-check-label" for="shareable" v-if="shareable">공유 가능</label>
 						<label class="form-check-label" for="shareable" v-else>공유 불가능</label>
 					</div>
@@ -49,19 +55,25 @@
 // It scheduled when backend server developed
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 import axios from 'axios'
+
+
 export default {
 	name: "WritePage",
 	data() {
 		return {
-            shareable: true,
+			shareable: true,
 			openable: true,
 			title: "",
 			tag: "",
 			taghistory: [],
 			editor: ClassicEditor,
-			editorData: "<p>내용</p>",
+			editorData: "",
 			editorConfig: {
 				language: "ko",
+				ckfinder: {
+            // Upload the images to the server using the CKFinder QuickUpload command.
+            uploadUrl: '/airreview/api/article/write-image'
+        }
 			},
 		}
 	},
@@ -95,23 +107,25 @@ export default {
 				context: this.editorData,
 				tags: this.taghistory,
 				opened: this.openable,
-                shareable: this.shareable,
-				token:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjEyMjg1ODYsImV4cCI6MTY2MzgyMDU4Niwic3ViIjoiMWFhYUBhYWEuY29tIn0.xrDxqeXKceqDtSI3yme49Z6RG5i1ImPYbBixu1OVZyo",
+				shareable: this.shareable,
+				token: "",
 
 			}
 			let result = JSON.stringify(page)
 			console.log(result)
 			result
-			
 
-			const url     = "/airreview/api/article/write"
-			const headers = { "Content-Type": "application/json; charset=utf-8", 
-								"token": page.token, "Authorization": page.token}
-			const body    = result
-			await axios.post(url, body,  {headers}).then(function(res){
+
+			const url = "/airreview/api/article/write"
+			const headers = {
+				"Content-Type": "application/json; charset=utf-8",
+				"token": page.token, "Authorization": page.token
+			}
+			const body = result
+			await axios.post(url, body, { headers }).then(function (res) {
 				console.log(res);
-			}).catch((e)=>{
-				console.log(e+ "통신실패");
+			}).catch((e) => {
+				console.log(e + "통신실패");
 			}).then(
 				console.log("통신 끝")
 			)
