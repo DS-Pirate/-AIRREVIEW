@@ -48,7 +48,7 @@
 // ImageUploader is not implemented yet, it needs making fileserver or db for uploading images
 // It scheduled when backend server developed
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
-
+import axios from 'axios'
 export default {
 	name: "WritePage",
 	data() {
@@ -89,15 +89,32 @@ export default {
 			this.taghistory.splice(i, 1)
 
 		},
-		submit: function () {
+		submit: async function () {
 			const page = {
 				title: this.title,
 				context: this.editorData,
 				tags: this.taghistory,
 				isOpened: this.isOpened,
-                shareable: this.shareable
+                shareable: this.shareable,
+				token:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjEyMTY3NjUsImV4cCI6MTY2MzgwODc2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.JPVhAVGUiBwF_BShoLK_glsKLGor1MI8vHndWAIqPH0",
+
 			}
-			console.log(JSON.stringify(page))
+			console.log()
+			let result = JSON.stringify(page)
+
+			const url     = "/airreview/api/article/write"
+			const headers = { "Content-Type": "application/json; charset=utf-8", 
+								"token": page.token, "Authorization": page.token}
+			const body    = result
+			await axios.post(url, body, {headers}).then(function(res){
+				console.log(res);
+			}).catch((e)=>{
+				console.log(e+ "통신실패");
+			}).then(
+				console.log("통신 끝")
+			)
+
+
 		},
 	},
 }

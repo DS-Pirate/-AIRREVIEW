@@ -40,6 +40,7 @@ public class UserRepositoryTests {
                                     .q2("q2")
                                     .q3("q3")
                                     .userIntro("Helloguys!")
+                                    .chName("11111"+i)
                                     .build();
             urepo.save(entity);
 

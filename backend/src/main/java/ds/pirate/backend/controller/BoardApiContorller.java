@@ -1,5 +1,7 @@
 package ds.pirate.backend.controller;
 
+import javax.transaction.Transactional;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +17,7 @@ import lombok.extern.log4j.Log4j2;
 
 @RestController
 @Log4j2
-@RequestMapping("/api")
+@RequestMapping("/api/article")
 @RequiredArgsConstructor
 public class BoardApiContorller {
 
@@ -24,7 +26,7 @@ public class BoardApiContorller {
     @RequestMapping(value = "/write", method = RequestMethod.POST, 
     consumes = MediaType.ALL_VALUE, 
     produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> register(@RequestBody ArticleDTO dto, @RequestHeader("token") String token){
+    public ResponseEntity<String> write(@RequestBody ArticleDTO dto,  @RequestHeader("token") String token){
         log.info("write dto is cominggggggggggggggggggggg"+ dto);
 
         return null;

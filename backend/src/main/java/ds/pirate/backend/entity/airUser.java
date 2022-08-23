@@ -3,6 +3,8 @@ package ds.pirate.backend.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -58,7 +60,7 @@ public class airUser  extends DateEntity{
     @Builder.Default
     private Set<MemberRole> roleSet = new HashSet<>();
 
-    @OneToMany(mappedBy = "airuser", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "airuser", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<uImagesList> userImg = new ArrayList<>();
 
     @OneToMany(mappedBy = "airuser", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)

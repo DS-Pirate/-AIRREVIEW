@@ -5,8 +5,19 @@ const path = require( 'path' );
 const CKEditorWebpackPlugin = require( '@ckeditor/ckeditor5-dev-webpack-plugin' );
 const { styles } = require( '@ckeditor/ckeditor5-dev-utils' );
 
-module.exports = defineConfig({
-  transpileDependencies: [
+const target = 'http://localhost:9090'
+module.exports = defineConfig(
+    
+    
+{
+    devServer: {
+        port: 8080,
+        proxy : {
+        "/airreview/api" : {target, changeOrigin: true},
+        }
+},
+publicPath: '/airreview',
+    transpileDependencies: [
     /ckeditor5-[^/\\]+[/\\]src[/\\].+\.js$/
 ],
   configureWebpack: {
