@@ -2,8 +2,10 @@ const { defineConfig } = require('@vue/cli-service')
 
 //CKEditor
 const path = require( 'path' );
+const webpack = require( 'webpack' );
+const { bundler, styles } = require( '@ckeditor/ckeditor5-dev-utils' );
 const CKEditorWebpackPlugin = require( '@ckeditor/ckeditor5-dev-webpack-plugin' );
-const { styles } = require( '@ckeditor/ckeditor5-dev-utils' );
+const TerserWebpackPlugin = require( 'terser-webpack-plugin' );
 
 
 const target = 'http://localhost:9090'
@@ -15,6 +17,7 @@ module.exports = defineConfig(
         port: 8080,
         proxy : {
         "/airreview/api" : {target, changeOrigin: true},
+        "/airreview/images" :{target, changeOrigin: true},
         }
 },
 publicPath: '/airreview',
@@ -23,14 +26,15 @@ publicPath: '/airreview',
 ],
   configureWebpack: {
     plugins: [
-        // CKEditor 웹팩 플러그인 섹션
-        new CKEditorWebpackPlugin( {
-            language: 'ko',
-
-            // Append translations to the file matching the `app` name.
-            translationsOutputFile: /app/
-        } )
-    ]
+		new CKEditorWebpackPlugin( {
+			language: 'ko',
+			additionalLanguages: 'all'
+		} ),
+		new webpack.BannerPlugin( {
+			banner: bundler.getLicenseBanner(),
+			raw: true
+		} )
+	],
 },
 
 chainWebpack: config => {

@@ -54,7 +54,7 @@ public class UserRepositoryTests {
 
     @Test
     public void insertAccounts(){
-        IntStream.rangeClosed(1, 50).forEach(i->{
+        IntStream.rangeClosed(1, 10).forEach(i->{
             airUser entity = airUser.builder()
                                     .passwd(encoder.encode("1234"))
                                     .eMail(i+"aaa@aaa.com")

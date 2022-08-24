@@ -53,7 +53,8 @@
 // Refer the below link https://github.com/ckeditor/ckeditor5-vue/issues/172
 // ImageUploader is not implemented yet, it needs making fileserver or db for uploading images
 // It scheduled when backend server developed
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
+import ClassicEditor from "@ckeditor/ckeditor5-custom"
 import axios from 'axios'
 
 
@@ -70,10 +71,15 @@ export default {
 			editorData: "",
 			editorConfig: {
 				language: "ko",
-				ckfinder: {
-            // Upload the images to the server using the CKFinder QuickUpload command.
-            uploadUrl: '/airreview/api/article/write-image'
-        }
+				simpleUpload:
+					{
+						uploadUrl: "api/article/write/image",
+						withCredentials: true,
+						headers: {
+							Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjEzMjQ0NDQsImV4cCI6MTY2MzkxNjQ0NCwic3ViIjoiMWFhYUBhYWEuY29tIn0.XcZVdYsExhpzZTjdEnr13tM9UUH_Gifq7nyMFEAOSbs'
+						}
+					}
+
 			},
 		}
 	},
@@ -108,7 +114,7 @@ export default {
 				tags: this.taghistory,
 				opened: this.openable,
 				shareable: this.shareable,
-				token: "",
+				token: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjEzMjQ0NDQsImV4cCI6MTY2MzkxNjQ0NCwic3ViIjoiMWFhYUBhYWEuY29tIn0.XcZVdYsExhpzZTjdEnr13tM9UUH_Gifq7nyMFEAOSbs",
 
 			}
 			let result = JSON.stringify(page)
