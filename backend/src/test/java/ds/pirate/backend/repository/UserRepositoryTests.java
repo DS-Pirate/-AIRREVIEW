@@ -1,5 +1,6 @@
 package ds.pirate.backend.repository;
 
+import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.util.stream.IntStream;
 
@@ -7,7 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.test.context.SpringBootTest;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import ds.pirate.backend.entity.ArticlesList;
@@ -32,24 +36,32 @@ public class UserRepositoryTests {
     @Autowired
     HashTagRepository hrepo;
 
-    @Test
-    public void insertArticles(){
-        IntStream.rangeClosed(1, 10).forEach(i->{
-            ArticlesList entity = ArticlesList.builder()
-                                    .atitle(i+"번글")
-                                    .context(i+"번글 내용")
-                                    .opend(false)
-                                    .shareable(false)
-                                    .build();
+    // @Test
+    // public void insertArticles(){
+    //     IntStream.rangeClosed(1, 10).forEach(i->{
+    //         ArticlesList entity = ArticlesList.builder()
+    //                                 .atitle(i+"번글")
+    //                                 .context("(Blob)(i+"번글 내용")")
+    //                                 .opend(false)
+    //                                 .shareable(false)
+    //                                 .build();
 
-            arepo.save(entity);
-            HashTags hentity = HashTags.builder()
-                                .hashTagName("hashTagName"+i)
-                                .articles(entity)
-                                .build();
-            hrepo.save(hentity);
+    //         arepo.save(entity);
+    //         HashTags hentity = HashTags.builder()
+    //                             .hashTagName("hashTagName"+i)
+    //                             .articles(entity)
+    //                             .build();
+    //         hrepo.save(hentity);
             
-        });
+    //     });
+    // }
+    @Test
+    public void getList(){
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("aid").descending());
+        Page<ArticlesList> result = arepo.getArticleList(pageable);
+        result.get().forEach(row -> {
+            System.out.println(row);
+          });
     }
 
     @Test

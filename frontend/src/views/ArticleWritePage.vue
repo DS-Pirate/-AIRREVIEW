@@ -72,13 +72,13 @@ export default {
 			editorConfig: {
 				language: "ko",
 				simpleUpload:
-					{
-						uploadUrl: "api/article/write/image",
-						withCredentials: true,
-						headers: {
-							Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjEzMjQ0NDQsImV4cCI6MTY2MzkxNjQ0NCwic3ViIjoiMWFhYUBhYWEuY29tIn0.XcZVdYsExhpzZTjdEnr13tM9UUH_Gifq7nyMFEAOSbs'
-						}
+				{
+					uploadUrl: "api/article/write/image",
+					withCredentials: true,
+					headers: {
+						Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjEzMjQ0NDQsImV4cCI6MTY2MzkxNjQ0NCwic3ViIjoiMWFhYUBhYWEuY29tIn0.XcZVdYsExhpzZTjdEnr13tM9UUH_Gifq7nyMFEAOSbs'
 					}
+				}
 
 			},
 		}
@@ -115,13 +115,31 @@ export default {
 				opened: this.openable,
 				shareable: this.shareable,
 				token: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjEzMjQ0NDQsImV4cCI6MTY2MzkxNjQ0NCwic3ViIjoiMWFhYUBhYWEuY29tIn0.XcZVdYsExhpzZTjdEnr13tM9UUH_Gifq7nyMFEAOSbs",
-
+				images: []
 			}
+			console.log(page.context);
+
+
+			//find image name where in context
+			function findImageName(list) {
+				let bonmun =list
+				let bonary = []
+				for (let i of bonmun.split("/")) {
+					if (i[0] + i[1] + i[2] == "?fi") {
+						let tmp = i.split("-")
+						tmp[0] = tmp[0].substr(10)
+						tmp[4] = tmp[4].slice(0, tmp[4].indexOf('">'))
+						bonary.push({
+							filename: tmp.join("-")
+							})
+					}
+				}
+				return bonary
+			}
+
+			page.images = findImageName(page.context)
+			/////////////////////////////////////////
 			let result = JSON.stringify(page)
-			console.log(result)
-			result
-
-
 			const url = "/airreview/api/article/write"
 			const headers = {
 				"Content-Type": "application/json; charset=utf-8",
@@ -129,6 +147,7 @@ export default {
 			}
 			const body = result
 			await axios.post(url, body, { headers }).then(function (res) {
+				console.log(body);
 				console.log(res);
 			}).catch((e) => {
 				console.log(e + "통신실패");

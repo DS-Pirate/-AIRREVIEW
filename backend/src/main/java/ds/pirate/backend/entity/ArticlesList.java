@@ -1,9 +1,10 @@
 package ds.pirate.backend.entity;
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +22,10 @@ public class ArticlesList extends DateEntity{
     @Column(nullable = false)
     private String atitle;
 
+    @Lob
     @Column(nullable = false)
-    private String context;
+    private byte[] context;
+
 
     @Column(nullable = false)
     private boolean opend;

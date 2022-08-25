@@ -67,25 +67,7 @@ public class BoardApiContorller {
         log.info("cccccccccccccccccccccccccccccccccccccc"+ uploadId);
         uploadFile.transferTo(new File(uploadDir + uploadId));
         paramMap.put("url", "/airreview/images/read/?fileName=" + uploadId);
+        log.info(paramMap);
         return paramMap;
     }
-
-    // @PostMapping("/write/images/{fileOriginName}")
-    // public ResponseEntity<Resource> getItemImageByName(@PathVariable("fileOriginName") String fileName) {
-    //     try {
-    //         String path = "c:\\testingimage\\";
-    //         FileSystemResource resource = new FileSystemResource(path+fileName);
-    //         if (!resource.exists()) {
-    //             throw new NotFoundException("NOIMAGE");
-    //         }
-    //         HttpHeaders header = new HttpHeaders();
-    //         Path filePath = null;
-    //         filePath = Paths.get(path+fileName);
-    //         header.add("Content-Type", Files.probeContentType(filePath));
-    //         return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
-    //     return null;
-    // }
 }
