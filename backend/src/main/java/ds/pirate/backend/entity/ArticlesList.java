@@ -1,9 +1,11 @@
 package ds.pirate.backend.entity;
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+
+import java.nio.charset.Charset;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(exclude = {"images", "cgroup"})
+@ToString(exclude = {"tags", "images", "cgroup"})
 public class ArticlesList extends DateEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +23,10 @@ public class ArticlesList extends DateEntity{
     @Column(nullable = false)
     private String atitle;
 
+    @Lob
     @Column(nullable = false)
-    private String context;
+    private byte[] context;
+
 
     @Column(nullable = false)
     private boolean opend;
@@ -41,4 +45,10 @@ public class ArticlesList extends DateEntity{
     @OneToMany(mappedBy = "articles", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<acomments> cgroup = new ArrayList<>();
 
+
+
+    public String updateContextToString(byte[] context){
+        String result = new String(context, Charset.forName("utf8"));
+        return result;
+    }
 }

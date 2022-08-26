@@ -53,7 +53,8 @@
 // Refer the below link https://github.com/ckeditor/ckeditor5-vue/issues/172
 // ImageUploader is not implemented yet, it needs making fileserver or db for uploading images
 // It scheduled when backend server developed
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
+import ClassicEditor from "@ckeditor/ckeditor5-custom"
 import axios from 'axios'
 
 
@@ -70,10 +71,15 @@ export default {
 			editorData: "",
 			editorConfig: {
 				language: "ko",
-				ckfinder: {
-            // Upload the images to the server using the CKFinder QuickUpload command.
-            uploadUrl: '/airreview/api/article/write-image'
-        }
+				simpleUpload:
+				{
+					uploadUrl: "api/article/write/image",
+					withCredentials: true,
+					headers: {
+						Authorization: ''
+					}
+				}
+
 			},
 		}
 	},
@@ -109,13 +115,32 @@ export default {
 				opened: this.openable,
 				shareable: this.shareable,
 				token: "",
-
+				images: []
 			}
+			console.log(page.context);
+
+
+			//find image name where in context
+			function findImageName(list) {
+				let bonmun =list
+				let bonary = []
+				for (let i of bonmun.split("/")) {
+					if (i[0] + i[1] + i[2] == "?fi") {
+						let tmp = i.split("-")
+						tmp[0] = tmp[0].substr(10)
+						tmp[4] = tmp[4].slice(0, tmp[4].indexOf('">'))
+						bonary.push({
+							fileName: tmp.join("-")
+							})
+					}
+				}
+				return bonary
+			}
+
+			page.images = findImageName(page.context)
+			console.log(page.images);
+			/////////////////////////////////////////
 			let result = JSON.stringify(page)
-			console.log(result)
-			result
-
-
 			const url = "/airreview/api/article/write"
 			const headers = {
 				"Content-Type": "application/json; charset=utf-8",
@@ -123,6 +148,7 @@ export default {
 			}
 			const body = result
 			await axios.post(url, body, { headers }).then(function (res) {
+				console.log(body);
 				console.log(res);
 			}).catch((e) => {
 				console.log(e + "통신실패");
