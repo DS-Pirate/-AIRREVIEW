@@ -1,5 +1,7 @@
 package ds.pirate.backend.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -16,6 +18,11 @@ public interface ArticleRepository extends JpaRepository<ArticlesList,String> {
     @Query(
         value = "select air from ArticlesList air "
       )
-      Page<ArticlesList> getArticleList(Pageable pageable);
+    Page<ArticlesList> getArticleList(Pageable pageable);
+
+    List<ArticlesList> getByAid(Long aid);
+
+    @Query("select a from ArticlesList a")
+    List<ArticlesList> getList();
 
 }

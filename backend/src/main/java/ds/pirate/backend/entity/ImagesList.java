@@ -21,6 +21,7 @@ public class ImagesList {
     @Column
     private String fileName;
 
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
     private int idx;
 

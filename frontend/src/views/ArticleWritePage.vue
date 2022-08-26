@@ -76,7 +76,7 @@ export default {
 					uploadUrl: "api/article/write/image",
 					withCredentials: true,
 					headers: {
-						Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjEzMjQ0NDQsImV4cCI6MTY2MzkxNjQ0NCwic3ViIjoiMWFhYUBhYWEuY29tIn0.XcZVdYsExhpzZTjdEnr13tM9UUH_Gifq7nyMFEAOSbs'
+						Authorization: ''
 					}
 				}
 
@@ -114,7 +114,7 @@ export default {
 				tags: this.taghistory,
 				opened: this.openable,
 				shareable: this.shareable,
-				token: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjEzMjQ0NDQsImV4cCI6MTY2MzkxNjQ0NCwic3ViIjoiMWFhYUBhYWEuY29tIn0.XcZVdYsExhpzZTjdEnr13tM9UUH_Gifq7nyMFEAOSbs",
+				token: "",
 				images: []
 			}
 			console.log(page.context);
@@ -130,7 +130,7 @@ export default {
 						tmp[0] = tmp[0].substr(10)
 						tmp[4] = tmp[4].slice(0, tmp[4].indexOf('">'))
 						bonary.push({
-							filename: tmp.join("-")
+							fileName: tmp.join("-")
 							})
 					}
 				}
@@ -138,6 +138,7 @@ export default {
 			}
 
 			page.images = findImageName(page.context)
+			console.log(page.images);
 			/////////////////////////////////////////
 			let result = JSON.stringify(page)
 			const url = "/airreview/api/article/write"

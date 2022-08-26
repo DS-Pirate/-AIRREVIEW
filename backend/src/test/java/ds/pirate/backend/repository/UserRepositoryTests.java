@@ -2,6 +2,7 @@ package ds.pirate.backend.repository;
 
 import java.sql.Blob;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
@@ -14,13 +15,19 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.fasterxml.jackson.databind.deser.impl.ExternalTypeHandler.Builder;
+
+import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.HashTags;
+import ds.pirate.backend.entity.ImagesList;
+import ds.pirate.backend.entity.acomments;
 import ds.pirate.backend.entity.airUser;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 
-
+@Log4j2
 @RequiredArgsConstructor
 @SpringBootTest
 public class UserRepositoryTests {
@@ -36,33 +43,73 @@ public class UserRepositoryTests {
     @Autowired
     HashTagRepository hrepo;
 
-    // @Test
-    // public void insertArticles(){
-    //     IntStream.rangeClosed(1, 10).forEach(i->{
-    //         ArticlesList entity = ArticlesList.builder()
-    //                                 .atitle(i+"번글")
-    //                                 .context("(Blob)(i+"번글 내용")")
-    //                                 .opend(false)
-    //                                 .shareable(false)
-    //                                 .build();
-
-    //         arepo.save(entity);
-    //         HashTags hentity = HashTags.builder()
-    //                             .hashTagName("hashTagName"+i)
-    //                             .articles(entity)
-    //                             .build();
-    //         hrepo.save(hentity);
-            
-    //     });
-    // }
     @Test
-    public void getList(){
-        Pageable pageable = PageRequest.of(0, 10, Sort.by("aid").descending());
-        Page<ArticlesList> result = arepo.getArticleList(pageable);
-        result.get().forEach(row -> {
-            System.out.println(row);
-          });
+    public void insertArticles(){
+        IntStream.rangeClosed(1, 10).forEach(i->{
+            ArticlesList entity = ArticlesList.builder()
+                                    .atitle(i+"번글")
+                                    .context((i+"번글 내용").getBytes())
+                                    .opend(false)
+                                    .shareable(false)
+                                    .build();
+
+
+            HashTags tags = HashTags.builder()
+                                    .hashTagName(i+"tagname")
+                                    .articles(entity)
+                                    .build();
+            
+            ImagesList imgs = ImagesList.builder().fileName(i+"fileName").idx(1).articles(entity).build();
+
+            acomments cgroup = acomments.builder().articles(entity)
+            .airuser(airUser.builder().passwd(encoder.encode("1234"))
+            .eMail(i+"aaa@aaa.com")
+            .airName("airName"+i)
+            .birthDay(LocalDateTime.now())
+            .gender(1)
+            .auth(false)
+            .recentArticles("1, 2, 3, 4, 5")
+            .q1("q1")
+            .q2("q2")
+            .q3("q3")
+            .userIntro("Helloguys!")
+            .chName("11111"+i)
+            .build()).commentGroup(1L).commentSorts(1L).commentContext(1L)
+            .rate(5).articleRate(5).build();
+
+            // entity.updateComments(cgroup);
+            // entity.updateImages(imgs);
+            // entity.updateTags(tags);
+
+            arepo.save(entity);
+
+            
+            HashTags hentity = HashTags.builder()
+                                .hashTagName("hashTagName"+i)
+                                .articles(entity)
+                                .build();
+            hrepo.save(hentity);
+            
+        });
     }
+
+
+    @Test
+    public void getAllList(){
+        List<ArticlesList>result = arepo.getList();
+        result.forEach(i -> {
+        ArticleDTO print = ArticleDTO.builder()
+                        .aid(i.getAid())
+                        .atitle(i.getAtitle())
+                        .context(i.updateContextToString(i.getContext()))
+                        .opened(i.isOpend())
+                        .shareable(i.isShareable())
+                        .build();
+        log.info(print);
+        });
+        
+    }
+
 
     @Test
     public void insertAccounts(){
