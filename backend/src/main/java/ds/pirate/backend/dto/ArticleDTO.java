@@ -31,6 +31,8 @@ public class ArticleDTO {
     private boolean shareable;
     private List<String> tags;
 
+    private Long userId;
+
     @Builder.Default
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     private List<ImagesList> images = new ArrayList<>();

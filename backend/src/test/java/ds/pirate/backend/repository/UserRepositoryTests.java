@@ -4,6 +4,7 @@ import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
@@ -47,6 +48,21 @@ public class UserRepositoryTests {
 
     @Autowired
     ArticleService aservice;
+
+
+    @Test
+    public void getbyaid(){
+        ArticlesList result = arepo.getByAid(1L);
+        ArticleDTO dto = aservice.EntityToDTO(result);
+        List<String> hashString =  hrepo.getList(result.getAid())
+                                        .stream()
+                                        .map(hentity -> hentity.getHashTagName())
+                                        .collect(Collectors.toList());
+        dto.setTags(hashString);
+        log.info(dto);
+    }
+
+
 
     @Test
     public void insertArticles(){
@@ -97,7 +113,16 @@ public class UserRepositoryTests {
             
         });
     }
+    
 
+    @Test
+    public void getHList(){
+        List<HashTags> result = hrepo.getList(1L);
+        result.forEach(i->{
+            
+        });
+
+    }
 
     @Test
     public void getAllList(){
@@ -115,21 +140,7 @@ public class UserRepositoryTests {
         
     }
 
-    @Test
-    public void getbyaid(){
-        ArticlesList result = arepo.getByAid(1L);
-        String context = result.updateContextToString(result.getContext());
-        
-        
-        
 
-        
-        
-
-
-        
-
-    }
 
     @Test
     public void insertAccounts(){
