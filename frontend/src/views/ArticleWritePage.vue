@@ -148,7 +148,6 @@ export default {
 			}
 			const body = result
 			await axios.post(url, body, { headers }).then(function (res) {
-				console.log(body);
 				console.log(res);
 			}).catch((e) => {
 				console.log(e + "통신실패");

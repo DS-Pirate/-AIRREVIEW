@@ -5,8 +5,8 @@
         <div class="metadata">
 
         <!-- 제목 -->
-        <div  class="title" >
-            <h1>
+        <div class="title" >
+            <h1 ref="articleTitle">
             제목
             </h1>
         </div>
@@ -14,7 +14,7 @@
 
         <div class="hashAndStar">
         <!-- 해시태그 -->
-          <ul class="hash">
+          <ul class="hash" ref="articleHashs">
             <li>#개발</li>
             <li>#프론트</li>
             <li>#백엔드</li>
@@ -37,16 +37,14 @@
           
           <!-- 내용 -->
           <div class="contentAndButton">
-            <p class="reviewContent clamp">
-              ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
-              <br>
-              ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
+            <div class="reviewContent clamp" ref="articleContext">
+              article context
 
-            </p>
+            </div>
           </div>
 
           <!-- 게시글 쓴 날짜 -->
-          <span class="views">1시간 전</span>
+          <span class="views" ref="articleRegdate">1시간 전</span>
         </div>
 
         <hr>

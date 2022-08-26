@@ -3,6 +3,7 @@ package ds.pirate.backend.repository;
 import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,7 @@ import ds.pirate.backend.entity.HashTags;
 import ds.pirate.backend.entity.ImagesList;
 import ds.pirate.backend.entity.acomments;
 import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.service.ArticleService.ArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -42,6 +44,9 @@ public class UserRepositoryTests {
 
     @Autowired
     HashTagRepository hrepo;
+
+    @Autowired
+    ArticleService aservice;
 
     @Test
     public void insertArticles(){
@@ -110,6 +115,21 @@ public class UserRepositoryTests {
         
     }
 
+    @Test
+    public void getbyaid(){
+        ArticlesList result = arepo.getByAid(1L);
+        String context = result.updateContextToString(result.getContext());
+        
+        
+        
+
+        
+        
+
+
+        
+
+    }
 
     @Test
     public void insertAccounts(){
