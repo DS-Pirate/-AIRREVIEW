@@ -8,16 +8,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ds.pirate.backend.dto.ArticleDTO;
+import ds.pirate.backend.service.ArticleService.ArticleService;
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/article/")
+@RequiredArgsConstructor
 public class ArticleViewController {
     
 
-    @RequestMapping(value = "/read/{aid}", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> articleRead(@ModelAttribute("aid") long aid){
+    private final ArticleService aservice;
 
-        
+    @RequestMapping(value = "/read/{aid}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArticleDTO> articleRead(@ModelAttribute("aid") long aid){
 
-        return new ResponseEntity<>("status", HttpStatus.OK);
+        ArticleDTO result = aservice.getArticleInfoByAid(aid);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

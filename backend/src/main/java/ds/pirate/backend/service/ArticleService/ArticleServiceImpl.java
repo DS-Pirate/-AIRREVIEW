@@ -1,6 +1,7 @@
 package ds.pirate.backend.service.ArticleService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import ds.pirate.backend.dto.ArticleDTO;
@@ -22,9 +23,15 @@ public class ArticleServiceImpl implements ArticleService{
     private final ImageRepository irepo;
 
     @Override
-    public String getArticleInfoByAid(Long aid) {
-        // TODO Auto-generated method stub
-        return null;
+    public ArticleDTO getArticleInfoByAid(Long aid) {
+        ArticlesList result = repo.getByAid(aid);
+        ArticleDTO dto = EntityToDTO(result);
+        List<String> hashString =  hrepo.getList(result.getAid())
+                                        .stream()
+                                        .map(hentity -> hentity.getHashTagName())
+                                        .collect(Collectors.toList());
+        dto.setTags(hashString);
+        return dto;
     }
 
     @Override
@@ -33,11 +40,7 @@ public class ArticleServiceImpl implements ArticleService{
         repo.save(result);
 
         List<ImagesList> lists = dto.getImages();
-        log.info("얘느ㅜㄴ 뭐라찍히냐"+lists);
-        log.info("Tostirng치면 ?"+lists.toString());
         lists.forEach(i->{
-            log.info("아니 얘 왜 값이 없냐"+i.getFileName());
-            
             irepo.save(ImagesList.builder().fileName(i.getFileName()).articles(result).build());
         });
 

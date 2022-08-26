@@ -54,6 +54,7 @@
 // ImageUploader is not implemented yet, it needs making fileserver or db for uploading images
 // It scheduled when backend server developed
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
+import router from "@/router"
 import ClassicEditor from "@ckeditor/ckeditor5-custom"
 import axios from 'axios'
 
@@ -76,7 +77,7 @@ export default {
 					uploadUrl: "api/article/write/image",
 					withCredentials: true,
 					headers: {
-						Authorization: ''
+						Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjE1MjA2NzgsImV4cCI6MTY2NDExMjY3OCwic3ViIjoiMWFhYUBhYWEuY29tIn0.TiUPEslIo4H6jqA8veMalbXSHhChrDbMyu7pgLqHyjU'
 					}
 				}
 
@@ -114,31 +115,26 @@ export default {
 				tags: this.taghistory,
 				opened: this.openable,
 				shareable: this.shareable,
-				token: "",
+				userId: 1,
+				token: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjE1MjA2NzgsImV4cCI6MTY2NDExMjY3OCwic3ViIjoiMWFhYUBhYWEuY29tIn0.TiUPEslIo4H6jqA8veMalbXSHhChrDbMyu7pgLqHyjU",
 				images: []
 			}
-			console.log(page.context);
 
 
 			//find image name where in context
 			function findImageName(list) {
-				let bonmun =list
-				let bonary = []
-				for (let i of bonmun.split("/")) {
-					if (i[0] + i[1] + i[2] == "?fi") {
-						let tmp = i.split("-")
-						tmp[0] = tmp[0].substr(10)
-						tmp[4] = tmp[4].slice(0, tmp[4].indexOf('">'))
-						bonary.push({
-							fileName: tmp.join("-")
-							})
+				let bonary = list.split("/")
+				let filenames = new Array
+				for (let i in bonary) {
+					if (bonary[i].split("-").length == 5) {
+						filenames.push({
+							fileName : bonary[i].slice(0, bonary[i].indexOf('>\n<') - 1)
+						})
 					}
 				}
-				return bonary
+				return filenames
 			}
-
 			page.images = findImageName(page.context)
-			console.log(page.images);
 			/////////////////////////////////////////
 			let result = JSON.stringify(page)
 			const url = "/airreview/api/article/write"
@@ -148,7 +144,8 @@ export default {
 			}
 			const body = result
 			await axios.post(url, body, { headers }).then(function (res) {
-				console.log(res);
+				console.log(res);//글번호들어옴
+				router.push({name : "readReview", params: {"articleId" : res.data}})
 			}).catch((e) => {
 				console.log(e + "통신실패");
 			}).then(

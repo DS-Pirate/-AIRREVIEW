@@ -29,8 +29,5 @@ public class ImagesList {
     @JoinColumn(name = "articles_id", referencedColumnName = "aid")
     private ArticlesList articles;
 
-    @CreatedDate
-    @Column(name="regdate", updatable = false)
-    private LocalDateTime regDate;
 
 }

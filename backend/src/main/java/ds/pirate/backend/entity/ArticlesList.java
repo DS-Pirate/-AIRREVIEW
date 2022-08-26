@@ -33,6 +33,9 @@ public class ArticlesList extends DateEntity{
 
     @Column(nullable = false)
     private boolean shareable;
+
+    @Column(nullable = false)
+    private Long aUser;
     
     // private List<String> tags;
 

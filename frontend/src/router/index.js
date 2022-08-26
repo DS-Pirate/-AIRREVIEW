@@ -60,7 +60,8 @@ const routes = [
   {
     path: '/read',
     name: 'readReview',
-    component: ReadReview
+    component: ReadReview,
+    props: true
   },
 
   {
