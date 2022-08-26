@@ -49,12 +49,6 @@ public class BoardApiContorller {
         return new ResponseEntity<>(aser.addArticle(dto, hashlist), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/write-image", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> imageupload(@RequestBody Object imageInfo) {
-        log.info(imageInfo);
-
-        return null;
-    }
 
     @ResponseBody
     @PostMapping("/write/image")

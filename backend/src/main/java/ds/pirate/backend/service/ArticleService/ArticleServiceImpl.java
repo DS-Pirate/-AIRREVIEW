@@ -1,12 +1,9 @@
 package ds.pirate.backend.service.ArticleService;
 
 import java.util.List;
-import java.util.function.Function;
 
 import org.springframework.stereotype.Service;
-
 import ds.pirate.backend.dto.ArticleDTO;
-import ds.pirate.backend.dto.ImageListDTO;
 import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.HashTags;
 import ds.pirate.backend.entity.ImagesList;
@@ -23,6 +20,13 @@ public class ArticleServiceImpl implements ArticleService{
     private final ArticleRepository repo;
     private final HashTagRepository hrepo;
     private final ImageRepository irepo;
+
+    @Override
+    public String getArticleInfoByAid(Long aid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
     @Override
     public String addArticle(ArticleDTO dto, List<String> tags) {
         ArticlesList result = dtoToEntity(dto);
@@ -46,7 +50,7 @@ public class ArticleServiceImpl implements ArticleService{
 
 
         
-        return "done";
+        return result.getAid().toString();
     }
 }
 

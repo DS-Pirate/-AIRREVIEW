@@ -20,9 +20,11 @@ public interface ArticleRepository extends JpaRepository<ArticlesList,String> {
       )
     Page<ArticlesList> getArticleList(Pageable pageable);
 
-    List<ArticlesList> getByAid(Long aid);
+    ArticlesList getByAid(Long aid);
 
     @Query("select a from ArticlesList a")
     List<ArticlesList> getList();
+
+    
 
 }
