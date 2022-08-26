@@ -77,7 +77,7 @@ export default {
 					uploadUrl: "api/article/write/image",
 					withCredentials: true,
 					headers: {
-						Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjE1MjA2NzgsImV4cCI6MTY2NDExMjY3OCwic3ViIjoiMWFhYUBhYWEuY29tIn0.TiUPEslIo4H6jqA8veMalbXSHhChrDbMyu7pgLqHyjU'
+						Authorization: ''
 					}
 				}
 
@@ -116,7 +116,7 @@ export default {
 				opened: this.openable,
 				shareable: this.shareable,
 				userId: 1,
-				token: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjE1MjA2NzgsImV4cCI6MTY2NDExMjY3OCwic3ViIjoiMWFhYUBhYWEuY29tIn0.TiUPEslIo4H6jqA8veMalbXSHhChrDbMyu7pgLqHyjU",
+				token: "",
 				images: []
 			}
 
