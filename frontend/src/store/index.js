@@ -9,7 +9,9 @@ export default createStore({
   mutations: {
     setArticleId(state, num){
       state.articleId = num
-    }
+      sessionStorage.setItem("aid", num) 
+    },
+
   },
   actions: {
   },

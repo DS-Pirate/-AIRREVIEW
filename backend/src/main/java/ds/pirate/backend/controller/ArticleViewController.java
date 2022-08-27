@@ -1,5 +1,7 @@
 package ds.pirate.backend.controller;
 
+import java.util.HashMap;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.service.ArticleService.ArticleService;
+import ds.pirate.backend.service.UserService.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -19,12 +22,15 @@ public class ArticleViewController {
     
 
     private final ArticleService aservice;
+    private final UserService uservice;
 
     @RequestMapping(value = "/read/{aid}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArticleDTO> articleRead(@ModelAttribute("aid") long aid){
-
-        ArticleDTO result = aservice.getArticleInfoByAid(aid);
-
+    public ResponseEntity<Object> articleRead(@ModelAttribute("aid") long aid){
+        HashMap<String,Object> result = new HashMap<>();
+        ArticleDTO articleInfo = aservice.getArticleInfoByAid(aid);
+        Object userInfo = uservice.getUserInfoByuseridForarticle(articleInfo.getUserId());
+        result.put("articleInfo", articleInfo);
+        result.put("userInfo", userInfo);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

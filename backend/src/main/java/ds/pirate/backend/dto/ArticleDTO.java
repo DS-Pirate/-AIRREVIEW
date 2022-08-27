@@ -1,6 +1,5 @@
 package ds.pirate.backend.dto;
 
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 

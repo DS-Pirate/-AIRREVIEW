@@ -6,7 +6,7 @@
 
         <!-- 제목 -->
         <div class="title" >
-          <h1 ref="title">
+          <h1 ref="reftitle">
             제목
           </h1>
         </div>
@@ -255,39 +255,46 @@
 // @ is an alias to /src
 import Cards from '@/components/MainCards.vue'
 import axios from 'axios'
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 export default {
   name: 'ReadReview',
   components: {
     Cards
   },
-  props: ["articleId"],
-  setup(props) {
+  setup() {
     const store = useStore()
-    let reftitle = ref(null)
-    const articleInfo = reactive({
-      title:reftitle,
-      tags:[],
-      context:"",
-      writer:"",
-      regDate:"",
-    })
-    store.commit("setArticleId", props.articleId)
+    const router = useRouter()
+    const reftitle = ref(null)
+    if(isNaN(sessionStorage.getItem("aid"))){
+      alert("잘못된 접근입니다")
+      router.push("/")
+    }else{
+      store.commit("setArticleId", sessionStorage.getItem("aid"))
+    }
     
-    console.log(props.articleId);
+
     async function getArticleInformation() {
       await axios.get(`/airreview/article/read/${store.state.articleId}`)
         .then(res => {
           console.log(res);
-          console.log(reftitle);
+          /** res.data 
+           * aid
+           * atitle
+           * cgroup
+           * context
+           * shareable
+           * tags
+           * userId
+          */
+          
+          reftitle.value.innerText = res.data.atitle
+          
         }).catch(e => console.log(e))
     }
     getArticleInformation()
-    return {articleInfo}
+    return {reftitle}
   }
 }
 </script>
-
-<style>
-</style>

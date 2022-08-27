@@ -20,4 +20,8 @@ public interface UserRepository extends JpaRepository<airUser, Long>{
     @Query("select u from airUser u where u.eMail=:email and u.auth=:auth ")
     Optional<airUser> findByEmail(String email, boolean auth);
     
+    @Query("select user from airUser user where userid=:userId ")
+    Optional<airUser> findByUserId(Long userId);
+        
+    
 }
