@@ -24,6 +24,7 @@ public class JWTUtil {
                 .compact();
     }
 
+    @SuppressWarnings("rawtypes")
     public String validateAndExtract(String tokenStr) {
         String contentValue = null;
         try {

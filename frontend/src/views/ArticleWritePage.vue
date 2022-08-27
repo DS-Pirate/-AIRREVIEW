@@ -145,6 +145,7 @@ export default {
 			const body = result
 			await axios.post(url, body, { headers }).then(function (res) {
 				console.log(res);//글번호들어옴
+				sessionStorage.setItem("aid", res.data)
 				router.push({name : "readReview", params: {"articleId" : res.data}})
 			}).catch((e) => {
 				console.log(e + "통신실패");

@@ -20,13 +20,13 @@ public class airUserDTO {
     private String airName;
     private LocalDateTime birthDay;
     private int gender;
-    private String auth;
+    private boolean auth;
     private String recentArticles;
     private String q1;
     private String q2;
     private String q3;
     private String userIntro;
-
+    private String roleSet;
     private List<uImagesList> userImg;
     private List<acomments> commentList; 
 

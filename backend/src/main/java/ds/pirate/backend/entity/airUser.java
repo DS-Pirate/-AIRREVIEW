@@ -3,7 +3,6 @@ package ds.pirate.backend.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -60,9 +59,11 @@ public class airUser  extends DateEntity{
     @Builder.Default
     private Set<MemberRole> roleSet = new HashSet<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "airuser", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<uImagesList> userImg = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "airuser", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<acomments> commentList = new ArrayList<>();
 

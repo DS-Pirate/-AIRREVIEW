@@ -5,7 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 
 import java.nio.charset.Charset;
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,12 +38,15 @@ public class ArticlesList extends DateEntity{
     
     // private List<String> tags;
 
+    @Builder.Default
     @OneToMany(mappedBy = "articles", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<HashTags> tags = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "articles", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<ImagesList> images = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "articles", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<acomments> cgroup = new ArrayList<>();
 

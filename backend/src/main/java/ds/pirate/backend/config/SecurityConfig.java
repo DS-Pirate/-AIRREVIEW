@@ -1,8 +1,6 @@
 package ds.pirate.backend.config;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,7 +24,6 @@ import ds.pirate.backend.security.util.JWTUtil;
 @EnableWebSecurity
 @Configuration
 @RequiredArgsConstructor
-@Log4j2
 // By WebSecurityConfigurerAdapter is deprecated, change to Bean type as suggested on spring boot blog site
 // https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
 public class SecurityConfig{

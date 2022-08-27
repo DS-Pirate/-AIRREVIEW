@@ -4,9 +4,6 @@ package ds.pirate.backend.entity;
 import javax.persistence.*;
 
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Builder
