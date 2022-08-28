@@ -1,4 +1,14 @@
 <template>
+    <div>
+        <div class="col-md-12 my-3 w-100">
+            <div class="panel-body">
+                <textarea class="form-control w-100" rows="2" placeholder="댓글을 입력하세요"></textarea>
+                <div class="mar-top clearfix">
+                    <button class="btn btn-sm btn-primary pull-right my-2" type="submit">입력</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div ref="commentList"></div>
 </template>
 <script>
@@ -16,10 +26,10 @@ export default {
         let commentLength = 0
         let commentList = ref(null)
         async function getComments() {
-            function calcStar(num){
-                let tmp=""
-                for(let i = 0; i<num; i++){
-                    tmp+="★"
+            function calcStar(num) {
+                let tmp = ""
+                for (let i = 0; i < num; i++) {
+                    tmp += "★"
                 }
                 return tmp
             }
@@ -29,7 +39,7 @@ export default {
                         let str = "<hr>"
                         for (let i = 0; i < res.data.commentList.length; i++) {
                             str += `
-                            <div class="comment-section w-100 h-100 d-flex justify-content-between gap-2 py-3" style="margin-left:${(res.data.commentList[i].commnetDepth*3)}rem !important; padding-right:${(res.data.commentList[i].commnetDepth*3)}rem !important;">
+                            <div class="comment-section w-100 h-100 d-flex justify-content-between gap-2 py-3" style="margin-left:${(res.data.commentList[i].commnetDepth * 3)}rem !important; padding-right:${(res.data.commentList[i].commnetDepth * 3)}rem !important;">
                                 <div class="comment-profile h-auto d-flex justify-content-center align-items-start">
                                     <img class ="img-fluid comment-profile-img mt-1" src="./images/read/userid/${res.data.commentList[i].userid}" alt="profile">
                                 </div>
@@ -72,10 +82,10 @@ export default {
                                 </div>
                             </div>
                             <hr>`
-                            
+
 
                         }
-                        commentList.value.innerHTML=str
+                        commentList.value.innerHTML = str
 
 
                     }
