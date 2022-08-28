@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import ds.pirate.backend.entity.acomments;
-import ds.pirate.backend.entity.uImagesList;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +26,7 @@ public class airUserDTO {
     private String q3;
     private String userIntro;
     private String roleSet;
-    private List<uImagesList> userImg;
+    private String userImgName;
     private List<acomments> commentList; 
 
 }

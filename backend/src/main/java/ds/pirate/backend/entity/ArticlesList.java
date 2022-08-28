@@ -35,8 +35,6 @@ public class ArticlesList extends DateEntity{
 
     @Column(nullable = false)
     private Long aUser;
-    
-    // private List<String> tags;
 
     @Builder.Default
     @OneToMany(mappedBy = "articles", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)

@@ -1,14 +1,18 @@
 package ds.pirate.backend.service.ArticleService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import ds.pirate.backend.dto.ArticleDTO;
+import ds.pirate.backend.dto.acommentDTO;
 import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.HashTags;
 import ds.pirate.backend.entity.ImagesList;
+import ds.pirate.backend.entity.acomments;
 import ds.pirate.backend.repository.ArticleRepository;
+import ds.pirate.backend.repository.CommentRepository;
 import ds.pirate.backend.repository.HashTagRepository;
 import ds.pirate.backend.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +23,20 @@ public class ArticleServiceImpl implements ArticleService{
     private final ArticleRepository repo;
     private final HashTagRepository hrepo;
     private final ImageRepository irepo;
+    private final CommentRepository crepo;
+    @Override
+    public List<acommentDTO> getCommentListByAid(Long aid) {
+        Optional<List<acomments>> entity = crepo.getListByAid(aid);
+        
+        if (entity.isPresent()){
+            List<acommentDTO> dto = entity.get()
+                                            .stream()
+                                            .map(cmt -> commentEntityToDTO(cmt))
+                                            .collect(Collectors.toList());
+            return dto;
+        }
+        return null;
+    }
 
     @Override
     public ArticleDTO getArticleInfoByAid(Long aid) {

@@ -13,6 +13,21 @@ public interface UserService {
 
     HashMap<String, String> getUserInfoByuseridForarticle(Long userid);
 
+    default airUser dtoToEntity(airUserDTO dto){
+        airUser entity = airUser.builder()
+        .airName(dto.getAirName())
+        .eMail(dto.getEMail())
+        .birthDay(dto.getBirthDay())
+        .gender(dto.getGender())
+        .auth(dto.isAuth())
+        .recentArticles(dto.getRecentArticles())
+        .q1(dto.getQ1())
+        .q2(dto.getQ3())
+        .q3(dto.getQ2())
+        .userIntro(dto.getUserIntro())
+        .build();
+        return entity;
+    }
 
     default airUserDTO entityToDTO(airUser entity){
         airUserDTO dto = airUserDTO.builder()

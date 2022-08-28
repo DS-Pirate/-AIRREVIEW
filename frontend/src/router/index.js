@@ -13,7 +13,7 @@ import Write from "../views/ArticleWritePage.vue"
 import PostListPage from "../views/PostListPage.vue"
 import ReportPage from "../views/ReportPage.vue"
 import RecentPage from "../views/RecentList.vue"
-
+import LogOut from "../views/LogoutPage.vue"
 const routes = [
   {
     path: '/',
@@ -88,6 +88,11 @@ const routes = [
     path: '/recent',
     name: 'recent',
     component: RecentPage
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: LogOut
   }
   // {
   //   path: '/about',

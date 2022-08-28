@@ -3,8 +3,8 @@ package ds.pirate.backend.dto;
 
 
 
-import ds.pirate.backend.entity.ArticlesList;
-import ds.pirate.backend.entity.airUser;
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,14 +15,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class acommentDTO {
-
     private Long cid;
-    private ArticlesList articles; //aid
-    private airUser airuser; // userid
+    private Long aid; //aid
+    private Long userid; // userid
+    private String userName;
+    private String userImgName;
     private Long commentGroup;
     private Long commnetDepth;
     private Long commentSorts;
-    private Long commentContext;
+    private String commentContext;
     private Integer rate; //코멘트 좋아요싫어요
     private Integer articleRate; // 글 별점
+    private LocalDateTime regDate;
 }

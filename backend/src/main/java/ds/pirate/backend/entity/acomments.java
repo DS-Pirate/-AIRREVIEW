@@ -19,11 +19,9 @@ public class acomments extends DateEntity{
     private Long cid;
 
     @ManyToOne
-    @JoinColumn(name = "articles_id", referencedColumnName = "aid")
     private ArticlesList articles;
 
     @ManyToOne
-    @JoinColumn(name = "airuser", referencedColumnName = "userid")
     private airUser airuser;
 
     @Column(nullable = false)
@@ -36,7 +34,7 @@ public class acomments extends DateEntity{
     private Long commentSorts;
 
     @Column(nullable = false)
-    private Long commentContext;
+    private String commentContext;
 
 
 

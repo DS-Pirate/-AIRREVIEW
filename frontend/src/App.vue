@@ -1,6 +1,6 @@
 <template>
-	<div class="content-area container-fluid d-flex justify-content-between p-5 gap-3">
-		<SubNavigationBar class="w-15" />
+	<div class="content-area container-fluid d-flex justify-content-between p-4 gap-3">
+		<SubNavigationBar class="w-15 px-4"/>
 		<div class="routing-section w-85">
 			<div class="routing-header mb-5 mt-4 border-bottom d-flex justify-content-between sticky-top">
 				<form class="searching-area d-flex align-items-center gap-1 w-50" @submit.prevent="searchingAxios">
@@ -11,7 +11,7 @@
 					<router-link to="/login">
 						<li class="list-group-item border-0">Login</li>
 					</router-link>
-					<router-link to="/loout">
+					<router-link to="/logout">
 						<li class="list-group-item border-0">Logout</li>
 					</router-link>
 					<router-link to="/join">

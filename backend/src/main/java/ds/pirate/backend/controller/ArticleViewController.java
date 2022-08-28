@@ -1,7 +1,6 @@
 package ds.pirate.backend.controller;
 
 import java.util.HashMap;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +22,24 @@ public class ArticleViewController {
 
     private final ArticleService aservice;
     private final UserService uservice;
-
     @RequestMapping(value = "/read/{aid}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> articleRead(@ModelAttribute("aid") long aid){
+    public ResponseEntity<Object> articleRead(@ModelAttribute("aid") Long aid){
         HashMap<String,Object> result = new HashMap<>();
         ArticleDTO articleInfo = aservice.getArticleInfoByAid(aid);
         Object userInfo = uservice.getUserInfoByuseridForarticle(articleInfo.getUserId());
         result.put("articleInfo", articleInfo);
         result.put("userInfo", userInfo);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/comment/{aid}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<String, Object>> commentRead(@ModelAttribute("aid") Long aid){
+        HashMap<String, Object> result = new HashMap<>();
+
+        Object commentList = aservice.getCommentListByAid(aid);
+        
+        result.put("commentList", commentList);
+        
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
