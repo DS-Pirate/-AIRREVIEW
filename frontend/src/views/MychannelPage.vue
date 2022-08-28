@@ -12,13 +12,13 @@
 				<li class="list-group-item border border-0" v-on:click="change('channelinfo')">내 정보</li>
 			</ul>
 		</div>
-		<div class="chcategory  p-3 my-3 shadow-sm bg-white d-flex h-50" v-if="(state.form == 'list')">
+		<div class="chcategory  p-3 my-3 shadow-sm bg-white d-flex h-auto" v-if="(state.form == 'list')">
 			<PostList/>
 		</div>
-		<div class="chcategory  p-3 my-3 shadow-sm bg-white d-flex h-50" v-else-if="(state.form == 'category')">
+		<div class="chcategory  p-3 my-3 shadow-sm bg-white d-flex h-auto" v-else-if="(state.form == 'category')">
 			<SubInfo/>
 		</div>
-		<div class="chcategory  p-3 my-3 shadow-sm bg-white d-flex h-50" v-else-if="(state.form == 'channelinfo')">
+		<div class="chcategory  p-3 my-3 shadow-sm bg-white d-flex h-auto" v-else-if="(state.form == 'channelinfo')">
 			<MyInfo/>
 		</div>
 	</channelpage>

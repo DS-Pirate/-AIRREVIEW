@@ -2,10 +2,7 @@ package ds.pirate.backend.entity;
 
 
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Builder
@@ -26,9 +23,5 @@ public class uImagesList {
     @ManyToOne
     @JoinColumn(name = "airuser", referencedColumnName = "userid")
     private airUser airuser;
-
-    @CreatedDate
-    @Column(name="regdate", updatable = false)
-    private LocalDateTime regDate;
 
 }

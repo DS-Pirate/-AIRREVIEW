@@ -1,24 +1,19 @@
 <template>
-  <div class="readReview">
+  <div class="readReview justify-content-between">
     <!-- 게시즐 정보 -->
-    <section class="info">
+    <section class="info w-100">
       <div class="metadata">
 
         <!-- 제목 -->
-        <div class="title" >
-          <h1 ref="reftitle">
-            제목
+        <div class="title">
+          <h1 ref="Iatitle">
           </h1>
         </div>
         <hr>
 
         <div class="hashAndStar">
           <!-- 해시태그 -->
-          <ul class="hash" >
-            <li>#개발</li>
-            <li>#프론트</li>
-            <li>#백엔드</li>
-            <li>#에어리뷰</li>
+          <ul class="hash m-0 p-0 px-1 d-flex align-items-center" ref="Itags">
           </ul>
 
           <!-- 별점  -->
@@ -37,9 +32,7 @@
 
         <!-- 내용 -->
         <div class="contentAndButton">
-          <div class="reviewContent clamp">
-            article context
-
+          <div class="reviewContent clamp" ref="Icontext">
           </div>
         </div>
 
@@ -70,178 +63,28 @@
       <!-- 채널 구독 등 -->
       <div class="channel">
         <div class="metadata">
-          <img src="@/assets/pngwing.com.png" alt="" />
+          <img ref="IuserId" src="@/assets/pngwing.com.png" alt="" />
           <div class="info">
-            <span class="name">동성리뷰단</span>
+            <span class="name" ref="IairName">동성리뷰단</span>
             <span class="subscribers">구독자 1명</span>
           </div>
         </div>
         <button class="btn btn-outline-primary">구독</button>
       </div>
 
-      <!-- 댓글 -->
-      <div class="container bootdey">
-        <div class="col-md-12 bootstrap snippets">
-          <div class="panel">
-            <div class="panel-body">
-              <textarea class="form-control" rows="2" placeholder="댓글을 입력하세요"></textarea>
-              <div class="mar-top clearfix">
-                <button class="btn btn-sm btn-primary pull-right" type="submit"><i class="fa fa-pencil fa-fw"></i>
-                  입력</button>
-                <a class="btn btn-trans btn-icon fa fa-video-camera add-tooltip" href="#"></a>
-                <a class="btn btn-trans btn-icon fa fa-camera add-tooltip" href="#"></a>
-                <a class="btn btn-trans btn-icon fa fa-file add-tooltip" href="#"></a>
-              </div>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="panel-body">
-              <!-- Newsfeed Content -->
-              <!--===================================================-->
-              <div class="media-block">
-                <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture"
-                    src="@/assets/pngwing.com.png"></a>
-                <div class="media-body">
-                  <div class="mar-btm">
-                    <a href="#" class="btn-link text-semibold media-heading box-inline">마도조현</a>
-                    <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> 11 min ago</p>
-                  </div>
-                  대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를 존중함을 기본으로 한다. 대통령의 임기는 5년으로 하며, 중임할 수 없다. 대한민국의 주권은 국민에게 있고, 모든 권력은
-                  국민으로부터 나온다.
-                  <div class="pad-ver">
-                    <div class="btn-group">
-                      <a class="btn btn-sm btn-default btn-hover-success active" href="#"><i
-                          class="fa fa-thumbs-up"></i> 추천 </a>
-                      <a class="btn btn-sm btn-default btn-hover-danger" href="#"><i
-                          class="fa fa-thumbs-down">9.8k</i></a>
-                    </div>
-                    <a class="btn btn-sm btn-default btn-hover-primary" href="#">Comment</a>
-                  </div>
-                  <hr>
-
-                  <!-- Comments -->
-                  <div>
-                    <div class="media-block">
-                      <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture"
-                          src="@/assets/pngwing.com.png"></a>
-                      <div class="media-body">
-                        <div class="mar-btm">
-                          <a href="#" class="btn-link text-semibold media-heading box-inline">선장</a>
-                          <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i>7 min ago</p>
-                        </div>
-                        <p>대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를 존중함을 기본으로 한다. 대통령의 임기는 5년으로 하며, 중임할 수 없다. 대한민국의 주권은 국민에게 있고,
-                          모든 권력은 국민으로부터 나온다.</p>
-                        <div class="pad-ver">
-                          <div class="btn-group">
-                            <a class="btn btn-sm btn-default btn-hover-success active" href="#"><i
-                                class="fa fa-thumbs-up"></i> 추천 </a>
-                            <a class="btn btn-sm btn-default btn-hover-danger" href="#"><i
-                                class="fa fa-thumbs-down"></i></a>
-                          </div>
-                          <a class="btn btn-sm btn-default btn-hover-primary" href="#">Comment</a>
-                        </div>
-                        <hr>
-                      </div>
-                    </div>
-
-                    <div class="media-block">
-                      <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture"
-                          src="@/assets/pngwing.com.png">
-                      </a>
-                      <div class="media-body">
-                        <div class="mar-btm">
-                          <a href="#" class="btn-link text-semibold media-heading box-inline">천사지영</a>
-                          <p class="text-muted text-sm"><i class="fa fa-globe fa-lg"></i> 2 min ago</p>
-                        </div>
-                        <p>모든 국민은 주거의 자유를 침해받지 아니한다. 주거에 대한 압수나 수색을 할 때에는 검사의 신청에 의하여 법관이 발부한 영장을 제시하여야 한다. 대한민국은 통일을
-                          지향하며, 자유민주적 기본질서에 입각한 평화적 통일 정책을 수립하고 이를 추진한다.</p>
-                        <div class="pad-ver">
-                          <div class="btn-group">
-                            <a class="btn btn-sm btn-default btn-hover-success active" href="#"><i
-                                class="fa fa-thumbs-up"></i> 추천 </a>
-                            <a class="btn btn-sm btn-default btn-hover-danger" href="#"><i
-                                class="fa fa-thumbs-down"></i></a>
-                          </div>
-                          <a class="btn btn-sm btn-default btn-hover-primary" href="#">Comment</a>
-                        </div>
-                        <hr>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!--===================================================-->
-              <!-- End Newsfeed Content -->
-
-
-              <!-- Newsfeed Content -->
-              <!--===================================================-->
-              <div class="media-block pad-all">
-                <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture"
-                    src="@/assets/pngwing.com.png"></a>
-                <div class="media-body">
-                  <div class="mar-btm">
-                    <a href="#" class="btn-link text-semibold media-heading box-inline">천재지영</a>
-                    <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i>11 min ago</p>
-                  </div>
-                  <p>이사진 에바예요</p>
-                  <img class="img-responsive thumbnail" src="@/assets/logo.png" alt="Image">
-                  <div class="pad-ver">
-                    <div class="btn-group">
-                      <a class="btn btn-sm btn-default btn-hover-success active" href="#"><i
-                          class="fa fa-thumbs-up"></i> 추천 </a>
-                      <a class="btn btn-sm btn-default btn-hover-danger" href="#"><i class="fa fa-thumbs-down"></i></a>
-                    </div>
-                    <a class="btn btn-sm btn-default btn-hover-primary" href="#">Comment</a>
-                  </div>
-                  <hr>
-
-                  <!-- Comments -->
-                  <div>
-                    <div class="media-block pad-all">
-                      <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture"
-                          src="@/assets/pngwing.com.png"></a>
-                      <div class="media-body">
-                        <div class="mar-btm">
-                          <a href="#" class="btn-link text-semibold media-heading box-inline">해적단 일동</a>
-                          <p class="text-muted text-sm"><i class="fa fa-globe fa-lg"></i>2 min ago</p>
-                        </div>
-                        <p>인정합니다</p>
-                        <div>
-                          <div class="btn-group">
-                            <a class="btn btn-sm btn-default btn-hover-success active" href="#"><i
-                                class="fa fa-thumbs-up"></i> 추천 </a>
-                            <a class="btn btn-sm btn-default btn-hover-danger" href="#"><i
-                                class="fa fa-thumbs-down"></i></a>
-                          </div>
-                          <a class="btn btn-sm btn-default btn-hover-primary" href="#">Comment</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!--===================================================-->
-              <!-- End Newsfeed Content -->
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- add Comment -->
+      <ArticleCommentInput/>
+      <ArticleCommentList></ArticleCommentList>
+        
+      
+      
+      
     </section>
-
-
-
-
-
-
-
-
-
     <!-- 추천 게시글 -->
-    <section class="recommend">
+    <section class="recommend w-15">
       <span class="title">추천 게시글</span>
 
-      <div class="row-cols-1 abc">
+      <div class="row-cols-1  py-4">
         <Cards v-for="i in 32" :key="i" class="col">
           Column
         </Cards>
@@ -257,44 +100,94 @@ import Cards from '@/components/MainCards.vue'
 import axios from 'axios'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
+import ArticleCommentInput from '../components/ArticleCommentInput.vue'
+import ArticleCommentList from '@/components/ArticleCommentList.vue'
 export default {
   name: 'ReadReview',
   components: {
-    Cards
-  },
+    Cards,
+    ArticleCommentInput,
+    ArticleCommentList
+},
   setup() {
-    const store = useStore()
     const router = useRouter()
-    const reftitle = ref(null)
-    if(isNaN(sessionStorage.getItem("aid"))){
+    const Iatitle = ref(null)
+    const Icontext = ref(null)
+    const Ishareable = ref(null)
+    const Itags = ref(null)
+    const IuserId = ref(null)
+    const IairName = ref(null)
+    let commentInfo = ""
+    /** res.data.articleInfo
+     * aid
+     * atitle
+     * cgroup
+     * context
+     * shareable
+     * tags
+     * userId
+    */
+    let articleInfo = null
+
+    /** res.data.userInfo
+     * airName
+     * userIntro
+     * imgSrc(예정)
+     */
+    let userInfo = null
+
+
+
+
+    let id = new URLSearchParams(window.location.search).get('article');
+
+    if (id.length == 0) {
+      errorAndGetBack()
+    }
+
+
+
+    function errorAndGetBack() {
       alert("잘못된 접근입니다")
       router.push("/")
-    }else{
-      store.commit("setArticleId", sessionStorage.getItem("aid"))
     }
-    
 
+    
     async function getArticleInformation() {
-      await axios.get(`/airreview/article/read/${store.state.articleId}`)
+      await axios.get(`/airreview/article/read/${id}`)
         .then(res => {
-          console.log(res);
-          /** res.data 
-           * aid
-           * atitle
-           * cgroup
-           * context
-           * shareable
-           * tags
-           * userId
-          */
-          
-          reftitle.value.innerText = res.data.atitle
-          
-        }).catch(e => console.log(e))
+          articleInfo = res.data.articleInfo
+          userInfo = res.data.userInfo
+          console.log(articleInfo)
+          console.log(userInfo)
+              Iatitle.value.innerText = articleInfo.atitle
+              Icontext.value.innerHTML = articleInfo.context
+              IairName.value.innerText = userInfo.airName
+              let tmp =[]
+              for(let element of articleInfo.tags){
+                tmp.push(`<span>#${element}<span>`)
+              }
+              Itags.value.innerHTML = tmp.join(" ")
+              if(!isNaN(articleInfo.userId)){
+                IuserId.value.src=`./images/read/userid/${articleInfo.userId}`
+              }
+              
+        }).catch(
+          e => {
+            //에러 처리는 더 궁리 필요 
+            if (e.name == "AxiosError") {
+              errorAndGetBack()
+            } else {
+              console.log("loadded!");
+              console.log(e);
+            }
+          }
+        )
     }
     getArticleInformation()
-    return {reftitle}
+    console.log();
+    
+    return { articleInfo, userInfo, commentInfo, id, Iatitle, Icontext, Ishareable, Itags, IuserId, IairName }
   }
 }
 </script>

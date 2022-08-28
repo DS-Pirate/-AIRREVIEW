@@ -1,4 +1,4 @@
-package ds.pirate.backend.repository;
+package ds.pirate.backend.test;
 
 
 import java.time.LocalDateTime;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.HashTags;
+import ds.pirate.backend.entity.acomments;
 import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.entity.uImagesList;
+import ds.pirate.backend.repository.ArticleRepository;
+import ds.pirate.backend.repository.CommentRepository;
+import ds.pirate.backend.repository.HashTagRepository;
+import ds.pirate.backend.repository.UserImageListRepository;
+import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -43,6 +51,11 @@ public class UserRepositoryTests {
     @Autowired
     ArticleService aservice;
 
+    @Autowired
+    CommentRepository crepo;
+
+    @Autowired
+    UserImageListRepository uimgrepo;
 
     @Test
     public void getbyaid(){
@@ -62,57 +75,6 @@ public class UserRepositoryTests {
         log.info(result.get().getAirName());
     }
 
-
-    // @Test
-    // public void insertArticles(){
-    //     IntStream.rangeClosed(1, 10).forEach(i->{
-    //         ArticlesList entity = ArticlesList.builder()
-    //                                 .atitle(i+"번글")
-    //                                 .context((i+"번글 내용").getBytes())
-    //                                 .opend(false)
-    //                                 .shareable(false)
-    //                                 .build();
-
-
-    //         HashTags tags = HashTags.builder()
-    //                                 .hashTagName(i+"tagname")
-    //                                 .articles(entity)
-    //                                 .build();
-            
-    //         ImagesList imgs = ImagesList.builder().fileName(i+"fileName").idx(1).articles(entity).build();
-
-    //         acomments cgroup = acomments.builder().articles(entity)
-    //         .airuser(airUser.builder().passwd(encoder.encode("1234"))
-    //         .eMail(i+"aaa@aaa.com")
-    //         .airName("airName"+i)
-    //         .birthDay(LocalDateTime.now())
-    //         .gender(1)
-    //         .auth(false)
-    //         .recentArticles("1, 2, 3, 4, 5")
-    //         .q1("q1")
-    //         .q2("q2")
-    //         .q3("q3")
-    //         .userIntro("Helloguys!")
-    //         .chName("11111"+i)
-    //         .build()).commentGroup(1L).commentSorts(1L).commentContext(1L)
-    //         .rate(5).articleRate(5).build();
-
-    //         // entity.updateComments(cgroup);
-    //         // entity.updateImages(imgs);
-    //         // entity.updateTags(tags);
-
-    //         arepo.save(entity);
-
-            
-    //         HashTags hentity = HashTags.builder()
-    //                             .hashTagName("hashTagName"+i)
-    //                             .articles(entity)
-    //                             .build();
-    //         hrepo.save(hentity);
-            
-    //     });
-    // }
-    
 
     @Test
     public void getHList(){
@@ -185,4 +147,52 @@ public class UserRepositoryTests {
         });
     }
 
+    @Test
+    public void insertcomment(){
+        ArticlesList aid = ArticlesList.builder().aid(1L).build();
+        airUser userid = airUser.builder().userid(1L).build();
+        acomments entity = acomments.builder()
+        .articles(aid)
+        .airuser(userid)
+        .commentGroup(1L)
+        .commnetDepth(0L)
+        .commentSorts(0L)
+        .commentContext("가나다라마바사아자차카타파하")
+        .rate(5)
+        .articleRate(3)
+        .build();
+        crepo.save(entity);
+    }
+
+    
+    @Test
+    public void insertcommentTwo(){
+        LongStream.rangeClosed(1L, 5L).forEach(i->{
+            ArticlesList aid = ArticlesList.builder().aid(1L).build();
+            airUser userid = airUser.builder().userid(1L).build();
+            acomments entity = acomments.builder()
+            .articles(aid)
+            .airuser(userid)
+            .commentGroup(i)
+            .commnetDepth(0L)
+            .commentSorts(0L)
+            .commentContext("가나다라마바사아자차카타파하")
+            .rate(3)
+            .articleRate(4)
+            .build();
+            crepo.save(entity);
+        });
+
+    }
+
+
+    @Test
+    public void insertulImage(){
+        airUser userid = airUser.builder().userid(1L).build();
+        uImagesList ulid = uImagesList.builder()
+        .airuser(userid)
+        .fileName("29a0f4f1-3882-4b3d-9641-0e71751842d7.png")
+        .build();
+        uimgrepo.save(ulid);
+    }
 }

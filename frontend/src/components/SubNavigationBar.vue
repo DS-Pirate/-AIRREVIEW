@@ -1,5 +1,5 @@
 <template>
-	<subNav>
+	<div class="subnav">
 		<div class="navbar container-fluid d-flex flex-column justify-content-center align-items-start sticky-top">
 			<section class="navlogo">
 				<router-link to="/"><h1 class="mb-5 fw-bold my-2">AIR 
@@ -43,7 +43,7 @@
 			</div>
 		</div>
 		<SubscribeOffcanvas />
-	</subNav>
+	</div>
 </template>
 <script>
 import SubscribeOffcanvas from './SubscribeOffcanvas.vue';
