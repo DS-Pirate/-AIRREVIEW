@@ -73,7 +73,6 @@
       </div>
 
       <!-- add Comment -->
-      <ArticleCommentInput/>
       <ArticleCommentList></ArticleCommentList>
         
       
@@ -100,13 +99,11 @@ import Cards from '@/components/MainCards.vue'
 import axios from 'axios'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import ArticleCommentInput from '../components/ArticleCommentInput.vue'
 import ArticleCommentList from '@/components/ArticleCommentList.vue'
 export default {
   name: 'ReadReview',
   components: {
     Cards,
-    ArticleCommentInput,
     ArticleCommentList
 },
   setup() {
@@ -156,6 +153,7 @@ export default {
     async function getArticleInformation() {
       await axios.get(`/airreview/article/read/${id}`)
         .then(res => {
+          console.log(res);
           articleInfo = res.data.articleInfo
           userInfo = res.data.userInfo
           console.log(articleInfo)

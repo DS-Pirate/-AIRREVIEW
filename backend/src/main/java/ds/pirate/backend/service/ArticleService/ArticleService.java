@@ -15,6 +15,7 @@ public interface ArticleService {
 
     ArticleDTO getArticleInfoByAid(Long aid);
     List<acommentDTO> getCommentListByAid(Long aid);
+    Long addNewComment(acommentDTO dto);
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {
         ArticlesList aentity = ArticlesList.builder()

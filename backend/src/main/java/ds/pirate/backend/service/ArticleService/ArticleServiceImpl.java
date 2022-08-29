@@ -11,10 +11,12 @@ import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.HashTags;
 import ds.pirate.backend.entity.ImagesList;
 import ds.pirate.backend.entity.acomments;
+import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.repository.ArticleRepository;
 import ds.pirate.backend.repository.CommentRepository;
 import ds.pirate.backend.repository.HashTagRepository;
 import ds.pirate.backend.repository.ImageRepository;
+import ds.pirate.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,6 +26,24 @@ public class ArticleServiceImpl implements ArticleService{
     private final HashTagRepository hrepo;
     private final ImageRepository irepo;
     private final CommentRepository crepo;
+    private final UserRepository urepo;
+
+    @Override
+    public Long addNewComment(acommentDTO dto) {
+        Optional<airUser> result = urepo.findByEmail(dto.getEmail());
+        dto.setCommentGroup(dto.getCommentGroup()+1);
+        dto.setCommnetDepth(0L);
+        dto.setCommentSorts(0L);
+        dto.setUserid(result.get().getUserid());
+        dto.setRate(0);
+        
+        
+        acomments entity = commentDTOtoEntity(dto);
+        
+        crepo.save(entity);
+        return entity.getCid();
+    }
+
     @Override
     public List<acommentDTO> getCommentListByAid(Long aid) {
         Optional<List<acomments>> entity = crepo.getListByAid(aid);

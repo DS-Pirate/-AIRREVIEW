@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import ds.pirate.backend.dto.ArticleDTO;
+import ds.pirate.backend.dto.acommentDTO;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -57,5 +58,11 @@ public class BoardApiContorller {
         
         log.info(paramMap);
         return paramMap;
+    }
+
+    @RequestMapping(value = "/comment/add/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> addComment(@RequestBody acommentDTO dto){
+        Long result = aser.addNewComment(dto);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

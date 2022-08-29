@@ -18,6 +18,7 @@ public class acommentDTO {
     private Long cid;
     private Long aid; //aid
     private Long userid; // userid
+    private String email;
     private String userName;
     private String userImgName;
     private Long commentGroup;
