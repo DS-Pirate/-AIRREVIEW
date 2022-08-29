@@ -153,6 +153,7 @@ export default {
     async function getArticleInformation() {
       await axios.get(`/airreview/article/read/${id}`)
         .then(res => {
+          console.log(res);
           articleInfo = res.data.articleInfo
           userInfo = res.data.userInfo
           console.log(articleInfo)

@@ -47,8 +47,8 @@ public class BoardApiContorller {
     public Map<String, Object> uploadImage(@RequestParam Map<String, Object> paramMap, MultipartRequest request)
             throws Exception {
         MultipartFile uploadFile = request.getFile("upload");
-        // String uploadDir = "c:\\testingimage\\"; //windows 일경우 이 경로 사용
-        String uploadDir = "/Users/hyunseokbyun/Documents/Imagefiles/";
+        String uploadDir = "c:\\testingimage\\"; //windows 일경우 이 경로 사용
+        // String uploadDir = "/Users/hyunseokbyun/Documents/Imagefiles/";
         String uploadId = UUID.randomUUID().toString() + "."
                 + FilenameUtils.getExtension(uploadFile.getOriginalFilename());
         log.info("cccccccccccccccccccccccccccccccccccccc"+ uploadId);

@@ -2,9 +2,9 @@
     <div>
         <div class="col-md-12 my-3 w-100">
             <div class="panel-body">
-                <textarea class="form-control w-100" rows="2" placeholder="댓글을 입력하세요"></textarea>
+                <textarea class="form-control w-100" rows="2" ref="commentContext" placeholder="댓글을 입력하세요"></textarea>
                 <div class="mar-top clearfix">
-                    <button class="btn btn-sm btn-primary pull-right my-2" type="submit">입력</button>
+                    <button class="btn btn-sm btn-primary pull-right my-2" type="submit" @click="addcomment">입력</button>
                 </div>
             </div>
         </div>
@@ -14,6 +14,7 @@
 <script>
 import axios from 'axios'
 import { ref } from 'vue'
+import { useStore} from 'vuex'
 
 export default {
 
@@ -25,6 +26,8 @@ export default {
         let comments = []
         let commentLength = 0
         let commentList = ref(null)
+        const store = useStore()
+
         async function getComments() {
             function calcStar(num) {
                 let tmp = ""
@@ -37,9 +40,13 @@ export default {
                 .then(
                     res => {
                         let str = "<hr>"
+                        let counter = 0
                         for (let i = 0; i < res.data.commentList.length; i++) {
+                            counter++
                             str += `
-                            <div class="comment-section w-100 h-100 d-flex justify-content-between gap-2 py-3" style="margin-left:${(res.data.commentList[i].commnetDepth * 3)}rem !important; padding-right:${(res.data.commentList[i].commnetDepth * 3)}rem !important;">
+                            <div class="comment-section w-100 h-100 d-flex justify-content-between gap-2 py-3" style="margin-left:${(res.data.commentList[i].commnetDepth * 3)}rem !important; padding-right:${(res.data.commentList[i].commnetDepth * 3)}rem !important;"
+                            data-cgroup="${res.data.commentList[i].commentgroup}" data-cdepth="${res.data.commentList[i].commnetDepth}" data-csorts="${res.data.commentList[i].commentSorts}" 
+                            ref="cinfo">
                                 <div class="comment-profile h-auto d-flex justify-content-center align-items-start">
                                     <img class ="img-fluid comment-profile-img mt-1" src="./images/read/userid/${res.data.commentList[i].userid}" alt="profile">
                                 </div>
@@ -51,7 +58,7 @@ export default {
                                                 ${res.data.commentList[i].userName}
                                             </span>
                                             <span class="comment-content-userinfo-left_date text-secondary" style="font-size:0.75rem;">
-                                                [3일 전]
+                                                [3일 전]${res.data.commentList[i].regDate}
                                             </span>
                                         </div>
                                         <div class="comment-content-userinfo-right">
@@ -72,7 +79,7 @@ export default {
                                             추천
                                         </button>
                                         <span class="comment-content-functions_commentrate d-flex justify-content-center align-items-center">
-                                            ${res.data.commentList[i].rate}
+                                            ${`${res.data.commentList[i].rate>0?"+":"-"}`+res.data.commentList[i].rate}
                                         </span>
                                         <button class="comment-content-functions_rereplybtn bg-white" style="cursor:pointer;">
                                             Comment
@@ -83,18 +90,36 @@ export default {
                             </div>
                             <hr>`
 
-
+                            if(counter == res.data.commentList.length){
+                                store.commit("setcLatestcGroup", group)
+                            }
                         }
                         commentList.value.innerHTML = str
-
-
+                        console.log(group);
+                        store.commit("setcLatestcGroup", group)
+                        
                     }
                 ).catch(
                     e => console.log(e)
                 )
         }
+            // token: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjE3Mjk2NzQsImV4cCI6MTY2NDMyMTY3NCwic3ViIjoiMWFhYUBhYWEuY29tIn0.P8R4k2E_lDzWVvS_0OoHhRyEEzpJwymWe4RX_dRuEO0",
+			// const headers = {
+			// 	"Content-Type": "application/json; charset=utf-8",
+			// 	"token": token, "Authorization": token
+			// }
+
+            async function addcomment(){
+                // let body = {
+                //     //state.email에서 끌고와야함
+                //     email : "1aaa@aaa.com",
+
+                // }
+                axios.post("api/comment/add",  )
+            }
+        
         getComments()
-        return { cardCnt, comments, commentLength, commentList }
+        return { cardCnt, comments, commentLength, commentList, addcomment, }
     }
 }
 </script>
