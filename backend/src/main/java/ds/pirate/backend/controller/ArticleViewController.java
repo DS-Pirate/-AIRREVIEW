@@ -5,16 +5,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.pirate.backend.dto.ArticleDTO;
-import ds.pirate.backend.dto.acommentDTO;
+
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import ds.pirate.backend.service.UserService.UserService;
 import lombok.RequiredArgsConstructor;
+
+
 
 @RestController
 @RequestMapping("/article/")
@@ -44,10 +45,5 @@ public class ArticleViewController {
         
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-    @RequestMapping(value = "/api/comment/add/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addComment(@RequestBody acommentDTO dto){
-        
 
-        return null;
-    }
 }
