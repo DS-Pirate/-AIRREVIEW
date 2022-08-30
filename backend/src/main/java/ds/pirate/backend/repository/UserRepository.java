@@ -22,6 +22,6 @@ public interface UserRepository extends JpaRepository<airUser, Long>{
     
     @Query("select user from airUser user where userid=:userId ")
     Optional<airUser> findByUserId(Long userId);
-        
-    
+
+
 }
