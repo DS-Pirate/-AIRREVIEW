@@ -23,21 +23,21 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.acommentDTO;
+import ds.pirate.backend.dto.acommentRateDTO;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @RestController
-@Log4j2
 @RequestMapping("/api/article")
 @RequiredArgsConstructor
+@Log4j2
 public class BoardApiContorller {
 
     private final ArticleService aser;
 
     @RequestMapping(value = "/write", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> register(@RequestBody ArticleDTO dto) {
-        log.info("write dto is cominggggggggggggggggggggg" + dto);
         List<String> hashlist = dto.getTags();
         return new ResponseEntity<>(aser.addArticle(dto, hashlist), HttpStatus.OK);
     }
@@ -52,11 +52,9 @@ public class BoardApiContorller {
         String uploadDir = "/Users/hyunseokbyun/Documents/Imagefiles/";
         String uploadId = UUID.randomUUID().toString() + "."
                 + FilenameUtils.getExtension(uploadFile.getOriginalFilename());
-        log.info("cccccccccccccccccccccccccccccccccccccc"+ uploadId);
         uploadFile.transferTo(new File(uploadDir + uploadId));
         paramMap.put("url", "/airreview/images/read/"+uploadId);
         
-        log.info(paramMap);
         return paramMap;
     }
 
@@ -64,5 +62,11 @@ public class BoardApiContorller {
     public ResponseEntity<Long> addComment(@RequestBody acommentDTO dto){
         Long result = aser.addNewComment(dto);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/comment/add/plusrate/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> ratingComment(@RequestBody acommentRateDTO dto){
+        log.info(" ㅇㅋ 잘 들어옴 " +  dto);
+        return new ResponseEntity<>(1L, HttpStatus.OK);
     }
 }
