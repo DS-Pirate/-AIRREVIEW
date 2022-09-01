@@ -45,6 +45,22 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     @Override
+    public Long addNewCommentReply(acommentDTO dto) {
+        Optional<airUser> result = urepo.findByEmail(dto.getEmail());
+        dto.setCommentGroup(dto.getCommentGroup());
+        dto.setCommnetDepth(dto.getCommnetDepth());
+        dto.setCommentSorts(dto.getCommentSorts());
+        dto.setUserid(result.get().getUserid());
+        dto.setRate(0);
+        
+        
+        acomments entity = commentDTOtoEntity(dto);
+        
+        crepo.save(entity);
+        return entity.getCid();
+    }
+
+    @Override
     public List<acommentDTO> getCommentListByAid(Long aid) {
         Optional<List<acomments>> entity = crepo.getListByAid(aid);
         

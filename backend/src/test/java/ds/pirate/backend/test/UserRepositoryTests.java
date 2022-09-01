@@ -66,13 +66,11 @@ public class UserRepositoryTests {
                                         .map(hentity -> hentity.getHashTagName())
                                         .collect(Collectors.toList());
         dto.setTags(hashString);
-        log.info(dto);
     }
 
     @Test
     public void getUserInfoByuserId(){
         Optional<airUser>result = urepo.findByUserId(1L);
-        log.info(result.get().getAirName());
     }
 
 
@@ -96,7 +94,6 @@ public class UserRepositoryTests {
                         .opened(i.isOpend())
                         .shareable(i.isShareable())
                         .build();
-        log.info(print);
         });
         
     }

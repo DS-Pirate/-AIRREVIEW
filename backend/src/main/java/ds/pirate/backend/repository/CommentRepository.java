@@ -12,6 +12,10 @@ import ds.pirate.backend.entity.acomments;
 public interface CommentRepository extends JpaRepository<acomments, Long>{
     
 
-    @Query("select ct from acomments ct where articles_aid=:aid order by comment_group")
+    @Query("SELECT ct FROM acomments ct WHERE articles_aid=:aid ORDER BY comment_group asc, comment_sorts asc, commnet_depth desc")
     Optional<List<acomments>> getListByAid(Long aid);
+
+
+//     @Query(value="SELECT * FROM acomments ct WHERE articles_aid=:aid ORDER BY comment_group desc, comment_sorts desc, comment_depth", nativeQuery = true)
+//     Optional<List<acomments>> getListByAid(Long aid);
 }
