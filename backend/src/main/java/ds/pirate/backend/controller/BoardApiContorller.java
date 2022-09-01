@@ -64,6 +64,13 @@ public class BoardApiContorller {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/comment/add/reply", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> addCommentReply(@RequestBody acommentDTO dto){
+        Long result = aser.addNewCommentReply(dto);
+        log.info(dto);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/comment/add/plusrate/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Long> ratingComment(@RequestBody acommentRateDTO dto){
         log.info(" ㅇㅋ 잘 들어옴 " +  dto);

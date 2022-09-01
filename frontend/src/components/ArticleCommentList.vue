@@ -4,7 +4,7 @@
             <div class="panel-body">
                 <textarea class="form-control w-100" rows="2" ref="commentcontext" placeholder="댓글을 입력하세요"></textarea>
                 <div class="mar-top clearfix">
-                    <button class="btn btn-sm btn-primary pull-right my-2" type="submit" @click="addNewcomment">입력</button>
+                    <button class="btn btn-sm btn-primary pull-right my-2" type="button" @click="addNewcomment">입력</button>
                 </div>
             </div>
         </div>
@@ -16,9 +16,9 @@ import axios from 'axios'
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import router from '@/router'
 
 export default {
-
     name: "CommentList",
     props: ["comment"],
     setup() {
@@ -46,13 +46,14 @@ export default {
                         let counter = 0
                         for (let i = 0; i < res.data.commentList.length; i++) {
                             counter++
-                            // console.log(res.data.commentList[i].commentGroup);
+                            //<img class ="img-fluid comment-profile-img mt-1" src="./images/read/userid/${res.data.commentList[i].userid}" alt="profile"> 나중에 프로필사진에 첨부
                             str += `
                             <div class="comment-section w-100 h-100 d-flex justify-content-between gap-2 py-3" style="margin-left:${(res.data.commentList[i].commnetDepth * 3)}rem !important; padding-right:${(res.data.commentList[i].commnetDepth * 3)}rem !important;"
                             data-cgroup="${res.data.commentList[i].commentGroup}" data-cdepth="${res.data.commentList[i].commnetDepth}" data-csorts="${res.data.commentList[i].commentSorts}" 
                             ref="cinfo">
                                 <div class="comment-profile h-auto d-flex justify-content-center align-items-start">
-                                    <img class ="img-fluid comment-profile-img mt-1" src="./images/read/userid/${res.data.commentList[i].userid}" alt="profile">
+                                    <img class ="img-fluid comment-profile-img mt-1" src="https://lh3.googleusercontent.com/a-/AFdZucqQDxMr6ZKaN-SnomfpYB8OZgFsFib8qYR3mVVW2g=s83-c-mo" alt="profile">
+                                    
                                 </div>
 
                                 <div class="comment-content w-95">
@@ -89,15 +90,16 @@ export default {
                                             답글
                                         </button>                                        
                                     </div>
-                                    <div class="collapse" id="commentreply${i}">
-                                        <div class="input-class h-75">
-                                            <input type="text" class="form-control">
+                                    <form>
+                                        <div class="collapse" id="commentreply${i}">
+                                            <div class="input-class h-75">
+                                                <input id="rereply${i}" type="text" class="form-control">
+                                            </div>
+                                            <div class="input-btn-class h-25 py-1 w-100 d-flex justify-content-end">
+                                                <custominput class="btn btn-primary replyReplySubmit" style="cursor:pointer;" data-g="${res.data.commentList[i].commentGroup}" data-d="${res.data.commentList[i].commnetDepth+1}" data-s="${res.data.commentList[i].commentSorts+1}" type="button">
+                                            </div>
                                         </div>
-                                        <div class="input-btn-class h-25 py-1 w-100 d-flex justify-content-end">
-                                            <input class="btn btn-primary" type="button" value="입력">
-                                        </div>
-                                    </div>
-                                    <h1 id="testingh1" ref="testingh1" data-g="${res.data.commentList[i].commentGroup}" data-d="${res.data.commentList[i].commnetDepth}" data-s="${res.data.commentList[i].commentSorts}">도레미파솔라시도</h1>
+                                    </form>
 
                                 </div>
                             </div>
@@ -111,7 +113,6 @@ export default {
                             }
                         }
                         commentList.value.innerHTML = str
-                        // console.log(store.state.latestcGroup);
 
                     }
                 ).catch(
@@ -142,21 +143,20 @@ export default {
             )
         }
 
-
         getComments()
-
         return { cardCnt, comments, commentLength, commentList, addNewcomment, commentcontext}
     }
 }
-
-window.onload = function () {
-    let result = document.getElementById("testingh1")
-    result.addEventListener("click", addReplyComment)
-    async function addReplyComment() {
-            
-            let commentGroup = result.dataset.g
-            let commnetDepth = result.dataset.d
-            let commentSorts = result.dataset.s
+    //쓰기싫었지만 어쩔수없음 흑흑..
+    window.onload = function () {
+    let result = document.getElementsByTagName("custominput")
+    for (let i = 0; i < result.length; i++) {
+        result[i].onclick = async() => {
+            console.log(result[i]);
+            console.log(result[i].dataset);
+            let tmpcommentGroup = result[i].dataset.g
+            let tmpcommnetDepth = result[i].dataset.d
+            let tmpcommentSorts = result[i].dataset.s
             const headers = {
                 "Content-Type": "application/json; charset=utf-8",
                 "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
@@ -165,20 +165,21 @@ window.onload = function () {
                 //state.email에서 끌고와야함
                 email: "1aaa@aaa.com",
                 aid: new URLSearchParams(window.location.search).get('article'),
-                commentGroup: commentGroup,
-                commnetDepth: commnetDepth,
-                commentSorts: commentSorts
-
-
+                commentGroup: tmpcommentGroup,
+                commnetDepth: tmpcommnetDepth,
+                commentSorts: tmpcommentSorts,
+                commentContext: document.getElementById(`rereply${i}`).value
             }
-            axios.post("./api/article/comment/add/", body, { headers }).then(
-                res=>console.log("신호 나이이스",res).catch(e=>console.log(e)),
-                location.reload()
-                
-            )
+            await axios.post("./api/article/comment/add/reply", body, { headers })
+            .then(res=>console.log("대댓들어간다아아아",res))
+            .catch(e=>console.log(e))
+            
+            router.go(0)
         }
+    }
+    
 
-} 
+}
 
 </script>
 
