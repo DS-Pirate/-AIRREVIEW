@@ -22,7 +22,6 @@ public class acommentRate extends DateEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long crid;
     
-    @Column(nullable = false)
     private Integer rate;
 
     @Column(nullable = false)
