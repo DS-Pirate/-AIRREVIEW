@@ -35,6 +35,10 @@ public class ArticleServiceImpl implements ArticleService{
     private final UserRepository urepo;
 
     @Override
+    public Double getArticleAvgRating(Long aid) { 
+        return crepo.getAvgByAid(aid);
+    }
+    @Override
     public String rateupComment(acommentRateDTO dto) {
         acomments result = crepo.getCommentByCidAndUserid(dto.getCid(), dto.getUserid()).get();
         acommentDTO cdto = commentEntityToDTO(result);

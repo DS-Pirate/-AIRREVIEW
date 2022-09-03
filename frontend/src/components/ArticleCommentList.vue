@@ -37,7 +37,7 @@ export default {
         let commentcontext = ref(null)
         const store = useStore()
         const router = useRouter()
-        let articleRating = ref(5)
+        let articleRating = ref(0)
 
         function clicked(i){
             this.articleRating = i+1

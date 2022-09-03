@@ -19,7 +19,7 @@ public interface ArticleService {
     Long addNewComment(acommentDTO dto);
     Long addNewCommentReply(acommentDTO dto);
     String rateupComment(acommentRateDTO dto);
-
+    Double getArticleAvgRating(Long aid);
     default ArticlesList dtoToEntity(ArticleDTO dto) {
         ArticlesList aentity = ArticlesList.builder()
                 .atitle(dto.getAtitle())

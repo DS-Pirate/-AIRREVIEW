@@ -29,9 +29,12 @@ public class ArticleViewController {
     public ResponseEntity<Object> articleRead(@ModelAttribute("aid") Long aid){
         HashMap<String,Object> result = new HashMap<>();
         ArticleDTO articleInfo = aservice.getArticleInfoByAid(aid);
+        Double AVGRate = aservice.getArticleAvgRating(aid);
         Object userInfo = uservice.getUserInfoByuseridForarticle(articleInfo.getUserId());
+
         result.put("articleInfo", articleInfo);
         result.put("userInfo", userInfo);
+        result.put("articleAVG", AVGRate);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
