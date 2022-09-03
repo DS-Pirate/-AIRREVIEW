@@ -5,6 +5,7 @@ import java.util.List;
 import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.HashTagDTO;
 import ds.pirate.backend.dto.acommentDTO;
+import ds.pirate.backend.dto.acommentRateDTO;
 import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.HashTags;
 import ds.pirate.backend.entity.acomments;
@@ -16,7 +17,8 @@ public interface ArticleService {
     ArticleDTO getArticleInfoByAid(Long aid);
     List<acommentDTO> getCommentListByAid(Long aid);
     Long addNewComment(acommentDTO dto);
-    public Long addNewCommentReply(acommentDTO dto);
+    Long addNewCommentReply(acommentDTO dto);
+    String rateupComment(acommentRateDTO dto);
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {
         ArticlesList aentity = ArticlesList.builder()
@@ -71,7 +73,7 @@ public interface ArticleService {
         .commentSorts(entity.getCommentSorts())
         .commentContext(entity.getCommentContext())
         .rate(entity.getRate())
-        .articleRate(entity.getRate())
+        .articleRate(entity.getArticleRate())
         .regDate(entity.getRegDate())
         .build();
         return dto;
@@ -82,6 +84,7 @@ public interface ArticleService {
         ArticlesList aid = ArticlesList.builder().aid(dto.getAid()).build();
         airUser userid = airUser.builder().userid(dto.getUserid()).build();
         acomments entity = acomments.builder()
+        .cid(dto.getCid())
         .articles(aid)
         .airuser(userid)
         .commentGroup(dto.getCommentGroup())
@@ -89,7 +92,7 @@ public interface ArticleService {
         .commentSorts(dto.getCommentSorts())
         .commentContext(dto.getCommentContext())
         .rate(dto.getRate())
-        .articleRate(dto.getRate())
+        .articleRate(dto.getArticleRate())
         .build();
         return entity;
     }

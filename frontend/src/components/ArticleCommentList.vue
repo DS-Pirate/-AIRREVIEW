@@ -83,9 +83,11 @@ export default {
                                         <button class="comment-content-functions_upbtn btn btn-outline-dark border border-1">
                                             추천
                                         </button>
-                                        <span class="comment-content-functions_commentrate d-flex justify-content-center align-items-center">
-                                            ${`${res.data.commentList[i].rate >= 0 ? "+" : "-"}` + res.data.commentList[i].rate}
-                                        </span>
+                                        <div class="comment-content-functions d-flex justify-content-center align-items-center gap-2 border border-1 p-1 px-2">
+                                            <rateup class="bi bi-hand-thumbs-up" style="cursor:pointer;" data-c="${res.data.commentList[i].cid}"></rateup>
+                                            ${res.data.commentList[i].rate}
+                                            <ratedwon class="bi bi-hand-thumbs-down" style="cursor:pointer;" data-c="${res.data.commentList[i].cid}"></ratedown>
+                                        </div>
                                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#commentreply${i}" aria-expanded="false" aria-controls="commentreply${i}">
                                             답글
                                         </button>                                        
@@ -106,10 +108,7 @@ export default {
                             <hr>`
 
                             if (counter == res.data.commentList.length) {
-                                console.log(counter);
-                                console.log(res.data.commentList.length);
                                 store.commit("setcLatestcGroup", res.data.commentList[i].commentGroup)
-                                console.log("store" + store.state.latestcGroup);
                             }
                         }
                         commentList.value.innerHTML = str
@@ -132,8 +131,8 @@ export default {
                 aid: id,
                 commentGroup: store.state.latestcGroup,
                 commentContext: commentcontext.value.value,
-                commentSorts: 0
-
+                commentSorts: 0,
+                articleRate: 1
 
             }
             axios.post("./api/article/comment/add/", body, { headers }).then(
@@ -152,7 +151,7 @@ export default {
     let result = document.getElementsByTagName("custominput")
     for (let i = 0; i < result.length; i++) {
         result[i].onclick = async() => {
-            console.log(result[i]);
+            console.log(result[i]); 
             console.log(result[i].dataset);
             let tmpcommentGroup = result[i].dataset.g
             let tmpcommnetDepth = result[i].dataset.d
@@ -177,6 +176,58 @@ export default {
             router.go(0)
         }
     }
+
+    //쓰기싫었지만 어쩔수없음2 흑흑..
+    let rateup = document.getElementsByTagName("rateup")
+    for (let i = 0; i < result.length; i++) {
+        rateup[i].onclick = async() => {
+            console.log(rateup[i]);
+            console.log(rateup[i].dataset);
+            let tmpCommentid=rateup[i].dataset.c;
+            let tmpUserid=1
+
+            const headers = {
+                "Content-Type": "application/json; charset=utf-8",
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+            }
+            let body = {
+                //state.email에서 끌고와야함
+                userid : tmpUserid,
+                cid : tmpCommentid,
+                updown: 1
+            }
+            await axios.post("./api/article/comment/add/rating/", body, { headers })
+            .then(res=>console.log("레이팅들어간다아아아아",res))
+            .catch(e=>console.log(e)) 
+        }
+    }
+        //쓰기싫었지만 어쩔수없음3 흑흑..
+    let rateDown = document.getElementsByTagName("ratedwon")
+    for (let i = 0; i < result.length; i++) {
+        rateDown[i].onclick = async() => {
+            console.log(rateDown[i]);
+            console.log(rateDown[i].dataset);
+            let tmpCommentid=rateDown[i].dataset.c;
+            let tmpUserid=1
+
+            const headers = {
+                "Content-Type": "application/json; charset=utf-8",
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+            }
+            let body = {
+                //state.email에서 끌고와야함
+                userid : tmpUserid,
+                cid : tmpCommentid,
+                updown: -1
+            }
+            await axios.post("./api/article/comment/add/rating/", body, { headers })
+            .then(res=>console.log("레이팅들어간다아아아아",res))
+            .catch(e=>console.log(e))
+            
+            router.go(0)
+        }
+    }
+    
     
 
 }

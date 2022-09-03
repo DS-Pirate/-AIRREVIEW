@@ -153,11 +153,8 @@ export default {
     async function getArticleInformation() {
       await axios.get(`/airreview/article/read/${id}`)
         .then(res => {
-          console.log(res);
           articleInfo = res.data.articleInfo
           userInfo = res.data.userInfo
-          console.log(articleInfo)
-          console.log(userInfo)
               Iatitle.value.innerText = articleInfo.atitle
               Icontext.value.innerHTML = articleInfo.context
               IairName.value.innerText = userInfo.airName
@@ -183,7 +180,6 @@ export default {
         )
     }
     getArticleInformation()
-    console.log();
     
     return { articleInfo, userInfo, commentInfo, id, Iatitle, Icontext, Ishareable, Itags, IuserId, IairName }
   }

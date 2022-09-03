@@ -2,9 +2,6 @@ package ds.pirate.backend.test;
 
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
@@ -16,9 +13,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 
-import ds.pirate.backend.dto.ArticleDTO;
+// import java.util.Optional;
+// import java.util.stream.Collectors;
+// import java.util.List;
+// import ds.pirate.backend.dto.ArticleDTO;
+// import ds.pirate.backend.entity.HashTags;
 import ds.pirate.backend.entity.ArticlesList;
-import ds.pirate.backend.entity.HashTags;
 import ds.pirate.backend.entity.acomments;
 import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.entity.uImagesList;
@@ -29,10 +29,10 @@ import ds.pirate.backend.repository.UserImageListRepository;
 import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+// import lombok.extern.log4j.Log4j2;
 
 
-@Log4j2
+// @Log4j2
 @RequiredArgsConstructor
 @SpringBootTest
 public class UserRepositoryTests {
@@ -57,46 +57,46 @@ public class UserRepositoryTests {
     @Autowired
     UserImageListRepository uimgrepo;
 
-    @Test
-    public void getbyaid(){
-        ArticlesList result = arepo.getByAid(1L);
-        ArticleDTO dto = aservice.EntityToDTO(result);
-        List<String> hashString =  hrepo.getList(result.getAid())
-                                        .stream()
-                                        .map(hentity -> hentity.getHashTagName())
-                                        .collect(Collectors.toList());
-        dto.setTags(hashString);
-    }
+    // @Test
+    // public void getbyaid(){
+    //     ArticlesList result = arepo.getByAid(1L);
+    //     ArticleDTO dto = aservice.EntityToDTO(result);
+    //     List<String> hashString =  hrepo.getList(result.getAid())
+    //                                     .stream()
+    //                                     .map(hentity -> hentity.getHashTagName())
+    //                                     .collect(Collectors.toList());
+    //     dto.setTags(hashString);
+    // }
 
-    @Test
-    public void getUserInfoByuserId(){
-        Optional<airUser>result = urepo.findByUserId(1L);
-    }
+    // @Test
+    // public void getUserInfoByuserId(){
+    //     Optional<airUser>result = urepo.findByUserId(1L);
+    // }
 
 
-    @Test
-    public void getHList(){
-        List<HashTags> result = hrepo.getList(1L);
-        result.forEach(i->{
+    // @Test
+    // public void getHList(){
+    //     List<HashTags> result = hrepo.getList(1L);
+    //     result.forEach(i->{
             
-        });
+    //     });
 
-    }
+    // }
 
-    @Test
-    public void getAllList(){
-        List<ArticlesList>result = arepo.getList();
-        result.forEach(i -> {
-        ArticleDTO print = ArticleDTO.builder()
-                        .aid(i.getAid())
-                        .atitle(i.getAtitle())
-                        .context(i.updateContextToString(i.getContext()))
-                        .opened(i.isOpend())
-                        .shareable(i.isShareable())
-                        .build();
-        });
+    // @Test
+    // public void getAllList(){
+    //     List<ArticlesList>result = arepo.getList();
+    //     result.forEach(i -> {
+    //     ArticleDTO print = ArticleDTO.builder()
+    //                     .aid(i.getAid())
+    //                     .atitle(i.getAtitle())
+    //                     .context(i.updateContextToString(i.getContext()))
+    //                     .opened(i.isOpend())
+    //                     .shareable(i.isShareable())
+    //                     .build();
+    //     });
         
-    }
+    // }
 
 
 
