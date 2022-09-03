@@ -1,6 +1,6 @@
 <template>
   <div class="readReview justify-content-between">
-    <!-- 게시즐 정보 -->
+    <!-- 게시글 정보 -->
     <section class="info w-100">
       <div class="metadata">
 
@@ -9,6 +9,7 @@
           <h1 ref="Iatitle">
           </h1>
         </div>
+
         <hr>
 
         <div class="hashAndStar d-flex justify-content-between">
@@ -41,14 +42,14 @@
       <!-- 버튼 -->
       <ul class="actions">
         <li>
-          <button class="border-0 bg-white"><span>Like</span>
+          <button class="border-0 bg-white" @click="addToLike"><span>Like</span>
           </button>
         </li>
         <li>
           <button class="border-0 bg-white" data-bs-toggle="modal" data-bs-target="#share"><span>Share</span></button>
         </li>
         <li>
-          <button class="border-0 bg-white"><span>Save</span></button>
+          <button class="border-0 bg-white" @click="addSave"><span>Save</span></button>
         </li>
         <li>
           <button class="border-0 bg-white" data-bs-toggle="modal" data-bs-target="#ReportModal"><span>Report</span>
@@ -56,20 +57,7 @@
         </li>
       </ul>
 
-
-      <!-- 채널 구독 등 -->
-      <div class="channel">
-        <div class="metadata">
-          <img ref="IuserId" src="@/assets/pngwing.com.png" alt="" />
-          <div class="info">
-            <span class="name" ref="IairName">동성리뷰단</span>
-            <span class="subscribers">구독자 1명</span>
-          </div>
-        </div>
-        <button class="btn btn-outline-primary">구독</button>
-      </div>
-
-      <!-- add Comment -->
+      <ArticleUserCard :id="id"></ArticleUserCard>
       <ArticleCommentList></ArticleCommentList>
       <ReportModal :id="id"></ReportModal>
 
@@ -97,12 +85,14 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import ArticleCommentList from '@/components/ArticleCommentList.vue'
 import ReportModal from '../components/ReportModal.vue'
+import ArticleUserCard from '@/components/ArticleUserCard.vue'
 export default {
   name: 'ReadReview',
   components: {
     Cards,
     ArticleCommentList,
-    ReportModal
+    ReportModal,
+    ArticleUserCard
 },
   setup() {
     const router = useRouter()
@@ -116,7 +106,7 @@ export default {
     let stars = ref(null)
     let ratingnum = ref(null)
     let commentInfo = ""
-
+    let userCardInfo=[]
     /** res.data.articleInfo
      * aid
      * atitle
@@ -145,6 +135,44 @@ export default {
     }
 
 
+    
+      async function addToLike(){
+        const url="./api/article/like"
+        const headers = {
+                "Content-Type": "application/json; charset=utf-8",
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+            }
+            let body = {
+                //store에서 userid획득
+                userid:1,
+                aid:id
+                
+            }
+            await axios.post(url, body, { headers })
+            .then(res=>alert(res.data))
+            .catch(e=>console.log(e))
+            
+            // router.go(0)
+    }
+    async function addSave(){
+        const url="./api/article/save"
+        const headers = {
+                "Content-Type": "application/json; charset=utf-8",
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+            }
+            let body = {
+                //store에서 userid획득
+                userid:1,
+                aid:id
+                
+            }
+            await axios.post(url, body, { headers })
+            .then(res=>alert(res.data))
+            .catch(e=>console.log(e))
+            
+            // router.go(0)
+    }
+
 
     function errorAndGetBack() {
       alert("잘못된 접근입니다")
@@ -152,9 +180,9 @@ export default {
     }
 
     function getTimeFromJavaDate(s) {
-            const tTime = s.split(/\D+/);
-            const cont = new Date(Date.UTC(tTime[0], --tTime[1], tTime[2], tTime[3], tTime[4], tTime[5], tTime[6])-(9 * 60 * 60 * 1000)-((60*9*1000)+10))
-            let calculated = (new Date() - cont)/1000 //초 계산
+            const cont = new Date(s)
+            let date = new Date()
+            let calculated = (new Date(date.getTime()) - cont)/1000 //초 계산
             if(calculated<60){
                 return "방금 전"
             }else if(calculated<60*60){
@@ -174,22 +202,22 @@ export default {
     async function getArticleInformation() {
       await axios.get(`/airreview/article/read/${id}`)
         .then(res => {
-          console.log(res);
+          //  
           articleInfo = res.data.articleInfo
           userInfo = res.data.userInfo
           Iatitle.value.innerText = articleInfo.atitle
           Icontext.value.innerHTML = articleInfo.context
-          IairName.value.innerText = userInfo.airName
+          // userCardInfo.push(articleInfo.userId)
           Iregdate.value.innerText = getTimeFromJavaDate(articleInfo.regdate)
-          ratingnum.value.innerText = res.data.articleAVG.toFixed(2)
+          ratingnum.value.innerText = (res.data.articleAVG!=undefined)?res.data.articleAVG.toFixed(2):0
           let tmp = []
           for (let element of articleInfo.tags) {
             tmp.push(`<span>#${element}<span>`)
           }
           Itags.value.innerHTML = tmp.join(" ")
-          if (!isNaN(articleInfo.userId)) {
-            IuserId.value.src = `./images/read/userid/${articleInfo.userId}`
-          }
+          // if (!isNaN(articleInfo.userId)) {
+          //   userCardInfo.push(`./images/read/userid/${articleInfo.userId}`)
+          // }
           let tmp2 = []
           for (let i = 0; i < Math.round(res.data.articleAVG); i++) {
             tmp2.push(`<i class="bi bi-star-fill"></i>`)
@@ -212,10 +240,10 @@ export default {
           }
         )
     }
-    console.log(stars);
+
     getArticleInformation()
 
-    return { articleInfo, userInfo, commentInfo, id, Iatitle, Icontext, Ishareable, Itags, IuserId, IairName, Iregdate, stars, ratingnum, getTimeFromJavaDate }
+    return { articleInfo, userInfo, commentInfo, id, Iatitle, Icontext, Ishareable, Itags, IuserId, IairName, Iregdate, stars, ratingnum, getTimeFromJavaDate, userCardInfo, addToLike, addSave }
   }
 }
 </script>

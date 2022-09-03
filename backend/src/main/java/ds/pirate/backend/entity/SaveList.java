@@ -15,12 +15,10 @@ public class SaveList extends DateEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long savid;
 
+    
+    private Long aid;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private ArticlesList articles;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private airUser userid;
+    private Long userid;
 
 }
