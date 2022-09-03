@@ -11,15 +11,18 @@
         </div>
         <hr>
 
-        <div class="hashAndStar">
+        <div class="hashAndStar d-flex justify-content-between">
           <!-- 해시태그 -->
           <ul class="hash m-0 p-0 px-1 d-flex align-items-center" ref="Itags">
           </ul>
-          <div class="starss">
-            
-          </div>
           <!-- 별점  -->
-
+          <div class="rating-stars-section">
+            <div ref="stars"></div>
+            <div class="ating-stars-section_accuraterating" style="font-size:0.1rem; color: #aaa;">
+              <span>현재평점:</span>
+            <span class="rating-stars-section_accuraterating_num" ref="ratingnum"></span>
+            </div>
+          </div>  
         </div>
         <hr>
 
@@ -108,6 +111,8 @@ export default {
     const Itags = ref(null)
     const IuserId = ref(null)
     const IairName = ref(null)
+    let stars = ref(null)
+    let ratingnum =ref(null)
     let commentInfo = ""
     /** res.data.articleInfo
      * aid
@@ -153,6 +158,7 @@ export default {
               Iatitle.value.innerText = articleInfo.atitle
               Icontext.value.innerHTML = articleInfo.context
               IairName.value.innerText = userInfo.airName
+              ratingnum.value.innerText = res.data.articleAVG
               let tmp =[]
               for(let element of articleInfo.tags){
                 tmp.push(`<span>#${element}<span>`)
@@ -161,6 +167,15 @@ export default {
               if(!isNaN(articleInfo.userId)){
                 IuserId.value.src=`./images/read/userid/${articleInfo.userId}`
               }
+              let tmp2=[]
+              for (let i =0; i<Math.round(res.data.articleAVG);i++){
+                tmp2.push(`<i class="bi bi-star-fill"></i>`)
+              }
+              for (let i =0; i<5-Math.round(res.data.articleAVG);i++){
+                tmp2.push(`<i class="bi bi-star"></i>`)
+              }
+              stars.value.innerHTML = tmp2.join("")
+
               
         }).catch(
           e => {
@@ -174,9 +189,10 @@ export default {
           }
         )
     }
+    console.log(stars);
     getArticleInformation()
     
-    return { articleInfo, userInfo, commentInfo, id, Iatitle, Icontext, Ishareable, Itags, IuserId, IairName }
+    return { articleInfo, userInfo, commentInfo, id, Iatitle, Icontext, Ishareable, Itags, IuserId, IairName, stars, ratingnum }
   }
 }
 </script>

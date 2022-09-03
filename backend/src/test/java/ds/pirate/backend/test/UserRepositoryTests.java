@@ -29,10 +29,10 @@ import ds.pirate.backend.repository.UserImageListRepository;
 import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import lombok.RequiredArgsConstructor;
-// import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j2;
 
 
-// @Log4j2
+@Log4j2
 @RequiredArgsConstructor
 @SpringBootTest
 public class UserRepositoryTests {
@@ -97,7 +97,12 @@ public class UserRepositoryTests {
     //     });
         
     // }
-
+    
+    @Test
+    public void getAVGArticleRate(){
+        Double result = crepo.getAvgByAid(1L);
+        log.info("평균값"+result);
+    }
 
 
     @Test
