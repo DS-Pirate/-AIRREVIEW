@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartRequest;
 import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.acommentDTO;
 import ds.pirate.backend.dto.acommentRateDTO;
+import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -74,6 +75,11 @@ public class BoardApiContorller {
     @RequestMapping(value = "/comment/add/rating/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> ratingCommentPlus(@RequestBody acommentRateDTO dto){        
         return new ResponseEntity<>(aser.rateupComment(dto), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/report", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> reportingArticle(@RequestBody reportDTO dto){        
+        return new ResponseEntity<>(aser.addArticleReport(dto), HttpStatus.OK);
     }
 
 }

@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.acommentDTO;
 import ds.pirate.backend.dto.acommentRateDTO;
+import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.HashTags;
 import ds.pirate.backend.entity.ImagesList;
 import ds.pirate.backend.entity.acommentRate;
 import ds.pirate.backend.entity.acomments;
 import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.entity.reportList;
+import ds.pirate.backend.repository.ArticleReportRepository;
 import ds.pirate.backend.repository.ArticleRepository;
 import ds.pirate.backend.repository.CommentRateRepository;
 import ds.pirate.backend.repository.CommentRepository;
@@ -33,6 +36,20 @@ public class ArticleServiceImpl implements ArticleService{
     private final CommentRepository crepo;
     private final CommentRateRepository ctrepo;
     private final UserRepository urepo;
+    private final ArticleReportRepository arepo;
+
+
+@Override
+public String addArticleReport(reportDTO dto) {
+    Optional<reportList> chekcing = arepo.checkReportLogByUserIdAndArticleId(dto.getUserid(), dto.getArticleid());
+    if(chekcing.isPresent()){
+        return "이미 신고한 글입니다";
+    }else{
+        arepo.save(reportDTOtoEntity(dto));
+        return "신고가 완료되었습니다";
+    }
+}
+
 
     @Override
     public Double getArticleAvgRating(Long aid) { 

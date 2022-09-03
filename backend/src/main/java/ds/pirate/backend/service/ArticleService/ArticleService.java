@@ -6,10 +6,12 @@ import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.HashTagDTO;
 import ds.pirate.backend.dto.acommentDTO;
 import ds.pirate.backend.dto.acommentRateDTO;
+import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.HashTags;
 import ds.pirate.backend.entity.acomments;
 import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.entity.reportList;
 
 public interface ArticleService {
     String addArticle(ArticleDTO dto, List<String> hashlist);
@@ -20,6 +22,7 @@ public interface ArticleService {
     Long addNewCommentReply(acommentDTO dto);
     String rateupComment(acommentRateDTO dto);
     Double getArticleAvgRating(Long aid);
+    String addArticleReport(reportDTO dto);
     default ArticlesList dtoToEntity(ArticleDTO dto) {
         ArticlesList aentity = ArticlesList.builder()
                 .atitle(dto.getAtitle())
@@ -96,6 +99,22 @@ public interface ArticleService {
         .articleRate(dto.getArticleRate())
         .build();
         return entity;
+    }
+
+    default reportList reportDTOtoEntity(reportDTO dto){
+        reportList entity = reportList.builder()
+        .articles(ArticlesList.builder().aid(dto.getArticleid()).build())
+        .userid(airUser.builder().userid(dto.getUserid()).build())
+        .reportContext(dto.getReportContext()).build();
+        return entity;
+    }
+
+    default reportDTO reportEntitytoDTO(reportList entity){
+        reportDTO dto = reportDTO.builder()
+        .articleid(entity.getArticles().getAid())
+        .userid(entity.getUserid().getUserid())
+        .reportContext(entity.getReportContext()).build();
+        return dto;
     }
 
 }

@@ -51,7 +51,7 @@
           <button class="border-0 bg-white"><span>Save</span></button>
         </li>
         <li>
-          <button class="border-0 bg-white"><span>Report</span>
+          <button class="border-0 bg-white" data-bs-toggle="modal" data-bs-target="#ReportModal"><span>Report</span>
           </button>
         </li>
       </ul>
@@ -71,7 +71,7 @@
 
       <!-- add Comment -->
       <ArticleCommentList></ArticleCommentList>
-
+      <ReportModal :id="id"></ReportModal>
 
 
 
@@ -87,7 +87,6 @@
       </div>
     </section>
   </div>
-
 </template>
 
 <script>
@@ -97,12 +96,14 @@ import axios from 'axios'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import ArticleCommentList from '@/components/ArticleCommentList.vue'
+import ReportModal from '../components/ReportModal.vue'
 export default {
   name: 'ReadReview',
   components: {
     Cards,
-    ArticleCommentList
-  },
+    ArticleCommentList,
+    ReportModal
+},
   setup() {
     const router = useRouter()
     const Iatitle = ref(null)
@@ -115,6 +116,7 @@ export default {
     let stars = ref(null)
     let ratingnum = ref(null)
     let commentInfo = ""
+
     /** res.data.articleInfo
      * aid
      * atitle
