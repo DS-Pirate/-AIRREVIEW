@@ -3,7 +3,14 @@
         <div class="col-md-12 my-3 w-100">
             <div class="panel-body">
                 <textarea class="form-control w-100" rows="2" ref="commentcontext" placeholder="댓글을 입력하세요"></textarea>
-                <div class="mar-top clearfix">
+                <div class="mar-top clearfix d-flex justify-content-end align-items-center">
+                    <span class="me-2">별점 : </span>
+                    <div class="comment-input-stars fs-5 me-3 pb-1 d-flex justify-content-end align-items-center">
+                        <div v-for="i in 5" :key="i" v-on:click="clicked(i)">
+                            <a class="bi bi-star-fill comment-input-stars_star" v-if="i<articleRating"></a>
+                            <a class="bi bi-star comment-input-stars_star" v-if="i>=articleRating"></a>
+                        </div>  
+                    </div>
                     <button class="btn btn-sm btn-primary pull-right my-2" type="button" @click="addNewcomment">입력</button>
                 </div>
             </div>
@@ -30,12 +37,21 @@ export default {
         let commentcontext = ref(null)
         const store = useStore()
         const router = useRouter()
+        let articleRating = ref(5)
+
+        function clicked(i){
+            this.articleRating = i+1
+            console.log(articleRating.value);
+        }
+
+        
+
 
         async function getComments() {
             function calcStar(num) {
                 let tmp = ""
                 for (let i = 0; i < num; i++) {
-                    tmp += "★"
+                    tmp += `<i class="bi bi-star-fill"></i>`
                 }
                 return tmp
             }
@@ -132,7 +148,7 @@ export default {
                 commentGroup: store.state.latestcGroup,
                 commentContext: commentcontext.value.value,
                 commentSorts: 0,
-                articleRate: 1
+                articleRate: articleRating.value-1
 
             }
             axios.post("./api/article/comment/add/", body, { headers }).then(
@@ -143,7 +159,7 @@ export default {
         }
 
         getComments()
-        return { cardCnt, comments, commentLength, commentList, addNewcomment, commentcontext}
+        return { cardCnt, comments, commentLength, commentList, addNewcomment, commentcontext, articleRating, clicked}
     }
 }
     //쓰기싫었지만 어쩔수없음 흑흑..

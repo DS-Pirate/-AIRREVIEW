@@ -15,17 +15,11 @@
           <!-- 해시태그 -->
           <ul class="hash m-0 p-0 px-1 d-flex align-items-center" ref="Itags">
           </ul>
-
+          <div class="starss">
+            
+          </div>
           <!-- 별점  -->
-          <form name="myform" id="myform" method="post" action="./save">
-            <fieldset>
-              <input type="radio" name="rating" value="5" id="rate1"><label for="rate1">⭐</label>
-              <input type="radio" name="rating" value="4" id="rate2"><label for="rate2">⭐</label>
-              <input type="radio" name="rating" value="3" id="rate3"><label for="rate3">⭐</label>
-              <input type="radio" name="rating" value="2" id="rate4"><label for="rate4">⭐</label>
-              <input type="radio" name="rating" value="1" id="rate5"><label for="rate5">⭐</label>
-            </fieldset>
-          </form>
+
         </div>
         <hr>
 
@@ -153,6 +147,7 @@ export default {
     async function getArticleInformation() {
       await axios.get(`/airreview/article/read/${id}`)
         .then(res => {
+          console.log(res);
           articleInfo = res.data.articleInfo
           userInfo = res.data.userInfo
               Iatitle.value.innerText = articleInfo.atitle
