@@ -6,15 +6,19 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import ds.pirate.backend.dto.ArticleDTO;
+import ds.pirate.backend.dto.SaveDTO;
 import ds.pirate.backend.dto.acommentDTO;
 import ds.pirate.backend.dto.acommentRateDTO;
+import ds.pirate.backend.dto.likeUnlikeDTO;
 import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.HashTags;
 import ds.pirate.backend.entity.ImagesList;
+import ds.pirate.backend.entity.SaveList;
 import ds.pirate.backend.entity.acommentRate;
 import ds.pirate.backend.entity.acomments;
 import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.entity.likeUnlikeList;
 import ds.pirate.backend.entity.reportList;
 import ds.pirate.backend.repository.ArticleReportRepository;
 import ds.pirate.backend.repository.ArticleRepository;
@@ -22,6 +26,8 @@ import ds.pirate.backend.repository.CommentRateRepository;
 import ds.pirate.backend.repository.CommentRepository;
 import ds.pirate.backend.repository.HashTagRepository;
 import ds.pirate.backend.repository.ImageRepository;
+import ds.pirate.backend.repository.LikeUnlikeRepository;
+import ds.pirate.backend.repository.SavedRepository;
 import ds.pirate.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -37,18 +43,46 @@ public class ArticleServiceImpl implements ArticleService{
     private final CommentRateRepository ctrepo;
     private final UserRepository urepo;
     private final ArticleReportRepository arepo;
+    private final LikeUnlikeRepository lurepo;
+    private final SavedRepository sarepo;
 
 
-@Override
-public String addArticleReport(reportDTO dto) {
-    Optional<reportList> chekcing = arepo.checkReportLogByUserIdAndArticleId(dto.getUserid(), dto.getArticleid());
-    if(chekcing.isPresent()){
-        return "이미 신고한 글입니다";
-    }else{
-        arepo.save(reportDTOtoEntity(dto));
-        return "신고가 완료되었습니다";
+    @Override
+    public String addSave(SaveDTO dto) {
+        Optional<SaveList> checking = sarepo.checkSaveLogByUserIdAndArticleId(dto.getUserid(), dto.getAid());
+        SaveList entity = saveDTOtoEntity(dto);
+        if(checking.isPresent()){
+            sarepo.delete(checking.get());
+            return "저장을 취소하였습니다";
+        }else{
+            sarepo.save(entity);
+            return "저장 리스트에 추가되었습니다";
+        }
     }
-}
+
+    @Override
+    public String addLikeUnlike(likeUnlikeDTO dto) {
+        Optional<likeUnlikeList> checking = lurepo.checkFavoLogByUserIdAndArticleId(dto.getUserid(), dto.getAid());
+        likeUnlikeList entity = favoDTOtoEntity(dto);
+        if(checking.isPresent()){
+            lurepo.delete(checking.get());
+            return "좋아요를 취소하였습니다";
+        }else{
+            lurepo.save(entity);
+            return "좋아요 리스트에 추가되었습니다";
+        }
+    }
+
+    @Override
+    public String addArticleReport(reportDTO dto) {
+        Optional<reportList> chekcing = arepo.checkReportLogByUserIdAndArticleId(dto.getUserid(), dto.getArticleid());
+        if(chekcing.isPresent()){
+            return "이미 신고한 글입니다";
+        }else{
+            arepo.save(reportDTOtoEntity(dto));
+            return "신고가 완료되었습니다";
+        }
+    }
 
 
     @Override

@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SaveDTO {
     private Long savid;
-    private ArticlesList articles;
-    private airUser userid;
+    private Long aid;
+    private Long userid;
 }

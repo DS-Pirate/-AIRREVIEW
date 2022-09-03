@@ -22,8 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import ds.pirate.backend.dto.ArticleDTO;
+import ds.pirate.backend.dto.SaveDTO;
 import ds.pirate.backend.dto.acommentDTO;
 import ds.pirate.backend.dto.acommentRateDTO;
+import ds.pirate.backend.dto.likeUnlikeDTO;
 import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import lombok.RequiredArgsConstructor;
@@ -80,6 +82,16 @@ public class BoardApiContorller {
     @RequestMapping(value = "/report", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> reportingArticle(@RequestBody reportDTO dto){        
         return new ResponseEntity<>(aser.addArticleReport(dto), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/like", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> LikeArticle(@RequestBody likeUnlikeDTO dto){        
+        return new ResponseEntity<>(aser.addLikeUnlike(dto), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> saveArticle(@RequestBody SaveDTO dto){        
+        return new ResponseEntity<>(aser.addSave(dto), HttpStatus.OK);
     }
 
 }

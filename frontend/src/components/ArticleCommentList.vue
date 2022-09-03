@@ -46,11 +46,10 @@ export default {
 
         
 
-        function getTimeFromJavaDate(s) {
-            const tTime = s.split(/\D+/);
-            // const cont = new Date(Date.UTC(tTime[0], --tTime[1], tTime[2], tTime[3], tTime[4], tTime[5], tTime[6])-(9 * 60 * 60 * 1000)-((60*9*1000)+10))
-            const cont = new Date(Date.UTC(tTime[0], --tTime[1], tTime[2], tTime[3], tTime[4], tTime[5], tTime[6])-(9 * 60 * 60 * 1000))
-            let calculated = (new Date() - cont)/1000 //초 계산
+        function getTimeFromJavaDateForComment(s) {
+            const cont = new Date(s)
+            let date = new Date()
+            let calculated = (new Date(date.getTime()) - cont)/1000 //초 계산
             if(calculated<60){
                 return "방금 전"
             }else if(calculated<60*60){
@@ -78,6 +77,7 @@ export default {
             await axios.get(`/airreview/article/comment/${id}`)
                 .then(
                     res => {
+                        // console.log(res);
                         let str = "<hr>"
                         let counter = 0
                         for (let i = 0; i < res.data.commentList.length; i++) {
@@ -99,7 +99,7 @@ export default {
                                                 ${res.data.commentList[i].userName}
                                             </span>
                                             <span class="comment-content-userinfo-left_date text-secondary" style="font-size:0.75rem;">
-                                                ${getTimeFromJavaDate(res.data.commentList[i].regDate)}
+                                                ${getTimeFromJavaDateForComment(res.data.commentList[i].regDate)}
                                             </span>
                                         </div>
                                         <div class="comment-content-userinfo-right">
@@ -179,14 +179,13 @@ export default {
         }
 
         getComments()
-        return { cardCnt, comments, commentLength, commentList, addNewcomment, commentcontext, articleRating, clicked, getTimeFromJavaDate}
+        return { cardCnt, comments, commentLength, commentList, addNewcomment, commentcontext, articleRating, clicked, getTimeFromJavaDateForComment}
     }
 }
     //쓰기싫었지만 어쩔수없음 흑흑..
     window.onload = function () {
     let result = document.getElementsByTagName("custominput")
-    for (let i = 0; i < result.length; i++) {
-        result[i].onclick = async() => {
+    for (let i = 0; i < result.length; i++) { result[i].onclick = async() => {
             console.log(result[i]); 
             console.log(result[i].dataset);
             let tmpcommentGroup = result[i].dataset.g

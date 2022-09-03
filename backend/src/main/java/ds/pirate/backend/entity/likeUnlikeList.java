@@ -16,14 +16,11 @@ public class likeUnlikeList extends DateEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long favid;
 
-    @Column
-    private boolean likeUnlike;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private ArticlesList articles;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private airUser userid;
+    private Long aid;
+
+
+    private Long userid;
 
 }
