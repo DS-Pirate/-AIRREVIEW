@@ -18,6 +18,6 @@ public interface CommentRepository extends JpaRepository<acomments, Long>{
     @Query("SELECT ct FROM acomments ct WHERE ct.cid=:cid and airuser_userid=:userid ")
     Optional<acomments> getCommentByCidAndUserid(Long cid, Long userid);
 
-    @Query("SELECT AVG(articleRate) FROM acomments ct WHERE articles_aid=:aid ")
+    @Query("SELECT AVG(articleRate) FROM acomments ct WHERE articles_aid=:aid and articleRate>0")
     Double getAvgByAid(Long aid);
 }
