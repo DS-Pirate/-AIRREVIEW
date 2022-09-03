@@ -46,6 +46,25 @@ export default {
 
         
 
+        function getTimeFromJavaDate(s) {
+            const tTime = s.split(/\D+/);
+            const cont = new Date(Date.UTC(tTime[0], --tTime[1], tTime[2], tTime[3], tTime[4], tTime[5], tTime[6])-(9 * 60 * 60 * 1000)-((60*9*1000)+10))
+            let calculated = (new Date() - cont)/1000 //초 계산
+            if(calculated<60){
+                return "방금 전"
+            }else if(calculated<60*60){
+                return`${Math.round(calculated/(60))}분 전`
+            }else if(calculated<60*60*24){
+                return`${Math.round(calculated/(60*60))}시간 전`
+            }else if(calculated<60*60*24*7){
+                return`${Math.round(calculated/(60*60*24))}일 전`
+            }else if(calculated<60*60*24*7*5){
+                return`${Math.round(calculated/(60*60*24*7))}주 전`
+            }else if(calculated>31536000){
+                return`${Math.round(calculated/31536000)}년 전`
+            }
+        }
+
 
         async function getComments() {
             function calcStar(num) {
@@ -79,7 +98,7 @@ export default {
                                                 ${res.data.commentList[i].userName}
                                             </span>
                                             <span class="comment-content-userinfo-left_date text-secondary" style="font-size:0.75rem;">
-                                                [3일 전]${res.data.commentList[i].regDate}
+                                                ${getTimeFromJavaDate(res.data.commentList[i].regDate)}
                                             </span>
                                         </div>
                                         <div class="comment-content-userinfo-right">
@@ -159,7 +178,7 @@ export default {
         }
 
         getComments()
-        return { cardCnt, comments, commentLength, commentList, addNewcomment, commentcontext, articleRating, clicked}
+        return { cardCnt, comments, commentLength, commentList, addNewcomment, commentcontext, articleRating, clicked, getTimeFromJavaDate}
     }
 }
     //쓰기싫었지만 어쩔수없음 흑흑..
@@ -215,6 +234,7 @@ export default {
             await axios.post("./api/article/comment/add/rating/", body, { headers })
             .then(res=>console.log("레이팅들어간다아아아아",res))
             .catch(e=>console.log(e)) 
+            router.go(0)
         }
     }
         //쓰기싫었지만 어쩔수없음3 흑흑..

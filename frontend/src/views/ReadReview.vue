@@ -18,11 +18,11 @@
           <!-- 별점  -->
           <div class="rating-stars-section">
             <div ref="stars"></div>
-            <div class="ating-stars-section_accuraterating" style="font-size:0.1rem; color: #aaa;">
-              <span>현재평점:</span>
-            <span class="rating-stars-section_accuraterating_num" ref="ratingnum"></span>
+            <div class="ating-stars-section_accuraterating d-flex justify-content-between" style="font-size:0.1rem; color: #aaa;">
+              <span>현재평점</span>
+              <span class="rating-stars-section_accuraterating_num" ref="ratingnum"></span>
             </div>
-          </div>  
+          </div>
         </div>
         <hr>
 
@@ -34,7 +34,7 @@
         </div>
 
         <!-- 게시글 쓴 날짜 -->
-        <span class="views">1시간 전</span>
+        <span class="views" ref="Iregdate">1시간 전</span>
       </div>
 
       <hr>
@@ -71,10 +71,10 @@
 
       <!-- add Comment -->
       <ArticleCommentList></ArticleCommentList>
-        
-      
-      
-      
+
+
+
+
     </section>
     <!-- 추천 게시글 -->
     <section class="recommend w-15">
@@ -102,7 +102,7 @@ export default {
   components: {
     Cards,
     ArticleCommentList
-},
+  },
   setup() {
     const router = useRouter()
     const Iatitle = ref(null)
@@ -111,8 +111,9 @@ export default {
     const Itags = ref(null)
     const IuserId = ref(null)
     const IairName = ref(null)
+    const Iregdate = ref(null)
     let stars = ref(null)
-    let ratingnum =ref(null)
+    let ratingnum = ref(null)
     let commentInfo = ""
     /** res.data.articleInfo
      * aid
@@ -148,35 +149,55 @@ export default {
       router.push("/")
     }
 
-    
+    function getTimeFromJavaDate(s) {
+            const tTime = s.split(/\D+/);
+            const cont = new Date(Date.UTC(tTime[0], --tTime[1], tTime[2], tTime[3], tTime[4], tTime[5], tTime[6])-(9 * 60 * 60 * 1000)-((60*9*1000)+10))
+            let calculated = (new Date() - cont)/1000 //초 계산
+            if(calculated<60){
+                return "방금 전"
+            }else if(calculated<60*60){
+                return`${Math.round(calculated/(60))}분 전`
+            }else if(calculated<60*60*24){
+                return`${Math.round(calculated/(60*60))}시간 전`
+            }else if(calculated<60*60*24*7){
+                return`${Math.round(calculated/(60*60*24))}일 전`
+            }else if(calculated<60*60*24*7*5){
+                return`${Math.round(calculated/(60*60*24*7))}주 전`
+            }else if(calculated>31536000){
+                return`${Math.round(calculated/31536000)}년 전`
+            }
+        }
+
+
     async function getArticleInformation() {
       await axios.get(`/airreview/article/read/${id}`)
         .then(res => {
           console.log(res);
           articleInfo = res.data.articleInfo
           userInfo = res.data.userInfo
-              Iatitle.value.innerText = articleInfo.atitle
-              Icontext.value.innerHTML = articleInfo.context
-              IairName.value.innerText = userInfo.airName
-              ratingnum.value.innerText = res.data.articleAVG
-              let tmp =[]
-              for(let element of articleInfo.tags){
-                tmp.push(`<span>#${element}<span>`)
-              }
-              Itags.value.innerHTML = tmp.join(" ")
-              if(!isNaN(articleInfo.userId)){
-                IuserId.value.src=`./images/read/userid/${articleInfo.userId}`
-              }
-              let tmp2=[]
-              for (let i =0; i<Math.round(res.data.articleAVG);i++){
-                tmp2.push(`<i class="bi bi-star-fill"></i>`)
-              }
-              for (let i =0; i<5-Math.round(res.data.articleAVG);i++){
-                tmp2.push(`<i class="bi bi-star"></i>`)
-              }
-              stars.value.innerHTML = tmp2.join("")
+          Iatitle.value.innerText = articleInfo.atitle
+          Icontext.value.innerHTML = articleInfo.context
+          IairName.value.innerText = userInfo.airName
+          Iregdate.value.innerText = getTimeFromJavaDate(articleInfo.regdate)
+          ratingnum.value.innerText = res.data.articleAVG.toFixed(2)
+          let tmp = []
+          for (let element of articleInfo.tags) {
+            tmp.push(`<span>#${element}<span>`)
+          }
+          Itags.value.innerHTML = tmp.join(" ")
+          if (!isNaN(articleInfo.userId)) {
+            IuserId.value.src = `./images/read/userid/${articleInfo.userId}`
+          }
+          let tmp2 = []
+          for (let i = 0; i < Math.round(res.data.articleAVG); i++) {
+            tmp2.push(`<i class="bi bi-star-fill"></i>`)
+          }
+          for (let i = 0; i < 5 - Math.round(res.data.articleAVG); i++) {
+            tmp2.push(`<i class="bi bi-star"></i>`)
+          }
+          stars.value.innerHTML = tmp2.join("")
 
-              
+
         }).catch(
           e => {
             //에러 처리는 더 궁리 필요 
@@ -191,8 +212,8 @@ export default {
     }
     console.log(stars);
     getArticleInformation()
-    
-    return { articleInfo, userInfo, commentInfo, id, Iatitle, Icontext, Ishareable, Itags, IuserId, IairName, stars, ratingnum }
+
+    return { articleInfo, userInfo, commentInfo, id, Iatitle, Icontext, Ishareable, Itags, IuserId, IairName, Iregdate, stars, ratingnum, getTimeFromJavaDate }
   }
 }
 </script>

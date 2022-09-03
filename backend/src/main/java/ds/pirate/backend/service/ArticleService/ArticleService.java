@@ -57,6 +57,7 @@ public interface ArticleService {
                 .opened(entity.isOpend())
                 .shareable(entity.isShareable())
                 .userId(entity.getAUser())
+                .regdate(entity.getRegDate())
                 .build();
         return dto;
     }

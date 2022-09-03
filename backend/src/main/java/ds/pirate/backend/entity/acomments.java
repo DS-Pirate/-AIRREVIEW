@@ -42,8 +42,7 @@ public class acomments extends DateEntity{
     @ColumnDefault("0") //default 0
     private Integer rate;
 
-    @Column(nullable = false) // 글 평점용 컬럼
-    @ColumnDefault("0")
+
     private Integer articleRate;
 
 
