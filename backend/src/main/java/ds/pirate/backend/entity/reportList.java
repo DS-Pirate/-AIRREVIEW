@@ -25,8 +25,10 @@ public class reportList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reid;
 
+
     @Column
-    private boolean reported;
+    private String reportContext;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     private ArticlesList articles;
