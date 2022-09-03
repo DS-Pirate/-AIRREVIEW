@@ -48,8 +48,8 @@ public class BoardApiContorller {
     public Map<String, Object> uploadImage(@RequestParam Map<String, Object> paramMap, MultipartRequest request)
             throws Exception {
         MultipartFile uploadFile = request.getFile("upload");
-        String uploadDir = "c:\\testingimage\\"; //windows 일경우 이 경로 사용
-        // String uploadDir = "/Users/hyunseokbyun/Documents/Imagefiles/";
+        // String uploadDir = "c:\\testingimage\\"; //windows 일경우 이 경로 사용
+        String uploadDir = "/Users/hyunseokbyun/Documents/Imagefiles/";
         String uploadId = UUID.randomUUID().toString() + "."
                 + FilenameUtils.getExtension(uploadFile.getOriginalFilename());
         uploadFile.transferTo(new File(uploadDir + uploadId));
@@ -71,9 +71,9 @@ public class BoardApiContorller {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/comment/add/plusrate/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Long> ratingComment(@RequestBody acommentRateDTO dto){
-        log.info(" ㅇㅋ 잘 들어옴 " +  dto);
-        return new ResponseEntity<>(1L, HttpStatus.OK);
+    @RequestMapping(value = "/comment/add/rating/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> ratingCommentPlus(@RequestBody acommentRateDTO dto){        
+        return new ResponseEntity<>(aser.rateupComment(dto), HttpStatus.OK);
     }
+
 }

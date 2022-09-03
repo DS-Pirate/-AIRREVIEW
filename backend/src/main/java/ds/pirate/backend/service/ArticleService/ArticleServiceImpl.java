@@ -7,26 +7,52 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.acommentDTO;
+import ds.pirate.backend.dto.acommentRateDTO;
 import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.HashTags;
 import ds.pirate.backend.entity.ImagesList;
+import ds.pirate.backend.entity.acommentRate;
 import ds.pirate.backend.entity.acomments;
 import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.repository.ArticleRepository;
+import ds.pirate.backend.repository.CommentRateRepository;
 import ds.pirate.backend.repository.CommentRepository;
 import ds.pirate.backend.repository.HashTagRepository;
 import ds.pirate.backend.repository.ImageRepository;
 import ds.pirate.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class ArticleServiceImpl implements ArticleService{
     private final ArticleRepository repo;
     private final HashTagRepository hrepo;
     private final ImageRepository irepo;
     private final CommentRepository crepo;
+    private final CommentRateRepository ctrepo;
     private final UserRepository urepo;
+
+    @Override
+    public String rateupComment(acommentRateDTO dto) {
+        acomments result = crepo.getCommentByCidAndUserid(dto.getCid(), dto.getUserid()).get();
+        acommentDTO cdto = commentEntityToDTO(result);
+        
+        Optional<acommentRate> isRated = ctrepo.getIsRatedByCidAndUserid(dto.getCid(), dto.getUserid());
+        if(isRated.isPresent()){
+            cdto.setRate(cdto.getRate()-isRated.get().getUpdown());
+            ctrepo.delete(isRated.get());
+            crepo.save(commentDTOtoEntity(cdto));
+            return "취소되었습니다";
+        }else{
+            cdto.setRate(cdto.getRate()+dto.getUpdown());
+            crepo.save(commentDTOtoEntity(cdto));
+            ctrepo.save(acommentRate.builder().commentid(cdto.getCid()).userid(cdto.getUserid()).updown(dto.getUpdown()).build());
+            log.info("없음 등록 ㄲ");
+            return "등록되었습니다";
+        }
+    }
 
     @Override
     public Long addNewComment(acommentDTO dto) {

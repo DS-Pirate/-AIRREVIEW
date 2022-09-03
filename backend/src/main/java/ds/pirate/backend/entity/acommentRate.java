@@ -1,11 +1,10 @@
 package ds.pirate.backend.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,18 +20,11 @@ public class acommentRate extends DateEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long crid;
-    
-    private Integer rate;
 
-    @Column(nullable = false)
-    private Long commentGroup;
+    private Long commentid;
 
-    @Column(nullable = false)
-    private Long commnetDepth;
+    private Long userid;
 
-    @Column(nullable = false)
-    private Long commentSorts;
-    @ManyToOne
-    private acomments commentid;
+    private int updown;
 }
 
