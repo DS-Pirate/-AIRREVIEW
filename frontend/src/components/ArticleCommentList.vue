@@ -48,7 +48,8 @@ export default {
 
         function getTimeFromJavaDate(s) {
             const tTime = s.split(/\D+/);
-            const cont = new Date(Date.UTC(tTime[0], --tTime[1], tTime[2], tTime[3], tTime[4], tTime[5], tTime[6])-(9 * 60 * 60 * 1000)-((60*9*1000)+10))
+            // const cont = new Date(Date.UTC(tTime[0], --tTime[1], tTime[2], tTime[3], tTime[4], tTime[5], tTime[6])-(9 * 60 * 60 * 1000)-((60*9*1000)+10))
+            const cont = new Date(Date.UTC(tTime[0], --tTime[1], tTime[2], tTime[3], tTime[4], tTime[5], tTime[6])-(9 * 60 * 60 * 1000))
             let calculated = (new Date() - cont)/1000 //초 계산
             if(calculated<60){
                 return "방금 전"
@@ -133,7 +134,7 @@ export default {
                                                 <input id="rereply${i}" type="text" class="form-control">
                                             </div>
                                             <div class="input-btn-class h-25 py-1 w-100 d-flex justify-content-end">
-                                                <custominput class="btn btn-primary replyReplySubmit" style="cursor:pointer;" data-g="${res.data.commentList[i].commentGroup}" data-d="${res.data.commentList[i].commnetDepth+1}" data-s="${res.data.commentList[i].commentSorts+1}" type="button">
+                                                <custominput class="btn btn-primary replyReplySubmit" style="cursor:pointer;" data-g="${res.data.commentList[i].commentGroup}" data-d="${res.data.commentList[i].commnetDepth+1}" data-s="${res.data.commentList[i].commentSorts+1}" type="button">답글</customInput>
                                             </div>
                                         </div>
                                     </form>
