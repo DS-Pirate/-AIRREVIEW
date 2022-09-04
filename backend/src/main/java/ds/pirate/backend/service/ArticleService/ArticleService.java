@@ -29,6 +29,8 @@ public interface ArticleService {
     String addArticleReport(reportDTO dto);
     String addLikeUnlike(likeUnlikeDTO dto);
     String addSave(SaveDTO dto);
+    List<Object> SubscStatus(Long sbid, Long userid);
+
     default ArticlesList dtoToEntity(ArticleDTO dto) {
         ArticlesList aentity = ArticlesList.builder()
                 .atitle(dto.getAtitle())

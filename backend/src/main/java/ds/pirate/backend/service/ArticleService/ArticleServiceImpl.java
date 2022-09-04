@@ -47,6 +47,10 @@ public class ArticleServiceImpl implements ArticleService{
     private final SavedRepository sarepo;
 
 
+
+
+
+
     @Override
     public String addSave(SaveDTO dto) {
         Optional<SaveList> checking = sarepo.checkSaveLogByUserIdAndArticleId(dto.getUserid(), dto.getAid());
@@ -143,6 +147,11 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public List<acommentDTO> getCommentListByAid(Long aid) {
+        // + 추가해야하는 내용으로 
+        // 코멘트 수정 가능유무, 코멘트 좋아요 싫어요 여부
+        // 프로필 하단으로 팝오버로 삭제 버튼 제공
+        // 이미 평점을 등록한 글이라면 input창 미표시
+
         Optional<List<acomments>> entity = crepo.getListByAid(aid);
         
         if (entity.isPresent()){
@@ -157,6 +166,10 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public ArticleDTO getArticleInfoByAid(Long aid) {
+
+        // + 추가해야하는 내용으로 
+        // Like, Save, 수정 가능유무
+        // 등록되어있을경우 파란색칠 아니면 검은색칠
         ArticlesList result = repo.getByAid(aid);
         ArticleDTO dto = EntityToDTO(result);
         List<String> hashString =  hrepo.getList(result.getAid())
@@ -165,6 +178,13 @@ public class ArticleServiceImpl implements ArticleService{
                                         .collect(Collectors.toList());
         dto.setTags(hashString);
         return dto;
+    }
+
+    @Override
+    public List<Object> SubscStatus(Long sbid, Long userid) {
+        // 글쓴이 정보 (사용자 이름, 구독자 수)
+        // subsc엔티티에서 sbid+userid조회 후 없으면 구독하기, 있으면 구독취소버튼
+        return null;
     }
 
     @Override
