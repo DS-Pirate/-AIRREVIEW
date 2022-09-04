@@ -47,7 +47,17 @@ public class ArticleServiceImpl implements ArticleService{
     private final SavedRepository sarepo;
 
 
+    @Override
+    public String removeComment(acommentDTO dto) {
+        Optional<acomments> checkingComment = crepo.getCommentByCidAndUserid(dto.getCid(), dto.getUserid());
 
+        if(checkingComment.isPresent()){
+            crepo.delete(checkingComment.get());
+            return "삭제되었습니다";
+        }else{
+            return "잘못된 접근입니다";
+        }
+    }
 
 
 
@@ -115,18 +125,24 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public Long addNewComment(acommentDTO dto) {
+        //이미 등록되어있으면 등록 못하게 막기 ! 해결
         Optional<airUser> result = urepo.findByEmail(dto.getEmail());
-        dto.setCommentGroup(dto.getCommentGroup()+1);
-        dto.setCommnetDepth(0L);
-        dto.setCommentSorts(0L);
-        dto.setUserid(result.get().getUserid());
-        dto.setRate(0);
-        
-        
-        acomments entity = commentDTOtoEntity(dto);
-        
-        crepo.save(entity);
-        return entity.getCid();
+        Optional<acomments> checkingAirUser= crepo.findByAiruser(airUser.builder().userid(dto.getUserid()).build());
+
+
+        if (!checkingAirUser.isPresent()) {
+            dto.setCommentGroup(dto.getCommentGroup()+1);
+            dto.setCommnetDepth(0L);
+            dto.setCommentSorts(0L);
+            dto.setUserid(result.get().getUserid());
+            dto.setRate(0);
+            acomments entity = commentDTOtoEntity(dto);
+            crepo.save(entity);
+            return entity.getCid();
+        }else{
+            return -1L;
+        }
+
     }
 
     @Override
@@ -148,9 +164,10 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public List<acommentDTO> getCommentListByAid(Long aid) {
         // + 추가해야하는 내용으로 
-        // 코멘트 수정 가능유무, 코멘트 좋아요 싫어요 여부
-        // 프로필 하단으로 팝오버로 삭제 버튼 제공
-        // 이미 평점을 등록한 글이라면 input창 미표시
+        // 코멘트 수정 가능유무>> userid가 넘어가니 프론트에서 store값이랑 비교
+        // 코멘트 좋아요 싫어요 여부 >> 이 역시 위와 같음
+        // 프로필 하단으로 팝오버로 삭제 버튼 제공 >>프론트
+        // 이미 평점을 등록한 글이라면 input창 미표시 >> 프론트
 
         Optional<List<acomments>> entity = crepo.getListByAid(aid);
         
