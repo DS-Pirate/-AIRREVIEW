@@ -35,6 +35,9 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("/api/article")
 @RequiredArgsConstructor
 @Log4j2
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!매우 중요 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//나중에 token도 같이 받아서 dto랑 토큰 같이넘겨서 .set으로 토큰값 덮어씌우기
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!매우 중요 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 public class BoardApiContorller {
 
     private final ArticleService aser;
@@ -92,6 +95,11 @@ public class BoardApiContorller {
     @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> saveArticle(@RequestBody SaveDTO dto){        
         return new ResponseEntity<>(aser.addSave(dto), HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/comment/remove", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> removeComment(@RequestBody acommentDTO dto){        
+        return new ResponseEntity<>(aser.removeComment(dto), HttpStatus.OK);
     }
 
 }

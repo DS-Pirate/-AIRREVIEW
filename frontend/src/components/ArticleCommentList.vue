@@ -77,7 +77,7 @@ export default {
             await axios.get(`/airreview/article/comment/${id}`)
                 .then(
                     res => {
-                        // console.log(res);
+                        console.log(res);
                         let str = "<hr>"
                         let counter = 0
                         for (let i = 0; i < res.data.commentList.length; i++) {
@@ -87,9 +87,9 @@ export default {
                             <div class="comment-section w-100 h-100 d-flex justify-content-between gap-2 py-3" style="margin-left:${(res.data.commentList[i].commnetDepth * 3)}rem !important; padding-right:${(res.data.commentList[i].commnetDepth * 3)}rem !important;"
                             data-cgroup="${res.data.commentList[i].commentGroup}" data-cdepth="${res.data.commentList[i].commnetDepth}" data-csorts="${res.data.commentList[i].commentSorts}" 
                             ref="cinfo">
-                                <div class="comment-profile h-auto d-flex justify-content-center align-items-start">
+                                <div class="comment-profile h-auto d-flex justify-content-start align-items-center flex-column gap-2">
                                     <img class ="img-fluid comment-profile-img mt-1" src="https://lh3.googleusercontent.com/a-/AFdZucqQDxMr6ZKaN-SnomfpYB8OZgFsFib8qYR3mVVW2g=s83-c-mo" alt="profile">
-                                    
+                                    ${res.data.commentList[i].userid==1?`<deletebtn id="deleteComment" data-c="${res.data.commentList[i].cid}" data-u=${res.data.commentList[i].userid} class="bi bi-x-lg btn p-2"></deletebtn>`:""}
                                 </div>
 
                                 <div class="comment-content w-95">
@@ -163,6 +163,7 @@ export default {
         async function addNewcomment() {
             let body = {
                 //state.email에서 끌고와야함
+                userid: 1,
                 email: "1aaa@aaa.com",
                 aid: id,
                 commentGroup: store.state.latestcGroup,
@@ -244,7 +245,6 @@ export default {
             console.log(rateDown[i]);
             console.log(rateDown[i].dataset);
             let tmpCommentid=rateDown[i].dataset.c;
-            let tmpUserid=1
 
             const headers = {
                 "Content-Type": "application/json; charset=utf-8",
@@ -252,7 +252,7 @@ export default {
             }
             let body = {
                 //state.email에서 끌고와야함
-                userid : tmpUserid,
+                userid : 1,
                 cid : tmpCommentid,
                 updown: -1
             }
@@ -263,6 +263,28 @@ export default {
             router.go(0)
         }
     }
+    let deleteBtn = document.getElementsByTagName("deletebtn")
+    for(let i = 0; i < deleteBtn.length; i++){
+        deleteBtn[i].onclick = async()=>{
+            const headers = {
+                "Content-Type": "application/json; charset=utf-8",
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+            }
+
+            let body = {
+                //store에서 끌고와야함
+                userid : 1,
+                cid : deleteBtn[i].dataset.c
+            }
+            await axios.post("./api/article/comment/remove", body, { headers })
+            .then(res=>console.log("사아아아아악제에에에에에", res))
+            .catch(e=>console.log(e))
+            router.go(0)
+        }
+    }
+
+    console.log(deleteBtn);
+
     
     
 

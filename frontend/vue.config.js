@@ -16,7 +16,7 @@ module.exports = defineConfig(
     devServer: {
         port: 8080,
         proxy : {
-        "/airreview/api" : {target, changeOrigin: true},
+        "/airreview/api/*" : {target, changeOrigin: true},
         "/airreview/images" :{target, changeOrigin: true},
         "/airreview/article" :{target, changeOrigin: true},
         }
