@@ -26,7 +26,7 @@ import ds.pirate.backend.security.util.JWTUtil;
 @RequiredArgsConstructor
 // By WebSecurityConfigurerAdapter is deprecated, change to Bean type as suggested on spring boot blog site
 // https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
-public class SecurityConfig{
+public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception{
