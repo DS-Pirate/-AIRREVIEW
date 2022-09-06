@@ -19,7 +19,8 @@
           <!-- 별점  -->
           <div class="rating-stars-section">
             <div ref="stars"></div>
-            <div class="ating-stars-section_accuraterating d-flex justify-content-between" style="font-size:0.1rem; color: #aaa;">
+            <div class="ating-stars-section_accuraterating d-flex justify-content-between"
+              style="font-size:0.1rem; color: #aaa;">
               <span>현재평점</span>
               <span class="rating-stars-section_accuraterating_num" ref="ratingnum"></span>
             </div>
@@ -40,20 +41,18 @@
 
       <hr>
       <!-- 버튼 -->
-      <ul class="actions">
-        <li>
-          <button class="border-0 bg-white" @click="addToLike"><span>Like</span>
-          </button>
-        </li>
+      <ul class="actions mx-0 px-1">
         <li>
           <button class="border-0 bg-white" data-bs-toggle="modal" data-bs-target="#share"><span>Share</span></button>
         </li>
-        <li>
-          <button class="border-0 bg-white" @click="addSave"><span>Save</span></button>
+        <li v-if="functionBtnChecking()">
+          <button class="border-0 bg-white" @click="addToLike"><span ref="fav">Like</span></button>
         </li>
-        <li>
-          <button class="border-0 bg-white" data-bs-toggle="modal" data-bs-target="#ReportModal"><span>Report</span>
-          </button>
+        <li v-if="functionBtnChecking()">
+          <button class="border-0 bg-white" @click="addSave"><span ref="save">Save</span></button>
+        </li>
+        <li v-if="functionBtnChecking()">
+          <button class="border-0 bg-white" data-bs-toggle="modal" data-bs-target="#ReportModal"><span ref="report">Report</span></button>
         </li>
       </ul>
 
@@ -93,7 +92,7 @@ export default {
     ArticleCommentList,
     ReportModal,
     ArticleUserCard
-},
+  },
   setup() {
     const router = useRouter()
     const Iatitle = ref(null)
@@ -106,71 +105,94 @@ export default {
     let stars = ref(null)
     let ratingnum = ref(null)
     let commentInfo = ""
-    let userCardInfo=[]
-    /** res.data.articleInfo
-     * aid
-     * atitle
-     * cgroup
-     * context
-     * shareable
-     * tags
-     * userId
-    */
+    let userCardInfo = []
+    let thisstorevariationshouldbeimplementedtostoresuseridkey = 1
     let articleInfo = null
-
-    /** res.data.userInfo
-     * airName
-     * userIntro
-     * imgSrc(예정)
-     */
     let userInfo = null
-
-
-
-
     let id = new URLSearchParams(window.location.search).get('article');
+    let fav = ref(null)
+    let report = ref(null)
+    let save = ref(null)
+
+
+    function functionBtnChecking() {
+      if (thisstorevariationshouldbeimplementedtostoresuseridkey != 0) {
+        return true
+      } else {
+        return false
+      }
+    }
 
     if (id.length == 0) {
       errorAndGetBack()
     }
 
+    function getArticleFunctionStatus() {
+      const url = "./api/article/functions"
+      const headers = {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+      }
+      let body = {
+        //store에서 userid획득
+        userid: 1,
+        aid: id
+      }
 
-    
-      async function addToLike(){
-        const url="./api/article/like"
-        const headers = {
-                "Content-Type": "application/json; charset=utf-8",
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
-            }
-            let body = {
-                //store에서 userid획득
-                userid:1,
-                aid:id
-                
-            }
-            await axios.post(url, body, { headers })
-            .then(res=>alert(res.data))
-            .catch(e=>console.log(e))
-            
-            // router.go(0)
+      axios.post(url, body, {headers})
+      .then(function(res){
+        if(res.data.favo == true){
+          fav.value.style.color = "#3041a9"
+        }
+        if(res.data.save == true){
+          save.value.style.color = "#3041a9"
+        }
+        if(res.data.report == true){
+          report.value.style.color = "red"
+          report.value.textContent = "Reported"
+          console.log(report);
+        }
+
+      })
+      .catch((e)=>{
+        console.log(e);
+      })
+
     }
-    async function addSave(){
-        const url="./api/article/save"
-        const headers = {
-                "Content-Type": "application/json; charset=utf-8",
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
-            }
-            let body = {
-                //store에서 userid획득
-                userid:1,
-                aid:id
-                
-            }
-            await axios.post(url, body, { headers })
-            .then(res=>alert(res.data))
-            .catch(e=>console.log(e))
-            
-            // router.go(0)
+
+
+
+    async function addToLike() {
+      const url = "./api/article/like"
+      const headers = {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+      }
+      let body = {
+        //store에서 userid획득
+        userid: 1,
+        aid: id
+      }
+      await axios.post(url, body, { headers })
+        .then(res => alert(res.data))
+        .catch(e => console.log(e))
+      router.go(0)
+    }
+    async function addSave() {
+      const url = "./api/article/save"
+      const headers = {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+      }
+      let body = {
+        //store에서 userid획득
+        userid: 1,
+        aid: id
+      }
+      await axios.post(url, body, { headers })
+        .then(res => alert(res.data))
+        .catch(e => console.log(e))
+      router.go(0)
     }
 
 
@@ -180,44 +202,38 @@ export default {
     }
 
     function getTimeFromJavaDate(s) {
-            const cont = new Date(s)
-            let date = new Date()
-            let calculated = (new Date(date.getTime()) - cont)/1000 //초 계산
-            if(calculated<60){
-                return "방금 전"
-            }else if(calculated<60*60){
-                return`${Math.round(calculated/(60))}분 전`
-            }else if(calculated<60*60*24){
-                return`${Math.round(calculated/(60*60))}시간 전`
-            }else if(calculated<60*60*24*7){
-                return`${Math.round(calculated/(60*60*24))}일 전`
-            }else if(calculated<60*60*24*7*5){
-                return`${Math.round(calculated/(60*60*24*7))}주 전`
-            }else if(calculated>31536000){
-                return`${Math.round(calculated/31536000)}년 전`
-            }
-        }
+      const cont = new Date(s)
+      let date = new Date()
+      let calculated = (new Date(date.getTime()) - cont) / 1000 //초 계산
+      if (calculated < 60) {
+        return "방금 전"
+      } else if (calculated < 60 * 60) {
+        return `${Math.round(calculated / (60))}분 전`
+      } else if (calculated < 60 * 60 * 24) {
+        return `${Math.round(calculated / (60 * 60))}시간 전`
+      } else if (calculated < 60 * 60 * 24 * 7) {
+        return `${Math.round(calculated / (60 * 60 * 24))}일 전`
+      } else if (calculated < 60 * 60 * 24 * 7 * 5) {
+        return `${Math.round(calculated / (60 * 60 * 24 * 7))}주 전`
+      } else if (calculated > 31536000) {
+        return `${Math.round(calculated / 31536000)}년 전`
+      }
+    }
 
 
     async function getArticleInformation() {
       await axios.get(`/airreview/article/read/${id}`)
         .then(res => {
-          //  
           articleInfo = res.data.articleInfo
-          userInfo = res.data.userInfo
           Iatitle.value.innerText = articleInfo.atitle
           Icontext.value.innerHTML = articleInfo.context
-          // userCardInfo.push(articleInfo.userId)
           Iregdate.value.innerText = getTimeFromJavaDate(articleInfo.regdate)
-          ratingnum.value.innerText = (res.data.articleAVG!=undefined)?res.data.articleAVG.toFixed(2):0
+          ratingnum.value.innerText = (res.data.articleAVG != undefined) ? res.data.articleAVG.toFixed(2) : 0
           let tmp = []
           for (let element of articleInfo.tags) {
             tmp.push(`<span>#${element}<span>`)
           }
           Itags.value.innerHTML = tmp.join(" ")
-          // if (!isNaN(articleInfo.userId)) {
-          //   userCardInfo.push(`./images/read/userid/${articleInfo.userId}`)
-          // }
           let tmp2 = []
           for (let i = 0; i < Math.round(res.data.articleAVG); i++) {
             tmp2.push(`<i class="bi bi-star-fill"></i>`)
@@ -226,8 +242,6 @@ export default {
             tmp2.push(`<i class="bi bi-star"></i>`)
           }
           stars.value.innerHTML = tmp2.join("")
-
-
         }).catch(
           e => {
             //에러 처리는 더 궁리 필요 
@@ -242,8 +256,8 @@ export default {
     }
 
     getArticleInformation()
-
-    return { articleInfo, userInfo, commentInfo, id, Iatitle, Icontext, Ishareable, Itags, IuserId, IairName, Iregdate, stars, ratingnum, getTimeFromJavaDate, userCardInfo, addToLike, addSave }
+    getArticleFunctionStatus()
+    return { articleInfo, userInfo, commentInfo, id, Iatitle, Icontext, Ishareable, Itags, IuserId, IairName, Iregdate, stars, ratingnum, getTimeFromJavaDate, userCardInfo, addToLike, addSave, functionBtnChecking,getArticleFunctionStatus, fav, report, save }
   }
 }
 </script>

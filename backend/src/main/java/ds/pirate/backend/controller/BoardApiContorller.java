@@ -28,6 +28,7 @@ import ds.pirate.backend.dto.acommentRateDTO;
 import ds.pirate.backend.dto.likeUnlikeDTO;
 import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.service.ArticleService.ArticleService;
+import ds.pirate.backend.vo.functioncheck;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -111,5 +112,11 @@ public class BoardApiContorller {
     public ResponseEntity<String> removeComment(@RequestBody acommentDTO dto){        
         return new ResponseEntity<>(aser.removeComment(dto), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/functions", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<String, Boolean>> functionsChecking(@RequestBody functioncheck vo){        
+        return new ResponseEntity<>(aser.getFunctionBtnStatusByUserid(vo.getUserid(), vo.getAid()) , HttpStatus.OK);
+    }
+
 
 }
