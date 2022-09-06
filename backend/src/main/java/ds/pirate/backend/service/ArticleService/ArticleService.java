@@ -1,5 +1,6 @@
 package ds.pirate.backend.service.ArticleService;
 
+import java.util.HashMap;
 import java.util.List;
 
 import ds.pirate.backend.dto.ArticleDTO;
@@ -31,6 +32,7 @@ public interface ArticleService {
     String addSave(SaveDTO dto);
     List<Object> SubscStatus(Long sbid, Long userid);
     String removeComment(acommentDTO dto);
+    HashMap<String, Object> getCommentListByAidTwo(Long aid, Long userid);
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {
         ArticlesList aentity = ArticlesList.builder()
