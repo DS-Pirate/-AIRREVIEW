@@ -57,6 +57,14 @@ public class UserRepositoryTests {
     @Autowired
     UserImageListRepository uimgrepo;
 
+    @Autowired
+    ArticleService aser;
+
+    @Test
+    void testingforeach(){
+        log.info(aser.getCommentListByAidTwo(1L, 1L));  
+    }
+
     // @Test
     // public void getbyaid(){
     //     ArticlesList result = arepo.getByAid(1L);

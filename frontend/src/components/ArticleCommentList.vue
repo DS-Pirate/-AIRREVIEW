@@ -60,6 +60,8 @@ export default {
                 return`${Math.round(calculated/(60*60*24))}일 전`
             }else if(calculated<60*60*24*7*5){
                 return`${Math.round(calculated/(60*60*24*7))}주 전`
+            }else if(calculated<31536000){
+                return`${Math.round(calculated/31536000)}달 전`
             }else if(calculated>31536000){
                 return`${Math.round(calculated/31536000)}년 전`
             }
@@ -67,6 +69,10 @@ export default {
 
 
         async function getComments() {
+            const headers = {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+        }
             function calcStar(num) {
                 let tmp = ""
                 for (let i = 0; i < num; i++) {
@@ -74,7 +80,8 @@ export default {
                 }
                 return tmp
             }
-            await axios.get(`/airreview/article/comment/${id}`)
+            let userid=1
+                await axios.get((userid==null)?`/airreview/article/comment/${id}`:`/airreview/api/article/comment/${id}/${userid}`, {headers})
                 .then(
                     res => {
                         console.log(res);
@@ -120,9 +127,18 @@ export default {
                                             추천
                                         </button>
                                         <div class="comment-content-functions d-flex justify-content-center align-items-center gap-2 border border-1 p-1 px-2">
-                                            <rateup class="bi bi-hand-thumbs-up" style="cursor:pointer;" data-c="${res.data.commentList[i].cid}"></rateup>
+                                            ${(res.data.commentList[i].israted==1)?`<rateup class="bi bi-hand-thumbs-up-fill" style="cursor:pointer;" data-c="${res.data.commentList[i].cid}"></rateup>
                                             ${res.data.commentList[i].rate}
-                                            <ratedwon class="bi bi-hand-thumbs-down" style="cursor:pointer;" data-c="${res.data.commentList[i].cid}"></ratedown>
+                                            <ratedwon class="bi bi-hand-thumbs-down" style="cursor:pointer;" data-c="${res.data.commentList[i].cid}"></ratedown>`:""}
+
+                                            ${(res.data.commentList[i].israted==-1)?`<rateup class="bi bi-hand-thumbs-up" style="cursor:pointer;" data-c="${res.data.commentList[i].cid}"></rateup>
+                                            ${res.data.commentList[i].rate}
+                                            <ratedwon class="bi bi-hand-thumbs-down-fill" style="cursor:pointer;" data-c="${res.data.commentList[i].cid}"></ratedown>`:""}
+                                            
+
+                                            ${(res.data.commentList[i].israted==0)?`<rateup class="bi bi-hand-thumbs-up" style="cursor:pointer;" data-c="${res.data.commentList[i].cid}"></rateup>
+                                            ${res.data.commentList[i].rate}
+                                            <ratedwon class="bi bi-hand-thumbs-down" style="cursor:pointer;" data-c="${res.data.commentList[i].cid}"></ratedown>`:""}
                                         </div>
                                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#commentreply${i}" aria-expanded="false" aria-controls="commentreply${i}">
                                             답글

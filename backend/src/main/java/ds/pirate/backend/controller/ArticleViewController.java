@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,11 +42,11 @@ public class ArticleViewController {
     @RequestMapping(value = "/comment/{aid}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HashMap<String, Object>> commentRead(@ModelAttribute("aid") Long aid){
         HashMap<String, Object> result = new HashMap<>();
-
         Object commentList = aservice.getCommentListByAid(aid);
-        
         result.put("commentList", commentList);
         
+        // HashMap<String, Object> result = aservice.getCommentListByAidTwo(aid);
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

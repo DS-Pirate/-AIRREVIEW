@@ -28,4 +28,5 @@ public class acommentDTO {
     private Integer rate; //코멘트 좋아요싫어요
     private Integer articleRate; // 글 별점
     private LocalDateTime regDate;
+    private int israted; //댓글상태넘겨주기용
 }

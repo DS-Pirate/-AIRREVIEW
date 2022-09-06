@@ -1,16 +1,16 @@
 package ds.pirate.backend.controller;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,6 +62,16 @@ public class BoardApiContorller {
         paramMap.put("url", "/airreview/images/read/"+uploadId);
         
         return paramMap;
+    }
+
+    @RequestMapping(value = "/comment/{aid}/{userid}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<String, Object>> commentReadWithUserid(@ModelAttribute("aid") Long aid, @ModelAttribute("userid") Long userid){
+        // HashMap<String, Object> result = new HashMap<>();
+        // Object commentList = aser.getCommentListByAid(aid);
+        // result.put("commentList", commentList);
+        
+        HashMap<String, Object> result = aser.getCommentListByAidTwo(aid, userid);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/comment/add/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
