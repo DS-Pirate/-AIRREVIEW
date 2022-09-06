@@ -91,7 +91,7 @@ export default {
                             counter++
                             //<img class ="img-fluid comment-profile-img mt-1" src="./images/read/userid/${res.data.commentList[i].userid}" alt="profile"> 나중에 프로필사진에 첨부
                             str += `
-                            <div class="comment-section w-100 h-100 d-flex justify-content-between gap-2 py-3" style="margin-left:${(res.data.commentList[i].commnetDepth * 3)}rem !important; padding-right:${(res.data.commentList[i].commnetDepth * 3)}rem !important;"
+                            <div id=comment${res.data.commentList[i].cid} class="comment-section w-100 h-100 d-flex justify-content-between gap-2 py-3" style="margin-left:${(res.data.commentList[i].commnetDepth * 3)}rem !important; padding-right:${(res.data.commentList[i].commnetDepth * 3)}rem !important;"
                             data-cgroup="${res.data.commentList[i].commentGroup}" data-cdepth="${res.data.commentList[i].commnetDepth}" data-csorts="${res.data.commentList[i].commentSorts}" 
                             ref="cinfo">
                                 <div class="comment-profile h-auto d-flex justify-content-start align-items-center flex-column gap-2">
@@ -188,9 +188,15 @@ export default {
                 articleRate: articleRating.value-1
 
             }
-            axios.post("./api/article/comment/add/", body, { headers }).then(
-                res=>console.log("신호 나이이스",res).catch(e=>console.log(e)),
-                router.go(0)
+            axios.post("./api/article/comment/add/", body, { headers })
+            .then(res=>{
+                if(res!=-1){
+                    alert("이미 리뷰를 작성하셨습니다")
+                    router.go(0)
+                }
+            })
+            .catch(e=>console.log(e),
+                
                 
             )
         }

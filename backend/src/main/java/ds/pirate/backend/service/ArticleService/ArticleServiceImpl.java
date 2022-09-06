@@ -47,6 +47,21 @@ public class ArticleServiceImpl implements ArticleService {
     private final LikeUnlikeRepository lurepo;
     private final SavedRepository sarepo;
 
+
+
+    @Override
+    public HashMap<String, Boolean> getFunctionBtnStatusByUserid(Long userid, Long aid) {
+        HashMap<String, Boolean> result = new HashMap<>();
+        Optional<likeUnlikeList> favoCheck = lurepo.checkFavoLogByUserIdAndArticleId(userid, aid);
+        Optional<reportList> reportCheck = arepo.checkReportLogByUserIdAndArticleId(userid, aid);
+        Optional<SaveList> saveCheck = sarepo.checkSaveLogByUserIdAndArticleId(userid, aid);
+        result.put("favo", favoCheck.isPresent()==true?true:false);
+        result.put("report", reportCheck.isPresent()==true?true:false);
+        result.put("save", saveCheck.isPresent()==true?true:false);
+        return result;
+    }
+
+
     @Override
     public String removeComment(acommentDTO dto) {
         Optional<acomments> checkingComment = crepo.getCommentByCidAndUserid(dto.getCid(), dto.getUserid());
@@ -136,9 +151,9 @@ public class ArticleServiceImpl implements ArticleService {
             dto.setRate(0);
             acomments entity = commentDTOtoEntity(dto);
             crepo.save(entity);
-            return entity.getCid();
-        } else {
             return -1L;
+        } else {
+            return checkingAirUser.get().getCid();
         }
 
     }
