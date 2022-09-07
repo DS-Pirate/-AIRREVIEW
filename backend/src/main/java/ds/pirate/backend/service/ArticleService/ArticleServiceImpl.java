@@ -29,6 +29,7 @@ import ds.pirate.backend.repository.HashTagRepository;
 import ds.pirate.backend.repository.ImageRepository;
 import ds.pirate.backend.repository.LikeUnlikeRepository;
 import ds.pirate.backend.repository.SavedRepository;
+// import ds.pirate.backend.repository.SubscribeRepository;
 import ds.pirate.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -46,8 +47,9 @@ public class ArticleServiceImpl implements ArticleService {
     private final ArticleReportRepository arepo;
     private final LikeUnlikeRepository lurepo;
     private final SavedRepository sarepo;
+    // private final SubscribeRepository surepo;
 
-
+    
 
     @Override
     public HashMap<String, Boolean> getFunctionBtnStatusByUserid(Long userid, Long aid) {
@@ -139,9 +141,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Long addNewComment(acommentDTO dto) {
-        // 이미 등록되어있으면 등록 못하게 막기 ! 해결
         Optional<airUser> result = urepo.findByEmail(dto.getEmail());
-        Optional<acomments> checkingAirUser = crepo.findByAiruser(airUser.builder().userid(dto.getUserid()).build());
+        Optional<acomments>  checkingAirUser = 
+        crepo.getCommentByAidAndUserid(ArticlesList.builder().aid(dto.getAid()).build(), airUser.builder().userid(dto.getUserid()).build());
 
         if (!checkingAirUser.isPresent()) {
             dto.setCommentGroup(dto.getCommentGroup() + 1);
@@ -173,14 +175,8 @@ public class ArticleServiceImpl implements ArticleService {
         return entity.getCid();
     }
 
-    @Override // 상태값없이 넘기기용
+    @Override 
     public List<acommentDTO> getCommentListByAid(Long aid) {
-        // + 추가해야하는 내용으로
-        // 코멘트 수정 가능유무>> userid가 넘어가니 프론트에서 store값이랑 비교
-        // 코멘트 좋아요 싫어요 여부 >> 이 역시 위와 같음
-        // 프로필 하단으로 팝오버로 삭제 버튼 제공 >>프론트
-        // 이미 평점을 등록한 글이라면 input창 미표시 >> 프론트
-
         Optional<List<acomments>> entity = crepo.getListByAid(aid);
 
         if (entity.isPresent()) {
@@ -193,7 +189,7 @@ public class ArticleServiceImpl implements ArticleService {
         return null;
     }
 
-   @Override //유저 id에따른 상태값추가
+   @Override
    public HashMap<String, Object> getCommentListByAidTwo(Long aid, Long userid) {
     HashMap<String, Object> result = new HashMap<>();
 
@@ -217,11 +213,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDTO getArticleInfoByAid(Long aid) {
-
-        // + 추가해야하는 내용으로
-        // Like, Save, 수정 가능유무
-        // 등록되어있을경우 파란색칠 아니면 검은색칠 
-        // 프론트에서 글userid와 store가 같을경우 파란칠 // 프론트 처리
         ArticlesList result = repo.getByAid(aid);
         ArticleDTO dto = EntityToDTO(result);
         List<String> hashString = hrepo.getList(result.getAid())
@@ -232,12 +223,6 @@ public class ArticleServiceImpl implements ArticleService {
         return dto;
     }
 
-    @Override
-    public List<Object> SubscStatus(Long sbid, Long userid) {
-        // 글쓴이 정보 (사용자 이름, 구독자 수)
-        // subsc엔티티에서 sbid+userid조회 후 없으면 구독하기, 있으면 구독취소버튼
-        return null;
-    }
 
     @Override
     public String addArticle(ArticleDTO dto, List<String> tags) {
@@ -256,5 +241,11 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         return result.getAid().toString();
+    }
+
+    @Override
+    public HashMap<String, Object> getSubscardInfo(Long aid, Long userid) {
+        
+        return null;
     }
 }

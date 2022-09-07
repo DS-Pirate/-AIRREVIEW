@@ -123,9 +123,6 @@ export default {
                                         </span>
                                     </div>
                                     <div class="comment-content-functions d-flex gap-3 my-1">
-                                        <button class="comment-content-functions_upbtn btn btn-outline-dark border border-1">
-                                            추천
-                                        </button>
                                         <div class="comment-content-functions d-flex justify-content-center align-items-center gap-2 border border-1 p-1 px-2">
                                             ${(res.data.commentList[i].israted==1)?`<rateup class="bi bi-hand-thumbs-up-fill" style="cursor:pointer;" data-c="${res.data.commentList[i].cid}"></rateup>
                                             ${res.data.commentList[i].rate}
@@ -190,8 +187,11 @@ export default {
             }
             axios.post("./api/article/comment/add/", body, { headers })
             .then(res=>{
-                if(res!=-1){
-                    alert("이미 리뷰를 작성하셨습니다")
+                if(res.data==-1){
+                    alert("등록되었습니다")
+                    router.go(0)
+                }else{
+                    alert("이미 리뷰를 등록하였습니다")
                     router.go(0)
                 }
             })
