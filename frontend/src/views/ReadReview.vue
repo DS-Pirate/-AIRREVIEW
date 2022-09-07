@@ -150,7 +150,6 @@ export default {
         if(res.data.report == true){
           report.value.style.color = "red"
           report.value.textContent = "Reported"
-          console.log(report);
         }
 
       })

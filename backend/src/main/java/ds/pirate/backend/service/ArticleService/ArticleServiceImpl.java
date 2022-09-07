@@ -29,7 +29,7 @@ import ds.pirate.backend.repository.HashTagRepository;
 import ds.pirate.backend.repository.ImageRepository;
 import ds.pirate.backend.repository.LikeUnlikeRepository;
 import ds.pirate.backend.repository.SavedRepository;
-import ds.pirate.backend.repository.SubscribeRepository;
+// import ds.pirate.backend.repository.SubscribeRepository;
 import ds.pirate.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -47,9 +47,9 @@ public class ArticleServiceImpl implements ArticleService {
     private final ArticleReportRepository arepo;
     private final LikeUnlikeRepository lurepo;
     private final SavedRepository sarepo;
-    private final SubscribeRepository surepo;
+    // private final SubscribeRepository surepo;
 
-
+    
 
     @Override
     public HashMap<String, Boolean> getFunctionBtnStatusByUserid(Long userid, Long aid) {
@@ -142,7 +142,8 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Long addNewComment(acommentDTO dto) {
         Optional<airUser> result = urepo.findByEmail(dto.getEmail());
-        Optional<acomments> checkingAirUser = crepo.findByAiruser(airUser.builder().userid(dto.getUserid()).build());
+        Optional<acomments>  checkingAirUser = 
+        crepo.getCommentByAidAndUserid(ArticlesList.builder().aid(dto.getAid()).build(), airUser.builder().userid(dto.getUserid()).build());
 
         if (!checkingAirUser.isPresent()) {
             dto.setCommentGroup(dto.getCommentGroup() + 1);
