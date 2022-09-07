@@ -18,7 +18,8 @@ module.exports = defineConfig(
         proxy : {
         "/airreview/api/*" : {target, changeOrigin: true},
         "/airreview/images" :{target, changeOrigin: true},
-        "/airreview/article" :{target, changeOrigin: true},
+            "/airreview/article" :{target, changeOrigin: true},
+            "/airreview/member/*" :{target, changeOrigin: true},
         }
 },
 publicPath: '/airreview',
