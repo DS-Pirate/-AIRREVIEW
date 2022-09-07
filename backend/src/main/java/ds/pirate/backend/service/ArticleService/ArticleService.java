@@ -33,7 +33,7 @@ public interface ArticleService {
     String removeComment(acommentDTO dto);
     HashMap<String, Object> getCommentListByAidTwo(Long aid, Long userid);
     HashMap<String, Boolean> getFunctionBtnStatusByUserid(Long userid, Long aid);
-    HashMap<String, Object> getSubscardInfo(Long aid, Long userid);
+    HashMap<String, String> getSubscardInfo(Long aid, Long userid);
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {
         ArticlesList aentity = ArticlesList.builder()

@@ -10,6 +10,7 @@ import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.SaveDTO;
 import ds.pirate.backend.dto.acommentDTO;
 import ds.pirate.backend.dto.acommentRateDTO;
+import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.dto.likeUnlikeDTO;
 import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.entity.ArticlesList;
@@ -21,6 +22,7 @@ import ds.pirate.backend.entity.acomments;
 import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.entity.likeUnlikeList;
 import ds.pirate.backend.entity.reportList;
+import ds.pirate.backend.entity.subscribList;
 import ds.pirate.backend.repository.ArticleReportRepository;
 import ds.pirate.backend.repository.ArticleRepository;
 import ds.pirate.backend.repository.CommentRateRepository;
@@ -29,7 +31,7 @@ import ds.pirate.backend.repository.HashTagRepository;
 import ds.pirate.backend.repository.ImageRepository;
 import ds.pirate.backend.repository.LikeUnlikeRepository;
 import ds.pirate.backend.repository.SavedRepository;
-// import ds.pirate.backend.repository.SubscribeRepository;
+import ds.pirate.backend.repository.SubscribeRepository;
 import ds.pirate.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -47,7 +49,7 @@ public class ArticleServiceImpl implements ArticleService {
     private final ArticleReportRepository arepo;
     private final LikeUnlikeRepository lurepo;
     private final SavedRepository sarepo;
-    // private final SubscribeRepository surepo;
+    private final SubscribeRepository surepo;
 
     
 
@@ -244,8 +246,17 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public HashMap<String, Object> getSubscardInfo(Long aid, Long userid) {
+    public HashMap<String, String> getSubscardInfo(Long aid, Long userid) {
+        HashMap<String, String> result = new HashMap<>();
+        Long articleUserId = repo.getArticleByAid(aid);
+        airUser articleUserEntity = urepo.findByUserId(articleUserId).get();
+        Optional<subscribList> subchecking = surepo.getIsSubcedByTargetIdAndUserid(articleUserId, userid);
+        Long subcount = surepo.getSumByTargetId(articleUserId);
+        result.put("articleUserName", articleUserEntity.getAirName());
+        result.put("articleUserImg", "./images/read/userid/"+(articleUserId.toString()));
+        result.put("isgudoked", subchecking.isPresent()?"true":"false");
+        result.put("subCount", subcount.toString());
         
-        return null;
+        return result;
     }
 }
