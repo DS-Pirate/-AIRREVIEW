@@ -9,11 +9,10 @@ public interface ApiMemberService {
 
     String register(airUserDTO dto);
 
-//    roleSet에러ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ
 //    default airUserDTO entityToDTO(airUser entity) {
-//        airUserDTO dto = airUser.builder()
+//        airUserDTO dto = airUserDTO.builder()
 //                .passwd(entity.getPasswd())
-//                .eMail(entity.getEMail())
+//                .email(entity.getEMail())
 //                .airName(entity.getAirName())
 //                .birthDay(entity.getBirthDay())
 //                .gender(entity.getGender())
@@ -26,7 +25,6 @@ public interface ApiMemberService {
 //                .roleSet(entity.getRoleSet().stream().map(
 //                                role -> new String("ROLE_" + role.name()))
 //                        .collect(Collectors.toSet()))
-//                .userImg(entity.getUserImg())
 //                .chName(entity.getChName())
 //                .commentList(entity.getCommentList())
 //                .build();
@@ -34,24 +32,24 @@ public interface ApiMemberService {
 //        return dto;
 //    }
 
-    default airUser dtoToEntity(airUserDTO dto){
-        airUser entity = airUser.builder()
-                .passwd(dto.getPasswd())
-                .eMail(dto.getEMail())
-                .airName(dto.getAirName())
-                .birthDay(dto.getBirthDay())
-                .gender(dto.getGender())
-                .auth(dto.isAuth())
-                .recentArticles(dto.getRecentArticles())
-                .q1(dto.getQ1())
-                .q2(dto.getQ2())
-                .q3(dto.getQ3())
-                .userIntro(dto.getUserIntro())
-                .chName(dto.getChName())
-                .build();
-
-        return entity;
-    }
+//    default airUser dtoToEntity(airUserDTO dto){
+//        airUser entity = airUser.builder()
+//                .passwd(dto.getPasswd())
+//                .eMail(dto.getEmail())
+//                .airName(dto.getAirName())
+//                .birthDay(dto.getBirthDay())
+//                .gender(dto.getGender())
+//                .auth(dto.isAuth())
+//                .recentArticles(dto.getRecentArticles())
+//                .q1(dto.getQ1())
+//                .q2(dto.getQ2())
+//                .q3(dto.getQ3())
+//                .userIntro(dto.getUserIntro())
+//                .chName(dto.getChName())
+//                .build();
+//
+//        return entity;
+//    }
 
 
 }
