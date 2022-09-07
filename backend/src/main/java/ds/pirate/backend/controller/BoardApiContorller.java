@@ -29,6 +29,7 @@ import ds.pirate.backend.dto.likeUnlikeDTO;
 import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import ds.pirate.backend.vo.functioncheck;
+import ds.pirate.backend.vo.subcard;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -65,12 +66,13 @@ public class BoardApiContorller {
         return paramMap;
     }
 
+    @RequestMapping(value = "/read/subcard/add", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> articleRead(@RequestBody subcard vo){
+        return new ResponseEntity<>(aser.subsFunction(vo.getAid(), vo.getUserid()), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/comment/{aid}/{userid}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HashMap<String, Object>> commentReadWithUserid(@ModelAttribute("aid") Long aid, @ModelAttribute("userid") Long userid){
-        // HashMap<String, Object> result = new HashMap<>();
-        // Object commentList = aser.getCommentListByAid(aid);
-        // result.put("commentList", commentList);
-        
         HashMap<String, Object> result = aser.getCommentListByAidTwo(aid, userid);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

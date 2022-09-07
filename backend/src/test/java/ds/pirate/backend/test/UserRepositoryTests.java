@@ -77,7 +77,7 @@ public class UserRepositoryTests {
 
     @Test
     void getArticleByAid(){
-        log.info(arepo.getArticleByAid(2L));
+        log.info(arepo.getArticleAuthorIdByAid(2L));
     }
 
     // @Test
