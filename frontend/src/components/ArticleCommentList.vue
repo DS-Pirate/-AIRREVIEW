@@ -41,7 +41,6 @@ export default {
 
         function clicked(i){
             this.articleRating = i+1
-            console.log(articleRating.value);
         }
 
         
@@ -84,7 +83,6 @@ export default {
                 await axios.get((userid==null)?`/airreview/article/comment/${id}`:`/airreview/api/article/comment/${id}/${userid}`, {headers})
                 .then(
                     res => {
-                        console.log(res);
                         let str = "<hr>"
                         let counter = 0
                         for (let i = 0; i < res.data.commentList.length; i++) {
@@ -209,8 +207,6 @@ export default {
     window.onload = function () {
     let result = document.getElementsByTagName("custominput")
     for (let i = 0; i < result.length; i++) { result[i].onclick = async() => {
-            console.log(result[i]); 
-            console.log(result[i].dataset);
             let tmpcommentGroup = result[i].dataset.g
             let tmpcommnetDepth = result[i].dataset.d
             let tmpcommentSorts = result[i].dataset.s
@@ -239,8 +235,6 @@ export default {
     let rateup = document.getElementsByTagName("rateup")
     for (let i = 0; i < result.length; i++) {
         rateup[i].onclick = async() => {
-            console.log(rateup[i]);
-            console.log(rateup[i].dataset);
             let tmpCommentid=rateup[i].dataset.c;
             let tmpUserid=1
 
@@ -264,8 +258,6 @@ export default {
     let rateDown = document.getElementsByTagName("ratedwon")
     for (let i = 0; i < result.length; i++) {
         rateDown[i].onclick = async() => {
-            console.log(rateDown[i]);
-            console.log(rateDown[i].dataset);
             let tmpCommentid=rateDown[i].dataset.c;
 
             const headers = {

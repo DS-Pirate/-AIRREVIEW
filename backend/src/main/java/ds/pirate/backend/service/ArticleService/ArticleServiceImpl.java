@@ -10,7 +10,6 @@ import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.SaveDTO;
 import ds.pirate.backend.dto.acommentDTO;
 import ds.pirate.backend.dto.acommentRateDTO;
-import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.dto.likeUnlikeDTO;
 import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.entity.ArticlesList;
@@ -248,7 +247,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public HashMap<String, String> getSubscardInfo(Long aid, Long userid) {
         HashMap<String, String> result = new HashMap<>();
-        Long articleUserId = repo.getArticleByAid(aid);
+        Long articleUserId = repo.getArticleAuthorIdByAid(aid);
         airUser articleUserEntity = urepo.findByUserId(articleUserId).get();
         Optional<subscribList> subchecking = surepo.getIsSubcedByTargetIdAndUserid(articleUserId, userid);
         Long subcount = surepo.getSumByTargetId(articleUserId);
@@ -256,7 +255,23 @@ public class ArticleServiceImpl implements ArticleService {
         result.put("articleUserImg", "./images/read/userid/"+(articleUserId.toString()));
         result.put("isgudoked", subchecking.isPresent()?"true":"false");
         result.put("subCount", subcount.toString());
-        
         return result;
     }
+
+    @Override
+    public String subsFunction(Long aid, Long userid) {
+        Long articleUserId = repo.getArticleAuthorIdByAid(aid);
+        Optional<subscribList> subchecking = surepo.getIsSubcedByTargetIdAndUserid(articleUserId, userid);
+        airUser articleUserEntity = urepo.findByUserId(articleUserId).get();
+        if(subchecking.isPresent()){
+            surepo.delete(subchecking.get());
+            return "구독이 해지되었습니다";
+        }else{
+            surepo.save(subscribList.builder().targetId(articleUserId).userid(articleUserEntity).build());
+            return "구독되었습니다";
+        }
+
+        
+    }
+
 }
