@@ -44,7 +44,6 @@ import { useRouter } from 'vue-router'
     let selected = null
     function selectedValue(i){
         selected = i
-        console.log(selected);
     }
 
     async function submitReport(){

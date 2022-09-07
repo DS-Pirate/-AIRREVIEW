@@ -33,7 +33,7 @@ import axios from "axios";
         if(IisSubed.value.dataset.is!="none"){
             await axios.post("./api/article/read/subcard/add",body, {headers})
             .then(function(res){
-                console.log(res);
+                alert(res.data)
                 router.go(0)
             })
         }else{
@@ -45,8 +45,6 @@ import axios from "axios";
 
         await axios.post("./article/read/subcard", body, { headers })
         .then(function(res){
-        
-            console.log(res);
             IuserIMG.value.src = res.data.articleUserImg
             IairName.value.textContent = res.data.articleUserName
         
