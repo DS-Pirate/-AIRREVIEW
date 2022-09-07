@@ -21,10 +21,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.acomments;
 import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.entity.subscribList;
 import ds.pirate.backend.entity.uImagesList;
 import ds.pirate.backend.repository.ArticleRepository;
 import ds.pirate.backend.repository.CommentRepository;
 import ds.pirate.backend.repository.HashTagRepository;
+import ds.pirate.backend.repository.SubscribeRepository;
 import ds.pirate.backend.repository.UserImageListRepository;
 import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.ArticleService.ArticleService;
@@ -60,9 +62,22 @@ public class UserRepositoryTests {
     @Autowired
     ArticleService aser;
 
+    @Autowired
+    SubscribeRepository srepo;
+
+    @Test
+    void subsTestingAdding(){
+        srepo.save(subscribList.builder().userid(airUser.builder().userid(1L).build()).targetId(1L).build());
+    }
+
     @Test
     void testingforeach(){
         log.info(aser.getCommentListByAidTwo(1L, 1L));  
+    }
+
+    @Test
+    void getArticleByAid(){
+        log.info(arepo.getArticleByAid(2L));
     }
 
     // @Test

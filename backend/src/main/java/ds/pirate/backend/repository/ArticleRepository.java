@@ -24,8 +24,10 @@ public interface ArticleRepository extends JpaRepository<ArticlesList,String> {
 
     @Query("select a from ArticlesList a")
     List<ArticlesList> getList();
-
       //Optioanl 사용할 이유가 없어보임(딱히 null값으로 나올만한게 없어보이고, 필요하면 사용 예정)
+
+    @Query("select aUser from ArticlesList a where a.aid=:aid")
+    Long getArticleByAid(Long aid);
     
 
 }

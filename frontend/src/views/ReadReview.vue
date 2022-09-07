@@ -223,6 +223,7 @@ export default {
     async function getArticleInformation() {
       await axios.get(`/airreview/article/read/${id}`)
         .then(res => {
+          console.log(res);
           articleInfo = res.data.articleInfo
           Iatitle.value.innerText = articleInfo.atitle
           Icontext.value.innerHTML = articleInfo.context
