@@ -36,10 +36,10 @@ public class airUser  extends DateEntity{
     @Column(nullable = false)
     private int gender;
 
-    @Column(nullable = false)
+    @Column
     private boolean auth;
 
-    @Column(nullable = false)
+    @Column
     private String recentArticles;
 
     @Column(nullable = false)
@@ -49,10 +49,10 @@ public class airUser  extends DateEntity{
     @Column(nullable = false)
     private String q3;
 
-    @Column(nullable = false)
+    @Column
     private String userIntro;
 
-    @Column(nullable = false)
+    @Column
     private String chName;
 
     @ElementCollection(fetch = FetchType.LAZY)
