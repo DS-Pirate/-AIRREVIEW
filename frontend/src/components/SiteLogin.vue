@@ -25,13 +25,10 @@ export default {
   setup(){
 // const router = useRouter();
     const state = reactive({
-      account: {
-        userid:null,
-        airName:"",
-      },
       form:{
         email:"",
-        password:""
+        password:"",
+        token: sessionStorage.getItem("TOKEN"),
       }
     })
     const submit =async()=>{
@@ -44,7 +41,7 @@ export default {
       }
       const url = "./airreview/member/login"
       const headers = { "Content-Type": "application/json; charset=utf-8;"}
-      const body = { eMail: state.form.email, passwd: state.form.password };
+      const body = { email: state.form.email, passwd: state.form.password };
       console.log(body);
       axios.post(url,body,{ headers }).then((res)=>{
         alert("로그인에 성공하였습니다");

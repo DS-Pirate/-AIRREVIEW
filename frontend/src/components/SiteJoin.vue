@@ -41,9 +41,7 @@
                 <option selected>성별</option>
                 <option value="1">남자</option>
                 <option value="2">여자</option>
-                <option value="3">상여자</option>
-                <option value="4">하남자</option>
-                <option value="5">이태일로부미</option>
+                <option value="3">하남자</option>
             </select>
         </div>
 
@@ -70,6 +68,7 @@
 import { reactive, ref } from '@vue/reactivity'
 // import { onMounted } from 'vue';
 import axios from 'axios'
+import router from "@/router";
 // import { useRouter } from 'vue-router';
 
 export default {
@@ -89,6 +88,7 @@ export default {
       q2: '',
       q3: '',
 
+      token: sessionStorage.getItem("TOKEN"),
       showModal: false,
     })
 
@@ -109,6 +109,8 @@ export default {
     const submit = async () => {
       if (state.email === '') {
         alert('이메일을 입력해주세요'); email.value.focus(); return false;
+      } else if (!(state.email.includes("@") && state.email.includes("."))) {
+        alert('이메일 양식이 맞지 않습니다.'); email.value.focus(); return false;
       } else if (state.password === '') {
         alert('비밀번호를 입력해주세요'); password.value.focus(); return false;
       } else if (state.repassword === '') {
@@ -139,18 +141,20 @@ export default {
       const url = '/airreview/member/register'
       const headers = {
         "Content-Type": "application/json",
-        // Authorization: state.token,
-        // "token": state.token
+        Authorization: state.token,
+        "token": state.token
       }
-      const body = JSON.stringify({
+      const body = {
         email: state.email, passwd: state.password, airName: state.name, birthDay: birthDay,
         gender: state.gender, q1: state.q1, q2: state.q2, q3: state.q3
-      });
+      };
       console.log(body)
       const response = await axios.post(url, body, { headers })
       console.log(response.data)
       if (response.status === 200) {
-        alert('회원가입이 완료되었습니다.');
+        alert('회원가입이 완료되었습니다.')
+        router.push(`/login`)
+
       } else {
         alert('회원가입에 실패하였습니다.')
       }
