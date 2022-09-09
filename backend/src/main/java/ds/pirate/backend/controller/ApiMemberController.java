@@ -15,14 +15,13 @@ import org.springframework.web.bind.annotation.*;
 @Log4j2
 public class ApiMemberController {
 
-//    private final ApiMemberService service;
-//
-//    @RequestMapping(value = "/register", method = RequestMethod.POST,
-//            consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<String> register(@RequestBody airUserDTO dto,
-//                                           @RequestHeader("token") String token) {
-//        log.info("api/member/register...airuserDTO:" + dto);
-//        String email = service.register(dto);
-//        return new ResponseEntity<>(email, HttpStatus.OK);
-//    }
+    private final ApiMemberService service;
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST,
+            consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> register(@RequestBody airUserDTO dto) {
+        log.info("api/member/register...airuserDTO:" + dto);
+        String email = service.register(dto);
+        return new ResponseEntity<>(email, HttpStatus.OK);
+    }
 }
