@@ -38,7 +38,7 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 @Log4j2
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!매우 중요 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//나중에 token도 같이 받아서 dto랑 토큰 같이넘겨서 .set으로 토큰값 덮어씌우기
+//나중에 token도 같이 받아서 dto랑 토큰 같이넘겨서 .set으로 토큰정보값 덮어씌우기
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!매우 중요 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 public class BoardApiContorller {
 

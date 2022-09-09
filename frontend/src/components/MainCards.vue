@@ -1,54 +1,47 @@
 <template>
 	<div class="col maincards">
-
-
-			<div class="card-1 card border-0 w-100 mb-5" >
-				<div class="wrapper">
-					<div class="date">
-						<span class="day">12</span>
-						<span class="month">Aug</span>
-						<span class="year">2016</span>
-					</div>
-					<div class="data">
-						<div class="content">
-								<router-link to="/read">
-								<span class="author">작성자구역</span>
-								<h3 class="title"><a href="#">타이틀구역</a></h3>
-								<p class="text">내용을 축약해서 이곳에 표시합니다 약 30자 정도 생각하고있습니다</p>
+		<div class="card-1 card border-0 w-100 mb-5">
+			<div class="wrapper">
+				<div class="date">
+					<span class="day">12</span>
+					<span class="month">Aug</span>
+					<span class="year">2016</span>
+				</div>
+				<div class="data">
+					<div class="content">
+						<router-link to="/read">
+							<span class="author">작성자구역</span>
+							<h3 class="title"><a href="#">타이틀구역</a></h3>
+							<p class="text">내용을 축약해서 이곳에 표시합니다 약 30자 정도 생각하고있습니다</p>
 						</router-link>
-								<label :for="cardinfo" class="menu-button"><span></span></label>
-							</div>
-						<input type="checkbox" :id="cardinfo" />
-						<ul class="menu-content">
-							<li>
-								<a href="#" class="bi bi-bookmark"></a>
-							</li>
-							<li><a href="#" class="bi bi-suit-heart-fill"><span>47</span></a></li>
-							<li><a href="#" class="bi bi-exclamation-lg"><span></span></a></li>
-						</ul>
+						<label :for="props.cardinfo" class="menu-button"><span></span></label>
 					</div>
+					<input type="checkbox" :id="props.cardinfo" />
+					<ul class="menu-content">
+						<li>
+							<a href="#" class="bi bi-bookmark"></a>
+						</li>
+						<li><a href="#" class="bi bi-suit-heart-fill"><span ref="favCount">47</span></a></li>
+						<li><a href="#" class="bi bi-exclamation-lg"></a></li>
+					</ul>
 				</div>
 			</div>
-
-
+		</div>
 	</div>
 </template>
 
-<script>
-export default {
-	props: ["cardinfo"],
-};
+<script setup>
+import { defineProps } from "vue";
+const props = defineProps(['cardinfo'])
+
+
 </script>
 
 <style scoped lang="scss">
-// Variables
 $regal-blue: #034378;
 $san-juan: #2d4e68;
 $white: #fff;
 $black: #000;
-
-
-// clear-fix mixin
 @mixin cf {
 
 	&::before,
@@ -77,15 +70,14 @@ h1 {
 h2 {
 	font-weight: 200;
 }
-h3{
-	font-weight: 200;;
-}
 
+h3 {
+	font-weight: 200;
+	;
+}
 .row {
 	margin: 50px auto 0;
 }
-
-// Base styles
 .card {
 	float: left;
 	padding: 0 1.7rem;
@@ -153,7 +145,7 @@ h3{
 	.text {
 		height: 4.5rem;
 		margin: 0;
-		color : black;
+		color: black;
 	}
 
 	input[type='checkbox'] {
@@ -164,8 +156,6 @@ h3{
 		transform: translateY(-60px);
 	}
 }
-
-// First card styles
 .card-1 {
 	.wrapper {
 		background: url(https://images.unsplash.com/photo-1496979551903-46e46589a88b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=cda12b505afa1beb06e49d89014cbd65&auto=format&fit=crop&w=634&q=80) 20% 1% / cover no-repeat;
@@ -249,7 +239,6 @@ h3{
 			}
 		}
 	}
-
 	.menu-content {
 		text-align: center;
 		position: absolute;

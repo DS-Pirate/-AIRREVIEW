@@ -30,8 +30,6 @@ public class ArticleViewController {
         HashMap<String,Object> result = new HashMap<>();
         ArticleDTO articleInfo = aservice.getArticleInfoByAid(aid);
         Double AVGRate = aservice.getArticleAvgRating(aid);
-        // Object userInfo = uservice.getUserInfoByuseridForarticle(articleInfo.getUserId());
-
         result.put("articleInfo", articleInfo);
         result.put("articleAVG", AVGRate);
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -49,13 +47,6 @@ public class ArticleViewController {
         HashMap<String, Object> result = new HashMap<>();
         Object commentList = aservice.getCommentListByAid(aid);
         result.put("commentList", commentList);
-        
-        // HashMap<String, Object> result = aservice.getCommentListByAidTwo(aid);
-
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
-
-
-    // getSubscardInfo
 }

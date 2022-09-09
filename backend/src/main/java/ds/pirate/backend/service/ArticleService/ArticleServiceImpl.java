@@ -3,9 +3,11 @@ package ds.pirate.backend.service.ArticleService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+
 import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.SaveDTO;
 import ds.pirate.backend.dto.acommentDTO;
@@ -50,7 +52,19 @@ public class ArticleServiceImpl implements ArticleService {
     private final SavedRepository sarepo;
     private final SubscribeRepository surepo;
 
-    
+    @Override
+    public List<ArticleDTO> getSearchCardInfo(Long aid) {
+        String hashname = hrepo.findByArticles(ArticlesList.builder().aid(aid).build()).get(0).getHashTagName();
+        List<ArticleDTO> articleResult = hrepo.getAidListByHashTagName(hashname).get().stream().map((Function<? super HashTags, ArticleDTO>) m->{
+            ArticleDTO dto = EntityToDTO( repo.getByAid(m.getArticles().getAid()));
+            if (dto.isShareable()) {
+                return dto;    
+            }else{
+                return null;
+            }
+        }).collect(Collectors.toList());
+        return articleResult;
+    }
 
     @Override
     public HashMap<String, Boolean> getFunctionBtnStatusByUserid(Long userid, Long aid) {

@@ -34,6 +34,7 @@ public interface ArticleService {
     HashMap<String, Object> getCommentListByAidTwo(Long aid, Long userid);
     HashMap<String, Boolean> getFunctionBtnStatusByUserid(Long userid, Long aid);
     HashMap<String, String> getSubscardInfo(Long aid, Long userid);
+    List<ArticleDTO> getSearchCardInfo(Long aid);
     String subsFunction(Long aid, Long userid);
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {

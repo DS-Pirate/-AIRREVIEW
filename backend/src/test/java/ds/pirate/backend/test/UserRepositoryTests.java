@@ -2,23 +2,28 @@ package ds.pirate.backend.test;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
-
+import ds.pirate.backend.dto.ArticleDTO;
 // import java.util.Optional;
 // import java.util.stream.Collectors;
 // import java.util.List;
 // import ds.pirate.backend.dto.ArticleDTO;
 // import ds.pirate.backend.entity.HashTags;
 import ds.pirate.backend.entity.ArticlesList;
+import ds.pirate.backend.entity.HashTags;
 import ds.pirate.backend.entity.acomments;
 import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.entity.subscribList;
@@ -80,6 +85,55 @@ public class UserRepositoryTests {
         log.info(arepo.getArticleAuthorIdByAid(2L));
     }
 
+    @Test
+    void getHashByAid(){
+        log.info("-----------------------------------------------------------------");
+        log.info(hrepo.findOneByArticle(1L).get().getHashTagName());
+        // log.info(hrepo.findOneByArticle(ArticlesList.builder().aid(27L).build()).get().getHashTagName());
+        log.info("-----------------------------------------------------------------");
+        //이 코드는 일단 보류 내생각에는 테스트케이스 만개 이런식으로 넘어가면 얘가 더 좋아야하는데 일단 아래 놈이 더 빠르니 저걸로
+    }
+    @Test
+    void getHashByAid2(){
+        log.info("-----------------------------------------------------------------");
+        log.info(hrepo.findByArticles(ArticlesList.builder().aid(27L).build()).get(0).getHashTagName());
+        //?? 정렬을 안 해서 그런가?? 아니면 글 수가 적어서 그런건가;;??? 얘가 더 빠르니  이걸로 ㄲ
+        log.info("-----------------------------------------------------------------");
+    }
+
+    @Test
+    void getHashtagSearchResult(){
+        log.info("-----------------------------------------------------------------");
+        
+        // hrepo.getAidListByHashTagName("추천게시글테스트용 글").get().forEach(result->{
+        //     log.info(result.getArticles().getAid());
+
+        // });
+        List<ArticleDTO> aidresult = hrepo.getAidListByHashTagName("추천게시글테스트용 글").get().stream().map((Function<? super HashTags, ArticleDTO>) m->{
+            ArticleDTO dto = aser.EntityToDTO( arepo.getByAid(m.getArticles().getAid()));
+            if (dto.isShareable()) {
+                return dto;    
+            }else{
+                return null;
+            }
+        }).collect(Collectors.toList());
+
+        log.info(aidresult);
+        log.info("-----------------------------------------------------------------");
+    }
+
+
+    @Test
+    void commentPagingTest(){
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<acomments> cmlist = crepo.getPageList(pageable, 53L);
+        
+        cmlist.get().forEach(comment->{
+            log.info(comment);
+        });
+
+        
+    }
     // @Test
     // public void getbyaid(){
     //     ArticlesList result = arepo.getByAid(1L);
@@ -130,7 +184,7 @@ public class UserRepositoryTests {
 
     @Test
     public void insertAccounts(){
-        IntStream.rangeClosed(1, 10).forEach(i->{
+        IntStream.rangeClosed(1, 20).forEach(i->{
             airUser entity = airUser.builder()
                                     .passwd(encoder.encode("1234"))
                                     .eMail(i+"aaa@aaa.com")
@@ -192,9 +246,9 @@ public class UserRepositoryTests {
     
     @Test
     public void insertcommentTwo(){
-        LongStream.rangeClosed(1L, 5L).forEach(i->{
-            ArticlesList aid = ArticlesList.builder().aid(1L).build();
-            airUser userid = airUser.builder().userid(1L).build();
+        LongStream.rangeClosed(24L, 34L).forEach(i->{
+            ArticlesList aid = ArticlesList.builder().aid(53L).build();
+            airUser userid = airUser.builder().userid(i).build();
             acomments entity = acomments.builder()
             .articles(aid)
             .airuser(userid)
