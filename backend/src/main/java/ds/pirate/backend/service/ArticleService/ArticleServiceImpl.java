@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ds.pirate.backend.dto.ArticleDTO;
@@ -55,14 +57,15 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<ArticleDTO> getSearchCardInfo(Long aid) {
         String hashname = hrepo.findByArticles(ArticlesList.builder().aid(aid).build()).get(0).getHashTagName();
-        List<ArticleDTO> articleResult = hrepo.getAidListByHashTagName(hashname).get().stream().map((Function<? super HashTags, ArticleDTO>) m->{
-            ArticleDTO dto = EntityToDTO( repo.getByAid(m.getArticles().getAid()));
-            if (dto.isShareable()) {
-                return dto;    
-            }else{
-                return null;
-            }
-        }).collect(Collectors.toList());
+        List<ArticleDTO> articleResult = hrepo.getAidListByHashTagName(hashname).get().stream()
+                .map((Function<? super HashTags, ArticleDTO>) m -> {
+                    ArticleDTO dto = EntityToDTO(repo.getByAid(m.getArticles().getAid()));
+                    if (dto.isShareable()) {
+                        return dto;
+                    } else {
+                        return null;
+                    }
+                }).collect(Collectors.toList());
         return articleResult;
     }
 
@@ -72,12 +75,11 @@ public class ArticleServiceImpl implements ArticleService {
         Optional<likeUnlikeList> favoCheck = lurepo.checkFavoLogByUserIdAndArticleId(userid, aid);
         Optional<reportList> reportCheck = arepo.checkReportLogByUserIdAndArticleId(userid, aid);
         Optional<SaveList> saveCheck = sarepo.checkSaveLogByUserIdAndArticleId(userid, aid);
-        result.put("favo", favoCheck.isPresent()==true?true:false);
-        result.put("report", reportCheck.isPresent()==true?true:false);
-        result.put("save", saveCheck.isPresent()==true?true:false);
+        result.put("favo", favoCheck.isPresent() == true ? true : false);
+        result.put("report", reportCheck.isPresent() == true ? true : false);
+        result.put("save", saveCheck.isPresent() == true ? true : false);
         return result;
     }
-
 
     @Override
     public String removeComment(acommentDTO dto) {
@@ -157,8 +159,8 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Long addNewComment(acommentDTO dto) {
         Optional<airUser> result = urepo.findByEmail(dto.getEmail());
-        Optional<acomments>  checkingAirUser = 
-        crepo.getCommentByAidAndUserid(ArticlesList.builder().aid(dto.getAid()).build(), airUser.builder().userid(dto.getUserid()).build());
+        Optional<acomments> checkingAirUser = crepo.getCommentByAidAndUserid(
+                ArticlesList.builder().aid(dto.getAid()).build(), airUser.builder().userid(dto.getUserid()).build());
 
         if (!checkingAirUser.isPresent()) {
             dto.setCommentGroup(dto.getCommentGroup() + 1);
@@ -190,7 +192,8 @@ public class ArticleServiceImpl implements ArticleService {
         return entity.getCid();
     }
 
-    @Override 
+    // 페이징 안된 코멘트리스트 뽑기
+    @Override
     public List<acommentDTO> getCommentListByAid(Long aid) {
         Optional<List<acomments>> entity = crepo.getListByAid(aid);
 
@@ -204,27 +207,43 @@ public class ArticleServiceImpl implements ArticleService {
         return null;
     }
 
-   @Override
-   public HashMap<String, Object> getCommentListByAidTwo(Long aid, Long userid) {
-    HashMap<String, Object> result = new HashMap<>();
 
-    Optional<List<acomments>> entity = crepo.getListByAid(aid);
+    //페이징 코멘트
+    @Override
+    public List<acommentDTO> getCommentListByAid2(Long aid, Pageable pageable) {
+        Page<acomments> cmlist = crepo.getPageList(pageable, aid);
+        if (!cmlist.isEmpty()) {
+            List<acommentDTO> dto = cmlist
+                    .stream()
+                    .map((Function<acomments, acommentDTO>) cmt -> {
+                        return commentEntityToDTO(cmt);
+                    })
+                    .collect(Collectors.toList());
+            return dto;
+        }
+        return null;
+    }
+
+    @Override
+    public HashMap<String, Object> getCommentListByAidTwo(Long aid, Long userid) {
+        HashMap<String, Object> result = new HashMap<>();
+        Optional<List<acomments>> entity = crepo.getListByAid(aid);
         if (entity.isPresent()) {
             List<acommentDTO> dto = entity.get()
                     .stream()
                     .map(cmt -> commentEntityToDTO(cmt)).collect(Collectors.toList());
-            
+
             dto.forEach((t) -> {
                 Optional<acommentRate> israted = ctrepo.getIsRatedByCidAndUserid(t.getCid(), userid);
-                if(israted.isPresent()){
+                if (israted.isPresent()) {
                     t.setIsrated(israted.get().getUpdown());
                 }
             });
             result.put("commentList", dto);
             return result;
         }
-       return null;
-   }
+        return null;
+    }
 
     @Override
     public ArticleDTO getArticleInfoByAid(Long aid) {
@@ -237,7 +256,6 @@ public class ArticleServiceImpl implements ArticleService {
         dto.setTags(hashString);
         return dto;
     }
-
 
     @Override
     public String addArticle(ArticleDTO dto, List<String> tags) {
@@ -266,8 +284,8 @@ public class ArticleServiceImpl implements ArticleService {
         Optional<subscribList> subchecking = surepo.getIsSubcedByTargetIdAndUserid(articleUserId, userid);
         Long subcount = surepo.getSumByTargetId(articleUserId);
         result.put("articleUserName", articleUserEntity.getAirName());
-        result.put("articleUserImg", "./images/read/userid/"+(articleUserId.toString()));
-        result.put("isgudoked", subchecking.isPresent()?"true":"false");
+        result.put("articleUserImg", "./images/read/userid/" + (articleUserId.toString()));
+        result.put("isgudoked", subchecking.isPresent() ? "true" : "false");
         result.put("subCount", subcount.toString());
         return result;
     }
@@ -277,15 +295,14 @@ public class ArticleServiceImpl implements ArticleService {
         Long articleUserId = repo.getArticleAuthorIdByAid(aid);
         Optional<subscribList> subchecking = surepo.getIsSubcedByTargetIdAndUserid(articleUserId, userid);
         airUser articleUserEntity = urepo.findByUserId(articleUserId).get();
-        if(subchecking.isPresent()){
+        if (subchecking.isPresent()) {
             surepo.delete(subchecking.get());
             return "구독이 해지되었습니다";
-        }else{
+        } else {
             surepo.save(subscribList.builder().targetId(articleUserId).userid(articleUserEntity).build());
             return "구독되었습니다";
         }
 
-        
     }
 
 }

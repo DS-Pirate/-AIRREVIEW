@@ -3,6 +3,7 @@ package ds.pirate.backend.test;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import ds.pirate.backend.dto.ArticleDTO;
+import ds.pirate.backend.dto.acommentDTO;
 // import java.util.Optional;
 // import java.util.stream.Collectors;
 // import java.util.List;
@@ -128,12 +130,39 @@ public class UserRepositoryTests {
         Pageable pageable = PageRequest.of(0, 10);
         Page<acomments> cmlist = crepo.getPageList(pageable, 53L);
         
-        cmlist.get().forEach(comment->{
-            log.info(comment);
-        });
+        List<acommentDTO> dto = cmlist
+        .stream()
+        .map((Function<? super acomments,acommentDTO>) cmt->{
+            return aser.commentEntityToDTO(cmt);
+        })
+        .collect(Collectors.toList());
+
+        log.info(dto);
+
+
+
+
+        // cmlist.get().forEach(comment->{
+        //     log.info(comment);
+        // });
+
+        
 
         
     }
+    @Test
+    public void getCommentListByAid() {
+        Optional<List<acomments>> entity = crepo.getListByAid(53L);
+        if (entity.isPresent()) {
+            List<acommentDTO> dto = entity.get()
+                    .stream()
+                    .map(cmt -> aser.commentEntityToDTO(cmt))
+                    .collect(Collectors.toList());
+            log.info(dto);
+        }
+
+    }
+
     // @Test
     // public void getbyaid(){
     //     ArticlesList result = arepo.getByAid(1L);
