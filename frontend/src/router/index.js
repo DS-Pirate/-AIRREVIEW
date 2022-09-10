@@ -10,6 +10,7 @@ import Favorite from '../views/FavoritePage.vue'
 import Saved from '../views/SavedPage.vue'
 import Mypage from '../views/MychannelPage.vue'
 import Write from "../views/ArticleWritePage.vue"
+import Modify from "../views/ArticleModifyPage.vue"
 import PostListPage from "../views/PostListPage.vue"
 import ReportPage from "../views/ReportPage.vue"
 import RecentPage from "../views/RecentList.vue"
@@ -58,6 +59,11 @@ const routes = [
     component: Write
   },
   {
+    path: '/modify',
+    name: 'mofify',
+    component : Modify
+  },
+  {
     path: '/read',
     name: 'readReview',
     component: ReadReview,
@@ -94,14 +100,6 @@ const routes = [
     name: 'logout',
     component: LogOut
   }
-  // {
-  //   path: '/about',
-  //   name: 'about',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  // }
 ]
 
 const router = createRouter({

@@ -3,9 +3,9 @@
         <div class="card-1 card border-0 w-100 mb-5">
             <div class="wrapper">
                 <div class="date">
-                    <span class="day">12</span>
-                    <span class="month">Aug</span>
-                    <span class="year">2016</span>
+                    <span class="day">{{props.cardInfo.regdate.split("-")[2].split("T")[0]}}</span>
+                    <span class="month">{{props.cardInfo.regdate.split("-")[1]}}</span>
+                    <span class="year">{{props.cardInfo.regdate.split("-")[0]}}</span>			
                 </div>
 				<a :href="'./read?article='+props.cardInfo.aid">
                 <div class="data">
@@ -15,8 +15,7 @@
                                 <a href="#">{{ props.cardInfo.atitle }}</a>
                             </h3>
                             <p class="text" v-html="props.cardInfo.context"></p>
-						</div>
-						<input type="checkbox" />
+						</div>			
 					</div>
 				</a>
             </div>
