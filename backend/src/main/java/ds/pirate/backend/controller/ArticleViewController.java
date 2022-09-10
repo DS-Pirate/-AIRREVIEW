@@ -43,15 +43,7 @@ public class ArticleViewController {
         return new ResponseEntity<>(aservice.getSubscardInfo(vo.getAid(), vo.getUserid()), HttpStatus.OK);
     }
 
-    
 
-    @RequestMapping(value = "/comment/{aid}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HashMap<String, Object>> commentRead(@ModelAttribute("aid") Long aid){
-        HashMap<String, Object> result = new HashMap<>();
-        Object commentList = aservice.getCommentListByAid(aid);
-        result.put("commentList", commentList);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
     @RequestMapping(value = "/comment/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HashMap<String, Object>> commentRead2(@RequestBody comment comment){
         Pageable pageable = PageRequest.of(comment.getReqPage(), 5);

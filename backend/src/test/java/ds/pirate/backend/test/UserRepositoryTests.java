@@ -86,10 +86,6 @@ public class UserRepositoryTests {
         srepo.save(subscribList.builder().userid(airUser.builder().userid(1L).build()).targetId(1L).build());
     }
 
-    @Test
-    void testingforeach(){
-        log.info(aser.getCommentListByAidTwo(1L, 1L));  
-    }
 
     @Test
     void getArticleByAid(){

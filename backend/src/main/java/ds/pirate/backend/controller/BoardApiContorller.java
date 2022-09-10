@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,11 +73,6 @@ public class BoardApiContorller {
         return new ResponseEntity<>(aser.subsFunction(vo.getAid(), vo.getUserid()), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/comment/{aid}/{userid}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HashMap<String, Object>> commentReadWithUserid(@ModelAttribute("aid") Long aid, @ModelAttribute("userid") Long userid){
-        HashMap<String, Object> result = aser.getCommentListByAidTwo(aid, userid);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
 
     @RequestMapping(value = "/comment/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HashMap<String, Object>> commentRead2(@RequestBody comment comment){

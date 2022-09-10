@@ -23,75 +23,57 @@
     </div>
 </template>
 <script setup>
-    import { ref, reactive } from "vue";
-    import { useRouter } from "vue-router";
-    import axios from "axios";
-    import ArticleCommentCard from "./ArticleCommentCard.vue";
+    import { ref, reactive } from "vue"
+    import { useRouter } from "vue-router"
+    import axios from "axios"
+    import ArticleCommentCard from "./ArticleCommentCard.vue"
 
-    const router = useRouter();
-    const id = new URLSearchParams(window.location.search).get("article");
+    const router = useRouter()
+    const id = new URLSearchParams(window.location.search).get("article")
     const headers = {
-        "Content-Type": "application/json; charset=utf-8",
+        "Content-Type": "application/json charset=utf-8",
         Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
-    };
+    }
 
-    let articleRating = ref(0);
-    let commentcontext = ref(null);
-    let commentState = reactive([]);
-    let stateInfo = reactive([]);
+    let articleRating = ref(0)
+    let commentcontext = ref(null)
+    let commentState = reactive([])
+    let stateInfo = reactive([])
     let commentInfo = reactive({
         aid: id,
         reqPage: 0,
         //store에서 나중에 가져와야함
         userid: 1,
-    });
+    })
 
     function getMoreComment() {
-            commentInfo.reqPage += 1;
-            getComments();
-
-
-
+        commentInfo.reqPage += 1
+        getComments()
     }
 
     function updateStates(cState, sInfo) {
-        commentState.push(...cState);
-        stateInfo.push(sInfo);
-        setToSessionStorage();
-        console.log(stateInfo);
-        console.log(commentState);
+        commentState.push(...cState)
+        stateInfo.push(sInfo)
     }
 
     function clicked(i) {
-        this.articleRating = i + 1;
-        console.log(articleRating.value);
-    }
-
-    function setToSessionStorage() {
-        console.log(commentState);
-        sessionStorage.setItem("aid", id);
-        sessionStorage.setItem("commentState", JSON.stringify(commentState));
-        sessionStorage.setItem("stateInfo", JSON.stringify(stateInfo));
+        this.articleRating = i + 1
     }
 
     function getComments() {
         axios
             .post(commentInfo.userid == null ? `/airreview/article/comment/` : `/airreview/api/article/comment/`, commentInfo, { headers })
             .then(function (res) {
-                console.log(res);
-                console.log("res.data.pageTotalCount" + res.data.pageTotalCount);
-                console.log("commentInfo.reqPage" + commentInfo.reqPage);
                 if (res.data.pageTotalCount == commentInfo.reqPage + 1) {
-                    updateStates(res.data.commentList, -999);
+                    updateStates(res.data.commentList, -999)
                 } else {
-                    updateStates(res.data.commentList, res.data.commentList.length);
+                    updateStates(res.data.commentList, res.data.commentList.length)
                 }
             })
             .catch(function (error) {
-                console.log("에러다" + error);
-                updateStates(null, -999);
-                
-            });
+                console.log("에러" + error)
+                updateStates(null, -999)
+            })
     }
 
     async function addNewcomment() {
@@ -102,25 +84,18 @@
             aid: id,
             commentContext: commentcontext.value.value,
             articleRate: articleRating.value - 1,
-        };
+        }
         axios
             .post("./api/article/comment/add/", body, { headers })
             .then((res) => {
                 if (res.data == -1) {
-                    alert("등록되었습니다");
-                    router.go(0);
+                    alert("등록되었습니다")
+                    router.go(0)
                 } else {
-                    alert("이미 리뷰를 등록하였습니다");
-                    router.go(0);
+                    alert("이미 리뷰를 등록하였습니다")
+                    router.go(0)
                 }
             })
-            .catch((e) => console.log(e));
-    }
-    if (!(sessionStorage.aid == id)) {
-        sessionStorage.clear();
-        getComments();
-    } else {
-        commentState = JSON.parse(sessionStorage.getItem("commentState"));
-        stateInfo = JSON.parse(sessionStorage.getItem("stateInfo"));
+            .catch((e) => console.log(e))
     }
 </script>
