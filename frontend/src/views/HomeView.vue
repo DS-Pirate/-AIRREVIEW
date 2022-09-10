@@ -8,13 +8,8 @@
 	</div>
 </template>
 
-<script>
+<script setup>
 import Cards from "@/components/MainCards.vue";
+sessionStorage.clear()
 
-export default {
-	name: "HomeView",
-	components: {
-		Cards,
-	},
-};
 </script>

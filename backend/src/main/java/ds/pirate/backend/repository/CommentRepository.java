@@ -4,6 +4,8 @@ package ds.pirate.backend.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -27,4 +29,11 @@ public interface CommentRepository extends JpaRepository<acomments, Long>{
 
     @Query("SELECT ct FROM acomments ct WHERE articles_aid=:aid and airuser_userid=:userid ")
     Optional<acomments> getCommentByAidAndUserid(ArticlesList aid, airUser userid);
+
+    @Query("SELECT commentGroup FROM acomments WHERE articles_aid=:aid ORDER BY comment_group desc")
+    List<Long> getLatestCommentGroupWhereMatchWithAid(Long aid);
+
+    @Query(value = "SELECT ct FROM acomments ct WHERE articles_aid=:aid ORDER BY comment_group asc, comment_sorts asc, commnet_depth desc ", 
+    countQuery = "select count(ct) from acomments ct WHERE articles_aid=:aid ORDER BY comment_group asc, comment_sorts asc, commnet_depth desc ")
+    Page<acomments> getPageList(Pageable pageable, Long aid);
 }

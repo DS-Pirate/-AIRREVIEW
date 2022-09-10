@@ -64,35 +64,27 @@
 
     </section>
     <!-- 추천 게시글 -->
-    <section class="recommend w-15">
-      <span class="title">추천 게시글</span>
-
-      <div class="row-cols-1  py-4">
-        <Cards v-for="i in 32" :key="i" class="col">
-          Column
-        </Cards>
-      </div>
-    </section>
+    <RecommentList></RecommentList>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Cards from '@/components/MainCards.vue'
 import axios from 'axios'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import ArticleCommentList from '@/components/ArticleCommentList.vue'
 import ReportModal from '../components/ReportModal.vue'
 import ArticleUserCard from '@/components/ArticleUserCard.vue'
+import RecommentList from '@/components/RecommentList.vue'
 export default {
   name: 'ReadReview',
   components: {
-    Cards,
     ArticleCommentList,
     ReportModal,
-    ArticleUserCard
-  },
+    ArticleUserCard,
+    RecommentList
+},
   setup() {
     const router = useRouter()
     const Iatitle = ref(null)

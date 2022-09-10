@@ -3,6 +3,8 @@ package ds.pirate.backend.service.ArticleService;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.HashTagDTO;
 import ds.pirate.backend.dto.SaveDTO;
@@ -34,7 +36,11 @@ public interface ArticleService {
     HashMap<String, Object> getCommentListByAidTwo(Long aid, Long userid);
     HashMap<String, Boolean> getFunctionBtnStatusByUserid(Long userid, Long aid);
     HashMap<String, String> getSubscardInfo(Long aid, Long userid);
+    List<ArticleDTO> getSearchCardInfo(Long aid);
     String subsFunction(Long aid, Long userid);
+
+    public HashMap<String, Object> getCommentListByAid2(Long aid, Pageable pageable);
+    public HashMap<String, Object> getCommentListByAidTwo2(Long aid, Pageable pageable, Long userid);
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {
         ArticlesList aentity = ArticlesList.builder()

@@ -7,302 +7,120 @@
                     <span class="me-2">별점 : </span>
                     <div class="comment-input-stars fs-5 me-3 pb-1 d-flex justify-content-end align-items-center">
                         <div v-for="i in 5" :key="i" v-on:click="clicked(i)">
-                            <a class="bi bi-star-fill comment-input-stars_star" v-if="i<articleRating"></a>
-                            <a class="bi bi-star comment-input-stars_star" v-if="i>=articleRating"></a>
-                        </div>  
+                            <a class="bi bi-star-fill comment-input-stars_star" v-if="i < articleRating"></a>
+                            <a class="bi bi-star comment-input-stars_star" v-if="i >= articleRating"></a>
+                        </div>
                     </div>
                     <button class="btn btn-sm btn-primary pull-right my-2" type="button" @click="addNewcomment">입력</button>
                 </div>
             </div>
         </div>
     </div>
-    <div ref="commentList"></div>
+    <hr />
+    <div class="comment-area d-flex flex-column align-items-center">
+        <ArticleCommentCard v-for="info in commentState" v-bind:key="info" v-bind:cardInfo="info"></ArticleCommentCard>
+        <button class="btn btn-primary w-100" @click="getMoreComment(3)" v-if="!(stateInfo[stateInfo.length - 1] == -999)">댓글 더 보기</button>
+    </div>
 </template>
-<script>
-import axios from 'axios'
-import { ref } from 'vue'
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
-import router from '@/router'
+<script setup>
+    import { ref, reactive } from "vue";
+    import { useRouter } from "vue-router";
+    import axios from "axios";
+    import ArticleCommentCard from "./ArticleCommentCard.vue";
 
-export default {
-    name: "CommentList",
-    props: ["comment"],
-    setup() {
-        let id = new URLSearchParams(window.location.search).get('article');
-        let cardCnt = 0
-        let comments = []
-        let commentLength = 0
-        let commentList = ref(null)
-        let commentcontext = ref(null)
-        const store = useStore()
-        const router = useRouter()
-        let articleRating = ref(0)
+    const router = useRouter();
+    const id = new URLSearchParams(window.location.search).get("article");
+    const headers = {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+    };
 
-        function clicked(i){
-            this.articleRating = i+1
-        }
+    let articleRating = ref(0);
+    let commentcontext = ref(null);
+    let commentState = reactive([]);
+    let stateInfo = reactive([]);
+    let commentInfo = reactive({
+        aid: id,
+        reqPage: 0,
+        //store에서 나중에 가져와야함
+        userid: 1,
+    });
 
-        
-
-        function getTimeFromJavaDateForComment(s) {
-            const cont = new Date(s)
-            let date = new Date()
-            let calculated = (new Date(date.getTime()) - cont)/1000 //초 계산
-            if(calculated<60){
-                return "방금 전"
-            }else if(calculated<60*60){
-                return`${Math.round(calculated/(60))}분 전`
-            }else if(calculated<60*60*24){
-                return`${Math.round(calculated/(60*60))}시간 전`
-            }else if(calculated<60*60*24*7){
-                return`${Math.round(calculated/(60*60*24))}일 전`
-            }else if(calculated<60*60*24*7*5){
-                return`${Math.round(calculated/(60*60*24*7))}주 전`
-            }else if(calculated<31536000){
-                return`${Math.round(calculated/31536000)}달 전`
-            }else if(calculated>31536000){
-                return`${Math.round(calculated/31536000)}년 전`
-            }
-        }
+    function getMoreComment() {
+            commentInfo.reqPage += 1;
+            getComments();
 
 
-        async function getComments() {
-            const headers = {
-            "Content-Type": "application/json; charset=utf-8",
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
-        }
-            function calcStar(num) {
-                let tmp = ""
-                for (let i = 0; i < num; i++) {
-                    tmp += `<i class="bi bi-star-fill"></i>`
-                }
-                return tmp
-            }
-            let userid=1
-                await axios.get((userid==null)?`/airreview/article/comment/${id}`:`/airreview/api/article/comment/${id}/${userid}`, {headers})
-                .then(
-                    res => {
-                        let str = "<hr>"
-                        let counter = 0
-                        for (let i = 0; i < res.data.commentList.length; i++) {
-                            counter++
-                            //<img class ="img-fluid comment-profile-img mt-1" src="./images/read/userid/${res.data.commentList[i].userid}" alt="profile"> 나중에 프로필사진에 첨부
-                            str += `
-                            <div id=comment${res.data.commentList[i].cid} class="comment-section w-100 h-100 d-flex justify-content-between gap-2 py-3" style="margin-left:${(res.data.commentList[i].commnetDepth * 3)}rem !important; padding-right:${(res.data.commentList[i].commnetDepth * 3)}rem !important;"
-                            data-cgroup="${res.data.commentList[i].commentGroup}" data-cdepth="${res.data.commentList[i].commnetDepth}" data-csorts="${res.data.commentList[i].commentSorts}" 
-                            ref="cinfo">
-                                <div class="comment-profile h-auto d-flex justify-content-start align-items-center flex-column gap-2">
-                                    <img class ="img-fluid comment-profile-img mt-1" src="https://lh3.googleusercontent.com/a-/AFdZucqQDxMr6ZKaN-SnomfpYB8OZgFsFib8qYR3mVVW2g=s83-c-mo" alt="profile">
-                                    ${res.data.commentList[i].userid==1?`<deletebtn id="deleteComment" data-c="${res.data.commentList[i].cid}" data-u=${res.data.commentList[i].userid} class="bi bi-x-lg btn p-2"></deletebtn>`:""}
-                                </div>
 
-                                <div class="comment-content w-95">
-                                    <div class="comment-content-userinfo d-flex justify-content-between align-items-center">
-                                        <div class="comment-content-userinfo-left d-flex flex-column">
-                                            <span class="comment-content-userinfo-left_username">
-                                                ${res.data.commentList[i].userName}
-                                            </span>
-                                            <span class="comment-content-userinfo-left_date text-secondary" style="font-size:0.75rem;">
-                                                ${getTimeFromJavaDateForComment(res.data.commentList[i].regDate)}
-                                            </span>
-                                        </div>
-                                        <div class="comment-content-userinfo-right">
-                                            <span class="comment-content-userinfo-right_articlerate">
-                                                <span class="comment-content-userinfo-right_articlerate_star fs-5">
-                                                    ${calcStar(res.data.commentList[i].articleRate)}
-                                                </span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="comment-content-context">
-                                        <span class="comment-content-context_description">
-                                            ${res.data.commentList[i].commentContext}
-                                        </span>
-                                    </div>
-                                    <div class="comment-content-functions d-flex gap-3 my-1">
-                                        <div class="comment-content-functions d-flex justify-content-center align-items-center gap-2 border border-1 p-1 px-2">
-                                            ${(res.data.commentList[i].israted==1)?`<rateup class="bi bi-hand-thumbs-up-fill" style="cursor:pointer;" data-c="${res.data.commentList[i].cid}"></rateup>
-                                            ${res.data.commentList[i].rate}
-                                            <ratedwon class="bi bi-hand-thumbs-down" style="cursor:pointer;" data-c="${res.data.commentList[i].cid}"></ratedown>`:""}
+    }
 
-                                            ${(res.data.commentList[i].israted==-1)?`<rateup class="bi bi-hand-thumbs-up" style="cursor:pointer;" data-c="${res.data.commentList[i].cid}"></rateup>
-                                            ${res.data.commentList[i].rate}
-                                            <ratedwon class="bi bi-hand-thumbs-down-fill" style="cursor:pointer;" data-c="${res.data.commentList[i].cid}"></ratedown>`:""}
-                                            
+    function updateStates(cState, sInfo) {
+        commentState.push(...cState);
+        stateInfo.push(sInfo);
+        setToSessionStorage();
+        console.log(stateInfo);
+        console.log(commentState);
+    }
 
-                                            ${(res.data.commentList[i].israted==0)?`<rateup class="bi bi-hand-thumbs-up" style="cursor:pointer;" data-c="${res.data.commentList[i].cid}"></rateup>
-                                            ${res.data.commentList[i].rate}
-                                            <ratedwon class="bi bi-hand-thumbs-down" style="cursor:pointer;" data-c="${res.data.commentList[i].cid}"></ratedown>`:""}
-                                        </div>
-                                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#commentreply${i}" aria-expanded="false" aria-controls="commentreply${i}">
-                                            답글
-                                        </button>                                        
-                                    </div>
-                                    <form>
-                                        <div class="collapse" id="commentreply${i}">
-                                            <div class="input-class h-75">
-                                                <input id="rereply${i}" type="text" class="form-control">
-                                            </div>
-                                            <div class="input-btn-class h-25 py-1 w-100 d-flex justify-content-end">
-                                                <custominput class="btn btn-primary replyReplySubmit" style="cursor:pointer;" data-g="${res.data.commentList[i].commentGroup}" data-d="${res.data.commentList[i].commnetDepth+1}" data-s="${res.data.commentList[i].commentSorts+1}" type="button">답글</customInput>
-                                            </div>
-                                        </div>
-                                    </form>
+    function clicked(i) {
+        this.articleRating = i + 1;
+        console.log(articleRating.value);
+    }
 
-                                </div>
-                            </div>
-                            <hr>`
+    function setToSessionStorage() {
+        console.log(commentState);
+        sessionStorage.setItem("aid", id);
+        sessionStorage.setItem("commentState", JSON.stringify(commentState));
+        sessionStorage.setItem("stateInfo", JSON.stringify(stateInfo));
+    }
 
-                            if (counter == res.data.commentList.length) {
-                                store.commit("setcLatestcGroup", res.data.commentList[i].commentGroup)
-                            }
-                        }
-                        commentList.value.innerHTML = str
-
-                    }
-                ).catch(
-                    e => console.log(e)
-                )
-        }
-
-        const headers = {
-            "Content-Type": "application/json; charset=utf-8",
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
-        }
-
-        async function addNewcomment() {
-            let body = {
-                //state.email에서 끌고와야함
-                userid: 1,
-                email: "1aaa@aaa.com",
-                aid: id,
-                commentGroup: store.state.latestcGroup,
-                commentContext: commentcontext.value.value,
-                commentSorts: 0,
-                articleRate: articleRating.value-1
-
-            }
-            axios.post("./api/article/comment/add/", body, { headers })
-            .then(res=>{
-                if(res.data==-1){
-                    alert("등록되었습니다")
-                    router.go(0)
-                }else{
-                    alert("이미 리뷰를 등록하였습니다")
-                    router.go(0)
+    function getComments() {
+        axios
+            .post(commentInfo.userid == null ? `/airreview/article/comment/` : `/airreview/api/article/comment/`, commentInfo, { headers })
+            .then(function (res) {
+                console.log(res);
+                console.log("res.data.pageTotalCount" + res.data.pageTotalCount);
+                console.log("commentInfo.reqPage" + commentInfo.reqPage);
+                if (res.data.pageTotalCount == commentInfo.reqPage + 1) {
+                    updateStates(res.data.commentList, -999);
+                } else {
+                    updateStates(res.data.commentList, res.data.commentList.length);
                 }
             })
-            .catch(e=>console.log(e),
+            .catch(function (error) {
+                console.log("에러다" + error);
+                updateStates(null, -999);
                 
-                
-            )
-        }
-
-        getComments()
-        return { cardCnt, comments, commentLength, commentList, addNewcomment, commentcontext, articleRating, clicked, getTimeFromJavaDateForComment}
-    }
-}
-    //쓰기싫었지만 어쩔수없음 흑흑..
-    window.onload = function () {
-    let result = document.getElementsByTagName("custominput")
-    for (let i = 0; i < result.length; i++) { result[i].onclick = async() => {
-            let tmpcommentGroup = result[i].dataset.g
-            let tmpcommnetDepth = result[i].dataset.d
-            let tmpcommentSorts = result[i].dataset.s
-            const headers = {
-                "Content-Type": "application/json; charset=utf-8",
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
-            }
-            let body = {
-                //state.email에서 끌고와야함
-                email: "1aaa@aaa.com",
-                aid: new URLSearchParams(window.location.search).get('article'),
-                commentGroup: tmpcommentGroup,
-                commnetDepth: tmpcommnetDepth,
-                commentSorts: tmpcommentSorts,
-                commentContext: document.getElementById(`rereply${i}`).value
-            }
-            await axios.post("./api/article/comment/add/reply", body, { headers })
-            .then(res=>console.log("대댓들어간다아아아",res))
-            .catch(e=>console.log(e))
-            
-            router.go(0)
-        }
+            });
     }
 
-    //쓰기싫었지만 어쩔수없음2 흑흑..
-    let rateup = document.getElementsByTagName("rateup")
-    for (let i = 0; i < result.length; i++) {
-        rateup[i].onclick = async() => {
-            let tmpCommentid=rateup[i].dataset.c;
-            let tmpUserid=1
-
-            const headers = {
-                "Content-Type": "application/json; charset=utf-8",
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
-            }
-            let body = {
-                //state.email에서 끌고와야함
-                userid : tmpUserid,
-                cid : tmpCommentid,
-                updown: 1
-            }
-            await axios.post("./api/article/comment/add/rating/", body, { headers })
-            .then(res=>console.log("레이팅들어간다아아아아",res))
-            .catch(e=>console.log(e)) 
-            router.go(0)
-        }
+    async function addNewcomment() {
+        let body = {
+            //state.userid+email에서 끌고와야함
+            userid: 1,
+            email: "1aaa@aaa.com",
+            aid: id,
+            commentContext: commentcontext.value.value,
+            articleRate: articleRating.value - 1,
+        };
+        axios
+            .post("./api/article/comment/add/", body, { headers })
+            .then((res) => {
+                if (res.data == -1) {
+                    alert("등록되었습니다");
+                    router.go(0);
+                } else {
+                    alert("이미 리뷰를 등록하였습니다");
+                    router.go(0);
+                }
+            })
+            .catch((e) => console.log(e));
     }
-        //쓰기싫었지만 어쩔수없음3 흑흑..
-    let rateDown = document.getElementsByTagName("ratedwon")
-    for (let i = 0; i < result.length; i++) {
-        rateDown[i].onclick = async() => {
-            let tmpCommentid=rateDown[i].dataset.c;
-
-            const headers = {
-                "Content-Type": "application/json; charset=utf-8",
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
-            }
-            let body = {
-                //state.email에서 끌고와야함
-                userid : 1,
-                cid : tmpCommentid,
-                updown: -1
-            }
-            await axios.post("./api/article/comment/add/rating/", body, { headers })
-            .then(res=>console.log("레이팅들어간다아아아아",res))
-            .catch(e=>console.log(e))
-            
-            router.go(0)
-        }
+    if (!(sessionStorage.aid == id)) {
+        sessionStorage.clear();
+        getComments();
+    } else {
+        commentState = JSON.parse(sessionStorage.getItem("commentState"));
+        stateInfo = JSON.parse(sessionStorage.getItem("stateInfo"));
     }
-    let deleteBtn = document.getElementsByTagName("deletebtn")
-    for(let i = 0; i < deleteBtn.length; i++){
-        deleteBtn[i].onclick = async()=>{
-            const headers = {
-                "Content-Type": "application/json; charset=utf-8",
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
-            }
-
-            let body = {
-                //store에서 끌고와야함
-                userid : 1,
-                cid : deleteBtn[i].dataset.c
-            }
-            await axios.post("./api/article/comment/remove", body, { headers })
-            .then(res=>console.log("사아아아아악제에에에에에", res))
-            .catch(e=>console.log(e))
-            router.go(0)
-        }
-    }
-
-    console.log(deleteBtn);
-
-    
-    
-
-}
-
 </script>
-

@@ -1,6 +1,9 @@
 package ds.pirate.backend.controller;
 
 import java.util.HashMap;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.pirate.backend.dto.ArticleDTO;
-
 import ds.pirate.backend.service.ArticleService.ArticleService;
+import ds.pirate.backend.vo.comment;
 import ds.pirate.backend.vo.subcard;
 import lombok.RequiredArgsConstructor;
 
@@ -30,8 +33,6 @@ public class ArticleViewController {
         HashMap<String,Object> result = new HashMap<>();
         ArticleDTO articleInfo = aservice.getArticleInfoByAid(aid);
         Double AVGRate = aservice.getArticleAvgRating(aid);
-        // Object userInfo = uservice.getUserInfoByuseridForarticle(articleInfo.getUserId());
-
         result.put("articleInfo", articleInfo);
         result.put("articleAVG", AVGRate);
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -49,13 +50,12 @@ public class ArticleViewController {
         HashMap<String, Object> result = new HashMap<>();
         Object commentList = aservice.getCommentListByAid(aid);
         result.put("commentList", commentList);
-        
-        // HashMap<String, Object> result = aservice.getCommentListByAidTwo(aid);
-
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
-
-
-    // getSubscardInfo
+    @RequestMapping(value = "/comment/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<String, Object>> commentRead2(@RequestBody comment comment){
+        Pageable pageable = PageRequest.of(comment.getReqPage(), 5);
+        HashMap<String, Object> result = aservice.getCommentListByAid2(comment.getAid(), pageable);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }
