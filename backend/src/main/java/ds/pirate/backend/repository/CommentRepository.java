@@ -27,7 +27,7 @@ public interface CommentRepository extends JpaRepository<acomments, Long>{
 
     Optional<acomments> findByAiruser(airUser airuser);
 
-    @Query("SELECT ct FROM acomments ct WHERE articles_aid=:aid and airuser_userid=:userid ")
+    @Query("SELECT ct FROM acomments ct WHERE articles_aid=:aid and airuser_userid=:userid and commnet_depth=0 ")
     Optional<acomments> getCommentByAidAndUserid(ArticlesList aid, airUser userid);
 
     @Query("SELECT commentGroup FROM acomments WHERE articles_aid=:aid ORDER BY comment_group desc")
