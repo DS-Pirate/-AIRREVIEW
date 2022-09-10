@@ -28,7 +28,7 @@ export default {
       form:{
         email:"",
         password:"",
-        token: sessionStorage.getItem("TOKEN"),
+        name:"",
       }
     })
     const submit =async()=>{
@@ -39,23 +39,18 @@ export default {
         alert('비밀번호를 확인해주세요');
         return false;
       }
-      const url = "./airreview/member/login"
+      const url = "/airreview/member/login"
       const headers = { "Content-Type": "application/json; charset=utf-8;"}
       const body = { email: state.form.email, passwd: state.form.password };
       console.log(body);
-      axios.post(url,body,{ headers }).then((res)=>{
-        alert("로그인에 성공하였습니다");
-        state.account = res.data;
-      }).catch(()=>{
-        alert("로그인에 실패했습니다. 계정 정보를 확인해주세요!");
+      await axios.post(url, body, {headers}).then(function(res){
+        if(res.data != null){
+          sessionStorage.setItem("TOKEN", res.data.token)
+          alert('로그인되었습니다.')
+        } else {
+          alert('로그인 실패하였습니다.')
+        }
       })
-
-
-      // axios.get(url, {headers}).then((res)=>{
-      //   console.log(res.data);
-      //   state.account = res.data;
-      //
-      // })
 
     }
     return{state, submit}
