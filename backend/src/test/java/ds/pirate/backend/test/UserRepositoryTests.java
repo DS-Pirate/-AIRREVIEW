@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import ds.pirate.backend.dto.ArticleDTO;
+import ds.pirate.backend.dto.HashTagDTO;
 import ds.pirate.backend.dto.acommentDTO;
 // import java.util.Optional;
 // import java.util.stream.Collectors;
@@ -75,6 +76,21 @@ public class UserRepositoryTests {
 
     @Autowired
     CommentRateRepository ctrepo;
+
+
+    @Test
+    void getPagedAidListByHashTagName(){
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<HashTags> result = hrepo.findByHashTagNameContainsIgnoreCaseOrderByHidDesc("테스트", pageable);
+        List<ArticleDTO> aresult = result.get().map((Function<HashTags, ArticleDTO>) dto->{
+            ArticleDTO dtoresult = aser.EntityToDTO(dto.getArticles());
+            return dtoresult;
+        }).collect(Collectors.toList());
+        
+        aresult.forEach(dto -> {
+            log.info(dto);
+        });
+    }
 
     @Test
     void isratedget(){

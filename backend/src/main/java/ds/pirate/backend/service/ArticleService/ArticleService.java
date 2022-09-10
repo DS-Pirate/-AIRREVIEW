@@ -37,6 +37,7 @@ public interface ArticleService {
     String subsFunction(Long aid, Long userid);
     HashMap<String, Object> getCommentListByAid2(Long aid, Pageable pageable);
     HashMap<String, Object> getCommentListByAidTwo2(Long aid, Pageable pageable, Long userid);
+    HashMap<String, Object> getCardInfosByHashTagName(Long aid, Pageable pageable);
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {
         ArticlesList aentity = ArticlesList.builder()

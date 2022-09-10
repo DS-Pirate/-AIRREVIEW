@@ -17,7 +17,7 @@
         </div>
     </div>
     <hr />
-    <div class="comment-area d-flex flex-column align-items-center">
+    <div class="comment-area d-flex flex-column align-items-between">
         <ArticleCommentCard v-for="info in commentState" v-bind:key="info" v-bind:cardInfo="info"></ArticleCommentCard>
         <button class="btn btn-primary w-100"  @click="getMoreComment" v-if="!(stateInfo[stateInfo.length - 1] == -999)">댓글 더 보기</button>
     </div>
@@ -27,7 +27,6 @@
     import { useRouter } from "vue-router"
     import axios from "axios"
     import ArticleCommentCard from "./ArticleCommentCard.vue"
-    window.scrollTo(0, 0)
     const router = useRouter()
     const id = new URLSearchParams(window.location.search).get("article")
     const headers = {
@@ -71,7 +70,7 @@
                 }
             })
             .catch(function (error) {
-                console.log("에러" + error)
+                console.log(error)
                 updateStates(null, -999)
             })
     }

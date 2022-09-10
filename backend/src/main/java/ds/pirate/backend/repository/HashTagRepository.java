@@ -3,6 +3,8 @@ package ds.pirate.backend.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -23,4 +25,5 @@ public interface HashTagRepository extends JpaRepository<HashTags, Long>{
     @Query("SELECT ht FROM HashTags ht WHERE hash_tag_name like %:keyword%")
     Optional<List<HashTags>> getAidListByHashTagName(String keyword);
 
+    Page<HashTags> findByHashTagNameContainsIgnoreCaseOrderByHidDesc(String keyword, Pageable pageable);
 }

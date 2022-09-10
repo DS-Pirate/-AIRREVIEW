@@ -20,7 +20,6 @@ public class ApiMemberController {
     @RequestMapping(value = "/register", method = RequestMethod.POST,
             consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> register(@RequestBody airUserDTO dto) {
-        log.info("api/member/register...airuserDTO:" + dto);
         String email = service.register(dto);
         return new ResponseEntity<>(email, HttpStatus.OK);
     }

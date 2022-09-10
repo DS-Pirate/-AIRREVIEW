@@ -90,13 +90,11 @@ public class BoardApiContorller {
     @RequestMapping(value = "/comment/add/reply", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Long> addCommentReply(@RequestBody acommentDTO dto){
         Long result = aser.addNewCommentReply(dto);
-        log.info(dto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/comment/add/rating/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> ratingCommentPlus(@RequestBody acommentRateDTO dto){
-        log.info("뭐야 왜 안들어가"+dto);  
         return new ResponseEntity<>(aser.rateupComment(dto), HttpStatus.OK);
     }
 

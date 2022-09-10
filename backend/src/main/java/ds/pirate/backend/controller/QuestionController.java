@@ -22,8 +22,7 @@ public class QuestionController {
   private final QuestionService qService;
 
   @RequestMapping(value = "/api/question", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<String> reportingArticle(@RequestBody QuestionDTO dto) {
-    log.info("dtoooooooooooooooooooo" + dto);        
+  public ResponseEntity<String> reportingArticle(@RequestBody QuestionDTO dto) {     
       return new ResponseEntity<>(qService.sendQuestion(dto) , HttpStatus.OK);
   }
 

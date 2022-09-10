@@ -7,6 +7,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.SaveDTO;
 import ds.pirate.backend.dto.acommentDTO;
 import ds.pirate.backend.dto.acommentRateDTO;
+import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.dto.likeUnlikeDTO;
 import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.entity.ArticlesList;
@@ -36,6 +38,7 @@ import ds.pirate.backend.repository.LikeUnlikeRepository;
 import ds.pirate.backend.repository.SavedRepository;
 import ds.pirate.backend.repository.SubscribeRepository;
 import ds.pirate.backend.repository.UserRepository;
+import ds.pirate.backend.service.UserService.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -53,6 +56,32 @@ public class ArticleServiceImpl implements ArticleService {
     private final LikeUnlikeRepository lurepo;
     private final SavedRepository sarepo;
     private final SubscribeRepository surepo;
+    private final UserService uservice;
+
+    @Override
+    public HashMap<String, Object> getCardInfosByHashTagName(Long aid, Pageable pageable) {
+        HashMap<String, Object> cardInfo = new HashMap<>();
+        
+        Page<HashTags> result = hrepo.findByHashTagNameContainsIgnoreCaseOrderByHidDesc(repo.getByAid(aid).getTags().get(0).getHashTagName(), pageable);
+        List<ArticleDTO> aresult = result.get().map((Function<HashTags, ArticleDTO>) dto->{
+            ArticleDTO dtoresult = EntityToDTO(dto.getArticles());
+            return dtoresult;
+        }).collect(Collectors.toList());
+
+        List<String> uresult = result.get().map((Function<HashTags, String>) dto->{
+            String dtoresult = uservice.entityToDTO(urepo.findByUserId(dto.getArticles().getAUser()).get()).getAirName();
+            return dtoresult;
+        }).collect(Collectors.toList());
+
+
+            
+        cardInfo.put("articles", aresult);
+        cardInfo.put("page", pageable.getPageNumber());
+        cardInfo.put("pageTotalCount", result.getTotalPages());
+        cardInfo.put("userInfo", uresult);
+
+        return cardInfo;
+    }
 
     @Override
     public List<ArticleDTO> getSearchCardInfo(Long aid) {
@@ -151,7 +180,6 @@ public class ArticleServiceImpl implements ArticleService {
             crepo.save(commentDTOtoEntity(cdto));
             ctrepo.save(acommentRate.builder().commentid(cdto.getCid()).userid(dto.getUserid()).updown(dto.getUpdown())
                     .build());
-            log.info("없음 등록 ㄲ");
             return "등록되었습니다";
         }
     }
