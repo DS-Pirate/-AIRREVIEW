@@ -137,7 +137,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public String rateupComment(acommentRateDTO dto) {
-        acomments result = crepo.getCommentByCidAndUserid(dto.getCid(), dto.getUserid()).get();
+        acomments result = crepo.getCommentByCidAndUserid(dto.getCid(), dto.getCommentUserid()).get();
         acommentDTO cdto = commentEntityToDTO(result);
 
         Optional<acommentRate> isRated = ctrepo.getIsRatedByCidAndUserid(dto.getCid(), dto.getUserid());
@@ -149,7 +149,7 @@ public class ArticleServiceImpl implements ArticleService {
         } else {
             cdto.setRate(cdto.getRate() + dto.getUpdown());
             crepo.save(commentDTOtoEntity(cdto));
-            ctrepo.save(acommentRate.builder().commentid(cdto.getCid()).userid(cdto.getUserid()).updown(dto.getUpdown())
+            ctrepo.save(acommentRate.builder().commentid(cdto.getCid()).userid(dto.getUserid()).updown(dto.getUpdown())
                     .build());
             log.info("없음 등록 ㄲ");
             return "등록되었습니다";
@@ -159,11 +159,9 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Long addNewComment(acommentDTO dto) {
         Optional<airUser> result = urepo.findByEmail(dto.getEmail());
-        Optional<acomments> checkingAirUser = crepo.getCommentByAidAndUserid(
-                ArticlesList.builder().aid(dto.getAid()).build(), airUser.builder().userid(dto.getUserid()).build());
-
+        Optional<acomments> checkingAirUser = crepo.getCommentByAidAndUserid(ArticlesList.builder().aid(dto.getAid()).build(), airUser.builder().userid(dto.getUserid()).build());
         if (!checkingAirUser.isPresent()) {
-            dto.setCommentGroup(dto.getCommentGroup() + 1);
+            dto.setCommentGroup(crepo.getLatestCommentGroupWhereMatchWithAid(dto.getAid()+1).get(0));
             dto.setCommnetDepth(0L);
             dto.setCommentSorts(0L);
             dto.setUserid(result.get().getUserid());
@@ -192,6 +190,52 @@ public class ArticleServiceImpl implements ArticleService {
         return entity.getCid();
     }
 
+    // 페이징 코멘트
+    @Override
+    public HashMap<String, Object> getCommentListByAid2(Long aid, Pageable pageable) {
+        Page<acomments> cmlist = crepo.getPageList(pageable, aid);
+        if (!cmlist.isEmpty()) {
+            List<acommentDTO> dto = cmlist
+                    .stream()
+                    .map((Function<acomments, acommentDTO>) cmt -> {
+                        return commentEntityToDTO(cmt);
+                    })
+                    .collect(Collectors.toList());
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("commentList", dto);
+            result.put("page", pageable.getPageNumber());
+            result.put("pageTotalCount", cmlist.getTotalPages());
+            return result;
+        }
+        return null;
+    }
+
+    // 페이징 코멘트 유저아이디랑 같이
+    public HashMap<String, Object> getCommentListByAidTwo2(Long aid, Pageable pageable, Long userid) {
+        Page<acomments> cmlist = crepo.getPageList(pageable, aid);
+        if (!cmlist.isEmpty()) {
+            List<acommentDTO> dto = cmlist
+                    .stream()
+                    .map((Function<acomments, acommentDTO>) cmt -> {
+                        return commentEntityToDTO(cmt);
+                    })
+                    .collect(Collectors.toList());
+            dto.forEach((t) -> {
+                Optional<acommentRate> israted = ctrepo.getIsRatedByCidAndUserid(t.getCid(), userid);
+                if (israted.isPresent()) {
+                    t.setIsrated(israted.get().getUpdown());
+                }
+            });
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("commentList", dto);
+            result.put("page", pageable.getPageNumber());
+            result.put("pageTotalCount", cmlist.getTotalPages());
+            return result;
+        }
+        return null;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////
     // 페이징 안된 코멘트리스트 뽑기
     @Override
     public List<acommentDTO> getCommentListByAid(Long aid) {
@@ -201,23 +245,6 @@ public class ArticleServiceImpl implements ArticleService {
             List<acommentDTO> dto = entity.get()
                     .stream()
                     .map(cmt -> commentEntityToDTO(cmt))
-                    .collect(Collectors.toList());
-            return dto;
-        }
-        return null;
-    }
-
-
-    //페이징 코멘트
-    @Override
-    public List<acommentDTO> getCommentListByAid2(Long aid, Pageable pageable) {
-        Page<acomments> cmlist = crepo.getPageList(pageable, aid);
-        if (!cmlist.isEmpty()) {
-            List<acommentDTO> dto = cmlist
-                    .stream()
-                    .map((Function<acomments, acommentDTO>) cmt -> {
-                        return commentEntityToDTO(cmt);
-                    })
                     .collect(Collectors.toList());
             return dto;
         }
@@ -244,6 +271,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return null;
     }
+    /////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     public ArticleDTO getArticleInfoByAid(Long aid) {

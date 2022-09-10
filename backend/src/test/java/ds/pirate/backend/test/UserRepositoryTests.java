@@ -31,6 +31,7 @@ import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.entity.subscribList;
 import ds.pirate.backend.entity.uImagesList;
 import ds.pirate.backend.repository.ArticleRepository;
+import ds.pirate.backend.repository.CommentRateRepository;
 import ds.pirate.backend.repository.CommentRepository;
 import ds.pirate.backend.repository.HashTagRepository;
 import ds.pirate.backend.repository.SubscribeRepository;
@@ -71,6 +72,14 @@ public class UserRepositoryTests {
 
     @Autowired
     SubscribeRepository srepo;
+
+    @Autowired
+    CommentRateRepository ctrepo;
+
+    @Test
+    void isratedget(){
+        log.info(ctrepo.getIsRatedByCidAndUserid(43L, 2L));
+    }
 
     @Test
     void subsTestingAdding(){
@@ -203,6 +212,11 @@ public class UserRepositoryTests {
     //     });
         
     // }
+
+    @Test
+    public void getLatestCidWhereMatchWithAid(){
+        log.info(crepo.getLatestCommentGroupWhereMatchWithAid(56L));
+    }
     
     @Test
     public void getAVGArticleRate(){
@@ -275,8 +289,8 @@ public class UserRepositoryTests {
     
     @Test
     public void insertcommentTwo(){
-        LongStream.rangeClosed(24L, 34L).forEach(i->{
-            ArticlesList aid = ArticlesList.builder().aid(53L).build();
+        LongStream.rangeClosed(2L, 20L).forEach(i->{
+            ArticlesList aid = ArticlesList.builder().aid(56L).build();
             airUser userid = airUser.builder().userid(i).build();
             acomments entity = acomments.builder()
             .articles(aid)
@@ -285,8 +299,8 @@ public class UserRepositoryTests {
             .commnetDepth(0L)
             .commentSorts(0L)
             .commentContext("가나다라마바사아자차카타파하")
-            .rate(3)
-            .articleRate(4)
+            .rate(0)
+            .articleRate(5)
             .build();
             crepo.save(entity);
         });

@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,7 @@ import ds.pirate.backend.dto.acommentRateDTO;
 import ds.pirate.backend.dto.likeUnlikeDTO;
 import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.service.ArticleService.ArticleService;
+import ds.pirate.backend.vo.comment;
 import ds.pirate.backend.vo.functioncheck;
 import ds.pirate.backend.vo.subcard;
 import lombok.RequiredArgsConstructor;
@@ -77,6 +80,13 @@ public class BoardApiContorller {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/comment/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<String, Object>> commentRead2(@RequestBody comment comment){
+        Pageable pageable = PageRequest.of(comment.getReqPage(), 5);
+        HashMap<String, Object> result = aser.getCommentListByAidTwo2(comment.getAid(), pageable, comment.getUserid());
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/comment/add/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Long> addComment(@RequestBody acommentDTO dto){
         Long result = aser.addNewComment(dto);
@@ -91,7 +101,8 @@ public class BoardApiContorller {
     }
 
     @RequestMapping(value = "/comment/add/rating/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> ratingCommentPlus(@RequestBody acommentRateDTO dto){        
+    public ResponseEntity<String> ratingCommentPlus(@RequestBody acommentRateDTO dto){
+        log.info("뭐야 왜 안들어가"+dto);  
         return new ResponseEntity<>(aser.rateupComment(dto), HttpStatus.OK);
     }
 

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class acommentRateDTO {
     private int updown;
     private Long cid;
+    private Long commentUserid;
     private Long userid;
     
     

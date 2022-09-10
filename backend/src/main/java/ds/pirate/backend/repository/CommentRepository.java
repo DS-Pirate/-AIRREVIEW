@@ -30,6 +30,8 @@ public interface CommentRepository extends JpaRepository<acomments, Long>{
     @Query("SELECT ct FROM acomments ct WHERE articles_aid=:aid and airuser_userid=:userid ")
     Optional<acomments> getCommentByAidAndUserid(ArticlesList aid, airUser userid);
 
+    @Query("SELECT commentGroup FROM acomments WHERE articles_aid=:aid ORDER BY comment_group desc")
+    List<Long> getLatestCommentGroupWhereMatchWithAid(Long aid);
 
     @Query(value = "SELECT ct FROM acomments ct WHERE articles_aid=:aid ORDER BY comment_group asc, comment_sorts asc, commnet_depth desc ", 
     countQuery = "select count(ct) from acomments ct WHERE articles_aid=:aid ORDER BY comment_group asc, comment_sorts asc, commnet_depth desc ")

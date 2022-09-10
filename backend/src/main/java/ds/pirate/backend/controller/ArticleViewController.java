@@ -55,9 +55,7 @@ public class ArticleViewController {
     @RequestMapping(value = "/comment/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HashMap<String, Object>> commentRead2(@RequestBody comment comment){
         Pageable pageable = PageRequest.of(comment.getReqPage(), 5);
-        HashMap<String, Object> result = new HashMap<>();
-        Object commentList = aservice.getCommentListByAid2(comment.getAid(), pageable);
-        result.put("commentList", commentList);
+        HashMap<String, Object> result = aservice.getCommentListByAid2(comment.getAid(), pageable);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
