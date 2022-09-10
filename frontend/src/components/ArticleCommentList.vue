@@ -19,7 +19,7 @@
     <hr />
     <div class="comment-area d-flex flex-column align-items-center">
         <ArticleCommentCard v-for="info in commentState" v-bind:key="info" v-bind:cardInfo="info"></ArticleCommentCard>
-        <button class="btn btn-primary w-100" @click="getMoreComment(3)" v-if="!(stateInfo[stateInfo.length - 1] == -999)">댓글 더 보기</button>
+        <button class="btn btn-primary w-100"  @click="getMoreComment" v-if="!(stateInfo[stateInfo.length - 1] == -999)">댓글 더 보기</button>
     </div>
 </template>
 <script setup>
@@ -27,11 +27,11 @@
     import { useRouter } from "vue-router"
     import axios from "axios"
     import ArticleCommentCard from "./ArticleCommentCard.vue"
-
+    window.scrollTo(0, 0)
     const router = useRouter()
     const id = new URLSearchParams(window.location.search).get("article")
     const headers = {
-        "Content-Type": "application/json charset=utf-8",
+        // "Content-Type": "application/json charset=utf-8",
         Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
     }
 
@@ -98,4 +98,6 @@
             })
             .catch((e) => console.log(e))
     }
+    
+    getComments()
 </script>

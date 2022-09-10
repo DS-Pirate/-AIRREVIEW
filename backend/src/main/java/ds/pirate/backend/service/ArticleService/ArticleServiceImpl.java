@@ -190,7 +190,6 @@ public class ArticleServiceImpl implements ArticleService {
         return entity.getCid();
     }
 
-    // 페이징 코멘트
     @Override
     public HashMap<String, Object> getCommentListByAid2(Long aid, Pageable pageable) {
         Page<acomments> cmlist = crepo.getPageList(pageable, aid);
@@ -210,7 +209,6 @@ public class ArticleServiceImpl implements ArticleService {
         return null;
     }
 
-    // 페이징 코멘트 유저아이디랑 같이
     public HashMap<String, Object> getCommentListByAidTwo2(Long aid, Pageable pageable, Long userid) {
         Page<acomments> cmlist = crepo.getPageList(pageable, aid);
         if (!cmlist.isEmpty()) {
