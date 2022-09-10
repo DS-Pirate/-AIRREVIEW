@@ -125,11 +125,15 @@ export default {
 			function findImageName(list) {
 				let bonary = list.split("/")
 				let filenames = new Array
+				
 				for (let i in bonary) {
 					if (bonary[i].split("-").length == 5) {
+						let tmp = bonary[i].slice(0, bonary[i].indexOf('>\n<') - 1)
+						if (tmp.split('"')[2]!="YouTube video player"){
 						filenames.push({
-							fileName : bonary[i].slice(0, bonary[i].indexOf('>\n<') - 1)
+							fileName : tmp
 						})
+					}
 					}
 				}
 				return filenames

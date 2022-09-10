@@ -28,7 +28,7 @@
             <ArticleCommentList></ArticleCommentList>
             <ReportModal :id="id"></ReportModal>
         </section>
-        <RecommentList></RecommentList>
+        <RecommentList :id="id"></RecommentList>
     </div>
 </template>
 
@@ -48,9 +48,7 @@
     const Iregdate = ref(null);
     let stars = ref(null);
     let ratingnum = ref(null);
-
     let articleInfo = null;
-
     let id = new URLSearchParams(window.location.search).get("article");
 
     if (id.length == 0) {

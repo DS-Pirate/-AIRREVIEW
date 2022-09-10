@@ -50,4 +50,11 @@ public class ArticleViewController {
         HashMap<String, Object> result = aservice.getCommentListByAid2(comment.getAid(), pageable);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/articlerecommend/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<String, Object>> recommend(@RequestBody comment comment){
+        Pageable pageable = PageRequest.of(comment.getReqPage(), 5);
+        HashMap<String, Object> result = aservice.getCardInfosByHashTagName(comment.getAid(), pageable);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

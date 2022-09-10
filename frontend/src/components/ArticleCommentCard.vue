@@ -1,10 +1,10 @@
 <template>
-    <div class="comment-section d-flex justify-content-between" :style="'margin-left:' + props.cardInfo.commnetDepth*3 + 'rem'">
-        <div class="comment-section-left w-10">
-            <div class="comment-section-left-profile d-flex justify-content-center">
+    <div class="comment-section d-flex justify-content-between me-4" :style="'margin-left:' + props.cardInfo.commnetDepth*3 + 'rem'">
+        <div class="comment-section-left w-10 d-flex flex-column align-items-center">
+            <div class="comment-section-left-profile d-flex justify-content-between">
                 <!-- 기본 이미지 일단 넣어둠 -->
                 <!-- <img class="img-fluid" :src="'./images/read/userid/' + props.cardInfo.userid" style="width: 2.75rem" /> -->
-                <img class="img-fluid py-2 px-3" src="@/assets/pngwing.com.png" />
+                <img class="img-fluid py-2 px-3" style="max-height: 60px;" src="@/assets/pngwing.com.png" />
             </div>
             <div class="comment-section-left-delete"></div>
         </div>
