@@ -235,43 +235,6 @@ public class ArticleServiceImpl implements ArticleService {
         return null;
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////
-    // 페이징 안된 코멘트리스트 뽑기
-    @Override
-    public List<acommentDTO> getCommentListByAid(Long aid) {
-        Optional<List<acomments>> entity = crepo.getListByAid(aid);
-
-        if (entity.isPresent()) {
-            List<acommentDTO> dto = entity.get()
-                    .stream()
-                    .map(cmt -> commentEntityToDTO(cmt))
-                    .collect(Collectors.toList());
-            return dto;
-        }
-        return null;
-    }
-
-    @Override
-    public HashMap<String, Object> getCommentListByAidTwo(Long aid, Long userid) {
-        HashMap<String, Object> result = new HashMap<>();
-        Optional<List<acomments>> entity = crepo.getListByAid(aid);
-        if (entity.isPresent()) {
-            List<acommentDTO> dto = entity.get()
-                    .stream()
-                    .map(cmt -> commentEntityToDTO(cmt)).collect(Collectors.toList());
-
-            dto.forEach((t) -> {
-                Optional<acommentRate> israted = ctrepo.getIsRatedByCidAndUserid(t.getCid(), userid);
-                if (israted.isPresent()) {
-                    t.setIsrated(israted.get().getUpdown());
-                }
-            });
-            result.put("commentList", dto);
-            return result;
-        }
-        return null;
-    }
-    /////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     public ArticleDTO getArticleInfoByAid(Long aid) {

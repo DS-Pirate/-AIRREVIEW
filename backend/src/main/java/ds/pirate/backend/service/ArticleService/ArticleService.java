@@ -22,9 +22,7 @@ import ds.pirate.backend.entity.reportList;
 
 public interface ArticleService {
     String addArticle(ArticleDTO dto, List<String> hashlist);
-
     ArticleDTO getArticleInfoByAid(Long aid);
-    List<acommentDTO> getCommentListByAid(Long aid);
     Long addNewComment(acommentDTO dto);
     Long addNewCommentReply(acommentDTO dto);
     String rateupComment(acommentRateDTO dto);
@@ -33,14 +31,12 @@ public interface ArticleService {
     String addLikeUnlike(likeUnlikeDTO dto);
     String addSave(SaveDTO dto);
     String removeComment(acommentDTO dto);
-    HashMap<String, Object> getCommentListByAidTwo(Long aid, Long userid);
     HashMap<String, Boolean> getFunctionBtnStatusByUserid(Long userid, Long aid);
     HashMap<String, String> getSubscardInfo(Long aid, Long userid);
     List<ArticleDTO> getSearchCardInfo(Long aid);
     String subsFunction(Long aid, Long userid);
-
-    public HashMap<String, Object> getCommentListByAid2(Long aid, Pageable pageable);
-    public HashMap<String, Object> getCommentListByAidTwo2(Long aid, Pageable pageable, Long userid);
+    HashMap<String, Object> getCommentListByAid2(Long aid, Pageable pageable);
+    HashMap<String, Object> getCommentListByAidTwo2(Long aid, Pageable pageable, Long userid);
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {
         ArticlesList aentity = ArticlesList.builder()
