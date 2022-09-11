@@ -1,5 +1,6 @@
 package ds.pirate.backend.service.ArticleService;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,6 +41,9 @@ public interface ArticleService {
     HashMap<String, Object> getCardInfosByHashTagName(Long aid, Pageable pageable);
     ArticleDTO CheckBeforeModifyArticle(Long aid, Long userid);
     String ArticleModify(ArticleDTO dto, List<String> tags);
+    List<Object[]> getArticleList();
+
+
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {
         ArticlesList aentity = ArticlesList.builder()

@@ -1,17 +1,19 @@
 package ds.pirate.backend.controller;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
+import ds.pirate.backend.entity.ArticlesList;
+import ds.pirate.backend.repository.ArticleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.service.ArticleService.ArticleService;
@@ -25,7 +27,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/article/")
 @RequiredArgsConstructor
 public class ArticleViewController {
-    
 
     private final ArticleService aservice;
     @RequestMapping(value = "/read/{aid}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -55,6 +56,13 @@ public class ArticleViewController {
     public ResponseEntity<HashMap<String, Object>> recommend(@RequestBody comment comment){
         Pageable pageable = PageRequest.of(comment.getReqPage(), 5);
         HashMap<String, Object> result = aservice.getCardInfosByHashTagName(comment.getAid(), pageable);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/card")
+    public ResponseEntity<List<Object[]>> ArticleCardsList(){
+        List<Object[]> result = aservice.getArticleList();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

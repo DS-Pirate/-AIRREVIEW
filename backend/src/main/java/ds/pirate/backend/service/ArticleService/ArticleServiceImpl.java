@@ -1,5 +1,6 @@
 package ds.pirate.backend.service.ArticleService;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -383,6 +384,11 @@ public class ArticleServiceImpl implements ArticleService {
             return "구독되었습니다";
         }
 
+    }
+
+    @Override
+    public List<Object[]> getArticleList() {
+        return repo.getListAndAuthor();
     }
 
 }
