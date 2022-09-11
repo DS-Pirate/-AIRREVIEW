@@ -1,6 +1,7 @@
 package ds.pirate.backend.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,4 +31,8 @@ public interface ArticleRepository extends JpaRepository<ArticlesList,String> {
     Long getArticleAuthorIdByAid(Long aid);
     
 
+    @Query("SELECT a FROM ArticlesList a WHERE a_user =:userid and aid=:aid ")
+    Optional<ArticlesList> getArticleByAidAndUserId(Long aid, Long userid);
+
+    ArticlesList findByAid(Long aid);
 }

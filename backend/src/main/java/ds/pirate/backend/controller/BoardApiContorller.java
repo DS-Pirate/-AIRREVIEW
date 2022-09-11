@@ -33,19 +33,17 @@ import ds.pirate.backend.vo.comment;
 import ds.pirate.backend.vo.functioncheck;
 import ds.pirate.backend.vo.subcard;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequestMapping("/api/article")
 @RequiredArgsConstructor
-@Log4j2
+
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!매우 중요 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //나중에 token도 같이 받아서 dto랑 토큰 같이넘겨서 .set으로 토큰정보값 덮어씌우기
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!매우 중요 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 public class BoardApiContorller {
 
     private final ArticleService aser;
-
     @RequestMapping(value = "/write", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> register(@RequestBody ArticleDTO dto) {
         List<String> hashlist = dto.getTags();
@@ -122,6 +120,21 @@ public class BoardApiContorller {
     public ResponseEntity<HashMap<String, Boolean>> functionsChecking(@RequestBody functioncheck vo){        
         return new ResponseEntity<>(aser.getFunctionBtnStatusByUserid(vo.getUserid(), vo.getAid()) , HttpStatus.OK);
     }
+
+
+    @RequestMapping(value = "/modify/check", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArticleDTO> CheckarticleBeforeModify(@RequestBody subcard vo){
+        ArticleDTO articleInfo = aser.CheckBeforeModifyArticle(vo.getAid(), vo.getUserid());
+        return new ResponseEntity<>(articleInfo, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/modify/send", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> articleModify(@RequestBody ArticleDTO dto){
+        String articleInfo = aser.ArticleModify(dto, dto.getTags());
+        return new ResponseEntity<>(articleInfo, HttpStatus.OK);
+    }
+
+    
 
 
 }

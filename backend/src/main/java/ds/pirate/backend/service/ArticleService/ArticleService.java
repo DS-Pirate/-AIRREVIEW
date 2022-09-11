@@ -38,6 +38,8 @@ public interface ArticleService {
     HashMap<String, Object> getCommentListByAid2(Long aid, Pageable pageable);
     HashMap<String, Object> getCommentListByAidTwo2(Long aid, Pageable pageable, Long userid);
     HashMap<String, Object> getCardInfosByHashTagName(Long aid, Pageable pageable);
+    ArticleDTO CheckBeforeModifyArticle(Long aid, Long userid);
+    String ArticleModify(ArticleDTO dto, List<String> tags);
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {
         ArticlesList aentity = ArticlesList.builder()

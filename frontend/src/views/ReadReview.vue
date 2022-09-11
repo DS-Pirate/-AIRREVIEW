@@ -20,7 +20,7 @@
                 <div class="contentAndButton">
                     <div class="reviewContent clamp" ref="Icontext"></div>
                 </div>
-                <span class="views" ref="Iregdate">1시간 전</span>
+                <span class="views" ref="Iregdate"></span>
             </div>
             <hr />
             <ArticleBtnSection :id="id"></ArticleBtnSection>

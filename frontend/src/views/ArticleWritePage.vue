@@ -61,7 +61,8 @@ import axios from 'axios'
 
 export default {
 	name: "WritePage",
-	data() {
+	data(props) {
+		console.log(props);
 		return {
 			shareable: true,
 			openable: true,

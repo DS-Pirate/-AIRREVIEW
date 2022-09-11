@@ -3,11 +3,11 @@ package ds.pirate.backend.service.ArticleService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,6 @@ import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.SaveDTO;
 import ds.pirate.backend.dto.acommentDTO;
 import ds.pirate.backend.dto.acommentRateDTO;
-import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.dto.likeUnlikeDTO;
 import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.entity.ArticlesList;
@@ -57,6 +56,63 @@ public class ArticleServiceImpl implements ArticleService {
     private final SavedRepository sarepo;
     private final SubscribeRepository surepo;
     private final UserService uservice;
+
+    @Override
+    public String ArticleModify(ArticleDTO dto, List<String> tags) {
+        ArticlesList origEntity = repo.findByAid(dto.getAid());
+        ArticleDTO getByAid =  EntityToDTO(origEntity); 
+
+        origEntity.getImages().forEach(image->{
+            irepo.delete(image);
+        });
+        origEntity.getTags().forEach(tag->{
+            hrepo.delete(tag);
+        });
+
+        getByAid.setAtitle(dto.getAtitle());
+        getByAid.setContext(dto.getContext());
+        getByAid.setOpened((dto.isOpened()));
+        getByAid.setShareable((dto.isShareable()));
+        ArticlesList modifiedArticle = dtoToEntity(getByAid);
+        repo.save(modifiedArticle);
+
+        List<ImagesList> lists = dto.getImages();
+        lists.forEach(new Consumer<ImagesList>() {
+            @Override
+            public void accept(ImagesList i) {
+                if(!irepo.findById(i.getIid()).isPresent()){
+                    ImagesList.builder().fileName(i.getFileName()).articles(modifiedArticle).build();
+                }
+            }
+        });
+
+        for (String i : tags) {
+            Optional<HashTags> hashTemp = hrepo.findByArticlesAndHashTagName(modifiedArticle, i);
+            if (!hashTemp.isPresent()) {
+                HashTags hresult = listToHSEntity(i);
+                hresult.updateArticles(modifiedArticle);
+                hrepo.save(hresult);
+            }
+        }
+        return modifiedArticle.getAid().toString();
+    }
+
+    @Override
+    public ArticleDTO CheckBeforeModifyArticle(Long aid, Long userid) {
+        Optional<ArticlesList> isit = repo.getArticleByAidAndUserId(aid, userid);
+        log.info("?????????"+aid + "?????????"+userid);
+        if(!isit.isPresent()){
+            return null;
+        }else{
+            ArticleDTO dto = EntityToDTO(isit.get());
+            List<String> hashString = hrepo.getList(dto.getAid())
+                .stream()
+                .map(hentity -> hentity.getHashTagName())
+                .collect(Collectors.toList());
+            dto.setTags(hashString);
+            return dto;
+        }
+    }
 
     @Override
     public HashMap<String, Object> getCardInfosByHashTagName(Long aid, Pageable pageable) {
@@ -189,7 +245,14 @@ public class ArticleServiceImpl implements ArticleService {
         Optional<airUser> result = urepo.findByEmail(dto.getEmail());
         Optional<acomments> checkingAirUser = crepo.getCommentByAidAndUserid(ArticlesList.builder().aid(dto.getAid()).build(), airUser.builder().userid(dto.getUserid()).build());
         if (!checkingAirUser.isPresent()) {
-            dto.setCommentGroup(crepo.getLatestCommentGroupWhereMatchWithAid(dto.getAid()+1).get(0));
+            Optional<List<Long>> latestg = crepo.getLatestCommentGroupWhereMatchWithAid(dto.getAid());
+            Long setcg = 1L;
+            if (latestg.get().size()!=0) {
+                setcg = latestg.get().get(0)+1;
+            }
+
+            
+            dto.setCommentGroup(setcg);
             dto.setCommnetDepth(0L);
             dto.setCommentSorts(0L);
             dto.setUserid(result.get().getUserid());

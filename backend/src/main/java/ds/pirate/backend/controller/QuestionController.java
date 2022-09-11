@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ds.pirate.backend.dto.QuestionDTO;
 import ds.pirate.backend.service.QuestionService.QuestionService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @RestController
-@Log4j2
 @RequiredArgsConstructor
 
 public class QuestionController {

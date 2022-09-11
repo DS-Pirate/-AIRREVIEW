@@ -18,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import ds.pirate.backend.dto.ArticleDTO;
-import ds.pirate.backend.dto.HashTagDTO;
 import ds.pirate.backend.dto.acommentDTO;
 // import java.util.Optional;
 // import java.util.stream.Collectors;
@@ -77,6 +76,25 @@ public class UserRepositoryTests {
     @Autowired
     CommentRateRepository ctrepo;
 
+    @Test
+    void findByArticlesAndHashTagName(){
+        log.info(hrepo.findByArticlesAndHashTagName(arepo.getByAid(56L), "코멘트페이징 테스트그으으을"));
+    }
+
+    @Test
+    void findByAid(){
+        log.info(arepo.findByAid(66L));
+    }
+
+    @Test
+    void getArticleByAidAndUserId(){
+        Optional<ArticlesList> isit = arepo.getArticleByAidAndUserId(56L, 1L);
+        if(!isit.isPresent()){
+            log.info(-1);
+        }else{
+            log.info(aser.EntityToDTO(isit.get()));
+        }
+    }
 
     @Test
     void getPagedAidListByHashTagName(){
