@@ -2,7 +2,7 @@
     <div class="popover__wrapper">
         <i class="bi bi-bell"></i>
         <div class="popover__content py-3">
-            <div class="popover__title pb-3 border border-0 border-bottom">새소식</div>
+            <div class="text-center pb-3 border border-0 border-bottom">새소식</div>
             <div class="popover__context">
                 <AlarmPopoverCard class="border border-0 border-bottom"></AlarmPopoverCard>
             </div>
@@ -13,14 +13,6 @@
     import AlarmPopoverCard from "./AlarmPopoverCard.vue";
 </script>
 <style scoped lang="sass">
-    a
-        text-decoration: none
-    .popover__title
-        text-decoration: none
-        color: black
-        text-align: center
-
-
     .popover__wrapper
         position: relative
 
@@ -41,12 +33,6 @@
         right:1%
         position: absolute
         z-index: -1
-        content: ""
-        border-style: solid
-        border-width: 0 10px 10px 10px
-        border-color: white
-        transition-duration: 0.2s
-        transition-property: transform
 
     .popover__wrapper:hover .popover__content
         right:1%
