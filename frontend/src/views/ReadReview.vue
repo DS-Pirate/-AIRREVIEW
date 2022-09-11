@@ -21,7 +21,6 @@
                     <div class="reviewContent clamp" ref="Icontext"></div>
                 </div>
                 <span class="views" ref="Iregdate"></span>
-                <router-link to="/modify">modify</router-link>
             </div>
             <hr />
             <ArticleBtnSection :id="id"></ArticleBtnSection>

@@ -66,12 +66,11 @@
                 if (res.data.pageTotalCount == commentInfo.reqPage + 1) {
                     updateStates(res.data.commentList, -999)
                 } else {
-                    updateStates(res.data.commentList, res.data.commentList.length)
+                    updateStates(res.data.commentList, (res.data.commentList.length))
                 }
             })
-            .catch(function (error) {
-                console.log(error)
-                updateStates(null, -999)
+            .catch(function () {
+                
             })
     }
 

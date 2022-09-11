@@ -22,7 +22,7 @@ public class ImagesList {
     @Column
     private int idx;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "articles_id", referencedColumnName = "aid")
     private ArticlesList articles;
 

@@ -12,18 +12,24 @@
         <li v-if="functionBtnChecking()">
             <button class="border-0 bg-white" data-bs-toggle="modal" data-bs-target="#ReportModal"><span ref="report">Report</span></button>
         </li>
+        <li v-if="stat.result">
+            <button type="button" v-on:click="router.push(`/modify?article=` + id)" class="border-0 bg-white"><span class="text-primary">Modify</span></button>
+        </li>
     </ul>
 </template>
 <script setup>
-    import axios from 'axios'
-    import { ref, defineProps } from 'vue'
-    import { useRouter } from 'vue-router'
-    const router = useRouter()
-    let props = defineProps(["id"])
-    let fav = ref(null)
-    let report = ref(null)
-    let save = ref(null)
-    let thisstorevariationshouldbeimplementedtostoresuseridkey = 1;
+    import axios from "axios";
+    import { ref, defineProps, reactive } from "vue";
+    import { useRouter } from "vue-router";
+    const router = useRouter();
+    let props = defineProps(["id"]);
+    let fav = ref(null);
+    let report = ref(null);
+    let save = ref(null);
+    let thisstorevariationshouldbeimplementedtostoresuseridkey = 1
+    let stat = reactive({
+        result : null
+    })
     function functionBtnChecking() {
         if (thisstorevariationshouldbeimplementedtostoresuseridkey != 0) {
             return true;
@@ -31,70 +37,91 @@
             return false;
         }
     }
+    function modifiable() {
+        const headers = {
+            "Content-Type": "application/json; charset=utf-8",
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+        }
+        let body = {
+            aid: new URLSearchParams(window.location.search).get("article"),
+            userid: 1,
+        }
+        axios
+        .post("./api/article/modify/check", body, { headers })
+        .then(function (res) {
+            if (res.data.aid==props.id) {
+                stat.result = true
+            }else{
+                stat.result = false
+            }
+        })
+    }
 
     async function addToLike() {
-      const url = "./api/article/like"
-      const headers = {
-        "Content-Type": "application/json; charset=utf-8",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
-      }
-      let body = {
-        //store에서 userid획득
-        userid: 1,
-        aid: props.id
-      }
-      await axios.post(url, body, { headers })
-        .then(res => alert(res.data))
-        .catch(e => console.log(e))
-      router.go(0)
+        const url = "./api/article/like";
+        const headers = {
+            "Content-Type": "application/json; charset=utf-8",
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+        };
+        let body = {
+            //store에서 userid획득
+            userid: 1,
+            aid: props.id,
+        };
+        await axios
+            .post(url, body, { headers })
+            .then((res) => alert(res.data))
+            .catch((e) => console.log(e));
+        router.go(0);
     }
     async function addSave() {
-      const url = "./api/article/save"
-      const headers = {
-        "Content-Type": "application/json; charset=utf-8",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
-      }
-      let body = {
-        //store에서 userid획득
-        userid: 1,
-        aid: props.id
-      }
-      await axios.post(url, body, { headers })
-        .then(res => alert(res.data))
-        .catch(e => console.log(e))
-      router.go(0)
+        const url = "./api/article/save";
+        const headers = {
+            "Content-Type": "application/json; charset=utf-8",
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+        };
+        let body = {
+            //store에서 userid획득
+            userid: 1,
+            aid: props.id,
+        };
+        await axios
+            .post(url, body, { headers })
+            .then((res) => alert(res.data))
+            .catch((e) => console.log(e));
+        router.go(0);
     }
 
     function getArticleFunctionStatus() {
-      const url = "./api/article/functions"
-      const headers = {
-        "Content-Type": "application/json; charset=utf-8",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
-      }
-      let body = {
-        //store에서 userid획득
-        userid: 1,
-        aid: props.id
-      }
+        const url = "./api/article/functions";
+        const headers = {
+            "Content-Type": "application/json; charset=utf-8",
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+        };
+        let body = {
+            //store에서 userid획득
+            userid: 1,
+            aid: props.id,
+        };
 
-      axios.post(url, body, {headers})
-      .then(function(res){
-        if(res.data.favo == true){
-          fav.value.style.color = "#3041a9"
-        }
-        if(res.data.save == true){
-          save.value.style.color = "#3041a9"
-        }
-        if(res.data.report == true){
-          report.value.style.color = "red"
-          report.value.textContent = "Reported"
-        }
-
-      })
-      .catch((e)=>{
-        console.log(e);
-      })
-
+        axios
+            .post(url, body, { headers })
+            .then(function (res) {
+                if (res.data.favo == true) {
+                    fav.value.style.color = "#3041a9";
+                }
+                if (res.data.save == true) {
+                    save.value.style.color = "#3041a9";
+                }
+                if (res.data.report == true) {
+                    report.value.style.color = "red";
+                    report.value.textContent = "Reported";
+                }
+            })
+            .catch((e) => {
+                console.log(e);
+            });
     }
-    getArticleFunctionStatus()
+    getArticleFunctionStatus();
+    modifiable()
 </script>

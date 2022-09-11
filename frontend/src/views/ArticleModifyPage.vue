@@ -16,7 +16,7 @@
 
         <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasBottomLabel">글쓰기</h5>
+                <h5 class="offcanvas-title" id="offcanvasBottomLabel">수정하기</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <hr />
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="offcanvas-footer small d-flex justify-content-end">
-                <button class="btn btn-primary m-3" @click.prevent="submit">글 쓰기</button>
+                <button class="btn btn-primary m-3" @click.prevent="submit">수정하기</button>
             </div>
         </div>
     </writeeditor>
@@ -51,20 +51,19 @@
     import router from "@/router";
     import ClassicEditor from "@ckeditor/ckeditor5-custom";
     import axios from "axios";
-
     export default {
         name: "WritePage",
-        props: ['title, tags, context'],
         data() {
-            console.log();
+            let title =""
             return {
+                aid : null,
                 shareable: true,
                 openable: true,
-                title: this.title,
+                title: title,
                 tag: "",
-                taghistory: [this.tags],
+                taghistory: [],
                 editor: ClassicEditor,
-                editorData: this.context,
+                editorData : "",
                 editorConfig: {
                     language: "ko",
                     simpleUpload: {
@@ -76,6 +75,37 @@
                     },
                 },
             };
+        },
+        mounted() {
+            const getInfo= async()=> {
+                let title = ""
+                let context = ""
+                let tags = []
+                let aid = 0
+                const headers = {
+                    "Content-Type": "application/json; charset=utf-8",
+                    Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+                };
+                let body = {
+                    aid: new URLSearchParams(window.location.search).get("article"),
+                    userid: 1,
+                };
+                await axios.post("./api/article/modify/check", body, { headers }).then(function (res) {
+                    console.log(res);
+                    context = res.data.context
+                    title = res.data.atitle
+                    tags = res.data.tags
+                    aid = res.data.aid
+                });
+                this.editorData = context
+                this.title = title
+                this.aid = aid
+                for (const i in tags) {
+                    this.taghistory.push(tags[i])    
+                }
+                
+            }
+            getInfo()
         },
         methods: {
             onReady: function onReady(editor) {
@@ -102,6 +132,7 @@
             },
             submit: async function () {
                 const page = {
+                    aid: this.aid,
                     atitle: this.title,
                     context: this.editorData,
                     tags: this.taghistory,
@@ -132,7 +163,7 @@
                 page.images = findImageName(page.context);
                 /////////////////////////////////////////
                 let result = JSON.stringify(page);
-                const url = "/airreview/api/article/write";
+                const url = "/airreview/api/article/modify/send";
                 const headers = {
                     "Content-Type": "application/json; charset=utf-8",
                     token: page.token,

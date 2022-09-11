@@ -1,5 +1,6 @@
 package ds.pirate.backend.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +27,7 @@ public class HashTags {
     @Column(nullable = false)
     private String hashTagName;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "articles_id", referencedColumnName = "aid")
     private ArticlesList articles;
     
