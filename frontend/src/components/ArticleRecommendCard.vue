@@ -12,7 +12,7 @@
                     <div class="content">
                             <span class="author">{{ props.uInfo }}</span>
                             <h3 class="title">
-                                <a href="#">{{ props.cardInfo.atitle }}</a>
+                                <a>{{ props.cardInfo.atitle }}</a>
                             </h3>
                             <p class="text" v-html="props.cardInfo.context"></p>
 						</div>			

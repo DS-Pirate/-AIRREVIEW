@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -27,5 +28,6 @@ public interface HashTagRepository extends JpaRepository<HashTags, Long>{
     @Query("SELECT ht FROM HashTags ht WHERE hash_tag_name like %:keyword%")
     Optional<List<HashTags>> getAidListByHashTagName(String keyword);
 
+    @EntityGraph(attributePaths = "articles")
     Page<HashTags> findByHashTagNameContainsIgnoreCaseOrderByHidDesc(String keyword, Pageable pageable);
 }

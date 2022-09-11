@@ -63,10 +63,10 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleDTO getByAid =  EntityToDTO(origEntity); 
 
         origEntity.getImages().forEach(image->{
-            irepo.delete(image);
+            irepo.deleteById(image.getIid());;
         });
         origEntity.getTags().forEach(tag->{
-            hrepo.delete(tag);
+            hrepo.deleteById(tag.getHid());
         });
 
         getByAid.setAtitle(dto.getAtitle());
@@ -123,8 +123,8 @@ public class ArticleServiceImpl implements ArticleService {
             ArticleDTO dtoresult = EntityToDTO(dto.getArticles());
             return dtoresult;
         }).collect(Collectors.toList());
-
         List<String> uresult = result.get().map((Function<HashTags, String>) dto->{
+            
             String dtoresult = uservice.entityToDTO(urepo.findByUserId(dto.getArticles().getAUser()).get()).getAirName();
             return dtoresult;
         }).collect(Collectors.toList());
