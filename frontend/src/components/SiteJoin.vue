@@ -64,17 +64,16 @@
     </div>
 
 </template>
+
+
 <script>
 import { reactive, ref } from '@vue/reactivity'
-// import { onMounted } from 'vue';
 import axios from 'axios'
 import router from "@/router";
-// import { useRouter } from 'vue-router';
 
 export default {
   name: 'SiteJoin',
   setup(){
-    // const router = useRouter();
     const state = reactive({
       email: '',
       password: '',
@@ -165,6 +164,9 @@ export default {
 
 }
 </script>
+
+
+
 <style lang="">
     
 </style>
