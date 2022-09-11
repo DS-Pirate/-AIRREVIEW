@@ -35,4 +35,7 @@ public interface ArticleRepository extends JpaRepository<ArticlesList,String> {
     Optional<ArticlesList> getArticleByAidAndUserId(Long aid, Long userid);
 
     ArticlesList findByAid(Long aid);
+
+    @Query("SELECT a FROM ArticlesList a WHERE a_user=:userid ")
+    List<ArticlesList> getListbyuserId(Long userid);
 }
