@@ -1,29 +1,29 @@
 <template>
 
-    <div class="d-flex flex-column" action="login" method="post">
-        <div class="input-group idsection px-5 my-2 ">
-            <input class="form-control" type="text" name="id" id="id" v-model="state.form.email" required placeholder="아이디" >
-        </div>
-        
-        <div class="input-group passwordsection px-5 my-2 w-100">
-            <input class="form-control" type="password" name="password" id="password" v-model="state.form.password" placeholder="비밀번호" required>
-        </div>
-        <div class="px-5 my-4">
-            <button @click="submit()" class="btn btn-outline-primary w-100">로그인</button>
-        </div>
-
+  <div class="d-flex flex-column" action="login" method="post">
+    <div class="input-group idsection px-5 my-2 ">
+      <input class="form-control" type="text" name="id" id="id" v-model="state.form.email" required placeholder="아이디" >
     </div>
+
+    <div class="input-group passwordsection px-5 my-2 w-100">
+      <input class="form-control" type="password" name="password" id="password" v-model="state.form.password" placeholder="비밀번호" required>
+    </div>
+    <div class="px-5 my-4">
+      <button @click="submit()" class="btn btn-outline-primary w-100">로그인</button>
+    </div>
+
+  </div>
 
 </template>
 
 <script charset='utf-8'>
 import {reactive} from '@vue/reactivity';
 import axios from 'axios';
-// import { useRouter } from 'vue-router';
+import store from "@/store";
+import router from "@/router";
 
 export default {
   setup(){
-// const router = useRouter();
     const state = reactive({
       form:{
         email:"",
@@ -45,8 +45,11 @@ export default {
       console.log(body);
       await axios.post(url, body, {headers}).then(function(res){
         if(res.data != null){
-          sessionStorage.setItem("TOKEN", res.data.token)
+          console.log(res.data.token + '===' + res.data.email);
+          store.commit('setToken',res.data.token);
+          store.commit('setEmail',res.data.email);
           alert('로그인되었습니다.')
+          router.push(`/`)
         } else {
           alert('로그인 실패하였습니다.')
         }
@@ -59,5 +62,5 @@ export default {
 </script>
 
 <style lang="">
-    
+
 </style>
