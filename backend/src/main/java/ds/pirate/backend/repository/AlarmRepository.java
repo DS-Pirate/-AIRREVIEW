@@ -14,17 +14,11 @@ import ds.pirate.backend.entity.alarm;
 public interface AlarmRepository extends JpaRepository<alarm, Long>{
     
     alarm findByArticleId(Long articleId);
-
-    @Query(value = 
-            "select "+
-            "regdate, "+
-            "(select atitle from articles_list ar where am.article_id_aid = ar.aid) as title, "+
-            "(select air_name from air_user as ar where am.who_user_userid = ar.userid) as whouser, "+
-            "(select air_name from air_user as ar where am.to_user_userid = ar.userid) as touser, "+
-            "(select comment_context from acomments as co where am.comment_id_cid = co.cid) as commentContext "+
-            "from alarm as am "+
-            "where am.to_user_userid =:userid ", 
-            nativeQuery = true)
+    @Query(value=
+            "select (select air_name from air_user as ar where am.who_user_userid = ar.userid) as whouser, air_name as touserm, am.article_id_aid as aid, atitle as title, comment_context, am.regdate "+
+            "from alarm as am left join air_user as ar on am.to_user_userid = ar.userid left join articles_list as atc on am.article_id_aid=atc.aid left join acomments as ac on am.comment_id_cid = ac.cid "+
+            "where am.to_user_userid =:userid"
+            , nativeQuery = true)
     Optional<List<Object>> getAlarmInfoByUserid(Long userid);
 
 }
