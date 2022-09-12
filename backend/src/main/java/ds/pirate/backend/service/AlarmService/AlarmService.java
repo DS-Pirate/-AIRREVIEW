@@ -1,18 +1,24 @@
 package ds.pirate.backend.service.AlarmService;
 
+import java.util.List;
+
 import ds.pirate.backend.dto.alarmDTO;
+import ds.pirate.backend.entity.ArticlesList;
+import ds.pirate.backend.entity.acomments;
+import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.entity.alarm;
 
 public interface AlarmService {
+    List<Object> getAlarmListByUserid(Long userid);
     
     default alarmDTO entityToDTO(alarm entity){
         alarmDTO dto = alarmDTO
         .builder()
         .arid(entity.getArid())
-        .articleId(entity.getArticleId())
-        .whoUser(entity.getWhoUser())
-        .toUser(entity.getToUser())
-        .commentContext(entity.getCommentContext())
+        .articleId(entity.getArticleId().getAid())
+        .commentId(entity.getCommentId().getCid())
+        .whoUser(entity.getWhoUser().getUserid())
+        .toUser(entity.getToUser().getUserid())
         .checked(entity.isChecked())
         .build();
         return dto;
@@ -22,10 +28,10 @@ public interface AlarmService {
         alarm entity = alarm
         .builder()
         .arid(dto.getArid())
-        .articleId(dto.getArticleId())
-        .whoUser(dto.getWhoUser())
-        .toUser(dto.getToUser())
-        .commentContext(dto.getCommentContext())
+        .articleId(ArticlesList.builder().aid(dto.getArticleId()).build())
+        .whoUser(airUser.builder().userid(dto.getWhoUser()).build())
+        .toUser(airUser.builder().userid(dto.getToUser()).build())
+        .commentId(acomments.builder().cid(dto.getCommentId()).build())
         .checked(dto.isChecked())
         .build();
         return entity;

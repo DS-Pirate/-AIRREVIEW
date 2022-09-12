@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,17 +22,17 @@ public class alarm extends DateEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long arid;
 
-    @Column
-    private Long articleId;
+    @ManyToOne
+    private ArticlesList articleId;
 
-    @Column
-    private String commentContext;
+    @ManyToOne
+    private acomments commentId;
 
-    @Column
-    private Long whoUser;
+    @ManyToOne
+    private airUser whoUser;
 
-    @Column
-    private Long toUser;
+    @ManyToOne
+    private airUser toUser;
 
     @Column
     private boolean checked;

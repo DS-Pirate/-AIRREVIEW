@@ -81,6 +81,27 @@ public class UserRepositoryTests {
     @Autowired
     AlarmRepository alrepo;
 
+
+    @Test
+    void insertDummyAlarm(){
+        LongStream.rangeClosed(1, 5).forEach(v->{
+            alarm entity = alarm
+            .builder()
+            .articleId(ArticlesList.builder().aid(1L).build())
+            .whoUser(airUser.builder().userid(v).build())
+            .toUser(airUser.builder().userid(1L).build())
+            .checked(false)
+            .build();
+            alrepo.save(entity);
+            
+        });
+    }
+
+    @Test
+    void getAlarmListDirectly(){
+        log.info(alrepo.getAlarmInfoByUserid(1L));
+    }
+
     @Test 
     void temporaltesttogetalarmlist(){
         List<ArticlesList> articleListByuserid = arepo.getListbyuserId(1L);
