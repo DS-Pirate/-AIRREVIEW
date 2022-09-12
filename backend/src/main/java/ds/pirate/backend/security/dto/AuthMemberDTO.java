@@ -14,23 +14,28 @@ import lombok.*;
 @Setter
 @ToString
 public class AuthMemberDTO extends User implements OAuth2User {
+    private Long userid;
     private String email;
     private String password;
     private String name;
     private boolean auth;
     private Map<String, Object> attr; 
 
-    public AuthMemberDTO(String username, String password,
-                             boolean fromSocial, Collection<? extends GrantedAuthority> authorities,
-                             Map<String, Object> attr) {
+    public AuthMemberDTO(String username, String password, boolean fromSocial, Collection<? extends GrantedAuthority> authorities, Map<String, Object> attr) {
         this(username, password, fromSocial, authorities);
         this.attr = attr;
     }
 
-    public AuthMemberDTO(
-            String username, String password, boolean auth,
-            Collection<? extends GrantedAuthority> authorities) {
+    public AuthMemberDTO(String username, String password, boolean auth, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
+        email = username;
+        this.password = password;
+        this.auth = auth;
+    }
+
+    public AuthMemberDTO(String username, String password, Long userid, boolean auth, Collection<? extends GrantedAuthority> authorities) {
+        super(username, password, authorities);
+        this.userid = userid;
         email = username;
         this.password = password;
         this.auth = auth;

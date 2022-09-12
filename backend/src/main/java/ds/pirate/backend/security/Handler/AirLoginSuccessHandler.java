@@ -34,11 +34,9 @@ public class AirLoginSuccessHandler implements AuthenticationSuccessHandler {
     log.info("onAuthenticationSuccess");
     AuthMemberDTO dto = (AuthMemberDTO)authentication.getPrincipal();
     boolean fromSocial = dto.isAuth();
-    log.info("isFromSocial : " + fromSocial);
     boolean passResult = encoder.matches("1", dto.getPassword());
-    log.info("fromSocial && passResult: " + (fromSocial && passResult));
     if(fromSocial && passResult) {
-      redirectStrategy.sendRedirect(request, response, "/member/modify?from=social");
+      redirectStrategy.sendRedirect(request, response, "플랫폼로그인 구현후 수정");
       return;
     } 
     List<String> roleNames = new ArrayList<>();
@@ -50,9 +48,8 @@ public class AirLoginSuccessHandler implements AuthenticationSuccessHandler {
     });
     String forward = "";
     System.out.println(">>>"+roleNames);
-    if(roleNames.contains("ROLE_USER")) forward = "/sample/all";
-    if(roleNames.contains("ROLE_MANAGER")) forward = "/sample/member";
-    if(roleNames.contains("ROLE_ADMIN")) forward = "/sample/admin";
+    if(roleNames.contains("ROLE_USER")) forward = "./";
+    if(roleNames.contains("ROLE_ADMIN")) forward = "/airreviewadminpage/";
     redirectStrategy.sendRedirect(request, response, forward);
   }
 }

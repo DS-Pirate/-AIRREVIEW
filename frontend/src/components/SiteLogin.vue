@@ -42,12 +42,11 @@ export default {
       const url = "/airreview/member/login"
       const headers = { "Content-Type": "application/json; charset=utf-8;"}
       const body = { email: state.form.email, passwd: state.form.password };
-      console.log(body);
       await axios.post(url, body, {headers}).then(function(res){
         if(res.data != null){
-          console.log(res.data.token + '===' + res.data.email);
           store.commit('setToken',res.data.token);
           store.commit('setEmail',res.data.email);
+          store.commit('setUserId',res.data.userid);
           alert('로그인되었습니다.')
           router.push(`/`)
         } else {

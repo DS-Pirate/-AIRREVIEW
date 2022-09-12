@@ -12,10 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import ds.pirate.backend.security.Handler.AirAccessDeniedHandler;
 import ds.pirate.backend.security.Handler.AirLoginSuccessHandler;
-import ds.pirate.backend.security.Handler.AirLogoutSuccessHandler;
-import ds.pirate.backend.security.Handler.ApiLoginFailHandler;
 import ds.pirate.backend.security.filter.ApiCheckFilter;
 import ds.pirate.backend.security.filter.ApiLoginFilter;
 import ds.pirate.backend.security.util.JWTUtil;
@@ -46,7 +43,6 @@ public class SecurityConfig {
       ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/member/login", jwtUtil());
       apiLoginFilter.setAuthenticationManager(authenticationManager);
       apiLoginFilter.setAuthenticationSuccessHandler(successHandler());
-      apiLoginFilter.setAuthenticationFailureHandler(new ApiLoginFailHandler());
       return apiLoginFilter;
     }
 
@@ -64,16 +60,6 @@ public class SecurityConfig {
     @Bean
     public AirLoginSuccessHandler successHandler() {
         return new AirLoginSuccessHandler(passwordEncoder());
-    }
-
-    @Bean
-    public AirLogoutSuccessHandler logoutSuccessHandler() {
-        return new AirLogoutSuccessHandler();
-    }
-
-    @Bean
-    public AirAccessDeniedHandler accessDeniedHandler(){
-      return new AirAccessDeniedHandler();
     }
     
     @Bean
