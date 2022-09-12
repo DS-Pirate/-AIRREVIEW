@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class alarmDTO {
     private Long arid;
     private Long articleId;
-    private String commentContext;
+    private Long commentId;
     private Long whoUser;
     private Long toUser;
     private boolean checked;
