@@ -25,13 +25,15 @@
 <script setup>
     import { ref, reactive } from "vue"
     import { useRouter } from "vue-router"
+    import { useStore } from 'vuex'
     import axios from "axios"
     import ArticleCommentCard from "./ArticleCommentCard.vue"
+    const store = useStore()
     const router = useRouter()
     const id = new URLSearchParams(window.location.search).get("article")
     const headers = {
-        // "Content-Type": "application/json charset=utf-8",
-        Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+        "Authorization": store.state.token,
+        "userid" : store.state.userid
     }
 
     let articleRating = ref(0)
@@ -41,8 +43,7 @@
     let commentInfo = reactive({
         aid: id,
         reqPage: 0,
-        //store에서 나중에 가져와야함
-        userid: 1,
+        userid: store.state.userid,
     })
 
     function getMoreComment() {
@@ -76,9 +77,8 @@
 
     async function addNewcomment() {
         let body = {
-            //state.userid+email에서 끌고와야함
-            userid: 1,
-            email: "1aaa@aaa.com",
+            userid: store.state.userid,
+            email: store.state.email,
             aid: id,
             commentContext: commentcontext.value.value,
             articleRate: articleRating.value - 1,

@@ -27,34 +27,36 @@
 import axios from 'axios';
 import { defineProps } from "vue";
 import { useRouter } from 'vue-router'
-    const props = defineProps(['id'])
-    const router = useRouter()
-    let categories= [
-        {value:1, name:"성적인 콘텐츠"},
-        {value:2 ,name:"폭력적 또는 혐오스러운 콘텐츠"},
-        {value:3 ,name:"증오 또는 악의적인 콘텐츠"},
-        {value:4 ,name:"희롱 또는 괴롭힘"},
-        {value:5 ,name:"유해하거나 위험한 행위"},
-        {value:6 ,name:"잘못된 정보"},
-        {value:7 ,name:"아동 학대"},
-        {value:8 ,name:"테러 조장"},
-        {value:9 ,name:"스팸 또는 오해의 소지가 있는 콘텐츠"},
-        {value:10 ,name:"권리 침해"}
+import { useStore } from 'vuex'
+const props = defineProps(['id'])
+const router = useRouter()
+const store = useStore()
+let categories= [
+    {value:1, name:"성적인 콘텐츠"},
+    {value:2 ,name:"폭력적 또는 혐오스러운 콘텐츠"},
+    {value:3 ,name:"증오 또는 악의적인 콘텐츠"},
+    {value:4 ,name:"희롱 또는 괴롭힘"},
+    {value:5 ,name:"유해하거나 위험한 행위"},
+    {value:6 ,name:"잘못된 정보"},
+    {value:7 ,name:"아동 학대"},
+    {value:8 ,name:"테러 조장"},
+    {value:9 ,name:"스팸 또는 오해의 소지가 있는 콘텐츠"},
+    {value:10 ,name:"권리 침해"}
 ]
-    let selected = null
-    function selectedValue(i){
-        selected = i
-    }
+let selected = null
+function selectedValue(i){
+    selected = i
+}
 
     async function submitReport(){
         const url="./api/article/report"
         const headers = {
                 "Content-Type": "application/json; charset=utf-8",
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+                "Authorization": store.state.token,
+                "userid" : store.state.userid
             }
             let body = {
-                //store에서 userid획득
-                userid:1,
+                userid:store.state.userid,
                 articleid:props.id,
                 reportContext:selected
             }

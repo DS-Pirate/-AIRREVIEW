@@ -21,17 +21,18 @@
     import axios from "axios";
     import { ref, defineProps, reactive } from "vue";
     import { useRouter } from "vue-router";
+    import { useStore } from 'vuex'
+    const store = useStore()
     const router = useRouter();
     let props = defineProps(["id"]);
     let fav = ref(null);
     let report = ref(null);
     let save = ref(null);
-    let thisstorevariationshouldbeimplementedtostoresuseridkey = 1
     let stat = reactive({
         result : null
     })
     function functionBtnChecking() {
-        if (thisstorevariationshouldbeimplementedtostoresuseridkey != 0) {
+        if (store.state.userid != 0) {
             return true;
         } else {
             return false;
@@ -40,11 +41,12 @@
     function modifiable() {
         const headers = {
             "Content-Type": "application/json; charset=utf-8",
-            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+            "Authorization": store.state.token,
+            "userid" : store.state.userid
         }
         let body = {
             aid: new URLSearchParams(window.location.search).get("article"),
-            userid: 1,
+            userid: store.state.userid,
         }
         axios
         .post("./api/article/modify/check", body, { headers })
@@ -61,11 +63,11 @@
         const url = "./api/article/like";
         const headers = {
             "Content-Type": "application/json; charset=utf-8",
-            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+            "Authorization": store.state.token,
+            "userid" : store.state.userid
         };
         let body = {
-            //store에서 userid획득
-            userid: 1,
+            userid: store.state.userid,
             aid: props.id,
         };
         await axios
@@ -78,11 +80,11 @@
         const url = "./api/article/save";
         const headers = {
             "Content-Type": "application/json; charset=utf-8",
-            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+            "Authorization": store.state.token,
+            "userid" : store.state.userid
         };
         let body = {
-            //store에서 userid획득
-            userid: 1,
+            userid: store.state.userid,
             aid: props.id,
         };
         await axios
@@ -96,11 +98,11 @@
         const url = "./api/article/functions";
         const headers = {
             "Content-Type": "application/json; charset=utf-8",
-            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+            "Authorization": store.state.token,
+            "userid" : store.state.userid
         };
         let body = {
-            //store에서 userid획득
-            userid: 1,
+            userid: store.state.userid,
             aid: props.id,
         };
 

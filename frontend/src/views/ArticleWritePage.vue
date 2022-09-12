@@ -57,6 +57,7 @@
 import router from "@/router"
 import ClassicEditor from "@ckeditor/ckeditor5-custom"
 import axios from 'axios'
+import store from 'vuex'
 
 
 export default {
@@ -78,7 +79,8 @@ export default {
 					uploadUrl: "api/article/write/image",
 					withCredentials: true,
 					headers: {
-						Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA'
+						"Authorization": store.state.token,
+						"userid" : store.state.userid
 					}
 				}
 
@@ -116,8 +118,8 @@ export default {
 				tags: this.taghistory,
 				opened: this.openable,
 				shareable: this.shareable,
-				userId: 1,
-				token: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+				userId: store.state.userid,
+				token: store.state.token,
 				images: []
 			}
 
@@ -145,7 +147,8 @@ export default {
 			const url = "/airreview/api/article/write"
 			const headers = {
 				"Content-Type": "application/json; charset=utf-8",
-				"token": page.token, "Authorization": page.token
+				"Authorization": store.state.token,
+				"userid" : store.state.userid
 			}
 			const body = result
 			await axios.post(url, body, { headers }).then(function (res) {

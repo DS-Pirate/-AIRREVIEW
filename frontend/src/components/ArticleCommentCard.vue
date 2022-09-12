@@ -52,12 +52,15 @@
 <script setup>
     import { defineProps } from "vue";
     import { useRouter } from "vue-router";
+    import { useStore } from 'vuex'
     import axios from "axios";
     let props = defineProps(["cardInfo"]);
     const router = useRouter();
+    const store = useStore()
     const headers = {
         "Content-Type": "application/json; charset=utf-8",
-        Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+        "Authorization": store.state.token,
+        "userid" : store.state.userid
     };
 
     let commentInfo = {
@@ -66,8 +69,7 @@
 
     async function ratingComment(ud) {
         let body = {
-            //state.userid에서 끌고와야함
-            userid: 1,
+            userid: store.state.userid,
             commentUserid: props.cardInfo.userid,
             cid: props.cardInfo.cid,
             updown: ud,
@@ -90,7 +92,7 @@
     async function addCommentReply() {
         const headers = {
             "Content-Type": "application/json; charset=utf-8",
-            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+            "Authorization": store.state.token,
         };
         let body = {
             //state.email에서 끌고와야함
