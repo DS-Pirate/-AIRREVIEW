@@ -1,8 +1,10 @@
 package ds.pirate.backend.repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import ds.pirate.backend.dto.ArticleDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -12,6 +14,8 @@ import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.stereotype.Repository;
 
 import ds.pirate.backend.entity.ArticlesList;
+import ds.pirate.backend.entity.airUser;
+
 
 @Repository
 public interface ArticleRepository extends JpaRepository<ArticlesList,String> {
@@ -35,6 +39,12 @@ public interface ArticleRepository extends JpaRepository<ArticlesList,String> {
     Optional<ArticlesList> getArticleByAidAndUserId(Long aid, Long userid);
 
     ArticlesList findByAid(Long aid);
+
+    @Query("SELECT u.airName ,a.aid, a.atitle, a.context, a.regDate, a.opend " +
+            "FROM ArticlesList a left join  airUser u " +
+            "on u.userid = a.aUser "+
+            "ORDER BY a.aid DESC")
+    List<Object[]> getListAndAuthor();
 
     @Query("SELECT a FROM ArticlesList a WHERE a_user=:userid ")
     List<ArticlesList> getListbyuserId(Long userid);

@@ -9,11 +9,11 @@
 				</div>
 				<div class="data">
 					<div class="content">
-						<router-link to="/read">
-							<span class="author">작성자구역</span>
-							<h3 class="title"><a href="#">타이틀구역</a></h3>
+						<div @click="read()">
+							<span class="author">{{ card[0] }}</span>
+							<h3 class="title"><a>{{ card[2] }}</a></h3>
 							<p class="text">내용을 축약해서 이곳에 표시합니다 약 30자 정도 생각하고있습니다</p>
-						</router-link>
+						</div>
 						<label :for="props.cardinfo" class="menu-button"><span></span></label>
 					</div>
 					<input type="checkbox" :id="props.cardinfo" />
@@ -32,8 +32,16 @@
 
 <script setup>
 import { defineProps } from "vue";
-const props = defineProps(['cardinfo'])
+import router from "@/router";
+// const props = defineProps(['cardinfo'])
 
+const props = defineProps({
+  card: Object,
+})
+
+function read() {
+  router.push(`/read?article=${props.card[1]}`)
+}
 
 </script>
 
