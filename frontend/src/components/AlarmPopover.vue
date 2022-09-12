@@ -11,6 +11,50 @@
 </template>
 <script setup>
     import AlarmPopoverCard from "./AlarmPopoverCard.vue";
+    import { useStore } from "vuex";
+    import axios from "axios";
+    const store = useStore();
+    const url = "./api/alarm/list";
+    const headers = {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: store.state.token,
+        userid: store.state.userid,
+    };
+
+    let body = {
+        userid : store.state.userid
+    }
+    getTimeFromJavaDateForComment(0)
+    function getTimeFromJavaDateForComment(s) {
+        const cont = new Date(s);
+        let date = new Date();
+        let calculated = (new Date(date.getTime()) - cont) / 1000; //초 계산
+        if (calculated < 60) {
+            return "방금 전";
+        } else if (calculated < 60 * 60) {
+            return `${Math.round(calculated / 60)}분 전`;
+        } else if (calculated < 60 * 60 * 24) {
+            return `${Math.round(calculated / (60 * 60))}시간 전`;
+        } else if (calculated < 60 * 60 * 24 * 7) {
+            return `${Math.round(calculated / (60 * 60 * 24))}일 전`;
+        } else if (calculated < 60 * 60 * 24 * 7 * 5) {
+            return `${Math.round(calculated / (60 * 60 * 24 * 7))}주 전`;
+        } else if (calculated < 31536000) {
+            return `${Math.round(calculated / 31536000)}달 전`;
+        } else if (calculated > 31536000) {
+            return `${Math.round(calculated / 31536000)}년 전`;
+        }
+    }
+
+
+
+    function getAlarmList() {
+        axios.post(url, body, { headers })
+        .then(function(res){
+            console.log(res);
+        })
+    }
+    getAlarmList()
 </script>
 <style scoped lang="sass">
     .popover__wrapper

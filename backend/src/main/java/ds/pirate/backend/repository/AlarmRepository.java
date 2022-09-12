@@ -2,6 +2,7 @@ package ds.pirate.backend.repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,6 +25,6 @@ public interface AlarmRepository extends JpaRepository<alarm, Long>{
             "from alarm as am "+
             "where am.to_user_userid =:userid ", 
             nativeQuery = true)
-    List<Object[]> getAlarmInfoByUserid(Long userid);
+    Optional<List<Object>> getAlarmInfoByUserid(Long userid);
 
 }

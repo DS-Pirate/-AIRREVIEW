@@ -1,5 +1,7 @@
 package ds.pirate.backend.service.AlarmService;
 
+import java.util.List;
+
 import ds.pirate.backend.dto.alarmDTO;
 import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.acomments;
@@ -7,6 +9,7 @@ import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.entity.alarm;
 
 public interface AlarmService {
+    List<Object> getAlarmListByUserid(Long userid);
     
     default alarmDTO entityToDTO(alarm entity){
         alarmDTO dto = alarmDTO

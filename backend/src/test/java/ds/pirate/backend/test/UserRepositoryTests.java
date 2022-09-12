@@ -39,7 +39,6 @@ import ds.pirate.backend.repository.HashTagRepository;
 import ds.pirate.backend.repository.SubscribeRepository;
 import ds.pirate.backend.repository.UserImageListRepository;
 import ds.pirate.backend.repository.UserRepository;
-import ds.pirate.backend.service.AlarmService.AlarmService;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
