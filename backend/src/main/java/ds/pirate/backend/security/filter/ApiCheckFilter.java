@@ -35,10 +35,8 @@ public class ApiCheckFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         if(antPathMatcher.match(request.getContextPath()+pattern, request.getRequestURI())){
             boolean checkHeader = checkAuthHeader(request);
-            log.info("checkHeader"+checkHeader);
             if(checkHeader){
                 filterChain.doFilter(request, response);
-                log.info("checkHeader: " + checkHeader);
             } else {
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 response.setContentType("application/json;charset=utf-8");
@@ -54,20 +52,16 @@ public class ApiCheckFilter extends OncePerRequestFilter {
 
     private boolean checkAuthHeader(HttpServletRequest request) {
         boolean checkResult = false;
-        log.info("requesttttttttttttttt"+request);
         String authHeader = request.getHeader("Authorization");
-        log.info(authHeader);
-        log.info("Authorization: " + authHeader);
+        String userid = request.getHeader("userid");
         if(StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")){
             log.info("Authorization exist: " + authHeader);
             try {
-                String email = jwtUtil.validateAndExtract(authHeader.substring(7));
-                log.info(("validate result: " + email));
-                checkResult = email.length() > 0;
+                checkResult = jwtUtil.validateAndExtract(authHeader.substring(7), userid);
+                log.info(("validate result: " + checkResult));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
         return checkResult;
     }

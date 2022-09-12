@@ -86,8 +86,6 @@ export default {
       q1: '',
       q2: '',
       q3: '',
-
-      token: sessionStorage.getItem("TOKEN"),
       showModal: false,
     })
 
@@ -140,8 +138,6 @@ export default {
       const url = '/airreview/member/register'
       const headers = {
         "Content-Type": "application/json",
-        Authorization: state.token,
-        "token": state.token
       }
       const body = {
         email: state.email, passwd: state.password, airName: state.name, birthDay: birthDay,

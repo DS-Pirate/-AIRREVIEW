@@ -1,7 +1,7 @@
 <template>
     <div class="modal" id="question" tabindex="-1" aria-labelledby="question" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content  rounded-0">
+            <div class="modal-content rounded-0">
                 <div class="modal-header">
                     <h5 class="modal-title" id="question">문의하기</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -27,37 +27,38 @@
     </div>
 </template>
 <script setup>
-import axios from 'axios';
-import { ref } from 'vue';
+    import axios from "axios";
+    import { ref } from "vue";
+    import { useStore } from "vuex";
+    const store = useStore();
 
     let title = ref(null);
     let context = ref(null);
-    
-    
+
     async function send() {
         const headers = {
             "Content-Type": "application/json; charset=utf-8",
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
-        }
+            Authorization: store.state.token,
+            "userid" : store.state.userid
+        };
 
         let body = {
-            userid: 1,
+            userid: store.state.userid,
             title: title.value.value,
-            context: context.value.value
+            context: context.value.value,
+        };
+
+        if (title.value.value === "") {
+            alert("제목을 적어주세요");
+            return false;
+        } else if (context.value.value === "") {
+            alert("내용을 적어주세요");
+            return false;
         }
 
-        if(title.value.value === ''){
-            alert('제목을 적어주세요');
-            return false;
-        } else if(context.value.value === ''){
-            alert('내용을 적어주세요');
-            return false;
-        }
-
-            await axios.post("./api/question", body, { headers })
-            .then(res=>console.log("신호 나이이스",res))
-            .catch(e=>console.log(e))
+        await axios
+            .post("./api/question", body, { headers })
+            .then((res) => console.log("신호 나이이스", res))
+            .catch((e) => console.log(e));
     }
-
 </script>
-

@@ -12,8 +12,10 @@
 </template>
 <script setup>
     import router from "@/router";
-import axios from "axios";
+    import axios from "axios";
     import { defineProps, ref, onMounted } from "vue";
+    import { useStore } from 'vuex'
+    const store = useStore()
     const props = defineProps(["id"])
     let IuserIMG = ref(null)
     let IairName = ref(null)
@@ -21,12 +23,12 @@ import axios from "axios";
     let IisSubed = ref(null)
     const headers = {
             "Content-Type": "application/json; charset=utf-8",
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+            "Authorization": store.state.token,
+            "userid" : store.state.userid
         }
     let body = {
             aid : props.id,
-            //store에서 가져와야함
-            userid : 1
+            userid : store.state.userid
     }
 
     async function subsFunction(){

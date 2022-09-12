@@ -40,11 +40,10 @@ import ds.pirate.backend.repository.SubscribeRepository;
 import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.UserService.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @Service
 @RequiredArgsConstructor
-@Log4j2
+
 public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository repo;
     private final HashTagRepository hrepo;
@@ -101,7 +100,6 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleDTO CheckBeforeModifyArticle(Long aid, Long userid) {
         Optional<ArticlesList> isit = repo.getArticleByAidAndUserId(aid, userid);
-        log.info("?????????"+aid + "?????????"+userid);
         if(!isit.isPresent()){
             return null;
         }else{

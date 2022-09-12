@@ -15,28 +15,37 @@ public class JWTUtil {
     private final String secretKey = "airreviewsecretkeyyyyyyyyyyyyyyyyyyyyyyyy";
     private final long expire = 60 * 24 * 30;
 
-    public String generateToken(String content) throws Exception {
-        return Jwts.builder()
+    public String generateToken(String email, Long userid) throws Exception {
+        String result = Jwts.builder()
                 .setIssuedAt(new Date())
                 .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(expire).toInstant()))
-                .claim("sub", content)
+                .claim("sub", email)
+                .claim("jti", userid)
                 .signWith(SignatureAlgorithm.HS256, secretKey.getBytes(StandardCharsets.UTF_8))
                 .compact();
+        log.info(result);
+        return result;
     }
 
     @SuppressWarnings("rawtypes")
-    public String validateAndExtract(String tokenStr) {
-        String contentValue = null;
+    public Boolean validateAndExtract(String tokenStr, String userid) {
+        Boolean checker = null;
         try {
             DefaultJws defaultjJws = (DefaultJws) Jwts.parser()
                     .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8)).parseClaimsJws(tokenStr);
+            
             DefaultClaims claims = (DefaultClaims) defaultjJws.getBody();
-            contentValue = claims.getSubject();
+            String uid = claims.getId();
+            if(Integer.parseInt(uid) == Integer.parseInt(userid)){
+                checker = true;
+            }else{
+                checker = false;
+            } 
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
         }
-        return contentValue;
+        return checker;
     }
 
 }

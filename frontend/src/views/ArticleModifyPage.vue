@@ -51,6 +51,7 @@
     import router from "@/router";
     import ClassicEditor from "@ckeditor/ckeditor5-custom";
     import axios from "axios";
+    import store from 'vuex'
     export default {
         name: "WritePage",
         data() {
@@ -70,7 +71,8 @@
                         uploadUrl: "api/article/write/image",
                         withCredentials: true,
                         headers: {
-                            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+                            "Authorization": store.state.token,
+                            "userid" : store.state.userid
                         },
                     },
                 },
@@ -84,11 +86,12 @@
                 let aid = 0
                 const headers = {
                     "Content-Type": "application/json; charset=utf-8",
-                    Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+                    "Authorization": store.state.token,
+                    "userid" : store.state.userid
                 };
                 let body = {
                     aid: new URLSearchParams(window.location.search).get("article"),
-                    userid: 1,
+                    userid: store.state.userid,
                 };
                 await axios.post("./api/article/modify/check", body, { headers }).then(function (res) {
                     console.log(res);
@@ -138,8 +141,8 @@
                     tags: this.taghistory,
                     opened: this.openable,
                     shareable: this.shareable,
-                    userId: 1,
-                    token: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjIwMDY2NjUsImV4cCI6MTY2NDU5ODY2NSwic3ViIjoiMWFhYUBhYWEuY29tIn0.SLdsL0VW2nyHEwkrAAqqn6uvUmpqMSHbUg81530SQvA",
+                    userId: store.state.userid,
+                    token: store.state.token,
                     images: [],
                 };
 
@@ -166,8 +169,8 @@
                 const url = "/airreview/api/article/modify/send";
                 const headers = {
                     "Content-Type": "application/json; charset=utf-8",
-                    token: page.token,
-                    Authorization: page.token,
+                    "Authorization": store.state.token,
+                    "userid" : store.state.userid
                 };
                 const body = result;
                 await axios
