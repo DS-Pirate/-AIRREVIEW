@@ -8,6 +8,9 @@
           <input id="searching" v-model="search.context" type="text" class="form-control border-0 bg-white">
         </form>
         <ul class="list-group list-group-horizontal">
+          <li class="list-group-item border-0">
+            <AlarmPopover></AlarmPopover>
+          </li>
           <router-link to="/login" v-if="!$store.state.token">
             <li class="list-group-item border-0" >Login</li>
           </router-link>
@@ -41,14 +44,16 @@ import ShareModal from "./components/ShareModal.vue";
 import {reactive} from "vue"
 import { useRouter } from 'vue-router'
 import store from "@/store";
+import AlarmPopover from "./components/AlarmPopover.vue";
 
 export default {
   name: "TopOfPage",
   components: {
     SubNavigationBar,
     QuestionModal,
-    ShareModal
-  },
+    ShareModal,
+    AlarmPopover
+},
   setup(){
     const router = useRouter()
 

@@ -46,4 +46,6 @@ public interface ArticleRepository extends JpaRepository<ArticlesList,String> {
             "ORDER BY a.aid DESC")
     List<Object[]> getListAndAuthor();
 
+    @Query("SELECT a FROM ArticlesList a WHERE a_user=:userid ")
+    List<ArticlesList> getListbyuserId(Long userid);
 }

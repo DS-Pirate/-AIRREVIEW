@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
@@ -28,8 +29,10 @@ import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.HashTags;
 import ds.pirate.backend.entity.acomments;
 import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.entity.alarm;
 import ds.pirate.backend.entity.subscribList;
 import ds.pirate.backend.entity.uImagesList;
+import ds.pirate.backend.repository.AlarmRepository;
 import ds.pirate.backend.repository.ArticleRepository;
 import ds.pirate.backend.repository.CommentRateRepository;
 import ds.pirate.backend.repository.CommentRepository;
@@ -75,6 +78,23 @@ public class UserRepositoryTests {
 
     @Autowired
     CommentRateRepository ctrepo;
+
+    @Autowired
+    AlarmRepository alrepo;
+
+    @Test 
+    void temporaltesttogetalarmlist(){
+        List<ArticlesList> articleListByuserid = arepo.getListbyuserId(1L);
+
+        List<alarm> alarmList = articleListByuserid.stream().map((Function<ArticlesList, alarm>) v->{
+            alarm result = alrepo.findByArticleId(v.getAid());
+            return result;
+        }).collect(Collectors.toList());
+
+        log.info(alarmList);
+        
+    }
+
 
     @Test
     void findByArticlesAndHashTagName(){
