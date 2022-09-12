@@ -58,10 +58,9 @@ export default {
     const router = useRouter()
 
     const logout =()=>{
-      console.log(store.state.token);
+      store.commit('setUserId',0);
       store.commit('setToken',0);
       store.commit('setEmail',0);
-      sessionStorage.clear()
       router.push({path:"/logout"})
     }
 

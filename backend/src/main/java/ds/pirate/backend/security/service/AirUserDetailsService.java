@@ -26,16 +26,17 @@ public class AirUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("ClubUserDetailsService loadUserByUsername: " + username);
+        log.info("loadUserByUsername: " + username);
         Optional<airUser> result = repository.findByEmail(username);
         if (!result.isPresent()) {
             throw new UsernameNotFoundException("Check email or Social");
         }
         airUser entity = result.get();
-        log.info("clubMember: " + entity);
+        log.info("airUser 유저정보: " + entity);
 
         AuthMemberDTO dto = new AuthMemberDTO(
-                entity.getEMail(), entity.getPasswd(), entity.isAuth(),
+                entity.getEMail(), entity.getPasswd(), entity.getUserid(),
+                entity.isAuth(),
                 entity.getRoleSet().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
                         .collect(Collectors.toList()));
         dto.setName(entity.getAirName());

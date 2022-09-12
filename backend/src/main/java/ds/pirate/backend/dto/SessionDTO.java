@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class SessionDTO {
+    private Long userid;
     private String email;
     private String username;
     private String name;

@@ -34,7 +34,6 @@ export default {
 
     const url = "/airreview/article/card"
     axios.get(url).then((res) => {
-      console.log(res);
       state.cards = res.data;
     })
     return {state}

@@ -37,7 +37,6 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
     public ApiLoginFilter(String defaultFilterProcessUrl, JWTUtil jwtUtil){
         super(defaultFilterProcessUrl);
         this.jwtUtil = jwtUtil;
-        
     }
     
 
@@ -83,16 +82,19 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
         try {
             token = "Bearer " + jwtUtil.generateToken(email);
             SessionDTO sessionDTO = AuthToSessionDTO((AuthMemberDTO) authResult.getPrincipal(), token,curl);
+            log.info("sessionDTO"+sessionDTO);
             String res = mapper.writeValueAsString(sessionDTO);
             response.setContentType("application/json;charset=utf-8");
             response.getOutputStream().write(res.getBytes());
             log.info("sessionDTO: " + sessionDTO.getName());
+            log.info("sessionDTO: " + sessionDTO.getUserid());
         } catch (Exception e) {e.printStackTrace();}
     }
     private SessionDTO AuthToSessionDTO(AuthMemberDTO dto,
                                         String token, String curl) {
         log.info("dto.getName:" + dto.getName());
         SessionDTO sessionDTO = SessionDTO.builder()
+                .userid(dto.getUserid())
                 .email(dto.getEmail())
                 .username(dto.getUsername())
                 .name(dto.getName())
