@@ -1,10 +1,8 @@
 package ds.pirate.backend.repository;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-import ds.pirate.backend.dto.ArticleDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -14,7 +12,6 @@ import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.stereotype.Repository;
 
 import ds.pirate.backend.entity.ArticlesList;
-import ds.pirate.backend.entity.airUser;
 
 
 @Repository

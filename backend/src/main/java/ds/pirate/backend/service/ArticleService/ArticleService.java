@@ -1,6 +1,5 @@
 package ds.pirate.backend.service.ArticleService;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
