@@ -37,4 +37,8 @@ public class alarm extends DateEntity{
     @Column
     private boolean checked;
 
+    public void updateChecked(boolean result){
+        this.checked = result;
+    }
+
 }

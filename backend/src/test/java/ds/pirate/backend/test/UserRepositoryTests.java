@@ -102,18 +102,18 @@ public class UserRepositoryTests {
         log.info(alrepo.getAlarmInfoByUserid(1L));
     }
 
-    @Test 
-    void temporaltesttogetalarmlist(){
-        List<ArticlesList> articleListByuserid = arepo.getListbyuserId(1L);
+    // @Test 
+    // void temporaltesttogetalarmlist(){
+    //     List<ArticlesList> articleListByuserid = arepo.getListbyuserId(1L);
 
-        List<alarm> alarmList = articleListByuserid.stream().map((Function<ArticlesList, alarm>) v->{
-            alarm result = alrepo.findByArticleId(v.getAid());
-            return result;
-        }).collect(Collectors.toList());
+    //     List<alarm> alarmList = articleListByuserid.stream().map((Function<ArticlesList, alarm>) v->{
+    //         alarm result = alrepo.findById(v.getAUser())
+    //         return result;
+    //     }).collect(Collectors.toList());
 
-        log.info(alarmList);
+    //     log.info(alarmList);
         
-    }
+    // }
 
 
     @Test
@@ -380,7 +380,7 @@ public class UserRepositoryTests {
 
     @Test
     public void insertulImage(){
-        airUser userid = airUser.builder().userid(1L).build();
+        airUser userid = airUser.builder().userid(2L).build();
         uImagesList ulid = uImagesList.builder()
         .airuser(userid)
         .fileName("29a0f4f1-3882-4b3d-9641-0e71751842d7.png")

@@ -4,7 +4,7 @@
         <div class="popover__content py-3">
             <div class="text-center pb-3 border border-0 border-bottom">새소식</div>
             <div class="popover__context">
-                <AlarmPopoverCard v-for="info in cardInfo.info" :key="info" :info="info" class="border border-0 border-bottom"></AlarmPopoverCard>
+                <AlarmPopoverCard v-for="info in cardInfo.info" :key="info" :info="info"  class="border border-0 border-bottom"></AlarmPopoverCard>
             </div>
         </div>
     </div>
@@ -35,6 +35,8 @@
     .then(function(res){
         cardInfo.info = res.data
     })
+
+
 
 </script>
 <style scoped lang="sass">

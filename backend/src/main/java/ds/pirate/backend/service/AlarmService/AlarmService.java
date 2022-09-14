@@ -10,6 +10,8 @@ import ds.pirate.backend.entity.alarm;
 
 public interface AlarmService {
     List<Object> getAlarmListByUserid(Long userid);
+    void addAlarm(acomments dto);
+    void checked(Long arid);
     
     default alarmDTO entityToDTO(alarm entity){
         alarmDTO dto = alarmDTO
