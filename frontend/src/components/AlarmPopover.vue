@@ -4,7 +4,7 @@
         <div class="popover__content py-3">
             <div class="text-center pb-3 border border-0 border-bottom">새소식</div>
             <div class="popover__context">
-                <AlarmPopoverCard v-for="info in cardInfo.info" :key="info" :info="info" class="border border-0 border-bottom"></AlarmPopoverCard>
+                <AlarmPopoverCard v-for="info in cardInfo.info" :key="info" :info="info"  class="border border-0 border-bottom"></AlarmPopoverCard>
             </div>
         </div>
     </div>
@@ -30,35 +30,13 @@
         info: null
     })
 
-    getTimeFromJavaDateForComment(0)
-    function getTimeFromJavaDateForComment(s) {
-        const cont = new Date(s);
-        let date = new Date();
-        let calculated = (new Date(date.getTime()) - cont) / 1000; //초 계산
-        if (calculated < 60) {
-            return "방금 전";
-        } else if (calculated < 60 * 60) {
-            return `${Math.round(calculated / 60)}분 전`;
-        } else if (calculated < 60 * 60 * 24) {
-            return `${Math.round(calculated / (60 * 60))}시간 전`;
-        } else if (calculated < 60 * 60 * 24 * 7) {
-            return `${Math.round(calculated / (60 * 60 * 24))}일 전`;
-        } else if (calculated < 60 * 60 * 24 * 7 * 5) {
-            return `${Math.round(calculated / (60 * 60 * 24 * 7))}주 전`;
-        } else if (calculated < 31536000) {
-            return `${Math.round(calculated / 31536000)}달 전`;
-        } else if (calculated > 31536000) {
-            return `${Math.round(calculated / 31536000)}년 전`;
-        }
-    }
-
-
-
 
     axios.post(url, body, { headers })
     .then(function(res){
         cardInfo.info = res.data
     })
+
+
 
 </script>
 <style scoped lang="sass">

@@ -1,5 +1,5 @@
 <template>
-    <a :href="'./read?article='+props.info[2]">
+    <a :href="'./read?article='+props.info[2]" @click="checked(props.info[7])">
         <div class="popovercard px-2">
             <div class="popovercard-profilesection d-flex py-3">
                 <div class="popovercard-profilesection__left w-15 d-flex align-items-center">
@@ -11,8 +11,9 @@
                         <div class="popovercard-profilesection__right__context__context">"{{ props.info[4] }}"</div>
                         <div class="popovercard-profilesection__right__context__title">:: {{ props.info[3] }}</div>
                     </div>
-                    <div class="popovercard-profilesection__right__date w-20 px-1 d-flex align-items-center">
+                    <div class="popovercard-profilesection__right__date w-20 px-1 d-flex align-items-center flex-column">
                         <span>{{ getTimeFromJavaDateForComment(props.info[5]) }}</span>
+                        <span v-if="props.info[6]==true">읽음</span>
                     </div>
                 </div>
             </div>
@@ -20,10 +21,11 @@
     </a>
 </template>
 <script setup>
+    import axios from "axios";
     import { defineProps } from "vue";
+    import { useStore } from 'vuex'
     let props = defineProps(["info"]);
-
-    getTimeFromJavaDateForComment(0);
+    const store = useStore();   
     function getTimeFromJavaDateForComment(s) {
         const cont = new Date(s);
         let date = new Date();
@@ -46,6 +48,18 @@
     }
 
     console.log(props.info);
+    const headers = {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: store.state.token,
+        userid: store.state.userid,
+    };
+    const url = "./api/alarm/checked";
+    
+
+    function checked(i){
+        console.log(i);
+        axios.post(url, i, { headers })
+    }
 </script>
 <style scoped lang="sass">
     a

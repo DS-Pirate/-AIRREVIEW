@@ -93,10 +93,10 @@
         const headers = {
             "Content-Type": "application/json; charset=utf-8",
             "Authorization": store.state.token,
+            "userid" : store.state.userid
         };
         let body = {
-            //state.email에서 끌고와야함
-            email: "1aaa@aaa.com",
+            email: store.state.email,
             aid: new URLSearchParams(window.location.search).get("article"),
             commentGroup: props.cardInfo.commentGroup,
             commnetDepth: props.cardInfo.commnetDepth+1,
@@ -113,7 +113,7 @@
     function getTimeFromJavaDateForComment(s) {
         const cont = new Date(s);
         let date = new Date();
-        let calculated = (new Date(date.getTime()) - cont) / 1000; //초 계산
+        let calculated = (new Date(date.getTime()) - cont) / 1000;
         if (calculated < 60) {
             return "방금 전";
         } else if (calculated < 60 * 60) {
