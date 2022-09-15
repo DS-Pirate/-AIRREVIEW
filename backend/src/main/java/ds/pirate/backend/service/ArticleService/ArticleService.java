@@ -41,6 +41,7 @@ public interface ArticleService {
     ArticleDTO CheckBeforeModifyArticle(Long aid, Long userid);
     String ArticleModify(ArticleDTO dto, List<String> tags);
     List<Object[]> getArticleList();
+    List<Object[]> getSearchArticleList(String search);
 
 
 
