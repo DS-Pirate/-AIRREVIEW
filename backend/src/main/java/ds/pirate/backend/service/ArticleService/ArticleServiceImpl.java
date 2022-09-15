@@ -369,6 +369,9 @@ public class ArticleServiceImpl implements ArticleService {
         airUser articleUserEntity = urepo.findByUserId(articleUserId).get();
         Optional<subscribList> subchecking = surepo.getIsSubcedByTargetIdAndUserid(articleUserId, userid);
         Long subcount = surepo.getSumByTargetId(articleUserId);
+        if (subcount==null) {
+            subcount=0L;            
+        }
         result.put("articleUserName", articleUserEntity.getAirName());
         result.put("articleUserImg", "./images/read/userid/" + (articleUserId.toString()));
         result.put("isgudoked", subchecking.isPresent() ? "true" : "false");
