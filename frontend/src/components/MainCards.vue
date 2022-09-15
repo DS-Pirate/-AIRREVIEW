@@ -3,16 +3,16 @@
 		<div class="card-1 card border-0 w-100 mb-5">
 			<div class="wrapper">
 				<div class="date">
-					<span class="day">12</span>
-					<span class="month">Aug</span>
-					<span class="year">2016</span>
+					<span class="day">{{date}}</span>
+					<span class="month">{{month}}</span>
+					<span class="year">{{year}}</span>
 				</div>
 				<div class="data">
 					<div class="content">
 						<div @click="read()">
 							<span class="author">{{ card[0] }}</span>
 							<h3 class="title"><a>{{ card[2] }}</a></h3>
-							<p class="text">내용을 축약해서 이곳에 표시합니다 약 30자 정도 생각하고있습니다</p>
+							<p class="text">내용을 축약해서 이곳에 표시합니다 약 30자 정도 생각하고있습니다{{card[1]}}</p>
 						</div>
 						<label :for="props.cardinfo" class="menu-button"><span></span></label>
 					</div>
@@ -33,11 +33,33 @@
 <script setup>
 import { defineProps } from "vue";
 import router from "@/router";
-// const props = defineProps(['cardinfo'])
 
 const props = defineProps({
   card: Object,
 })
+const monthNames = ["JAN", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
+const regdate = new Date(Date.parse(props.card[4]))
+const year = regdate.getFullYear();
+const date = regdate.getDate();
+const month = monthNames[regdate.getMonth()];
+
+// 내용 넣는중
+// const icontext = ref(null);
+// let articleInfo = null;
+
+
+// async function getArticleInformation() {
+//   await axios
+//       .get(`/airreview/article/read/${props.card[1]}`)
+//       .then((res) => {
+//         Icontext.value.innerHTML = articleInfo.context;
+//       })
+//
+//
+//   getArticleInformation();
+
 
 function read() {
   router.push(`/read?article=${props.card[1]}`)

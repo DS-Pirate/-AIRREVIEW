@@ -113,6 +113,7 @@ public class UserRepositoryTests {
         log.info(alrepo.getAlarmInfoByUserid(1L));
     }
 
+
     @Test
     void temporaltesttogetalarmlist() {
         List<ArticlesList> articleListByuserid = arepo.getListbyuserId(1L);
@@ -123,6 +124,7 @@ public class UserRepositoryTests {
         }).collect(Collectors.toList());
 
         log.info(alarmList);
+
 
     }
 
@@ -424,8 +426,9 @@ public class UserRepositoryTests {
     }
 
     @Test
-    public void insertulImage() {
-        airUser userid = airUser.builder().userid(1L).build();
+
+    public void insertulImage(){
+        airUser userid = airUser.builder().userid(2L).build();
         uImagesList ulid = uImagesList.builder()
                 .airuser(userid)
                 .fileName("29a0f4f1-3882-4b3d-9641-0e71751842d7.png")

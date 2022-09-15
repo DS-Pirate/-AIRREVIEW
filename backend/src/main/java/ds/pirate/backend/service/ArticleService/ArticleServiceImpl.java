@@ -38,12 +38,14 @@ import ds.pirate.backend.repository.LikeUnlikeRepository;
 import ds.pirate.backend.repository.SavedRepository;
 import ds.pirate.backend.repository.SubscribeRepository;
 import ds.pirate.backend.repository.UserRepository;
+import ds.pirate.backend.service.AlarmService.AlarmService;
 import ds.pirate.backend.service.UserService.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @Service
 @RequiredArgsConstructor
-
+@Log4j2
 public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository repo;
     private final HashTagRepository hrepo;
@@ -56,6 +58,7 @@ public class ArticleServiceImpl implements ArticleService {
     private final SavedRepository sarepo;
     private final SubscribeRepository surepo;
     private final UserService uservice;
+    private final AlarmService alser;
 
     @Override
     public String ArticleModify(ArticleDTO dto, List<String> tags) {
@@ -258,6 +261,7 @@ public class ArticleServiceImpl implements ArticleService {
             dto.setRate(0);
             acomments entity = commentDTOtoEntity(dto);
             crepo.save(entity);
+            alser.addAlarm(entity);
             return -1L;
         } else {
             return checkingAirUser.get().getCid();
@@ -268,6 +272,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Long addNewCommentReply(acommentDTO dto) {
         Optional<airUser> result = urepo.findByEmail(dto.getEmail());
+        log.info(result+"+아니 뭐");
         dto.setCommentGroup(dto.getCommentGroup());
         dto.setCommnetDepth(dto.getCommnetDepth());
         dto.setCommentSorts(dto.getCommentSorts());
@@ -277,6 +282,8 @@ public class ArticleServiceImpl implements ArticleService {
         acomments entity = commentDTOtoEntity(dto);
 
         crepo.save(entity);
+        alser.addAlarm(entity);
+
         return entity.getCid();
     }
 
@@ -389,4 +396,8 @@ public class ArticleServiceImpl implements ArticleService {
         return repo.getListAndAuthor();
     }
 
+    @Override
+    public List<Object[]> getSearchArticleList(String search) {
+        return repo.getListAndAuthorByAuthorOrAtitle(search);
+    }
 }

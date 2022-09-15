@@ -5,7 +5,7 @@
       <div class="routing-header mb-5 mt-4 border-bottom d-flex justify-content-between sticky-top">
         <form class="searching-area d-flex align-items-center gap-1 w-50" @submit.prevent="searchingAxios">
           <label for="searching"><i class="bi bi-search"></i></label>
-          <input id="searching" v-model="search.context" type="text" class="form-control border-0 bg-white">
+          <input id="searching" v-model="search.context" type="text" class="form-control border-0 bg-white" @keyup.enter="searchingAxios()">
         </form>
         <ul class="list-group list-group-horizontal">
           <li class="list-group-item border-0">
@@ -45,6 +45,7 @@ import {reactive} from "vue"
 import { useRouter } from 'vue-router'
 import store from "@/store";
 import AlarmPopover from "./components/AlarmPopover.vue";
+// import axios from "axios";
 
 export default {
   name: "TopOfPage",
@@ -73,10 +74,17 @@ export default {
         return
       }
       console.log("put axios function");
-      router.push("/search")
+
+      //검색처리 하는중!
+      // const url= `/airreview/search/${search.context}`
+      // const headers = {
+      //   "Content-Type": "application/json; charset=utf-8",
+      // }
+
+      router.push(`/search/${search.context}`)
     }
 
-    return{ searchingAxios, search, logout }
+    return{ searchingAxios, search, logout,}
   }
 
 
