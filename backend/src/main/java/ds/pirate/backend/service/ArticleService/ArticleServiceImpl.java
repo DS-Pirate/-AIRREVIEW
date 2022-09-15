@@ -396,5 +396,8 @@ public class ArticleServiceImpl implements ArticleService {
         return repo.getListAndAuthor();
     }
 
-
+    @Override
+    public List<Object[]> getSearchArticleList(String search) {
+        return repo.getListAndAuthorByAuthorOrAtitle(search);
+    }
 }
