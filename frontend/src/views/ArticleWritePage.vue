@@ -55,7 +55,7 @@
 // It scheduled when backend server developed
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 import router from "@/router"
-import ClassicEditor from "@ckeditor/ckeditor5-custom"
+import ClassicEditor from "@ckeditor/ckeditor5-custom/build/ckeditor"
 import axios from 'axios'
 import store from "@/store";
 

@@ -9,7 +9,7 @@
         </form>
         <ul class="list-group list-group-horizontal">
           <li class="list-group-item border-0">
-            <AlarmPopover></AlarmPopover>
+            <AlarmPopover v-if="$store.state.token"></AlarmPopover>
           </li>
           <router-link to="/login" v-if="!$store.state.token">
             <li class="list-group-item border-0" >Login</li>
@@ -38,13 +38,13 @@
   <ShareModal />
 </template>
 <script>
-import SubNavigationBar from "./components/SubNavigationBar.vue";
-import QuestionModal from "./components/QuestionModal.vue";
-import ShareModal from "./components/ShareModal.vue";
+import SubNavigationBar from "@/components/SubNavigationBar.vue";
+import QuestionModal from "@/components/QuestionModal.vue";
+import ShareModal from "@/components/ShareModal.vue";
 import {reactive} from "vue"
 import { useRouter } from 'vue-router'
 import store from "@/store";
-import AlarmPopover from "./components/AlarmPopover.vue";
+import AlarmPopover from "@/components/AlarmPopover.vue";
 
 export default {
   name: "TopOfPage",
