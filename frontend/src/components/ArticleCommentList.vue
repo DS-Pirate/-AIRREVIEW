@@ -62,7 +62,7 @@
 
     function getComments() {
         axios
-            .post(commentInfo.userid == null ? `/airreview/article/comment/` : `/airreview/api/article/comment/`, commentInfo, { headers })
+            .post(store.state.userid==0 ? `/airreview/article/comment/` : `/airreview/api/article/comment/`, commentInfo, { headers })
             .then(function (res) {
                 if (res.data.pageTotalCount == commentInfo.reqPage + 1) {
                     updateStates(res.data.commentList, -999)
