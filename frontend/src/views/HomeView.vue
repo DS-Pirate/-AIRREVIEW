@@ -9,7 +9,7 @@
       </div>
     </div>
 <!--            나중에 삭제 예정!!!!-->
-        <p v-for="(card, idx) in state.cards" :key="idx">{{card[1]}}</p>
+<!--        <p v-for="(card, idx) in state.cards" :key="idx">{{card[1]}}</p>-->
   </div>
 <!--3 : 글-->
 </template>

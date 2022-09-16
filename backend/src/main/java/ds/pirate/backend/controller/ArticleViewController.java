@@ -62,7 +62,7 @@ public class ArticleViewController {
 
 
     @RequestMapping(value = "/search/{search}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> ArticleCardsSearch(@ModelAttribute("search") String search){
+    public ResponseEntity<Object> ArticleCardsSearch(@RequestBody String search){
         List<Object[]> result = aservice.getSearchArticleList(search);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

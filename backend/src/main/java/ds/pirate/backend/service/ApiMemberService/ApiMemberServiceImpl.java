@@ -22,4 +22,13 @@ public class ApiMemberServiceImpl implements ApiMemberService{
         return "회원가입에 성공하였습니다";
 
     }
+
+//    @Override
+//    public String findPass(airUserDTO dto) {
+//
+//        if(){
+//
+//        }
+//        return null;
+//    }
 }

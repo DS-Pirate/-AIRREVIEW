@@ -74,16 +74,8 @@ export default {
         return
       }
       console.log("put axios function");
-
-      //검색처리 하는중!
-      // const url= `/airreview/search/${search.context}`
-      // const headers = {
-      //   "Content-Type": "application/json; charset=utf-8",
-      // }
-
-      router.push(`/search/${search.context}`)
+      router.push(`/search?cards=${search.context}`)
     }
-
     return{ searchingAxios, search, logout,}
   }
 
