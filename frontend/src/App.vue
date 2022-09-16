@@ -1,4 +1,5 @@
 <template>
+  <metainfo /> 
   <div class="content-area container-fluid d-flex justify-content-between p-4 gap-3">
     <SubNavigationBar class="w-15 px-4"/>
     <div class="routing-section w-85">
@@ -45,6 +46,7 @@ import {reactive} from "vue"
 import { useRouter } from 'vue-router'
 import store from "@/store";
 import AlarmPopover from "@/components/AlarmPopover.vue";
+import { useMeta } from "vue-meta";
 
 
 export default {
@@ -76,7 +78,11 @@ export default {
       console.log("put axios function");
       router.push(`/search?cards=${search.context}`)
     }
-    return{ searchingAxios, search, logout,}
+    const { meta } = useMeta({
+                title:  ':: 에어리뷰',
+            })
+
+    return{ searchingAxios, search, logout,meta}
   }
 
 

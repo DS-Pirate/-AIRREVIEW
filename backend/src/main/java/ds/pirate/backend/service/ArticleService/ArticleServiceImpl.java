@@ -295,6 +295,7 @@ public class ArticleServiceImpl implements ArticleService {
             List<acommentDTO> dto = cmlist
                     .stream()
                     .map((Function<acomments, acommentDTO>) cmt -> {
+                        log.info(cmt);
                         return commentEntityToDTO(cmt);
                     })
                     .collect(Collectors.toList());
@@ -384,7 +385,8 @@ public class ArticleServiceImpl implements ArticleService {
     public String subsFunction(Long aid, Long userid) {
         Long articleUserId = repo.getArticleAuthorIdByAid(aid);
         Optional<subscribList> subchecking = surepo.getIsSubcedByTargetIdAndUserid(articleUserId, userid);
-        airUser articleUserEntity = urepo.findByUserId(articleUserId).get();
+        log.info(articleUserId+"아니왜들어가는거야"+userid);
+        airUser articleUserEntity = urepo.findByUserId(userid).get();
         if (subchecking.isPresent()) {
             surepo.delete(subchecking.get());
             return "구독이 해지되었습니다";

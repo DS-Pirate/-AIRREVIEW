@@ -12,7 +12,7 @@ public interface SubscribeRepository extends JpaRepository<subscribList, Long> {
     @Query("SELECT sb FROM subscribList sb WHERE target_id=:targetid and userid_userid=:userid")
     Optional<subscribList> getIsSubcedByTargetIdAndUserid(Long targetid, Long userid);
 
-    @Query("SELECT SUM(targetId) FROM subscribList WHERE target_id=:targetid")
+    @Query("SELECT count(targetId) FROM subscribList WHERE target_id=:targetid")
     Long getSumByTargetId(Long targetid);
 
     @Query("SELECT s FROM subscribList s WHERE userid_userid=:userid")

@@ -18,8 +18,9 @@ module.exports = defineConfig(
         "/airreview/member/" :{target, changeOrigin: true},
         }
 },
-publicPath: '/airreview',
-    transpileDependencies: [
-    /ckeditor5-[^/\\]+[/\\]src[/\\].+\.js$/
-],
+
+    publicPath: '/airreview',
+        transpileDependencies: [
+        'vue-meta'
+    ],
 })

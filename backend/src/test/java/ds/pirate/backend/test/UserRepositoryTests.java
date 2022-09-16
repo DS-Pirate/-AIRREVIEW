@@ -130,6 +130,21 @@ public class UserRepositoryTests {
 //
 //    }
 
+    // @Test
+    // void temporaltesttogetalarmlist() {
+    //     List<ArticlesList> articleListByuserid = arepo.getListbyuserId(1L);
+
+    //     List<alarm> alarmList = articleListByuserid.stream().map((Function<ArticlesList, alarm>) v -> {
+    //         alarm result = alrepo.findByArticleId(v.getAid());
+    //         return result;
+    //     }).collect(Collectors.toList());
+
+    //     log.info(alarmList);
+
+
+    // }
+
+
     @Test
     void findByArticlesAndHashTagName() {
         log.info(hrepo.findByArticlesAndHashTagName(arepo.getByAid(56L), "코멘트페이징 테스트그으으을"));
