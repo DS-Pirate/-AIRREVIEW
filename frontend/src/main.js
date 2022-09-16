@@ -3,6 +3,8 @@ import App from '@/App.vue'
 import router from '@/router'
 import store from '@/store'
 
+import { createMetaManager } from 'vue-meta'
+
 
 
 
@@ -24,4 +26,4 @@ import "bootstrap"
 import './sass/custom.sass'
 
 
-createApp(App).use(store).use(router).use(CKEditor).mount('#app')
+createApp(App).use(store).use(router).use(CKEditor).use(createMetaManager()).mount('#app')
