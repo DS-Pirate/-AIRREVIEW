@@ -116,21 +116,24 @@
                 articleinfo.articleAVG = res.data.articleAVG != undefined ? res.data.articleAVG.toFixed(2) : 0;
 
                     meta.title = res.data.articleInfo.atitle + " :: 세상의 모든 리뷰";
+                    const box = document.createElement("div");
+                    box.innerHTML = res.data.articleInfo.context
+                    let contextText = box.innerText
                     // meta.type = "article";
                     // meta.description = res.data.articleInfo.context;
                     // meta.url = document.location.href;
                     // meta.image = `${document.location.href}:9090/images/read/`;
                     meta.meta.push(                    
-                    {
+                    res.data.articleInfo.images.lenth>0?{
                         type: "og:image",
                         description: "",
                         url: document.location.href,
                         image: `${document.location.href}:9090/images/read/${res.data.articleInfo.images[0]}`,
                         //나중에 변경
-                    },
+                    }:"",
                     {
                         property: "og:description",
-                        content: `${res.data.articleInfo.context}`,
+                        content: `${contextText}`,
                         // vmid: "og:description",
                     },
                     {
@@ -139,7 +142,7 @@
                         // vmid: "og:url",
                     },
                     {
-                        property: "og:image",
+                        property: "og:article",
                         content: "article",
                         // vmid: "og:type",Author
                     },
