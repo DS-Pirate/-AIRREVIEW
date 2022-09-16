@@ -114,19 +114,19 @@ public class UserRepositoryTests {
     }
 
 
-    @Test
-    void temporaltesttogetalarmlist() {
-        List<ArticlesList> articleListByuserid = arepo.getListbyuserId(1L);
+    // @Test
+    // void temporaltesttogetalarmlist() {
+    //     List<ArticlesList> articleListByuserid = arepo.getListbyuserId(1L);
 
-        List<alarm> alarmList = articleListByuserid.stream().map((Function<ArticlesList, alarm>) v -> {
-            alarm result = alrepo.findByArticleId(v.getAid());
-            return result;
-        }).collect(Collectors.toList());
+    //     List<alarm> alarmList = articleListByuserid.stream().map((Function<ArticlesList, alarm>) v -> {
+    //         alarm result = alrepo.findByArticleId(v.getAid());
+    //         return result;
+    //     }).collect(Collectors.toList());
 
-        log.info(alarmList);
+    //     log.info(alarmList);
 
 
-    }
+    // }
 
     @Test
     void findByArticlesAndHashTagName() {
