@@ -49,8 +49,8 @@ public interface ArticleRepository extends JpaRepository<ArticlesList,String> {
     @Query("SELECT u.airName ,a.aid, a.atitle, a.context, a.regDate, a.opend " +
             "FROM ArticlesList a left join  airUser u " +
             "on u.userid = a.aUser "+
-            "where u.airName like '%:search%' Or " +
-            "a.atitle like '%:search%' " +
+            "where u.airName LIKE CONCAT('%',:search,'%') Or " +
+            "a.atitle LIKE CONCAT('%',:search,'%') " +
             "ORDER BY a.aid DESC")
     List<Object[]> getListAndAuthorByAuthorOrAtitle(String search);
 }

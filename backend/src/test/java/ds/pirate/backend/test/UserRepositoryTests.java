@@ -1,5 +1,6 @@
 package ds.pirate.backend.test;
 
+import java.net.URLDecoder;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
+import ds.pirate.backend.vo.findpass;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -114,6 +116,20 @@ public class UserRepositoryTests {
     }
 
 
+//    @Test
+//    void temporaltesttogetalarmlist() {
+//        List<ArticlesList> articleListByuserid = arepo.getListbyuserId(1L);
+//
+//        List<alarm> alarmList = articleListByuserid.stream().map((Function<ArticlesList, alarm>) v -> {
+//            alarm result = alrepo.findByArticleId(v.getAid());
+//            return result;
+//        }).collect(Collectors.toList());
+//
+//        log.info(alarmList);
+//
+//
+//    }
+
     // @Test
     // void temporaltesttogetalarmlist() {
     //     List<ArticlesList> articleListByuserid = arepo.getListbyuserId(1L);
@@ -127,6 +143,7 @@ public class UserRepositoryTests {
 
 
     // }
+
 
     @Test
     void findByArticlesAndHashTagName() {
@@ -434,6 +451,25 @@ public class UserRepositoryTests {
                 .fileName("29a0f4f1-3882-4b3d-9641-0e71751842d7.png")
                 .build();
         uimgrepo.save(ulid);
+    }
+
+//    음...좀 더 고민해봐야할것같아
+//    @Test
+//    public void searchCards(){
+//        String decode = "";
+//        try{
+//            decode = URLDecoder.decode("aa", "UTF-8");
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        log.info(decode);
+//        log.info(arepo.getListAndAuthorByAuthorOrAtitle("a"));
+//        log.info(arepo.getListAndAuthor());
+//    }
+
+    @Test
+    public void findUserIdbyEmailAndQ(){
+        log.info(urepo.findUserIdByEmailAndQ("3@3.3","","","11"));
     }
 
 }

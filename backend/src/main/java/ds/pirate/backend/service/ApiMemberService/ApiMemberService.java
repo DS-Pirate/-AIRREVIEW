@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 public interface ApiMemberService {
 
     String register(airUserDTO dto);
+//    String findPass(airUserDTO dto);
 
     default airUserDTO entityToDTO(airUser entity) {
         airUserDTO dto = airUserDTO.builder()

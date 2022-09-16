@@ -1,6 +1,7 @@
 package ds.pirate.backend.service.ArticleService;
 
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -403,6 +404,12 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<Object[]> getSearchArticleList(String search) {
-        return repo.getListAndAuthorByAuthorOrAtitle(search);
+        String decode = "";
+        try{
+            decode = URLDecoder.decode(search, "UTF-8");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return repo.getListAndAuthorByAuthorOrAtitle(decode);
     }
 }
