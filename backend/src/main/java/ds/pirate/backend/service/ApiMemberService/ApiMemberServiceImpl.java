@@ -1,18 +1,23 @@
 package ds.pirate.backend.service.ApiMemberService;
 
 import ds.pirate.backend.dto.airUserDTO;
+import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.repository.UserRepository;
+import ds.pirate.backend.vo.findpass;
+import ds.pirate.backend.vo.setpass;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ApiMemberServiceImpl implements ApiMemberService{
     private final UserRepository repository;
     private final PasswordEncoder encoder;
+
 
     @Transactional
     @Override
@@ -23,12 +28,28 @@ public class ApiMemberServiceImpl implements ApiMemberService{
 
     }
 
-//    @Override
-//    public String findPass(airUserDTO dto) {
-//
-//        if(){
-//
-//        }
-//        return null;
-//    }
+    @Override
+    public Long findPass(findpass vo) {
+        Long result = repository.findUserIdByEmailAndQ(vo.getEmail(),vo.getQ1(), vo.getQ2(), vo.getQ3());
+        if(result == null){
+            return null;
+        } else {
+            return result;
+        }
+    }
+
+    @Override
+    public String changePass(setpass vo) {
+        repository.changePassbyId(vo.getUserid(), encoder.encode(vo.getPasswd()));
+        return "비밀번호를 변경하였습니다.";
+    }
+
+    @Override
+    public String findEmail(airUserDTO email) {
+        Optional<airUser> result = repository.findByEmail(email.getEmail());
+        if (result.isEmpty()) {
+            return null;
+        }
+        return "존재하는 이메일입니다!";
+    }
 }

@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
+import ds.pirate.backend.dto.airUserDTO;
+import ds.pirate.backend.service.ApiMemberService.ApiMemberService;
 import ds.pirate.backend.vo.findpass;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,8 @@ import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+
+import javax.transaction.Transactional;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -94,6 +98,9 @@ public class UserRepositoryTests {
 
     @Autowired
     SubscribeRepository subrepo;
+
+    @Autowired
+    ApiMemberService memberService;
 
     @Test
     void insertDummyAlarm() {
@@ -470,6 +477,18 @@ public class UserRepositoryTests {
     @Test
     public void findUserIdbyEmailAndQ(){
         log.info(urepo.findUserIdByEmailAndQ("3@3.3","","","11"));
+    }
+
+    @Test
+    public void changePass(){
+        urepo.changePassbyId(43L, "12345");
+
+    }
+
+    @Test
+    public void findemail(){
+        Optional<airUser> result = urepo.findByEmail("3@3.3");
+        log.info(result);
     }
 
 }

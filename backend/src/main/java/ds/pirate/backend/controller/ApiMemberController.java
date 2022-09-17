@@ -1,8 +1,11 @@
 package ds.pirate.backend.controller;
 
 import ds.pirate.backend.dto.airUserDTO;
+import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.ApiMemberService.ApiMemberService;
 import ds.pirate.backend.vo.findpass;
+import ds.pirate.backend.vo.setpass;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -11,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Log4j2
@@ -19,6 +24,7 @@ import java.util.HashMap;
 public class ApiMemberController {
 
     private final ApiMemberService service;
+
     @RequestMapping(value = "/register", method = RequestMethod.POST,
             consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> register(@RequestBody airUserDTO dto) {
@@ -28,9 +34,23 @@ public class ApiMemberController {
 
     @RequestMapping(value = "/findpass", method = RequestMethod.POST,
             consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> findpass(@RequestBody findpass vo) {
+    public ResponseEntity<Long> findpass(@RequestBody findpass vo) {
         log.info(vo);
+        log.info(service.findPass(vo));
+            return new ResponseEntity<>(service.findPass(vo),HttpStatus.OK);
+    }
 
-        return null;
+    @RequestMapping(value = "/setpass", method = RequestMethod.POST,
+            consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> setpass(@RequestBody setpass vo) {
+        log.info(vo);
+        return new ResponseEntity<>(service.changePass(vo),HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/findemail", method = RequestMethod.POST,
+            consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> findemail(@RequestBody airUserDTO email) {
+        log.info(email);
+        return new ResponseEntity<>(service.findEmail(email),HttpStatus.OK);
     }
 }
