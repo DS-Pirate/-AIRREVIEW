@@ -1,18 +1,19 @@
 <template>
-    <div class="comment-section d-flex justify-content-between me-4" :style="'margin-left:' + props.cardInfo.commnetDepth*3 + 'rem'">
+    <div class="comment-section d-flex justify-content-between me-4" :style="'margin-left:' + props.cardInfo.commnetDepth * 3 + 'rem'">
         <div class="comment-section-left w-10 d-flex flex-column align-items-center">
             <div class="comment-section-left-profile d-flex justify-content-between">
                 <!-- 기본 이미지 일단 넣어둠 -->
                 <!-- <img class="img-fluid" :src="'./images/read/userid/' + props.cardInfo.userid" style="width: 2.75rem" /> -->
-                <img class="img-fluid py-2 px-3" style="max-height: 60px;" src="@/assets/pngwing.com.png" />
+                <img class="img-fluid py-2 px-3" style="max-height: 60px" src="@/assets/pngwing.com.png" />
             </div>
             <div class="comment-section-left-delete"></div>
         </div>
+        
         <div class="comment-section-right w-90">
             <div class="comment-section-right-commentauthor d-flex justify-content-between">
                 <div class="comment-section-right-commentauthor-authorinfo d-flex flex-column gap-1">
                     <div class="comment-section-right-commentauthor-authorinfo_usernamdandregdate d-flex align-items-end gap-1">
-                        <span class="comment-section-right-commentauthor-authorinfo_username">{{ props.cardInfo.userName }}</span>
+                        <span class="comment-section-right-commentauthor-authorinfo_username" style="cursor: pointer;" data-bs-toggle="modal" :data-bs-target="'#UserDetail'+props.cardInfo.cid">{{ props.cardInfo.userName }}</span>
                         <span class="comment-section-right-commentauthor-authorinfo_regdate" style="font-size: 0.7rem; color: gray">{{ getTimeFromJavaDateForComment(props.cardInfo.regDate) }}</span>
                     </div>
 
@@ -48,19 +49,21 @@
         </div>
     </div>
     <hr />
+    <UserDetailComment :userDetail="props.cardInfo"></UserDetailComment>
 </template>
 <script setup>
     import { defineProps } from "vue";
     import { useRouter } from "vue-router";
-    import { useStore } from 'vuex'
+    import { useStore } from "vuex";
     import axios from "axios";
+    import UserDetailComment from "./UserDetailComment.vue";
     let props = defineProps(["cardInfo"]);
     const router = useRouter();
-    const store = useStore()
+    const store = useStore();
     const headers = {
         "Content-Type": "application/json; charset=utf-8",
-        "Authorization": store.state.token,
-        "userid" : store.state.userid
+        Authorization: store.state.token,
+        userid: store.state.userid,
     };
 
     let commentInfo = {
@@ -92,15 +95,15 @@
     async function addCommentReply() {
         const headers = {
             "Content-Type": "application/json; charset=utf-8",
-            "Authorization": store.state.token,
-            "userid" : store.state.userid
+            Authorization: store.state.token,
+            userid: store.state.userid,
         };
         let body = {
             email: store.state.email,
             aid: new URLSearchParams(window.location.search).get("article"),
             commentGroup: props.cardInfo.commentGroup,
-            commnetDepth: props.cardInfo.commnetDepth+1,
-            commentSorts: props.cardInfo.commentSorts+1,
+            commnetDepth: props.cardInfo.commnetDepth + 1,
+            commentSorts: props.cardInfo.commentSorts + 1,
             commentContext: commentInfo.reply,
         };
         await axios

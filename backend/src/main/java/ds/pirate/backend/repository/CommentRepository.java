@@ -1,6 +1,5 @@
 package ds.pirate.backend.repository;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -13,8 +12,7 @@ import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.acomments;
 import ds.pirate.backend.entity.airUser;
 
-public interface CommentRepository extends JpaRepository<acomments, Long>{
-    
+public interface CommentRepository extends JpaRepository<acomments, Long> {
 
     @Query("SELECT ct FROM acomments ct WHERE articles_aid=:aid ORDER BY comment_group asc, comment_sorts asc, commnet_depth desc ")
     Optional<List<acomments>> getListByAid(Long aid);
@@ -33,7 +31,12 @@ public interface CommentRepository extends JpaRepository<acomments, Long>{
     @Query("SELECT commentGroup FROM acomments WHERE articles_aid=:aid ORDER BY comment_group desc")
     Optional<List<Long>> getLatestCommentGroupWhereMatchWithAid(Long aid);
 
-    @Query(value = "SELECT ct FROM acomments ct WHERE articles_aid=:aid ORDER BY comment_group asc, comment_sorts asc, commnet_depth desc ", 
-    countQuery = "select count(ct) from acomments ct WHERE articles_aid=:aid ORDER BY comment_group asc, comment_sorts asc, commnet_depth desc ")
+    @Query(value = "SELECT ct FROM acomments ct WHERE articles_aid=:aid ORDER BY comment_group asc, comment_sorts asc, commnet_depth desc ", countQuery = "select count(ct) from acomments ct WHERE articles_aid=:aid ORDER BY comment_group asc, comment_sorts asc, commnet_depth desc ")
     Page<acomments> getPageList(Pageable pageable, Long aid);
+
+    @Query(value = "SELECT * "+ 
+        "FROM acomments ct left join articles_list att on ct.articles_aid = att.aid " +
+        "WHERE att.a_user = 1 and ct.airuser_userid=1 "
+        ,nativeQuery = true)
+    Optional<List<acomments>> getListByUserIdAndAuthorId(Long userid, Long authorid);
 }

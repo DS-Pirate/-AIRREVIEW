@@ -12,7 +12,6 @@ import ds.pirate.backend.entity.alarm;
 import ds.pirate.backend.repository.AlarmRepository;
 import ds.pirate.backend.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @Service
 @RequiredArgsConstructor
