@@ -16,12 +16,14 @@
             <button type="button" v-on:click="router.push(`/modify?article=` + id)" class="border-0 bg-white"><span class="text-primary">Modify</span></button>
         </li>
     </ul>
+    <ShareModal></ShareModal>
 </template>
 <script setup>
     import axios from "axios";
     import { ref, defineProps, reactive } from "vue";
     import { useRouter } from "vue-router";
     import { useStore } from 'vuex'
+    import ShareModal from "./ShareModal.vue";
     const store = useStore()
     const router = useRouter();
     let props = defineProps(["id"]);

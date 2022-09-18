@@ -1,6 +1,6 @@
 <template>
     <a :href="'./read?article='+props.info[2]" @click="checked(props.info[7])">
-        <div class="popovercard px-2">
+        <div class="popovercard px-2" :style="props.info[7]==true?'opacity:1;':'opacity:0.3;'">
             <div class="popovercard-profilesection d-flex py-3">
                 <div class="popovercard-profilesection__left w-15 d-flex align-items-center">
                     <img class="img-fluid p-2" src="@/assets/pngwing.com.png" alt="" srcset="" />
@@ -47,7 +47,6 @@
         }
     }
 
-    console.log(props.info);
     const headers = {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: store.state.token,
@@ -57,7 +56,6 @@
     
 
     function checked(i){
-        console.log(i);
         axios.post(url, i, { headers })
     }
 </script>

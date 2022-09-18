@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.stereotype.Repository;
@@ -53,4 +54,9 @@ public interface ArticleRepository extends JpaRepository<ArticlesList,String> {
             "a.atitle LIKE CONCAT('%',:search,'%') " +
             "ORDER BY a.aid DESC")
     List<Object[]> getListAndAuthorByAuthorOrAtitle(String search);
+
+
+    @Query("update ArticlesList a set a.opencount = a.opencount+1 where a.aid=:aid")
+    @Modifying
+    void updateOpencount(Long aid);
 }

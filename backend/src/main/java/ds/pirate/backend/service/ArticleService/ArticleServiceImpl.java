@@ -9,6 +9,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -341,7 +343,7 @@ public class ArticleServiceImpl implements ArticleService {
         return null;
     }
 
-
+    @Transactional
     @Override
     public ArticleDTO getArticleInfoByAid(Long aid) {
         ArticlesList result = repo.getByAid(aid);
@@ -351,6 +353,7 @@ public class ArticleServiceImpl implements ArticleService {
                 .map(hentity -> hentity.getHashTagName())
                 .collect(Collectors.toList());
         dto.setTags(hashString);
+        repo.updateOpencount(aid);
         return dto;
     }
 

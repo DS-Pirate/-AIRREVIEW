@@ -36,12 +36,12 @@
     </div>
   </div>
   <QuestionModal />
-  <ShareModal />
+
 </template>
 <script>
 import SubNavigationBar from "@/components/SubNavigationBar.vue";
 import QuestionModal from "@/components/QuestionModal.vue";
-import ShareModal from "@/components/ShareModal.vue";
+
 import {reactive} from "vue"
 import { useRouter } from 'vue-router'
 import store from "@/store";
@@ -54,7 +54,7 @@ export default {
   components: {
     SubNavigationBar,
     QuestionModal,
-    ShareModal,
+
     AlarmPopover
 },
   setup(){

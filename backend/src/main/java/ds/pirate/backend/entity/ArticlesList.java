@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,10 @@ public class ArticlesList extends DateEntity{
 
     @Column(nullable = false)
     private Long aUser;
+
+    @Column
+    @ColumnDefault("0")
+    private Long opencount;
 
     @Builder.Default
     @OneToMany(mappedBy = "articles", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)

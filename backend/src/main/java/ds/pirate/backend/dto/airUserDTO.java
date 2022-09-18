@@ -29,6 +29,7 @@ public class airUserDTO {
     private String userIntro;
     private String userImgName;
     private String chName;
+    private Long opencount;
     private List<acomments> commentList;
 
     @Builder.Default
