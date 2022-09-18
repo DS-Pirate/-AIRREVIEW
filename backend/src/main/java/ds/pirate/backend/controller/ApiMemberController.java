@@ -1,8 +1,6 @@
 package ds.pirate.backend.controller;
 
 import ds.pirate.backend.dto.airUserDTO;
-import ds.pirate.backend.entity.airUser;
-import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.ApiMemberService.ApiMemberService;
 import ds.pirate.backend.vo.findpass;
 import ds.pirate.backend.vo.setpass;
@@ -13,9 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @Log4j2

@@ -62,6 +62,15 @@ public class ArticleServiceImpl implements ArticleService {
     private final AlarmService alser;
 
     @Override
+    public List<acommentDTO> getListByUserIdAndAuthorId(Long userid, Long authorid) {
+        List<acommentDTO> dtos = crepo.getListByUserIdAndAuthorId(userid, authorid).get().stream().map((Function<acomments, acommentDTO>) v->{
+            acommentDTO result = commentEntityToDTO(v);
+            return result;
+        }).collect(Collectors.toList());
+        return dtos;
+    }
+
+    @Override
     public String ArticleModify(ArticleDTO dto, List<String> tags) {
         ArticlesList origEntity = repo.findByAid(dto.getAid());
         ArticleDTO getByAid =  EntityToDTO(origEntity); 

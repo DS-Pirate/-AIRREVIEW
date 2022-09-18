@@ -1,6 +1,5 @@
 package ds.pirate.backend.test;
 
-import java.net.URLDecoder;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -8,10 +7,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
-
-import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.service.ApiMemberService.ApiMemberService;
-import ds.pirate.backend.vo.findpass;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,13 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import ds.pirate.backend.dto.ArticleDTO;
-import ds.pirate.backend.dto.HashTagDTO;
 import ds.pirate.backend.dto.acommentDTO;
-// import java.util.Optional;
-// import java.util.stream.Collectors;
-// import java.util.List;
-// import ds.pirate.backend.dto.ArticleDTO;
-// import ds.pirate.backend.entity.HashTags;
 import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.HashTags;
 import ds.pirate.backend.entity.SaveList;
@@ -50,8 +41,6 @@ import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-
-import javax.transaction.Transactional;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -122,6 +111,11 @@ public class UserRepositoryTests {
         log.info(alrepo.getAlarmInfoByUserid(1L));
     }
 
+    @Test
+    void getListByUserIdAndAuthorId(){
+        Optional<List<acomments>> result = crepo.getListByUserIdAndAuthorId(1L, 1L);
+        log.info(result.get());
+    }
 
 //    @Test
 //    void temporaltesttogetalarmlist() {

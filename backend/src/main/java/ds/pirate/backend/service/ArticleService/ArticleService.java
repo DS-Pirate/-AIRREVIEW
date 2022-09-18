@@ -42,7 +42,7 @@ public interface ArticleService {
     String ArticleModify(ArticleDTO dto, List<String> tags);
     List<Object[]> getArticleList();
     List<Object[]> getSearchArticleList(String search);
-
+    List<acommentDTO>getListByUserIdAndAuthorId(Long userid, Long authorid);
 
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {
