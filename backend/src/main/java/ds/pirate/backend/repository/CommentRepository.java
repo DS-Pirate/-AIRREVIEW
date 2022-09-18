@@ -36,7 +36,7 @@ public interface CommentRepository extends JpaRepository<acomments, Long> {
 
     @Query(value = "SELECT * "+ 
         "FROM acomments ct left join articles_list att on ct.articles_aid = att.aid " +
-        "WHERE att.a_user = 1 and ct.airuser_userid=1 "
+        "WHERE att.a_user =:authorid and ct.airuser_userid=:userid order by cid desc limit 5"
         ,nativeQuery = true)
     Optional<List<acomments>> getListByUserIdAndAuthorId(Long userid, Long authorid);
 }

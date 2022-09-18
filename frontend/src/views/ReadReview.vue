@@ -44,6 +44,7 @@
     import ArticleBtnSection from "@/components/ArticleBtnSection.vue";
 
     import { useMeta } from "vue-meta";
+import store from "@/store";
 
     export default {
         components: {
@@ -114,6 +115,7 @@
                 articleinfo.regdate = getTimeFromJavaDate(res.data.articleInfo.regdate);
                 articleinfo.images = res.data.articleInfo.images;
                 articleinfo.articleAVG = res.data.articleAVG != undefined ? res.data.articleAVG.toFixed(2) : 0;
+                store.commit("setAuthorid", articleinfo.userId)
 
                     meta.title = res.data.articleInfo.atitle + " :: 세상의 모든 리뷰";
                     const box = document.createElement("div");

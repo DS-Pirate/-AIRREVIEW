@@ -7,10 +7,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
-
-import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.service.ApiMemberService.ApiMemberService;
-import ds.pirate.backend.vo.findpass;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,8 +41,6 @@ import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-
-import javax.transaction.Transactional;
 
 @Log4j2
 @RequiredArgsConstructor

@@ -10,8 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import ds.pirate.backend.dto.ArticleDTO;
+import ds.pirate.backend.dto.acommentDTO;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import ds.pirate.backend.vo.comment;
+import ds.pirate.backend.vo.commentDetail;
 import ds.pirate.backend.vo.subcard;
 import lombok.RequiredArgsConstructor;
 
@@ -65,6 +67,12 @@ public class ArticleViewController {
     public ResponseEntity<Object> ArticleCardsSearch(@RequestBody String search){
         List<Object[]> result = aservice.getSearchArticleList(search);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/userdetail", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<acommentDTO>> commentUserDetail(@RequestBody commentDetail vo){
+        
+        return new ResponseEntity<>(aservice.getListByUserIdAndAuthorId(vo.getUserid(), vo.getAuthorid()), HttpStatus.OK);
     }
 
 }

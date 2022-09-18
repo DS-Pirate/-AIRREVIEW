@@ -7,7 +7,8 @@ export default createStore({
     latestcGroup:0,
     token:0,
     email:0,
-    userid:0
+    userid:0,
+    authorid:0
   },
   getters: {
   },
@@ -26,6 +27,9 @@ export default createStore({
     },
     setUserId(state, payload){
       state.userid = payload
+    },
+    setAuthorid(state, payload){
+      state.authorid = payload
     }
   },
   actions: {
