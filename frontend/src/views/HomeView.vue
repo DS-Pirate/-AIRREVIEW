@@ -10,14 +10,9 @@
     </div>
 <!--            나중에 삭제 예정!!!!-->
 <!--        <p v-for="(card, idx) in state.cards" :key="idx">{{card[1]}}</p>-->
+    <!--card[3] : 글-->
   </div>
-<!--3 : 글-->
 </template>
-
-<!--<script setup>-->
-<!--import Cards from "@/components/MainCards.vue";-->
-
-<!--</script>-->
 
 <script>
 import Cards from "@/components/MainCards.vue";

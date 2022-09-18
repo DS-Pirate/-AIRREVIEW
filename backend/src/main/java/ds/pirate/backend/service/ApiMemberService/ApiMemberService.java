@@ -3,14 +3,19 @@ package ds.pirate.backend.service.ApiMemberService;
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.entity.MemberRole;
 import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.vo.findpass;
+import ds.pirate.backend.vo.setpass;
 
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public interface ApiMemberService {
 
     String register(airUserDTO dto);
-//    String findPass(airUserDTO dto);
+    Long findPass(findpass vo);
+    String changePass(setpass vo);
+    String findEmail(airUserDTO email);
 
     default airUserDTO entityToDTO(airUser entity) {
         airUserDTO dto = airUserDTO.builder()

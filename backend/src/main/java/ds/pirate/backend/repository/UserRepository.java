@@ -4,10 +4,12 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import ds.pirate.backend.entity.airUser;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<airUser, Long>{
@@ -22,6 +24,11 @@ public interface UserRepository extends JpaRepository<airUser, Long>{
     
     @Query("select user from airUser user where userid=:userId ")
     Optional<airUser> findByUserId(Long userId);
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query("update airUser u set u.passwd=:passwd where u.userid=:userid")
+    int changePassbyId(Long userid, String passwd);
 
     @Query("select userid from airUser where eMail=:email and (q1=:q1 or q2=:q2 or q3=:q3)")
     Long findUserIdByEmailAndQ(String email, String q1, String q2, String q3);
