@@ -8,6 +8,4 @@ public class findpass {
     String q1;
     String q2;
     String q3;
-//    String qtype;
-//    String answer;
 }
