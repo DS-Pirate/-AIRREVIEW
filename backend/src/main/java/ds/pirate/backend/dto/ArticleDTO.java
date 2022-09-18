@@ -32,6 +32,7 @@ public class ArticleDTO {
     private List<String> tags;
     private Long userId;
     private LocalDateTime regdate;
+    private Long opencount;
     @Builder.Default
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     private List<ImagesList> images = new ArrayList<>();

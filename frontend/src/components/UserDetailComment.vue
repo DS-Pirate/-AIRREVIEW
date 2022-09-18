@@ -23,7 +23,6 @@
     import UserDetailCommentCards from "./UserDetailCommentCards.vue";
     let props = defineProps(["userDetail"]);
     let commentList = reactive({})
-    console.log(props.userDetail);
 
     const headers = {
         "Content-Type": "application/json; charset=utf-8",
@@ -35,7 +34,6 @@
         authorid: store.state.authorid,
     };
     axios.post("./article/userdetail", body, { headers }).then(function (res) {
-        console.log(res);
         commentList.list = [...res.data]
     });
 </script>

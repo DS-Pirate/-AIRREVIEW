@@ -11,9 +11,13 @@
                     <ul class="hash m-0 p-0 px-1 d-flex align-items-center" v-html="articleinfo.tags"></ul>
                     <div class="rating-stars-section">
                         <div v-html="articleinfo.starIcon"></div>
-                        <div class="ating-stars-section_accuraterating d-flex justify-content-between" style="font-size: 0.1rem; color: #aaa">
+                        <div class="rating-stars-section_accuraterating d-flex justify-content-between" style="font-size: 0.1rem; color: #aaa">
                             <span>현재평점</span>
                             <span class="rating-stars-section_accuraterating_num">{{ articleinfo.articleAVG }}</span>
+                        </div>                        
+                        <div class="rating-stars-section_opencount d-flex justify-content-between" style="font-size: 0.1rem; color: #aaa">
+                            <span>조회수</span>
+                            <span class="rating-stars-section_opencount_num">{{ articleinfo.opencount }}</span>
                         </div>
                     </div>
                 </div>
@@ -33,7 +37,7 @@
     </div>
 </template>
 
-<script>
+<script setup>
     import axios from "axios";
     import { reactive } from "vue";
     import { useRouter } from "vue-router";
@@ -42,20 +46,9 @@
     import ArticleUserCard from "@/components/ArticleUserCard.vue";
     import RecommentList from "@/components/RecommentList.vue";
     import ArticleBtnSection from "@/components/ArticleBtnSection.vue";
-
     import { useMeta } from "vue-meta";
-import store from "@/store";
+    import store from "@/store";
 
-    export default {
-        components: {
-            ArticleCommentList,
-            ReportModal,
-            ArticleUserCard,
-            RecommentList,
-            ArticleBtnSection,
-        },
-
-        setup() {
             let articleinfo = reactive({
                 aid: null,
                 atitle: "",
@@ -68,6 +61,7 @@ import store from "@/store";
                 images: null,
                 articleAVG: null,
                 starIcon: null,
+                opencount: null
             });
             const { meta } = useMeta({
                 title: "에어리뷰",
@@ -115,6 +109,7 @@ import store from "@/store";
                 articleinfo.regdate = getTimeFromJavaDate(res.data.articleInfo.regdate);
                 articleinfo.images = res.data.articleInfo.images;
                 articleinfo.articleAVG = res.data.articleAVG != undefined ? res.data.articleAVG.toFixed(2) : 0;
+                articleinfo.opencount = res.data.articleInfo.opencount
                 store.commit("setAuthorid", articleinfo.userId)
 
                     meta.title = res.data.articleInfo.atitle + " :: 세상의 모든 리뷰";
@@ -176,10 +171,8 @@ import store from "@/store";
                     alert("비공개글입니다");
                     router.go(-1);
                 }
-                articleinfo.tags = tag.join(",");
+                articleinfo.tags = tag.join("  ");
                 articleinfo.starIcon = tmp.join("");
             });
-            return { articleinfo, id, meta };
-        },
-    };
+    
 </script>
