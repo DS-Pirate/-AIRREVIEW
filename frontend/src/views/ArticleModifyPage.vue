@@ -51,7 +51,7 @@
     import router from "@/router";
     import ClassicEditor from "@ckeditor/ckeditor5-custom/build/ckeditor"
     import axios from "axios";
-    import store from 'vuex'
+    import store from "@/store";
     export default {
         name: "WritePage",
         data() {

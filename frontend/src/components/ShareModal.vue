@@ -14,60 +14,63 @@
                 </div>
                 <hr class="my-2" style="opacity: 0.2" />
                 <div class="modal-body pt-0 d-flex w-100">
-                    <div class="d-flex flex-column justify-content-between w-15">
+                    <div class="d-flex flex-column justify-content-between w-15" @change="changeInputRealtime">
                         <div class="form-check form-switch">
-                            <input class="form-check-input rounded-3" type="checkbox" role="switch" id="title" :checked="inputarea.title" @click="inputarea.title = !inputarea.title"/>
+                            <input class="form-check-input rounded-3" type="checkbox" role="switch" id="title" :checked="inputarea.title" @click="inputarea.title = !inputarea.title" />
                             <label class="form-check-label" for="title">제목</label>
                         </div>
 
                         <div class="form-check form-switch">
-                            <input class="form-check-input rounded-3" type="checkbox" role="switch" id="thumbnail" :checked="inputarea.thumbnail" @click="inputarea.thumbnail = !inputarea.thumbnail"/>
+                            <input class="form-check-input rounded-3" type="checkbox" role="switch" id="thumbnail" :checked="inputarea.thumbnail" @click="inputarea.thumbnail = !inputarea.thumbnail" />
                             <label class="form-check-label" for="thumbnail">썸네일</label>
                         </div>
 
                         <div class="form-check form-switch">
-                            <input class="form-check-input rounded-3" type="checkbox" role="switch" id="author" :checked="inputarea.author" @click="inputarea.author = !inputarea.author"/>
+                            <input class="form-check-input rounded-3" type="checkbox" role="switch" id="author" :checked="inputarea.author" @click="inputarea.author = !inputarea.author" />
                             <label class="form-check-label" for="author">글쓴이</label>
                         </div>
 
                         <div class="form-check form-switch">
-                            <input class="form-check-input rounded-3" type="checkbox" role="switch" id="regDate" :checked="inputarea.date" @click="inputarea.date = !inputarea.date"/>
+                            <input class="form-check-input rounded-3" type="checkbox" role="switch" id="regDate" :checked="inputarea.date" @click="inputarea.date = !inputarea.date" />
                             <label class="form-check-label" for="regDate">날짜</label>
                         </div>
 
                         <div class="form-check form-switch">
-                            <input class="form-check-input rounded-3" type="checkbox" role="switch" id="rate" :checked="inputarea.rating" @click="inputarea.rating = !inputarea.rating"/>
+                            <input class="form-check-input rounded-3" type="checkbox" role="switch" id="rate" :checked="inputarea.rating" @click="inputarea.rating = !inputarea.rating" />
                             <label class="form-check-label" for="rate">별점</label>
                         </div>
 
                         <div class="form-check form-switch">
-                            <input class="form-check-input rounded-3" type="checkbox" role="switch" id="like" :checked="inputarea.like" @click="inputarea.like = !inputarea.like"/>
+                            <input class="form-check-input rounded-3" type="checkbox" role="switch" id="like" :checked="inputarea.like" @click="inputarea.like = !inputarea.like" />
                             <label class="form-check-label" for="like">좋아요</label>
                         </div>
 
                         <div class="form-check form-switch">
-                            <input class="form-check-input rounded-3" type="checkbox" role="switch" id="logo" :checked="inputarea.logo" @click="inputarea.logo = !inputarea.logo"/>
+                            <input class="form-check-input rounded-3" type="checkbox" role="switch" id="logo" :checked="inputarea.logo" @click="inputarea.logo = !inputarea.logo" />
                             <label class="form-check-label" for="logo">로고</label>
+                        </div>
+
+                        <div class="d-flex m-0 p-0 align-items-center">
+                            <label class="form-check-label w-30" for="width">넓이</label>
+                            <input class="form-control w-60" type="text" id="width" required v-model="embedInfo.width" />
                         </div>
                     </div>
 
                     <div class="preview w-100" ref="previ">
                         <form>
-                            <textarea class="content w-100" readonly v-model="inputarea.description"></textarea>
+                            <textarea class="content w-100" readonly v-model="inputarea.description" @click="selectAll($event)"></textarea>
                         </form>
-                        <div class="sharePreview">
-                            <div class="preview p-3 my-2 border">
-                                <div class="preview-title text-center" v-show="inputarea.title"><h3>Lorem Ipsum is simply dummy text</h3></div>
+                        <div class="sharePreview w-100">
+                            <div class="preview p-3 mb-2 border">
+                                <div class="preview-title text-center" v-show="inputarea.title">
+                                    <h3>{{ embedInfo.title }}</h3>
+                                </div>
                                 <hr />
                                 <div class="preview-context d-flex gap-2 align-items-top">
-                                    <img src="@/assets/aaaa.png" alt="image" class="w-30 preview-context-thumbnailimg img-fluid" v-show="inputarea.thumbnail"/>
+                                    <img src="@/assets/aaaa.png" alt="image" class="w-30 preview-context-thumbnailimg img-fluid" v-show="inputarea.thumbnail" />
                                     <div class="preview-context-context w-70 d-flex flex-column gap-3">
-                                        <span class="preview-context-context-rating" v-show="inputarea.rating">★★★★★</span>
-                                        <p class="preview-context-context_description">
-                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas recusandae totam aliquid doloribus numquam ex error illo quia ipsa cupiditate cumque beatae, 
-                                            rem quasi odio quos quis voluptatum tenetur quibusdam. 
-                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas recusandae totam aliquid doloribus numquam ex error illo quia ipsa cupiditate cumque beatae, 
-                                            rem quasi odio quos quis voluptatum tenetur quibusdam.</p>
+                                        <span class="preview-context-context-rating" v-show="inputarea.rating" v-html="embedInfo.avg"></span>
+                                        <p class="preview-context-context_description" v-html="embedInfo.context"></p>
                                     </div>
                                 </div>
                                 <hr />
@@ -76,11 +79,11 @@
                                         <span v-show="inputarea.logo" class="preview-footer-logo_text">에어리뷰</span>
                                     </div>
                                     <div class="preview-footer-etcinfo d-flex gap-3">
-                                        <span v-show="inputarea.author" class="preview-footer-etcinfo_author">해적단 저</span>
+                                        <span v-show="inputarea.author" class="preview-footer-etcinfo_author">{{ embedInfo.username }} 저</span>
                                         <span v-show="inputarea.author" class="preview-footer-etcinfo_verticalbar">|</span>
-                                        <span v-show="inputarea.like" class="preview-footer-etcinfo_likecount">♥9.9k</span>
+                                        <span v-show="inputarea.like" class="preview-footer-etcinfo_likecount">♥{{ embedInfo.fav }}</span>
                                         <span v-show="inputarea.like" class="preview-footer-etcinfo_verticalbar">|</span>
-                                        <span v-show="inputarea.date" class="preview-footer-etcinfo_reddate">2022.09.19</span>
+                                        <span v-show="inputarea.date" class="preview-footer-etcinfo_reddate">{{ embedInfo.regdate }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +99,30 @@
     </div>
 </template>
 <script setup>
-    import { reactive, ref } from "vue";
+    import store from "@/store";
+    import axios from "axios";
+    import { reactive } from "vue";
+    
+    let id = store.state.articleId
+
+    function getTimeFromJavaDate(s) {
+        const cont = new Date(s);
+        let date = new Date();
+        let calculated = (new Date(date.getTime()) - cont) / 1000; //초 계산
+        if (calculated < 60) {
+            return "방금 전";
+        } else if (calculated < 60 * 60) {
+            return `${Math.round(calculated / 60)}분 전`;
+        } else if (calculated < 60 * 60 * 24) {
+            return `${Math.round(calculated / (60 * 60))}시간 전`;
+        } else if (calculated < 60 * 60 * 24 * 7) {
+            return `${Math.round(calculated / (60 * 60 * 24))}일 전`;
+        } else if (calculated < 60 * 60 * 24 * 7 * 5) {
+            return `${Math.round(calculated / (60 * 60 * 24 * 7))}주 전`;
+        } else if (calculated > 31536000) {
+            return `${Math.round(calculated / 31536000)}년 전`;
+        }
+    }
 
     let inputarea = reactive({
         description: "",
@@ -106,20 +132,62 @@
         rating: true,
         like: true,
         logo: true,
-        author: true
+        author: true,
     });
 
+    
+
+    let embedInfo = reactive({
+        regdate: null,
+        title: null,
+        context: null,
+        username: null,
+        fav: null,
+        avg: null,
+        width: 800,
+    });
+
+    function selectAll(e){
+        e.target.select()
+    }
+
+    axios.get(`././info/${id}`).then(function (res) {
+        let info = res.data;
+        embedInfo.regdate = getTimeFromJavaDate(info.regdate), 
+        embedInfo.title = info.title, 
+        embedInfo.username = info.author, 
+        embedInfo.fav = info.favcount, 
+        embedInfo.context = info.context
+        if(embedInfo.context.indexOf("<iframe")>0){
+            embedInfo.context = embedInfo.context.replace(embedInfo.context.slice(embedInfo.context.indexOf("<iframe"), embedInfo.context.indexOf("</iframe>")+9), `>> ${id}번 글 링크<br>`)
+        }
+
+        let tmp = [];
+        for (let i = 0; i < Math.round(info.avgrate); i++) {
+            tmp.push(`<i class="bi bi-star-fill"></i>`);
+        }
+        for (let i = 0; i < 5 - Math.round(info.avgrate); i++) {
+            tmp.push(`<i class="bi bi-star"></i>`);
+        }
+        embedInfo.avg = tmp.join("");
+
+    });
 
     function changeInput(which) {
         if (which == 1) {
             inputarea.description = window.location.href.toString();
         } else if (which == 2) {
-            inputarea.description = "";
+            inputarea.description = `<iframe src="http://localhost:8080/airreview/embed?article=${id}&title=${inputarea.title}&thumbnail=${inputarea.thumbnail}&date=${inputarea.date}&rating=${inputarea.rating}&like=${inputarea.like}&logo=${inputarea.logo}&author=${inputarea.author}" width="${embedInfo.width}" height="${embedInfo.width/2}"></iframe>`
         }
         console.log(inputarea);
     }
-    let previ = ref(null)
-    console.log(previ);
+
+    function changeInputRealtime(){
+        inputarea.description = `<iframe src="http://localhost:8080/airreview/embed?article=${id}&title=${inputarea.title}&thumbnail=${inputarea.thumbnail}&date=${inputarea.date}&rating=${inputarea.rating}&like=${inputarea.like}&logo=${inputarea.logo}&author=${inputarea.author}" width="${embedInfo.width}" height="${embedInfo.width/2}"></iframe>`
+    }
+
+    
+
 </script>
 <style scoped lang="sass">
     .modal-btn
@@ -134,7 +202,6 @@
         cursor: pointer
         transition-duration: 0.4s
         -webkit-transition-duration: 0.4s
-        /* Safari */
 
 
     .modal-btn:hover
@@ -179,9 +246,14 @@
         background-repeat: no-repeat
         color: black
         resize: none
-        overflow: hidden
+        overflow: scroll
         background-position: -1140px 0
         background-size: 1140px 100%
+        -ms-overflow-style: none
+        scrollbar-width: none
+        overflow: visible
+        &::-webkit-scrollbar
+            display: none
 
 
     .content:focus,

@@ -3,7 +3,7 @@
         <div class="detailcontainer-header">
             <a :href="'read?article='+props.list.aid"><ul class="detailcontainer-header-list d-flex gap-2 m-0 p-0">
                 <li class="detailcontainer-header-list_articleid">{{props.list.aid}}번 글</li>
-                <li class="detailcontainer-header-list_rating">{{getStars(props.list.articleRate)}}</li>
+                <li class="detailcontainer-header-list_rating" v-html="getStars(props.list.articleRate)"></li>
                 <li class="detailcontainer-header-list_regdate">{{getTimeFromJavaDate(props.list.regDate)}}</li>
                 <li><i class="bi bi-arrow-right"></i></li>
             </ul></a>
@@ -20,10 +20,15 @@
     const props = defineProps(["list"])
 
     function getStars(num){
-        let tmp = []
-        for (let i = 0; i < num; i++) {
-            tmp.push("★")
+        let tmp = [];
+        for (let i = 0; i < Math.round(num); i++) {
+            tmp.push(`<i class="bi bi-star-fill"></i>`);
         }
+        for (let i = 0; i < 5 - Math.round(num); i++) {
+            tmp.push(`<i class="bi bi-star"></i>`);
+        }
+
+
         return tmp.join("")
     }
 

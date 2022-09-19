@@ -47,6 +47,7 @@ public interface ArticleService {
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {
         ArticlesList aentity = ArticlesList.builder()
+                .aid(dto.getAid())
                 .atitle(dto.getAtitle())
                 .context(dto.getContext().getBytes())
                 .opend(dto.isOpened())
