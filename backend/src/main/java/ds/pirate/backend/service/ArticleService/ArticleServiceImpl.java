@@ -359,6 +359,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public String addArticle(ArticleDTO dto, List<String> tags) {
+        dto.setOpencount(0L);
         ArticlesList result = dtoToEntity(dto);
         repo.save(result);
 

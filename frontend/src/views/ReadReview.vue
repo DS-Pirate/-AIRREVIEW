@@ -49,6 +49,9 @@
     import { useMeta } from "vue-meta";
     import store from "@/store";
 
+    let id = new URLSearchParams(window.location.search).get("article");
+    store.commit("setArticleId", id)
+
             let articleinfo = reactive({
                 aid: null,
                 atitle: "",
@@ -70,7 +73,7 @@
 
                 ],
             });
-            let id = new URLSearchParams(window.location.search).get("article");
+
             if (id.length == 0) {
                 errorAndGetBack();
             }
