@@ -15,8 +15,25 @@
 				<SiteLogin></SiteLogin>
 			</div>
 			<div v-else>
-				<button type="button" class="btn btn-outline-primary w-100" @click="submit()">구글 로그인</button>
-			</div>
+<!--        https://yoyostudy.tistory.com/43 참고-->
+        <button type="button" class="btn btn-outline-primary w-100" @click="GoogleLoginBtn()">구글 로그인</button>
+        <div id="my-signin2" style="display: none"></div>
+
+        <div id="g_id_onload"
+             data-client_id="YOUR_GOOGLE_CLIENT_ID"
+             data-login_uri="https://your.domain/your_login_endpoint"
+             data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin"
+             data-type="standard"
+             data-size="large"
+             data-theme="outline"
+             data-text="sign_in_with"
+             data-shape="rectangular"
+             data-logo_alignment="left">
+        </div>
+
+      </div>
 
 			<div class="utlpart d-flex justify-content-center align-items-center gap-3 my-3">
 				<router-link to="/find"><span>아이디 · 비밀번호 찾기</span></router-link>
@@ -28,10 +45,11 @@
 <script>
 import SiteLogin from "../components/SiteLogin.vue";
 import { reactive } from "vue";
+// import { gapi } from "gapi-script";
 export default {
 	components: { SiteLogin },
+  setup() {
 
-	setup() {
 		let state = reactive({
 			form: "true"
 		})
@@ -45,12 +63,45 @@ export default {
 			console.log(state.form);
 		}
 
-    const submit =()=>{
-      window.open("https://여기에 사이트")
-    }
-
-		return { state, changeform, submit };
+		return { state, changeform };
 	},
+
+  methods: {
+
+    GoogleLoginBtn:function(){
+      var self = this;
+
+      window.gapi.signin2.render('my-signin2', {
+        scope: 'profile email',
+        width: 240,
+        height: 50,
+        longtitle: true,
+        theme: 'dark',
+        onsuccess: this.GoogleLoginSuccess,
+        onfailure: this.GoogleLoginFailure,
+      });
+
+      setTimeout(function () {
+        if (!self.googleLoginCheck) {
+          const auth = window.gapi.auth2.getAuthInstance();
+          auth.isSignedIn.get();
+          document.querySelector('.abcRioButton').click();
+        }
+      }, 1500)
+
+    },
+    async GoogleLoginSuccess(googleUser) {
+      const googleEmail = googleUser.getBasicProfile().getEmail();
+      if (googleEmail !== 'undefined') {
+        console.log(googleEmail);
+      }
+    },
+    //구글 로그인 콜백함수 (실패)
+    GoogleLoginFailure(error) {
+      console.log(error);
+    },
+  }
 };
 </script>
+
 <style lang=""></style>

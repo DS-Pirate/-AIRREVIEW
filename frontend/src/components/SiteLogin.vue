@@ -42,17 +42,19 @@ export default {
       const url = "/airreview/member/login"
       const headers = { "Content-Type": "application/json; charset=utf-8;"}
       const body = { email: state.form.email, passwd: state.form.password };
-      await axios.post(url, body, {headers}).then(function(res){
-        if(res.data != null){
-          store.commit('setToken',res.data.token);
-          store.commit('setEmail',res.data.email);
-          store.commit('setUserId',res.data.userid);
-          alert('로그인되었습니다.')
-          router.push(`/`)
-        } else {
-          alert('로그인 실패하였습니다.')
-        }
-      })
+      try{
+        await axios.post(url, body, {headers}).then(function(res){
+            store.commit('setToken',res.data.token);
+            store.commit('setEmail',res.data.email);
+            store.commit('setUserId',res.data.userid);
+            alert('로그인되었습니다.')
+            router.push(`/`)
+        })
+      }
+      catch(err){
+        alert('로그인에 실패하였습니다.')
+      }
+
 
     }
     return{state, submit}
