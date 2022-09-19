@@ -1,35 +1,33 @@
 <template>
-    <div class="embed-background">
-        <a :href="'./read?article='+id">
-            <div class="sharePreview w-100">
-                <div class="preview p-3 mb-2 border">
-                    <div class="preview-title text-center" v-show="inputarea.title">
-                        <h3>{{ embedInfo.title }}</h3>
+    <div class="embed-background" id="parentpage">
+        <div class="sharePreview w-100">
+            <div class="preview p-3 mb-2 border">
+                <div class="preview-title text-center" v-show="inputarea.title">
+                    <h3>{{ embedInfo.title }}</h3>
+                </div>
+                <hr />
+                <div class="preview-context d-flex gap-2 align-items-top">
+                    <img src="@/assets/aaaa.png" alt="image" class="w-30 preview-context-thumbnailimg img-fluid" v-show="inputarea.thumbnail" />
+                    <div class="preview-context-context w-70 d-flex flex-column gap-3">
+                        <span class="preview-context-context-rating" v-show="inputarea.rating">★★★★★</span>
+                        <p class="preview-context-context_description" v-html="embedInfo.context"></p>
                     </div>
-                    <hr />
-                    <div class="preview-context d-flex gap-2 align-items-top">
-                        <img src="@/assets/aaaa.png" alt="image" class="w-30 preview-context-thumbnailimg img-fluid" v-show="inputarea.thumbnail" />
-                        <div class="preview-context-context w-70 d-flex flex-column gap-3">
-                            <span class="preview-context-context-rating" v-show="inputarea.rating">★★★★★</span>
-                            <p class="preview-context-context_description" v-html="embedInfo.context"></p>
-                        </div>
+                </div>
+                <hr />
+                <div class="preview-footer d-flex justify-content-between px-3">
+                    <div class="preview-footer-logo">
+                        <span v-show="inputarea.logo" class="preview-footer-logo_text">에어리뷰</span>
                     </div>
-                    <hr />
-                    <div class="preview-footer d-flex justify-content-between px-3">
-                        <div class="preview-footer-logo">
-                            <span v-show="inputarea.logo" class="preview-footer-logo_text">에어리뷰</span>
-                        </div>
-                        <div class="preview-footer-etcinfo d-flex gap-3">
-                            <span v-show="inputarea.author" class="preview-footer-etcinfo_author">{{ embedInfo.username }} 저</span>
-                            <span v-show="inputarea.author" class="preview-footer-etcinfo_verticalbar">|</span>
-                            <span v-show="inputarea.like" class="preview-footer-etcinfo_likecount">♥{{ embedInfo.fav }}</span>
-                            <span v-show="inputarea.like" class="preview-footer-etcinfo_verticalbar">|</span>
-                            <span v-show="inputarea.date" class="preview-footer-etcinfo_reddate">{{ embedInfo.regdate }}</span>
-                        </div>
+                    <div class="preview-footer-etcinfo d-flex gap-3">
+                        <span v-show="inputarea.author" class="preview-footer-etcinfo_author">{{ embedInfo.username }} 저</span>
+                        <span v-show="inputarea.author" class="preview-footer-etcinfo_verticalbar">|</span>
+                        <span v-show="inputarea.like" class="preview-footer-etcinfo_likecount">♥{{ embedInfo.fav }}</span>
+                        <span v-show="inputarea.like" class="preview-footer-etcinfo_verticalbar">|</span>
+                        <span v-show="inputarea.date" class="preview-footer-etcinfo_reddate">{{ embedInfo.regdate }}</span>
                     </div>
                 </div>
             </div>
-        </a>
+        </div>
     </div>
 </template>
 <script setup>
@@ -82,16 +80,12 @@
         }
     }
 
+
     axios.get(`././info/${id}`).then(function (res) {
         let info = res.data;
-        embedInfo.regdate = getTimeFromJavaDate(info.regdate), 
-        embedInfo.title = info.title, 
-        embedInfo.username = info.author, 
-        embedInfo.fav = info.favcount, 
-        embedInfo.avg = info.avgrate,
-        embedInfo.context = info.context
-        if(embedInfo.context.indexOf("<iframe")>0){
-            embedInfo.context = embedInfo.context.replace(embedInfo.context.slice(embedInfo.context.indexOf("<iframe"), embedInfo.context.indexOf("</iframe>")+9), `>> ${id}번 글 링크<br>`)
+        (embedInfo.regdate = getTimeFromJavaDate(info.regdate)), (embedInfo.title = info.title), (embedInfo.username = info.author), (embedInfo.fav = info.favcount), (embedInfo.avg = info.avgrate), (embedInfo.context = info.context);
+        if (embedInfo.context.indexOf("<iframe") > 0) {
+            embedInfo.context = embedInfo.context.replace(embedInfo.context.slice(embedInfo.context.indexOf("<iframe"), embedInfo.context.indexOf("</iframe>") + 9), `>> ${id}번 글 링크<br>`);
         }
     });
 </script>
