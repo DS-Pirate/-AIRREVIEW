@@ -1,7 +1,8 @@
 <template>
     <div class="d-flex flex-column">
         <div class="input-group idsection px-5 my-2">
-            <input class="form-control" type="text" name="id" id="id" v-model="state.email"  placeholder="아이디" required>
+            <input class="form-control" type="text" name="id" id="id" v-model="state.email" @change="state.emailCheck=false" placeholder="이메일" required>
+          <button class="btn btn-outline-primary w-25" @click="check()">중복 확인</button>
         </div>
         
         <div class="input-group passwordsection px-5 my-2 w-100">
@@ -87,6 +88,7 @@ export default {
       q2: '',
       q3: '',
       showModal: false,
+      emailCheck: false,
     })
 
     const email = ref('')
@@ -101,13 +103,34 @@ export default {
     const q2 = ref('')
     const q3 = ref('')
 
-
-    //회원가입 버튼
-    const submit = async () => {
+    //email check
+    const check = async () => {
       if (state.email === '') {
-        alert('이메일을 입력해주세요'); email.value.focus(); return false;
+        alert('이메일을 입력해주세요.'); email.value.focus(); return false;
       } else if (!(state.email.includes("@") && state.email.includes("."))) {
         alert('이메일 양식이 맞지 않습니다.'); email.value.focus(); return false;
+      }
+
+      const url = './member/findemail'
+      const headers = {
+        "Content-Type": "application/json",
+      }
+      const body = {email : state.email};
+      axios.post(url, body, {headers}).then(function (res){
+        if(res.data != ''){
+          alert('이미 존재하는 이메일입니다.');
+        } else {
+          alert('사용 가능한 이메일입니다.');
+          state.emailCheck =  false;
+        }
+      })
+    }
+
+
+    //join
+    const submit = async () => {
+      if (state.emailCheck === false) {
+        alert('이메일 중복 확인 버튼을 눌러주세요'); email.value.focus(); return false;
       } else if (state.password === '') {
         alert('비밀번호를 입력해주세요'); password.value.focus(); return false;
       } else if (state.repassword === '') {
@@ -155,7 +178,7 @@ export default {
       }
     }
 
-    return {state, submit}
+    return {state, submit, check}
   }
 
 }
