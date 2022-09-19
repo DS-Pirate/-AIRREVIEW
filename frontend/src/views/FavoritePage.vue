@@ -12,7 +12,7 @@
 <script>
 // @ is an alias to /src
 
-import Cards from "@/components/MainCards.vue";
+import Cards from "@/components/LikeCards.vue";
 
 export default {
 	name: "FavoritePage",

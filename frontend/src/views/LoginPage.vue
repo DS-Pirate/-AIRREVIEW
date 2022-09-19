@@ -15,7 +15,7 @@
 				<SiteLogin></SiteLogin>
 			</div>
 			<div v-else>
-				<button type="button" class="btn btn-outline-primary w-100">구글 로그인</button>
+				<button type="button" class="btn btn-outline-primary w-100" @click="submit()">구글 로그인</button>
 			</div>
 
 			<div class="utlpart d-flex justify-content-center align-items-center gap-3 my-3">
@@ -44,7 +44,12 @@ export default {
 			}
 			console.log(state.form);
 		}
-		return { state, changeform };
+
+    const submit =()=>{
+      window.open("https://여기에 사이트")
+    }
+
+		return { state, changeform, submit };
 	},
 };
 </script>
