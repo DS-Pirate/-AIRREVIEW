@@ -179,7 +179,6 @@
         } else if (which == 2) {
             inputarea.description = `<iframe src="http://localhost:8080/airreview/embed?article=${id}&title=${inputarea.title}&thumbnail=${inputarea.thumbnail}&date=${inputarea.date}&rating=${inputarea.rating}&like=${inputarea.like}&logo=${inputarea.logo}&author=${inputarea.author}" width="${embedInfo.width}" height="${embedInfo.width/2}"></iframe>`
         }
-        console.log(inputarea);
     }
 
     function changeInputRealtime(){
