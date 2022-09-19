@@ -2,7 +2,6 @@
   <div class="mainviewpage">
     <div class="fav p-1">
       <div  class="row row-cols-3">
-<!--        <Cards :cardinfo="i" v-for="i in 25" :key="i"></Cards>-->
         <div v-for="(card, idx) in state.cards" :key="idx">
           <Cards :card="card"></Cards>
         </div>
@@ -24,7 +23,8 @@ export default {
   components: {Cards},
   setup() {
     const state = reactive({
-      cards: []
+      cards: [],
+      a : [["a","b","c"],["aa","bb","cc"],["aaa","bbb","ccc"]]
     })
 
 
