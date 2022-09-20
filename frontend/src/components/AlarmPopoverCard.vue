@@ -1,6 +1,6 @@
 <template>
     <a :href="'./read?article='+props.info[2]" @click="checked(props.info[7])">
-        <div class="popovercard px-2" :style="props.info[7]==true?'opacity:1;':'opacity:0.3;'">
+        <div class="popovercard px-2" :style="props.info[6]==false?'opacity:1;':'opacity:0.3;'">
             <div class="popovercard-profilesection d-flex py-3">
                 <div class="popovercard-profilesection__left w-15 d-flex align-items-center">
                     <img class="img-fluid p-2" src="@/assets/pngwing.com.png" alt="" srcset="" />
@@ -25,6 +25,7 @@
     import { defineProps } from "vue";
     import { useStore } from 'vuex'
     let props = defineProps(["info"]);
+    console.log(props.info);
     const store = useStore();   
     function getTimeFromJavaDateForComment(s) {
         const cont = new Date(s);
