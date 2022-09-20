@@ -4,12 +4,25 @@
 		<div class="fav p-4 m-0 w-100 bg-white">
 			<div class="row row-cols-2 gx-5 gy-3">
 				<div v-for="(card, idx) in state.cards" :key="idx">
-          <Cards :card="card"></Cards>
+          <Cards :name="state.usernames[idx]" :card="card"></Cards>
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
+
+
+const asdf = () => {
+
+	await 
+}
+
+asdf.then
+
+axios.post("sadfsadf.com", boyd,header)
+
+
+
 
 <script>
 // @ is an alias to /src
@@ -19,14 +32,13 @@ import axios from "axios";
 import { useStore } from 'vuex'
 import {reactive} from "@vue/reactivity";
 
-
 export default {
 	name: "SavedPage",
 	components: {Cards},
 	setup() {
     const store = useStore();
 		const state = reactive({
-      cards: []
+      cards: [], usernames: []
     })
 
 		const url = "/airreview/api/save";
@@ -39,7 +51,8 @@ export default {
 
     axios.post(url, body, { headers })
 			.then((res) => {
-				state.cards = res.data;
+				state.cards = res.data.card;
+				state.usernames = res.data.username;
 				console.log(res);
     })
     return {state}

@@ -2,12 +2,12 @@ package ds.pirate.backend.service.SubscribeService;
 
 import java.util.List;
 
-import ds.pirate.backend.dto.ArticleDTO;
+import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.dto.subScribeDTO;
 import ds.pirate.backend.entity.subscribList;
 
 public interface SubscribeService {
-  List<ArticleDTO> getListAid(Long aid);
+  List<airUserDTO> getListUserId(Long userid);
 
   default subscribList dtoToEntity(subScribeDTO dto) {
     subscribList entity = subscribList.builder()

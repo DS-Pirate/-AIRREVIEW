@@ -3,7 +3,9 @@
     <h2>좋아요 글</h2>
 		<div class="fav p-4 m-0 w-100 ">
 			<div class="row row-cols-2 gx-5 gy-3">
-				<Cards v-for="i in 32" :key="i" class="col"> Column </Cards>
+				<div v-for="(card, idx) in state.cards" :key="idx">
+          <Cards :name="state.usernames[idx]" :card="card"></Cards>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -12,12 +14,35 @@
 <script>
 // @ is an alias to /src
 
-import Cards from "@/components/LikeCards.vue";
+import Cards from "@/components/FavCards.vue";
+import axios from "axios";
+import { useStore } from 'vuex'
+import {reactive} from "@vue/reactivity";
 
 export default {
-	name: "FavoritePage",
-	components: {
-		Cards,
-	},
+	name: "FavPage",
+	components: {Cards},
+	setup() {
+    const store = useStore();
+		const state = reactive({
+      cards: [], usernames: []
+    })
+
+		const url = "/airreview/api/like";	
+		const headers = {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": store.state.token,
+            "userid" : store.state.userid
+    }
+		let body = {userid : store.state.userid}
+
+    axios.post(url, body, { headers })
+			.then((res) => {
+				state.cards = res.data.card;
+				state.usernames = res.data.username;
+				console.log(res);
+    })
+    return {state}
+	}
 };
 </script>

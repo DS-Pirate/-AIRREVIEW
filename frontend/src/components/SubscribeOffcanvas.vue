@@ -6,15 +6,32 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-          <SubscribeList/>  
+          <SubscribeList v-for="info in subs.Info " :key="info" :subsinfo="info" ></SubscribeList>  
         </div>
     </div>
 </template>
-<script>
+<script setup>
+import { reactive } from "vue"
+import store from '@/store';
+import axios from 'axios';
 import SubscribeList from './SubscribeList.vue';
-export default {
-    components: { SubscribeList }
-}
+
+const headers = {
+        "Authorization": store.state.token,
+        "userid" : store.state.userid
+    }
+
+    let body = {
+        userid: store.state.userid
+    }
+
+    let subs = reactive({
+        Info: {}
+    })
+
+axios.post(`./api/subs`, body, {headers} ).then(function(res) {
+    subs.Info = res.data;
+})
 </script>
 <style lang="">
     
