@@ -36,6 +36,10 @@
 import SiteLogin from "../components/SiteLogin.vue";
 import { decodeCredential } from "vue3-google-login";
 import { reactive } from "vue";
+// import router from "@/router";
+import axios from "axios";
+import store from "@/store";
+import router from "@/router";
 export default {
 	components: { SiteLogin},
   setup() {
@@ -54,10 +58,34 @@ export default {
 		}
 
     //google
+
+    let userData;
     const callback = (response) => {
-      const userData = decodeCredential(response.credential);
+      userData = decodeCredential(response.credential);
+      // const login = JSON.parse(userData)
+
+      // const notDecode = response.credential;
       console.log("Handle the response", response);
       console.log("DecodeCredential", userData);
+      console.log(userData.email +"------"+userData.sub);
+      // console.log(notDecode);
+
+      const url = "/airreview/member/login"
+      const headers = { "Content-Type": "application/json; charset=utf-8;"}
+      const body = { email: userData.email, passwd: userData.sub};
+      try{
+         axios.post(url, body, {headers}).then(function(res){
+          store.commit('setToken',res.data.token);
+          store.commit('setEmail',res.data.email);
+          store.commit('setUserId',res.data.userid);
+          console.log(res.data)
+          alert('로그인되었습니다.')
+          router.push(`/`)
+        })
+      }
+      catch(err){
+        alert('로그인에 실패하였습니다.')
+      }
     };
 
     const buttonConfig = {
@@ -74,7 +102,8 @@ export default {
 
 
 
-		return { state, changeform, callback, buttonConfig };
+
+    return { state, changeform, callback, buttonConfig };
 	},
 };
 </script>

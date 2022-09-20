@@ -129,9 +129,10 @@ export default {
 
     //join
     const submit = async () => {
-      if (state.emailCheck === false) {
-        alert('이메일 중복 확인 버튼을 눌러주세요'); email.value.focus(); return false;
-      } else if (state.password === '') {
+      // if (state.emailCheck === false) {
+      //   alert('이메일 중복 확인 버튼을 눌러주세요'); email.value.focus(); return false;
+      // } else
+        if (state.password === '') {
         alert('비밀번호를 입력해주세요'); password.value.focus(); return false;
       } else if (state.repassword === '') {
         alert('비밀번호를 입력해주세요'); repassword.value.focus(); return false;
