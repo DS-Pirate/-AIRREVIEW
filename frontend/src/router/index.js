@@ -16,6 +16,11 @@ const ReportPage = () => import(/* webpackChunkName: "ReportPage" */ "../views/R
 const RecentPage = () => import(/* webpackChunkName: "RecentPage" */ "../views/RecentList.vue");
 const LogOut = () => import(/* webpackChunkName: "LogOut" */ "../views/LogoutPage.vue");
 const Embed = () => import(/* webpackChunkName: "Embed" */ "@/views/EmbedPage.vue")
+const AdminPage = () => import(/* webpackChunkName: "AdminPage" */ "@/views/AdminPage.vue");
+const AdminUserList = () => import(/* webpackChunkName: "AdminUserList" */ "@/components/AdminUserList.vue");
+const AdminArticleList = () => import(/* webpackChunkName: "AdminArticleList" */ "@/components/AdminArticleList.vue");
+const AdminReportedArticleList = () => import(/* webpackChunkName: "AdminReportedArticleList" */ "@/components/AdminReportedArticleList.vue");
+const AdminQuestionList = () => import(/* webpackChunkName: "AdminQuestionList" */ "@/components/AdminQuestionList.vue");
 const routes = [
   {
     path: '/',
@@ -105,6 +110,38 @@ const routes = [
     path: '/embed',
     name: 'embed',
     component: Embed
+  },
+  {
+    path: '/admin/',
+    name: 'AdminPage',
+    component: AdminPage,
+    children: [
+      {
+        path: '/',
+        name: 'AdminPage',
+        component: AdminPage,
+      },
+      {
+        path: 'user',
+        name: 'usermanage',
+        component: AdminUserList
+      },
+      {
+        path: 'article',
+        name: 'articlemanage',
+        component: AdminArticleList
+      },
+      {
+        path: 'report',
+        name: 'reportmanage',
+        component: AdminReportedArticleList
+      },
+      {
+        path: 'question',
+        name: 'questionmanage',
+        component: AdminQuestionList
+      }
+    ]
   }
 ]
 
