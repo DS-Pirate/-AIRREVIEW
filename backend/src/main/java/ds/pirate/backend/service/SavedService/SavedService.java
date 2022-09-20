@@ -1,13 +1,12 @@
 package ds.pirate.backend.service.SavedService;
 
-import java.util.List;
+import java.util.HashMap;
 
-import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.SaveDTO;
 import ds.pirate.backend.entity.SaveList;
 
 public interface SavedService {
-  List<ArticleDTO> getListAid(Long aid);
+  HashMap<String, Object> getListAid(Long aid);
 
   default SaveList dtoToEntity(SaveDTO dto) {
     SaveList entity = SaveList.builder()

@@ -6,11 +6,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import ds.pirate.backend.dto.ArticleDTO;
+import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.entity.subscribList;
-import ds.pirate.backend.repository.ArticleRepository;
 import ds.pirate.backend.repository.SubscribeRepository;
-import ds.pirate.backend.service.ArticleService.ArticleService;
+import ds.pirate.backend.repository.UserRepository;
+import ds.pirate.backend.service.UserService.UserService;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -18,14 +18,14 @@ import lombok.RequiredArgsConstructor;
 
 public class SubscribeServiceImpl implements SubscribeService {
   private final SubscribeRepository subrepo;
-  private final ArticleRepository arepo;
-  private final ArticleService aService;
+  private final UserRepository urepo;
+  private final UserService uService;
 
   @Override
-  public List<ArticleDTO> getListAid(Long aid) {
-    List<ArticleDTO> result = subrepo.getByUserId(aid).get().stream()
-        .map((Function<? super subscribList, ? extends ArticleDTO>) v -> {
-          ArticleDTO list = aService.EntityToDTO(arepo.getByAid(v.getTargetId()));
+  public List<airUserDTO> getListUserId(Long userid) {
+    List<airUserDTO> result = subrepo.getByUserId(userid).get().stream()
+        .map((Function<? super subscribList, ? extends airUserDTO>) v -> {
+          airUserDTO list = uService.entityToDTO(urepo.findByUserId(v.getTargetId()).get());
           return list;
         }).collect(Collectors.toList());
     return result;

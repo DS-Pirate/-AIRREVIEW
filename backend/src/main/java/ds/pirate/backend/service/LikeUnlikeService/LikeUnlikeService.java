@@ -1,13 +1,12 @@
 package ds.pirate.backend.service.LikeUnlikeService;
 
-import java.util.List;
+import java.util.HashMap;
 
-import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.likeUnlikeDTO;
 import ds.pirate.backend.entity.likeUnlikeList;
 
 public interface LikeUnlikeService {
-  List<ArticleDTO> getListAid(Long aid);
+  HashMap<String, Object> getListAid(Long aid);
 
   default likeUnlikeList dtoToEntity(likeUnlikeDTO dto) {
     likeUnlikeList entity = likeUnlikeList.builder()
