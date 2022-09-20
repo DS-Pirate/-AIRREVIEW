@@ -47,6 +47,7 @@ export default {
             store.commit('setToken',res.data.token);
             store.commit('setEmail',res.data.email);
             store.commit('setUserId',res.data.userid);
+            console.log(res.data)
             alert('로그인되었습니다.')
             router.push(`/`)
         })
