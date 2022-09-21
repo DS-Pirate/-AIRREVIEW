@@ -10,18 +10,19 @@ import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+
 import java.util.Optional;
+
 @Repository
-public interface UserRepository extends JpaRepository<airUser, Long>{
-    @EntityGraph(attributePaths = {"roleSet"}, type = EntityGraphType.LOAD)
+public interface UserRepository extends JpaRepository<airUser, Long> {
+    @EntityGraph(attributePaths = { "roleSet" }, type = EntityGraphType.LOAD)
     @Query("select u from airUser u where u.eMail=:email ")
     Optional<airUser> findByEmail(String email);
 
-
-    @EntityGraph(attributePaths = {"roleSet"}, type = EntityGraphType.LOAD)
+    @EntityGraph(attributePaths = { "roleSet" }, type = EntityGraphType.LOAD)
     @Query("select u from airUser u where u.eMail=:email and u.auth=:auth ")
     Optional<airUser> findByEmail(String email, boolean auth);
-    
+
     @Query("select user from airUser user where userid=:userId ")
     Optional<airUser> findByUserId(Long userId);
 
@@ -32,4 +33,5 @@ public interface UserRepository extends JpaRepository<airUser, Long>{
 
     @Query("select userid from airUser where eMail=:email and (q1=:q1 or q2=:q2 or q3=:q3)")
     Long findUserIdByEmailAndQ(String email, String q1, String q2, String q3);
+
 }

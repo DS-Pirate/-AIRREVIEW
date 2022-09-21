@@ -11,8 +11,6 @@ import javax.servlet.ServletInputStream;
 import ds.pirate.backend.dto.SessionDTO;
 import ds.pirate.backend.security.dto.AuthMemberDTO;
 
-
-
 import ds.pirate.backend.security.util.JWTUtil;
 
 import org.json.simple.JSONObject;
@@ -20,11 +18,8 @@ import org.json.simple.parser.JSONParser;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.util.StreamUtils;
-
-
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -35,18 +30,16 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     private JWTUtil jwtUtil;
 
-    public ApiLoginFilter(String defaultFilterProcessUrl, JWTUtil jwtUtil){
+    public ApiLoginFilter(String defaultFilterProcessUrl, JWTUtil jwtUtil) {
         super(defaultFilterProcessUrl);
         this.jwtUtil = jwtUtil;
     }
-    
-
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException {
         log.info("ApiLoginFilter........ attemptAuthentication");
-        log.info("request.getRequestURI():"+request.getRequestURI());
+        log.info("request.getRequestURI():" + request.getRequestURI());
 
         ServletInputStream inputStream = request.getInputStream();
 
@@ -66,15 +59,14 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
         String email = jsonObject.get("email").toString();
         String pw = jsonObject.get("passwd").toString();
         log.info("email: " + email + "/pw: " + pw);
-        UsernamePasswordAuthenticationToken authToken =
-                new UsernamePasswordAuthenticationToken(email, pw);
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, pw);
 
-                
         return getAuthenticationManager().authenticate(authToken);
     }
+
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-                                            Authentication authResult) {
+            Authentication authResult) {
         log.info("successfulAuthentication... authResult:" + authResult.getPrincipal());
         String email = ((AuthMemberDTO) authResult.getPrincipal()).getEmail();
         Long userid = ((AuthMemberDTO) authResult.getPrincipal()).getUserid();
@@ -83,14 +75,17 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
         String curl = "";
         try {
             token = "Bearer " + jwtUtil.generateToken(email, userid);
-            SessionDTO sessionDTO = AuthToSessionDTO((AuthMemberDTO) authResult.getPrincipal(), token,curl);
+            SessionDTO sessionDTO = AuthToSessionDTO((AuthMemberDTO) authResult.getPrincipal(), token, curl);
             String res = mapper.writeValueAsString(sessionDTO);
             response.setContentType("application/json;charset=utf-8");
             response.getOutputStream().write(res.getBytes());
-        } catch (Exception e) {e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
     private SessionDTO AuthToSessionDTO(AuthMemberDTO dto,
-                                        String token, String curl) {
+            String token, String curl) {
         SessionDTO sessionDTO = SessionDTO.builder()
                 .userid(dto.getUserid())
                 .email(dto.getEmail())
