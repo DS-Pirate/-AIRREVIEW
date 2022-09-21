@@ -14,19 +14,19 @@
       <img class="imgIcon" src="../assets/dummy.webp" />
     </div>
     <div class="nameDiv mt-2">
-      <span class="fs-4 name">Jiyoung</span>
+      <span class="fs-4 name">{{state.username}}</span>
     </div>
 
     <!-- 폼 -->
     <form class="row g-3 mt-3 myAccountForm pe-5 ps-5">
       <div class="col-md-3 w-50">
         <label for="inputEmail4" class="form-label">이름</label>
-        <input type="email" class="form-control" id="inputEmail4" />
+        <input type="email" class="form-control" id="inputEmail4" :value="state.username" />
       </div>
 
       <div class="col-md-6 w-50">
-        <label for="inputEmail4" class="form-label">닉네임</label>
-        <input type="email" class="form-control" id="inputEmail4" />
+        <label for="inputEmail4" class="form-label">이메일</label>
+        <input type="email" class="form-control" id="inputEmail4" :value="state.email" />
       </div>
 
       <div class="col-12">
@@ -35,114 +35,93 @@
           class="form-control aboutMe"
           id="exampleFormControlTextarea1"
           rows="3"
+          :value="state.userintro"
         ></textarea>
       </div>
 
+      <div class="d-flex">
       <div class="col-md-2 w-15">
         <label for="inputState" class="form-label">생년월일</label>
-        <select id="inputState" class="form-select">
-          <option selected>년도</option>
+        <select id="inputState" class="form-select" :value="state.year">
+          <option selected>{{state.year}}</option>
           <option v-for="i in 82" :key="i">{{ i + 1940 }}</option>
         </select>
       </div>
 
-      <div class="col-md-2 w-15">
+      <div class="col-md-2 w-15 mx-2">
         <label for="inputState" class="form-label"> </label>
         <select id="inputState" class="form-select mt-2">
-          <option selected>월</option>
+          <option selected>{{state.month}}</option>
           <option v-for="i in 12" :key="i">{{ i }}</option>
         </select>
       </div>
       <div class="col-md-2 w-15">
         <label for="inputState" class="form-label"> </label>
         <select id="inputState" class="form-select mt-2">
-          <option selected>일</option>
-          <option v-for="i in 31" :key="i">{{ i + 1940 }}</option>
+          <option selected>{{state.date}}</option>
+          <option v-for="i in 31" :key="i">{{ i }}</option>
         </select>
       </div>
-
-      <div class="col-md-2 number w-15">
-        <label for="inputState" class="form-label">전화번호</label>
-        <select id="inputState" class="form-select">
-          <option selected>번호</option>
-          <option>010</option>
-          <option>011</option>
-        </select>
       </div>
-      <div class="col-md-2 number w-15">
-        <label for="inputState" class="form-label"></label>
-        <input type="text" class="form-control mt-2" id="inputZip" />
-      </div>
-
-      <div class="col-md-2 number w-15">
-        <label for="inputState" class="form-label"></label>
-        <input type="text" class="form-control mt-2" id="inputZip" />
-      </div>
-
-      <div class="col-md-6 w-50">
-        <label for="inputPassword4" class="form-label">비밀번호</label>
+     
+      <div class="col-md-3 w-50">
+        <label for="inputPassword4" class="form-label">현재 비밀번호</label>
         <input type="password" class="form-control" id="inputPassword4" />
       </div>
       <div class="col-md-6 w-50">
-        <label for="inputPassword4" class="form-label">비밀번호 변경</label>
+        <label for="inputPassword4" class="form-label">변경할 비밀번호</label>
         <input type="password" class="form-control" id="inputPassword4" />
       </div>
+    
 
       <div class="col-12">
-        <div class="form-check form-switch">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            role="switch"
-            id="flesnwitchCheckChecked"
-            checked
-          />
-          <label class="form-check-label" for="flesnwitchCheckChecked"
-            >신규 구독자 알림</label
-          >
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-check form-switch">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            role="switch"
-            id="flesnwitchCheckChecked"
-            checked
-          />
-          <label class="form-check-label" for="flesnwitchCheckChecked"
-            >신규 팔로워 알림</label
-          >
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-check form-switch">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            role="switch"
-            id="flesnwitchCheckChecked"
-            checked
-          />
-          <label class="form-check-label" for="flesnwitchCheckChecked"
-            >새 댓글 알림</label
-          >
-        </div>
-      </div>
-
-      <div class="col-12">
-        <button type="submit" class="btn btn-primary">수정하기</button>
+        <button type="submit" class="btn btn-primary" @click="changesetting()">수정하기</button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
+import {reactive} from "@vue/reactivity";
+import axios from "axios";
+import { useStore } from "vuex";
+
 export default {
   name: "MyAccount",
-  data() {
-    return {};
-  },
+  setup() {
+    const state = reactive({
+      username: '',
+      email: '',
+      birthday: '',
+      userintro: '',
+    })
+    
+  const store = useStore();
+  const url = './api/setting/getuser'
+  const headers = {
+    "Content-Type": "application/json",
+    "Authorization": store.state.token,
+    "userid" : store.state.userid
+  }
+
+  let body = {
+    userid : store.state.userid
+  }
+
+  axios.post(url, body, {headers}).then(function (res) {
+        state.username = res.data.airName;
+        state.email = res.data.email;
+        state.birthday = res.data.birthday;
+        state.userintro = res.data.userIntro;
+
+        const regdate = new Date(Date.parse(res.data.birthDay))
+        state.year = regdate.getFullYear();
+        state.date = regdate.getDate();
+        state.month = regdate.getMonth()+1;
+        console.log(res.data);
+
+    })
+    return {state}
+  }
 };
 </script>
