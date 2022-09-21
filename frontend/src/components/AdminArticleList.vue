@@ -5,35 +5,81 @@
                 <tr>
                     <th scope="col">글 번호</th>
                     <th scope="col">글 제목</th>
-                    <th scope="col">글쓴이</th>
-                    <th scope="col">공개여부</th>
                     <th scope="col">조회수</th>
-                    <th scope="col">신고수</th>
                     <th scope="col">삭제</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr> -->
+            <tbody class="w-100">
+                <tr v-for="dto in ArticleInfo.dtoList" :key ="dto" class="w-100">
+                    <td>{{dto.aid}}</td>
+                    <td>{{dto.atitle}}</td>
+                    <td>{{dto.opencount}}</td>
+                    <td><button class="btn btn-danger">삭제</button></td>
+                </tr>
             </tbody>
         </table>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                <li class="page-item"><a class="page-link" @click="getUserList(ArticleInfo.page-1)" v-if="ArticleInfo.page!=1">Previous</a></li>
+                <li :class="ArticleInfo.page == page?'page-item active':'page-item'" v-for="page in ArticleInfo.pageList"  :key="page"><a class="page-link" @click="getUserList(page)">{{page}}</a></li>
+                <li class="page-item" ><a class="page-link" @click="getUserList(ArticleInfo.page+1)" v-if="ArticleInfo.page!=ArticleInfo.totalPage">Next</a></li>
             </ul>
         </nav>
     </div>
 </template>
-<script>
-    export default {};
+<script setup>
+    import { reactive  } from 'vue';
+    import axios from 'axios';
+    import store from '@/store';
+
+    let ArticleInfo = reactive({
+        dtoList : null,
+        end : null,
+        next : null,
+        page : null,
+        pageList : null,
+        prev : null,
+        size : null,
+        start : null,
+        totalPage : null
+    })
+
+    const headers = {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": store.state.token,
+        "userid": store.state.userid,
+    };
+
+
+    function getUserList(page){
+        axios.post("../api/admin/articlemanagement", { page:page }, { headers })
+    .then(function(res){
+        ArticleInfo.dtoList =  res.data.dtoList,
+        ArticleInfo.end =  res.data.end,
+        ArticleInfo.next =  res.data.next,
+        ArticleInfo.page =  res.data.page,
+        ArticleInfo.pageList =  res.data.pageList,
+        ArticleInfo.prev =  res.data.prev,
+        ArticleInfo.size =  res.data.size,
+        ArticleInfo.start =  res.data.start,
+        ArticleInfo.totalPage = res.data.totalPag
+        console.log(res);
+    })  
+    }
+    axios.post("../api/admin/articlemanagement", { page:1 }, { headers })
+    .then(function(res){
+        ArticleInfo.dtoList =  res.data.dtoList,
+        ArticleInfo.end =  res.data.end,
+        ArticleInfo.next =  res.data.next,
+        ArticleInfo.page =  res.data.page,
+        ArticleInfo.pageList =  res.data.pageList,
+        ArticleInfo.prev =  res.data.prev,
+        ArticleInfo.size =  res.data.size,
+        ArticleInfo.start =  res.data.start,
+        ArticleInfo.totalPage = res.data.totalPag
+    })
 </script>
 <style lang="sass">
-    thead
+    thead, tbody
         text-align: center
 </style>

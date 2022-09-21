@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
-import ds.pirate.backend.admin.AdminArticleRepository;
-import ds.pirate.backend.admin.AdminQuestionRepository;
-import ds.pirate.backend.admin.AdminReportRepository;
-import ds.pirate.backend.admin.AdminUserRepository;
+import ds.pirate.backend.admin.Repository.AdminArticleRepository;
+import ds.pirate.backend.admin.Repository.AdminQuestionRepository;
+import ds.pirate.backend.admin.Repository.AdminReportRepository;
+import ds.pirate.backend.admin.Repository.AdminUserRepository;
 import ds.pirate.backend.admin.dto.PageRequestDTO;
 import ds.pirate.backend.admin.dto.PageResultDTO;
 import ds.pirate.backend.dto.ArticleDTO;
@@ -44,9 +44,17 @@ public class AdminServiceImple implements AdminService {
     private final UserService user;
     private final QuestionService qser;
 
+
+    @Override
+    public Boolean adminChecker(Long userid) {
+        
+        return urepo.isAdminCheck(userid);
+    }
+
+
     @Override
     public PageResultDTO<ArticleDTO, ArticlesList> getArticleList(PageRequestDTO requestDTO) {
-        Pageable pageable = requestDTO.getPageable(Sort.by("aid").descending());
+        Pageable pageable = requestDTO.getPageable(Sort.by("aid").ascending());
         BooleanBuilder booleanBuilder = getArticleSearch(requestDTO);
         Page<ArticlesList> result = arepo.findAll(booleanBuilder, pageable);
         Function<ArticlesList, ArticleDTO> fn = entity -> aser.EntityToDTO(entity);
@@ -80,7 +88,7 @@ public class AdminServiceImple implements AdminService {
 
     @Override
     public PageResultDTO<airUserDTO, airUser> getUserList(PageRequestDTO requestDTO) {
-        Pageable pageable = requestDTO.getPageable(Sort.by("userid").descending());
+        Pageable pageable = requestDTO.getPageable(Sort.by("userid").ascending());
         BooleanBuilder booleanBuilder = getUserSearch(requestDTO);
         Page<airUser> result = urepo.findAll(booleanBuilder, pageable);
         Function<airUser, airUserDTO> fn = entity -> user.entityToDTO(entity);

@@ -12,6 +12,7 @@ public interface UserService {
 
     default airUser dtoToEntity(airUserDTO dto){
         airUser entity = airUser.builder()
+        .userid(dto.getUserid())
         .airName(dto.getAirName())
         .eMail(dto.getEmail())
         .birthDay(dto.getBirthDay())
@@ -28,6 +29,7 @@ public interface UserService {
 
     default airUserDTO entityToDTO(airUser entity){
         airUserDTO dto = airUserDTO.builder()
+        .userid(entity.getUserid())
         .airName(entity.getAirName())
         .email(entity.getEMail())
         .birthDay(entity.getBirthDay())

@@ -10,41 +10,81 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-// import ds.pirate.backend.admin.service.AdminService;
-import ds.pirate.backend.security.util.JWTUtil;
-import ds.pirate.backend.vo.userid;
+import ds.pirate.backend.admin.dto.PageRequestDTO;
+import ds.pirate.backend.admin.dto.PageResultDTO;
+import ds.pirate.backend.admin.service.AdminService;
+import ds.pirate.backend.dto.ArticleDTO;
+import ds.pirate.backend.dto.QuestionDTO;
+import ds.pirate.backend.dto.airUserDTO;
+import ds.pirate.backend.dto.reportDTO;
+import ds.pirate.backend.entity.ArticlesList;
+import ds.pirate.backend.entity.QuestionsList;
+import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.entity.reportList;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
-@RequestMapping("/admin/")
+@RequestMapping("/api/admin/")
 @RestController
 @RequiredArgsConstructor
+@Log4j2
 public class AdminController {
 
-    // private final AdminService adser;
-    private final JWTUtil jwtUtil;
+    private final AdminService adser;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> removeComment(@RequestBody userid vo, @RequestHeader(value="userid") String userid, @RequestHeader(value="Authorization") String tokenStr) {
-        
-        try {
-            permissionCheckingEverytime(userid, tokenStr);
-        } catch (Exception e) {
+    @RequestMapping(value = "/usermanagement", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PageResultDTO<airUserDTO, airUser>> usermanage(@RequestBody PageRequestDTO dto, @RequestHeader(value="userid") Long userid) {
+        if(permissionCheckingEverytime(userid)){
+            PageResultDTO<airUserDTO, airUser>result = adser.getUserList(dto);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+            
+        }else{
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-
-
-
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        }  
     }
 
-    // @RequestMapping(value = "/manage", method = RequestMethod.POST, consumes =
-    // MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    // public ResponseEntity<List<Object>> removeComment(@RequestBody userid vo){
-    // return new ResponseEntity<>(alser.getAlarmListByUserid(vo.getUserid()),
-    // HttpStatus.OK);
-    // }
+    @RequestMapping(value = "/articlemanagement", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PageResultDTO<ArticleDTO, ArticlesList>> articlemanage(@RequestBody PageRequestDTO dto, @RequestHeader(value="userid") Long userid) {
+        if(permissionCheckingEverytime(userid)){
+            PageResultDTO<ArticleDTO, ArticlesList>result = adser.getArticleList(dto);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+            
+        }else{
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }  
+    }
 
-    public void permissionCheckingEverytime(String userid, String tokenStr) {
-        jwtUtil.validateAdmin(userid, tokenStr);
+    @RequestMapping(value = "/reportmanagement", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PageResultDTO<reportDTO, reportList>> reportmanage(@RequestBody PageRequestDTO dto, @RequestHeader(value="userid") Long userid) {
+        if(permissionCheckingEverytime(userid)){
+            PageResultDTO<reportDTO, reportList>result = adser.getReportList(dto);
+            log.info(result);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+            
+        }else{
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }  
+    }
+
+    @RequestMapping(value = "/questionmanagement", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PageResultDTO<QuestionDTO, QuestionsList>> questionmanage(@RequestBody PageRequestDTO dto, @RequestHeader(value="userid") Long userid) {
+        if(permissionCheckingEverytime(userid)){
+            PageResultDTO<QuestionDTO, QuestionsList> result = adser.getQuestionList(dto);
+            log.info(result);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+            
+        }else{
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }  
+    }
+
+
+
+    public Boolean permissionCheckingEverytime(Long userid) {
+        if(!adser.adminChecker(userid)){
+            return false;
+        } else{
+            return true;
+        }
     }
 }

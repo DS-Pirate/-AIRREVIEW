@@ -48,24 +48,4 @@ public class JWTUtil {
         return checker;
     }
 
-    @SuppressWarnings("rawtypes")
-    public boolean validateAdmin(String userid, String tokenStr){
-        Boolean checker = null;
-        try {
-            DefaultJws defaultJws = (DefaultJws) Jwts.parser().setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8)).parseClaimsJws(tokenStr);
-            DefaultClaims claims = (DefaultClaims) defaultJws.getBody();
-            String uid = claims.getId();
-            if(Integer.parseInt(uid) == Integer.parseInt(userid)){
-                checker = true;
-            }else{
-                checker = false;
-            } 
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error(e.getMessage());
-        }
-        return checker;
-    }
-
 }
