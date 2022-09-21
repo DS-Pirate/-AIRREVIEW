@@ -2,19 +2,17 @@ package ds.pirate.backend.service.UserService;
 
 import java.util.HashMap;
 
-import ds.pirate.backend.dto.UserApiDTO;
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.entity.airUser;
 
 public interface UserService {
     
-    Long register(UserApiDTO dto);
-    airUserDTO getUserInfoByuserid(Long userid);
 
     HashMap<String, String> getUserInfoByuseridForarticle(Long userid);
 
     default airUser dtoToEntity(airUserDTO dto){
         airUser entity = airUser.builder()
+        .userid(dto.getUserid())
         .airName(dto.getAirName())
         .eMail(dto.getEmail())
         .birthDay(dto.getBirthDay())
@@ -31,6 +29,7 @@ public interface UserService {
 
     default airUserDTO entityToDTO(airUser entity){
         airUserDTO dto = airUserDTO.builder()
+        .userid(entity.getUserid())
         .airName(entity.getAirName())
         .email(entity.getEMail())
         .birthDay(entity.getBirthDay())

@@ -1,7 +1,5 @@
-package ds.pirate.backend.dto;
+package ds.pirate.backend.security.dto;
 
-
-import java.util.Map;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,14 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class SessionDTO {
+public class TokenDTO {
     private Long userid;
     private String email;
     private String username;
     private String name;
     private String token;
-    private String curl;
-    private boolean fromSocial;
-    private Map<String, Object> attr; //OAuth from Social
-    //세션발급용
+    private boolean auth;
 }

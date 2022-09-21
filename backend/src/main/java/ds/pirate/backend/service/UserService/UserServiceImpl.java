@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
 
-import ds.pirate.backend.dto.UserApiDTO;
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
     private final UserRepository urepo;
 
-    @Override
-    public airUserDTO getUserInfoByuserid(Long userid) {
-        // 
-        return null;
-    }
+
 
     @Override
     public HashMap<String, String> getUserInfoByuseridForarticle(Long userid) {
@@ -29,10 +24,6 @@ public class UserServiceImpl implements UserService {
         return airUserDTO;
     }
 
-    @Override
-    public Long register(UserApiDTO dto) {
-        //
-        return null;
-    }
+
 
 }
