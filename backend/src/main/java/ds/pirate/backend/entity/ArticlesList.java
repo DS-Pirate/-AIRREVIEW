@@ -6,6 +6,9 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.querydsl.core.annotations.PropertyType;
+import com.querydsl.core.annotations.QueryType;
+
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,7 @@ public class ArticlesList extends DateEntity{
 
     @Lob
     @Column(nullable = false)
+    @QueryType(PropertyType.STRING)
     private byte[] context;
 
 

@@ -2,14 +2,11 @@ package ds.pirate.backend.service.UserService;
 
 import java.util.HashMap;
 
-import ds.pirate.backend.dto.UserApiDTO;
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.entity.airUser;
 
 public interface UserService {
     
-    Long register(UserApiDTO dto);
-    airUserDTO getUserInfoByuserid(Long userid);
 
     HashMap<String, String> getUserInfoByuseridForarticle(Long userid);
 
