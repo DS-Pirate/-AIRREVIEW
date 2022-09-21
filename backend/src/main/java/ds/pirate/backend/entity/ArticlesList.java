@@ -59,7 +59,7 @@ public class ArticlesList extends DateEntity{
     private List<acomments> cgroup = new ArrayList<>();
 
 
-
+//이거 참고하기!!
     public String updateContextToString(byte[] context){
         String result = new String(context, Charset.forName("utf8"));
         return result;

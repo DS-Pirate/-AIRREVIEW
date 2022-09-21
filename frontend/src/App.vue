@@ -47,6 +47,7 @@ import { useRouter } from 'vue-router'
 import store from "@/store";
 import AlarmPopover from "@/components/AlarmPopover.vue";
 import { useMeta } from "vue-meta";
+import axios from "axios";
 
 
 export default {
@@ -77,6 +78,24 @@ export default {
       }
       console.log("put axios function");
       router.push(`/search?cards=${search.context}`)
+      const searchUrl = window.location.href;
+      const searchWord = searchUrl.split("/search?cards=")[1];
+      console.log(searchWord);
+
+      function getCardsInformation(){
+        const url= `/airreview/article/search`
+        const headers = {
+          "Content-Type": "application/json; charset=utf-8",
+        }
+        const body = {
+          search: searchWord
+        }
+        axios.post(url, body, {headers}).then(function (res){
+          console.log(res.data);
+          // state.cards = res.data;
+        })
+      }
+      getCardsInformation()
     }
     const { meta } = useMeta({
                 title:  ':: 에어리뷰',

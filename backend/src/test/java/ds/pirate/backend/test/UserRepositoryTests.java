@@ -1,5 +1,6 @@
 package ds.pirate.backend.test;
 
+import java.net.URLDecoder;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +10,7 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import ds.pirate.backend.service.ApiMemberService.ApiMemberService;
 
+import ds.pirate.backend.vo.search;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -454,19 +456,18 @@ public class UserRepositoryTests {
         uimgrepo.save(ulid);
     }
 
-//    음...좀 더 고민해봐야할것같아
-//    @Test
-//    public void searchCards(){
-//        String decode = "";
-//        try{
-//            decode = URLDecoder.decode("aa", "UTF-8");
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        log.info(decode);
-//        log.info(arepo.getListAndAuthorByAuthorOrAtitle("a"));
-//        log.info(arepo.getListAndAuthor());
-//    }
+    @Test
+    public void searchCards(){
+        String decode = "";
+        try{
+            decode = URLDecoder.decode("aa", "UTF-8");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        log.info(decode);
+        log.info(arepo.getListAndAuthorByAuthorOrAtitle("a"));
+        log.info(arepo.getListAndAuthor());
+    }
 
     @Test
     public void findUserIdbyEmailAndQ(){
@@ -482,6 +483,12 @@ public class UserRepositoryTests {
     @Test
     public void findemail(){
         Optional<airUser> result = urepo.findByEmail("3@3.3");
+        log.info(result);
+    }
+
+    @Test
+    public void searchTitle() {
+        Optional<Object[]> result = aser.aaaaa("a");
         log.info(result);
     }
 

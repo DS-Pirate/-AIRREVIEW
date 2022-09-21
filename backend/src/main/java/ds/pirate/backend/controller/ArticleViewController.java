@@ -2,6 +2,10 @@ package ds.pirate.backend.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
+
+import ds.pirate.backend.vo.search;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -20,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 
 
 @RestController
+@Log4j2
 @RequestMapping("/article/")
 @RequiredArgsConstructor
 public class ArticleViewController {
@@ -56,16 +61,17 @@ public class ArticleViewController {
     }
 
 
-    @GetMapping("/card")
+    @GetMapping(value = "/card", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Object[]>> ArticleCardsList(){
         List<Object[]> result = aservice.getArticleList();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 
-    @RequestMapping(value = "/search/{search}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> ArticleCardsSearch(@RequestBody String search){
-        List<Object[]> result = aservice.getSearchArticleList(search);
+    @RequestMapping(value = "/search", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Optional<Object[]>> ArticleCardsSearch(@RequestBody search vo){
+        log.info(vo.getSearch());
+        Optional<Object[]> result = aservice.aaaaa(vo.getSearch());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

@@ -14,6 +14,7 @@
       <div v-for="(card, idx) in state.cards" :key="idx">
         <Cards :card="card"></Cards>
       </div>
+      <p v-for="(card, idx) in state.cards" :key="idx">{{card}}</p>
     </div>
   </div>
   </div>
@@ -24,7 +25,7 @@
 
 // import Cards from "@/components/MainCards.vue";
 
-import axios from "axios";
+// import axios from "axios";
 import {reactive} from "@vue/reactivity";
 
 export default {
@@ -37,27 +38,8 @@ export default {
       cards: []
     })
   //검색처리 하는중!
-    const searchUrl = window.location.href;
-    const searchWord = searchUrl.split("/search?cards=")[1];
-    console.log(searchWord);
 
-  function getCardsInformation(){
-    const url= `/airreview/article/search/${searchWord}`
-    // const headers = {
-    //   "Content-Type": "application/json; charset=utf-8",
-    // }
-    // const body = {
-    //   search: searchWord
-    // }
-    axios.get(url).then(function (res){
-      console.log(res);
-      state.cards = res.data;
-    }).catch((e)=>{
-      console.log(e+"통신 실패!!!");
-    }).then(console.log("통신 끝!"))
-
-  }
-    getCardsInformation();
+    // getCardsInformation();
   return {state,}
   },
 };

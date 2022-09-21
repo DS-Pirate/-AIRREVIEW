@@ -2,7 +2,9 @@ package ds.pirate.backend.service.ArticleService;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
+import ds.pirate.backend.vo.search;
 import org.springframework.data.domain.Pageable;
 
 import ds.pirate.backend.dto.ArticleDTO;
@@ -43,6 +45,7 @@ public interface ArticleService {
     List<Object[]> getArticleList();
     List<Object[]> getSearchArticleList(String search);
     List<acommentDTO>getListByUserIdAndAuthorId(Long userid, Long authorid);
+    Optional<Object[]> aaaaa(String search);
 
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {

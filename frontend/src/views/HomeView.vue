@@ -24,7 +24,6 @@ export default {
   setup() {
     const state = reactive({
       cards: [],
-      a : [["a","b","c"],["aa","bb","cc"],["aaa","bbb","ccc"]]
     })
 
 
@@ -32,9 +31,9 @@ export default {
     const url = "/airreview/article/card"
     axios.get(url).then((res) => {
       state.cards = res.data;
-      const year = Date.parse(state.cards[1][4]);
-      console.log(typeof state.cards[1][4])
-      console.log(new Date(year).getFullYear());
+      // const year = Date.parse(state.cards[1][4]);
+      // console.log(typeof state.cards[1][4])
+      // console.log(new Date(year).getFullYear());
     })
     return {state}
   }
