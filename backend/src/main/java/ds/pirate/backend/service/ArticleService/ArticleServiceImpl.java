@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import ds.pirate.backend.vo.search;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -128,6 +129,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
     }
 
+    //이부분 카드 내용 참고!
     @Override
     public HashMap<String, Object> getCardInfosByHashTagName(Long aid, Pageable pageable) {
         HashMap<String, Object> cardInfo = new HashMap<>();
@@ -424,5 +426,12 @@ public class ArticleServiceImpl implements ArticleService {
             e.printStackTrace();
         }
         return repo.getListAndAuthorByAuthorOrAtitle(decode);
+    }
+
+
+    @Override
+    public Optional<Object[]> aaaaa(String search) {
+        Optional<Object[]> result = repo.aaaaaa(search);
+        return result;
     }
 }

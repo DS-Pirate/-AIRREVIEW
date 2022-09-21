@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import ds.pirate.backend.vo.search;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -51,6 +52,16 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
             "a.atitle LIKE CONCAT('%',:search,'%') " +
             "ORDER BY a.aid DESC")
     List<Object[]> getListAndAuthorByAuthorOrAtitle(String search);
+
+
+    @Query("SELECT a.atitle " +
+            "FROM ArticlesList a left join  airUser u " +
+            "on u.userid = a.aUser " +
+            "where u.airName LIKE CONCAT('%',:search,'%') Or " +
+            "a.atitle LIKE CONCAT('%',:search,'%') " +
+            "ORDER BY a.aid DESC")
+    Optional<Object[]> aaaaaa(String search);
+
 
     @Query("update ArticlesList a set a.opencount = a.opencount+1 where a.aid=:aid")
     @Modifying
