@@ -16,4 +16,5 @@ public interface AdminService {
     PageResultDTO<ArticleDTO, ArticlesList> getArticleList(PageRequestDTO requestDTO);
     PageResultDTO<reportDTO, reportList> getReportList(PageRequestDTO requestDTO);
     PageResultDTO<QuestionDTO, QuestionsList> getQuestionList(PageRequestDTO requestDTO);
+    Boolean adminChecker(Long userid);
 }

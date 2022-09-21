@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class airUserDTO {
+    private Long userid;
     private String passwd;
     private String email;
     private String airName;

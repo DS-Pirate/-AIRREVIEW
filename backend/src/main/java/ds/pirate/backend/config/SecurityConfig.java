@@ -1,6 +1,7 @@
 package ds.pirate.backend.config;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import ds.pirate.backend.security.Handler.AirLoginSuccessHandler;
 import ds.pirate.backend.security.filter.ApiCheckFilter;
 import ds.pirate.backend.security.filter.ApiLoginFilter;
 import ds.pirate.backend.security.util.JWTUtil;
@@ -42,7 +42,6 @@ public class SecurityConfig {
     
       ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/member/login", jwtUtil());
       apiLoginFilter.setAuthenticationManager(authenticationManager);
-      apiLoginFilter.setAuthenticationSuccessHandler(successHandler());
       return apiLoginFilter;
     }
 
@@ -51,17 +50,12 @@ public class SecurityConfig {
         return new JWTUtil();
     }
 
+
     @Bean
     public ApiCheckFilter apiCheckFilter(){
         return new ApiCheckFilter("/api/**/*", jwtUtil());
     }
 
-    
-    @Bean
-    public AirLoginSuccessHandler successHandler() {
-        return new AirLoginSuccessHandler(passwordEncoder());
-    }
-    
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
