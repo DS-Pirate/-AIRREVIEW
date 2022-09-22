@@ -130,7 +130,7 @@ public interface ArticleService {
     }
 
     default reportList reportDTOtoEntity(reportDTO dto){
-        reportList entity = reportList.builder()
+        reportList entity = reportList.builder().reid(dto.getReid())
         .articles(ArticlesList.builder().aid(dto.getArticleid()).build())
         .userid(airUser.builder().userid(dto.getUserid()).build())
         .reportContext(dto.getReportContext()).build();
@@ -138,7 +138,7 @@ public interface ArticleService {
     }
 
     default reportDTO reportEntitytoDTO(reportList entity){
-        reportDTO dto = reportDTO.builder()
+        reportDTO dto = reportDTO.builder().reid(entity.getReid())
         .articleid(entity.getArticles().getAid())
         .userid(entity.getUserid().getUserid())
         .reportContext(entity.getReportContext()).build();
