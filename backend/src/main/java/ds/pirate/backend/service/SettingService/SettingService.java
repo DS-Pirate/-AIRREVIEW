@@ -2,12 +2,13 @@ package ds.pirate.backend.service.SettingService;
 
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.vo.userid;
 
 public interface SettingService {
 
   airUserDTO getByUserId(Long userid);
 
-  String changePasswd(airUserDTO dto);
+  String changePasswd(userid vo);
 
   default airUserDTO entityToDTO(airUser entity) {
     airUserDTO dto = airUserDTO.builder()

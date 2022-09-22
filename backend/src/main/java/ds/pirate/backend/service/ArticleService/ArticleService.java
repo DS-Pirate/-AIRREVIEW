@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+
 import ds.pirate.backend.vo.EmbedCard;
 import ds.pirate.backend.vo.search;
 import org.springframework.data.domain.Pageable;
@@ -25,29 +26,53 @@ import ds.pirate.backend.entity.reportList;
 
 public interface ArticleService {
     String addArticle(ArticleDTO dto, List<String> hashlist);
+
     ArticleDTO getArticleInfoByAid(Long aid);
+
     Long addNewComment(acommentDTO dto);
+
     Long addNewCommentReply(acommentDTO dto);
+
     String rateupComment(acommentRateDTO dto);
+
     Double getArticleAvgRating(Long aid);
+
     String addArticleReport(reportDTO dto);
+
     String addLikeUnlike(likeUnlikeDTO dto);
+
     String addSave(SaveDTO dto);
+
     String removeComment(acommentDTO dto);
+
     HashMap<String, Boolean> getFunctionBtnStatusByUserid(Long userid, Long aid);
+
     HashMap<String, String> getSubscardInfo(Long aid, Long userid);
+
     List<ArticleDTO> getSearchCardInfo(Long aid);
+
     String subsFunction(Long aid, Long userid);
+
     HashMap<String, Object> getCommentListByAid2(Long aid, Pageable pageable);
+
     HashMap<String, Object> getCommentListByAidTwo2(Long aid, Pageable pageable, Long userid);
+
     HashMap<String, Object> getCardInfosByHashTagName(Long aid, Pageable pageable);
+
     ArticleDTO CheckBeforeModifyArticle(Long aid, Long userid);
+
     String ArticleModify(ArticleDTO dto, List<String> tags);
-//    List<Object[]> getArticleList();
-     List<EmbedCard> getArticleList();
+
+
+
+    List<Object[]> getSearchArticleList(String search);
+    List<EmbedCard> getArticleList();
     List<acommentDTO>getListByUserIdAndAuthorId(Long userid, Long authorid);
     Optional<Object[]> getSearchList(String search);
 
+    List<acommentDTO> getListByUserIdAndAuthorId(Long userid, Long authorid);
+
+    Optional<Object[]> aaaaa(String search);
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {
         ArticlesList aentity = ArticlesList.builder()
@@ -94,41 +119,40 @@ public interface ArticleService {
         return dto;
     }
 
-
-    default acommentDTO commentEntityToDTO(acomments entity){
+    default acommentDTO commentEntityToDTO(acomments entity) {
         acommentDTO dto = acommentDTO.builder()
-        .cid(entity.getCid())
-        .aid(entity.getArticles().getAid())
-        .userid(entity.getAiruser().getUserid())
-        .userName(entity.getAiruser().getAirName())
-        .commentGroup(entity.getCommentGroup())
-        .commnetDepth(entity.getCommnetDepth())
-        .commentSorts(entity.getCommentSorts())
-        .commentContext(entity.getCommentContext())
-        .rate(entity.getRate())
-        .articleRate(entity.getArticleRate())
-        .regDate(entity.getRegDate())
-        .build();
+                .cid(entity.getCid())
+                .aid(entity.getArticles().getAid())
+                .userid(entity.getAiruser().getUserid())
+                .userName(entity.getAiruser().getAirName())
+                .commentGroup(entity.getCommentGroup())
+                .commnetDepth(entity.getCommnetDepth())
+                .commentSorts(entity.getCommentSorts())
+                .commentContext(entity.getCommentContext())
+                .rate(entity.getRate())
+                .articleRate(entity.getArticleRate())
+                .regDate(entity.getRegDate())
+                .build();
         return dto;
     }
 
-
-    default acomments commentDTOtoEntity(acommentDTO dto){
+    default acomments commentDTOtoEntity(acommentDTO dto) {
         ArticlesList aid = ArticlesList.builder().aid(dto.getAid()).build();
         airUser userid = airUser.builder().userid(dto.getUserid()).build();
         acomments entity = acomments.builder()
-        .cid(dto.getCid())
-        .articles(aid)
-        .airuser(userid)
-        .commentGroup(dto.getCommentGroup())
-        .commnetDepth(dto.getCommnetDepth())
-        .commentSorts(dto.getCommentSorts())
-        .commentContext(dto.getCommentContext())
-        .rate(dto.getRate())
-        .articleRate(dto.getArticleRate())
-        .build();
+                .cid(dto.getCid())
+                .articles(aid)
+                .airuser(userid)
+                .commentGroup(dto.getCommentGroup())
+                .commnetDepth(dto.getCommnetDepth())
+                .commentSorts(dto.getCommentSorts())
+                .commentContext(dto.getCommentContext())
+                .rate(dto.getRate())
+                .articleRate(dto.getArticleRate())
+                .build();
         return entity;
     }
+
 
     default reportList reportDTOtoEntity(reportDTO dto){
         reportList entity = reportList.builder().reid(dto.getReid())
@@ -146,39 +170,39 @@ public interface ArticleService {
         return dto;
     }
 
-    default likeUnlikeList favoDTOtoEntity(likeUnlikeDTO dto){
+    default likeUnlikeList favoDTOtoEntity(likeUnlikeDTO dto) {
         likeUnlikeList entity = likeUnlikeList.builder()
-        .favid(dto.getFavid())
-        .aid(dto.getAid())
-        .userid(dto.getUserid())
-        .build();
+                .favid(dto.getFavid())
+                .aid(dto.getAid())
+                .userid(dto.getUserid())
+                .build();
         return entity;
     }
 
-    default likeUnlikeDTO favoEntityToEDTO(likeUnlikeList entity){
+    default likeUnlikeDTO favoEntityToEDTO(likeUnlikeList entity) {
         likeUnlikeDTO dto = likeUnlikeDTO.builder()
-        .favid(entity.getFavid())
-        .aid(entity.getAid())
-        .userid(entity.getUserid())
-        .build();
+                .favid(entity.getFavid())
+                .aid(entity.getAid())
+                .userid(entity.getUserid())
+                .build();
         return dto;
     }
 
-    default SaveList saveDTOtoEntity(SaveDTO dto){
+    default SaveList saveDTOtoEntity(SaveDTO dto) {
         SaveList entity = SaveList.builder()
-        .savid(dto.getSavid())
-        .aid(dto.getAid())
-        .userid(dto.getUserid())
-        .build();
+                .savid(dto.getSavid())
+                .aid(dto.getAid())
+                .userid(dto.getUserid())
+                .build();
         return entity;
     }
 
-    default SaveDTO saveEntityToDTO(SaveList entity){
+    default SaveDTO saveEntityToDTO(SaveList entity) {
         SaveDTO dto = SaveDTO.builder()
-        .savid(entity.getSavid())
-        .aid(entity.getAid())
-        .userid(entity.getUserid())
-        .build();
+                .savid(entity.getSavid())
+                .aid(entity.getAid())
+                .userid(entity.getUserid())
+                .build();
         return dto;
     }
 

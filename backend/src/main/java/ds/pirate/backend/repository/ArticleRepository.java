@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import ds.pirate.backend.vo.search;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -18,6 +17,7 @@ import ds.pirate.backend.entity.ArticlesList;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
+
     @EntityGraph(attributePaths = { "tags", "images", "cgroup" }, type = EntityGraphType.LOAD)
     @Query(value = "select air from ArticlesList air ")
     Page<ArticlesList> getArticleList(Pageable pageable);
