@@ -4,9 +4,9 @@
     <SubNavigationBar class="w-15 px-4"/>
     <div class="routing-section w-85">
       <div class="routing-header mb-5 mt-4 border-bottom d-flex justify-content-between sticky-top">
-        <form class="searching-area d-flex align-items-center gap-1 w-50" @submit.prevent="searchingAxios">
+        <form class="searching-area d-flex align-items-center gap-1 w-50" @submit.prevent="searchingAxios()">
           <label for="searching"><i class="bi bi-search"></i></label>
-          <input id="searching" v-model="search.context" type="text" class="form-control border-0 bg-white" @keyup.enter="searchingAxios()">
+          <input id="searching" v-model="search.context" type="text" class="form-control border-0 bg-white" @submit="searchingAxios()">
         </form>
         <ul class="list-group list-group-horizontal">
           <li class="list-group-item border-0">
@@ -36,7 +36,6 @@
     </div>
   </div>
   <QuestionModal />
-
 </template>
 <script>
 import SubNavigationBar from "@/components/SubNavigationBar.vue";
@@ -47,7 +46,6 @@ import { useRouter } from 'vue-router'
 import store from "@/store";
 import AlarmPopover from "@/components/AlarmPopover.vue";
 import { useMeta } from "vue-meta";
-import axios from "axios";
 
 
 export default {
@@ -69,33 +67,19 @@ export default {
     }
 
     let search = reactive({
-      context:""
+      context:"",
     })
     function searchingAxios(){
       if (search.context.trim().length == 0){
-        //prevent empty searching
         return
       }
-      console.log("put axios function");
-      router.push(`/search?cards=${search.context}`)
-      const searchUrl = window.location.href;
-      const searchWord = searchUrl.split("/search?cards=")[1];
-      console.log(searchWord);
 
-      function getCardsInformation(){
-        const url= `/airreview/article/search`
-        const headers = {
-          "Content-Type": "application/json; charset=utf-8",
-        }
-        const body = {
-          search: searchWord
-        }
-        axios.post(url, body, {headers}).then(function (res){
-          console.log(res.data);
-          // state.cards = res.data;
-        })
+      async function routing (){
+        await router.push(`/search?cards=${search.context}`)
+        console.log("이동(app)")
+        await router.go(0)
       }
-      getCardsInformation()
+    routing();
     }
     const { meta } = useMeta({
                 title:  ':: 에어리뷰',

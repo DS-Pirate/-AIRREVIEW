@@ -1,6 +1,8 @@
 package ds.pirate.backend.admin.controller;
 
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,16 +34,72 @@ public class AdminController {
 
     private final AdminService adser;
 
+    @RequestMapping(value = "/questionanswer", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> insertAnswer(@RequestBody QuestionDTO dto, @RequestHeader(value="userid") Long userid) {
+        if(permissionCheckingEverytime(userid)){
+            
+            return new ResponseEntity<>(adser.qaAnswer(dto), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }  
+    }
+
+    @RequestMapping(value = "/reportmanagement/delete", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> reportdelete(@RequestBody reportDTO dto, @RequestHeader(value="userid") Long userid) {
+        if(permissionCheckingEverytime(userid)){
+            return new ResponseEntity<>(adser.reportCancel(dto.getReid()), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }  
+    }
+
+    @RequestMapping(value = "/articlemanagement/delete", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> articleDelete(@RequestBody ArticleDTO dto, @RequestHeader(value="userid") Long userid) {
+        if(permissionCheckingEverytime(userid)){
+            return new ResponseEntity<>(adser.articleDelete(dto), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }  
+    }
+
+
+    @RequestMapping(value = "/articlemanagement/hashs", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<String>> gethashs(@RequestBody ArticleDTO dto, @RequestHeader(value="userid") Long userid) {
+        if(permissionCheckingEverytime(userid)){
+            return new ResponseEntity<>(adser.getHashs(dto.getAid()), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }  
+    }
+
     @RequestMapping(value = "/usermanagement", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PageResultDTO<airUserDTO, airUser>> usermanage(@RequestBody PageRequestDTO dto, @RequestHeader(value="userid") Long userid) {
         if(permissionCheckingEverytime(userid)){
             PageResultDTO<airUserDTO, airUser>result = adser.getUserList(dto);
             return new ResponseEntity<>(result, HttpStatus.OK);
-            
         }else{
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }  
     }
+
+
+    @RequestMapping(value = "/usermanagement/modify", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> usermodify(@RequestBody airUserDTO dto, @RequestHeader(value="userid") Long userid) {
+        if(permissionCheckingEverytime(userid)){
+            return new ResponseEntity<>(adser.UserModifier(dto), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }  
+    }
+    @RequestMapping(value = "/usermanagement/delete", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> userdelete(@RequestBody airUserDTO dto, @RequestHeader(value="userid") Long userid) {
+        if(permissionCheckingEverytime(userid)){
+            return new ResponseEntity<>(adser.UserDeleter(dto), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }  
+    }
+
 
     @RequestMapping(value = "/articlemanagement", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PageResultDTO<ArticleDTO, ArticlesList>> articlemanage(@RequestBody PageRequestDTO dto, @RequestHeader(value="userid") Long userid) {
