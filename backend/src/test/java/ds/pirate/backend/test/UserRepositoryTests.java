@@ -486,10 +486,10 @@ public class UserRepositoryTests {
         log.info(result);
     }
 
-    @Test
-    public void searchTitle() {
-        Optional<Object[]> result = aser.aaaaa("a");
-        log.info(result);
-    }
+//    @Test
+//    public void searchTitle() {
+//        Optional<getEmbedCardsInformation> result = aser.getSearchList("a");
+//        log.info(result);
+//    }
 
 }

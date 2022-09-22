@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-import ds.pirate.backend.vo.search;
+import ds.pirate.backend.service.EmbedService.EmbedService;
+import ds.pirate.backend.vo.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,9 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.acommentDTO;
 import ds.pirate.backend.service.ArticleService.ArticleService;
-import ds.pirate.backend.vo.comment;
-import ds.pirate.backend.vo.commentDetail;
-import ds.pirate.backend.vo.subcard;
 import lombok.RequiredArgsConstructor;
 
 
@@ -60,18 +58,21 @@ public class ArticleViewController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+//    @GetMapping(value = "/card", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<List<Object[]>> ArticleCardsList(){
+//        List<Object[]> result = aservice.getArticleList();
+//        return new ResponseEntity<>(result, HttpStatus.OK);
+//    }
 
     @GetMapping(value = "/card", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Object[]>> ArticleCardsList(){
-        List<Object[]> result = aservice.getArticleList();
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public ResponseEntity<List<EmbedCard>> ArticleCardsList(){
+        return new ResponseEntity<>(aservice.getArticleList(), HttpStatus.OK);
     }
-
 
     @RequestMapping(value = "/search", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Optional<Object[]>> ArticleCardsSearch(@RequestBody search vo){
         log.info(vo.getSearch());
-        Optional<Object[]> result = aservice.aaaaa(vo.getSearch());
+        Optional<Object[]> result = aservice.getSearchList(vo.getSearch());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

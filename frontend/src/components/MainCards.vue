@@ -10,9 +10,9 @@
 				<div class="data">
 					<div class="content">
 						<div @click="read()">
-							<span class="author">{{ card[0] }}</span>
-							<h3 class="title"><a>{{ card[2] }}</a></h3>
-							<p class="text">내용을 축약해서 이곳에 표시합니다 약 30자 정도 생각하고있습니다{{card[3]}}</p>
+							<span class="author">{{ card.airName }}</span>
+							<h3 class="title"><a>{{ card.atitle }}</a></h3>
+							<p class="text" v-html="props.card.context"></p>
 						</div>
 						<label :for="props.cardinfo" class="menu-button"><span></span></label>
 					</div>
@@ -40,26 +40,13 @@ const props = defineProps({
 const monthNames = ["JAN", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
-const regdate = new Date(Date.parse(props.card[4]))
+const regdate = new Date(Date.parse(props.card.regDate))
 const year = regdate.getFullYear();
 const date = regdate.getDate();
 const month = monthNames[regdate.getMonth()];
 
-
-
-// async function getArticleInformation() {
-//   await axios
-//       .get(`/airreview/article/read/${props.card[1]}`)
-//       .then((res) => {
-//         Icontext.value.innerHTML = articleInfo.context;
-//       })
-//
-//
-//   getArticleInformation();
-
-
 function read() {
-  router.push(`/read?article=${props.card[1]}`)
+  router.push(`/read?article=${props.card.aid}`)
 }
 
 </script>
