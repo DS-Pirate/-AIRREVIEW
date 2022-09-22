@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -51,14 +52,14 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
     @Query("SELECT a FROM ArticlesList a WHERE a_user=:userid ")
     List<ArticlesList> getListbyuserId(Long userid);
 
-    @Query("SELECT u.airName ,a.aid, a.atitle, a.context, a.regDate, a.opend " +
+    @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate, a.opend as opend " +
             "FROM ArticlesList a left join  airUser u " +
             "on u.userid = a.aUser " +
             "where u.airName LIKE CONCAT('%',:search,'%') Or " +
-            "a.atitle LIKE CONCAT('%',:search,'%') " +
-            "ORDER BY a.aid DESC")
-    Optional<Object[]> getListAndAuthorByAuthorOrAtitle(String search);
+            "a.atitle LIKE CONCAT('%',:search,'%') " )
+    Optional<List<getEmbedCardsInformation>> getListAndAuthorByAuthorOrAtitle(String search, Sort sort);
 
+//    "ORDER BY a.aid DESC"
     @Query("update ArticlesList a set a.opencount = a.opencount+1 where a.aid=:aid")
     @Modifying
     void updateOpencount(Long aid);

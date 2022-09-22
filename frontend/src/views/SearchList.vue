@@ -3,10 +3,10 @@
   <div class="all">
     <!-- 검색필터 -->
     <div class="btn-group" role="group" aria-label="Default button group">
-      <button type="button" class="btn btn-outline-dark">조회순</button>
+      <button class="btn btn-outline-dark" @click="view()">조회순</button>
       <button type="button" class="btn btn-outline-dark">좋아요순</button>
       <button type="button" class="btn btn-outline-dark">평점순</button>
-      <button type="button" class="btn btn-outline-dark">최신순</button>
+      <button type="button" class="btn btn-outline-dark" @click="latest()">최신순</button>
     </div>
 
     <!-- 검색카드 -->
@@ -14,11 +14,9 @@
       <div v-for="(card, idx) in state.cards" :key="idx">
         <Cards :card="card"></Cards>
       </div>
-<!--      <p v-for="(card, idx) in state.cards" :key="idx">{{card}}</p>-->
     </div>
   </div>
   </div>
-<!--  {{searchWord}}-->
 </template>
 
 <script>
@@ -26,11 +24,8 @@
 
 import Cards from "@/components/MainCards.vue";
 import {reactive} from "@vue/reactivity";
-
-// import { useRouter } from 'vue-router'
 import axios from "axios";
-import { useStore } from "vuex";
-import {computed} from "vue";
+import {useRouter} from "vue-router/dist/vue-router";
 
 export default {
   name: "SearchList",
@@ -38,40 +33,47 @@ export default {
     Cards,
   },
   setup() {
-    const store = useStore();
     const state = reactive({
       cards: 0,
     })
-
-    const searchWord = computed(()=>{
-      return store.state.searchWord
-    })
+    const router = useRouter()
+    let searchword = new URLSearchParams(window.location.search).get("cards");
 
 
-    let id = new URLSearchParams(window.location.search).get("cards");
-    console.log(id);
-    console.log("이동완료(searchList)")
-
-    function getCardsInformation(){
+    //getCards
+    async function getCardsInformation(){
+      let orderword = new URLSearchParams(window.location.search).get("order");
+      console.log("1. order : " + orderword);
       const url= `/airreview/article/search`
       const headers = {
         "Content-Type": "application/json; charset=utf-8",
       }
       const body = {
-        search: id
+        search: searchword,
+        order: orderword
       }
-      axios.post(url, body, {headers}).then(function (res){
-        console.log("시작");
+      console.log("2." + body);
+      await axios.post(url, body, {headers}).then(function (res){
+        console.log("3. 시작");
         console.log(res.data);
+        state.cards = 0;
         state.cards = res.data;
-        console.log("끝")
-        // router.push(`/search?cards=${store.state.searchWord}`)
+        console.log("4. 끝")
       })
+    }
+    async function view (){
+      await router.push(`/search?cards=${searchword}&order=view`);
+      await router.go(0)
+    }
+
+    async function latest(){
+      await router.push(`/search?cards=${searchword}&order=new`);
+      await router.go(0)
     }
 
       getCardsInformation()
 
-  return {state, searchWord}
+  return {state, view, latest }
   },
 };
 </script>

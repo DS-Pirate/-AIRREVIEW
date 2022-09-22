@@ -75,7 +75,7 @@ export default {
       }
 
       async function routing (){
-        await router.push(`/search?cards=${search.context}`)
+        await router.push(`/search?cards=${search.context}&order=new`)
         console.log("이동(app)")
         await router.go(0)
       }
