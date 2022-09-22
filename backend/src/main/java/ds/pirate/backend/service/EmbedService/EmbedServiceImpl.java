@@ -1,6 +1,7 @@
 package ds.pirate.backend.service.EmbedService;
 
 
+import ds.pirate.backend.vo.EmbedCard;
 import org.springframework.stereotype.Service;
 
 import ds.pirate.backend.repository.ArticleRepository;
@@ -19,7 +20,7 @@ public class EmbedServiceImpl implements EmbedService{
         ArticleRepository.getEmbedInformation geted = arepo.getEmbedInfoByAid(article).get();
         Embed result = new Embed(geted);
         log.info(result);
-        
+
 
         return result;
     }

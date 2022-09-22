@@ -7,9 +7,6 @@
         </div>
       </div>
     </div>
-<!--            나중에 삭제 예정!!!!-->
-<!--        <p v-for="(card, idx) in state.cards" :key="idx">{{card[1]}}</p>-->
-    <!--card[3] : 글-->
   </div>
 </template>
 
@@ -31,9 +28,6 @@ export default {
     const url = "/airreview/article/card"
     axios.get(url).then((res) => {
       state.cards = res.data;
-      // const year = Date.parse(state.cards[1][4]);
-      // console.log(typeof state.cards[1][4])
-      // console.log(new Date(year).getFullYear());
     })
     return {state}
   }

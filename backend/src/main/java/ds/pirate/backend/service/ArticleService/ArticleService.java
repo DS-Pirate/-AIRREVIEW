@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import ds.pirate.backend.vo.EmbedCard;
 import ds.pirate.backend.vo.search;
 import org.springframework.data.domain.Pageable;
 
@@ -42,10 +43,10 @@ public interface ArticleService {
     HashMap<String, Object> getCardInfosByHashTagName(Long aid, Pageable pageable);
     ArticleDTO CheckBeforeModifyArticle(Long aid, Long userid);
     String ArticleModify(ArticleDTO dto, List<String> tags);
-    List<Object[]> getArticleList();
-    List<Object[]> getSearchArticleList(String search);
+//    List<Object[]> getArticleList();
+     List<EmbedCard> getArticleList();
     List<acommentDTO>getListByUserIdAndAuthorId(Long userid, Long authorid);
-    Optional<Object[]> aaaaa(String search);
+    Optional<Object[]> getSearchList(String search);
 
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {
