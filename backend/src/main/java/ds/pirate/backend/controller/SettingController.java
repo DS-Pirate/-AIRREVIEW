@@ -12,7 +12,9 @@ import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.service.SettingService.SettingService;
 import ds.pirate.backend.vo.userid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -21,13 +23,14 @@ public class SettingController {
   private final SettingService service;
 
   @RequestMapping(value = "/setting/getuser", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<airUserDTO> register(@RequestBody userid userid) {
+  public ResponseEntity<airUserDTO> getByUserId(@RequestBody userid userid) {
     airUserDTO result = service.getByUserId(userid.getUserid());
     return new ResponseEntity<>(result, HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/changePasswd", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<String> changePasswd(@RequestBody airUserDTO dto) {
-    return new ResponseEntity<>(service.changePasswd(dto), HttpStatus.OK);
+  @RequestMapping(value = "/setting/changePasswd", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<String> changePasswd(@RequestBody userid vo) {
+    log.info(vo);
+    return new ResponseEntity<>(service.changePasswd(vo), HttpStatus.OK);
   }
 }

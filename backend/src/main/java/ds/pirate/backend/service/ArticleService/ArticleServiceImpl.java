@@ -1,6 +1,5 @@
 package ds.pirate.backend.service.ArticleService;
 
-
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +10,6 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import ds.pirate.backend.vo.search;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -66,22 +64,24 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<acommentDTO> getListByUserIdAndAuthorId(Long userid, Long authorid) {
-        List<acommentDTO> dtos = crepo.getListByUserIdAndAuthorId(userid, authorid).get().stream().map((Function<acomments, acommentDTO>) v->{
-            acommentDTO result = commentEntityToDTO(v);
-            return result;
-        }).collect(Collectors.toList());
+        List<acommentDTO> dtos = crepo.getListByUserIdAndAuthorId(userid, authorid).get().stream()
+                .map((Function<acomments, acommentDTO>) v -> {
+                    acommentDTO result = commentEntityToDTO(v);
+                    return result;
+                }).collect(Collectors.toList());
         return dtos;
     }
 
     @Override
     public String ArticleModify(ArticleDTO dto, List<String> tags) {
         ArticlesList origEntity = repo.findByAid(dto.getAid());
-        ArticleDTO getByAid =  EntityToDTO(origEntity); 
+        ArticleDTO getByAid = EntityToDTO(origEntity);
 
-        origEntity.getImages().forEach(image->{
-            irepo.deleteById(image.getIid());;
+        origEntity.getImages().forEach(image -> {
+            irepo.deleteById(image.getIid());
+            ;
         });
-        origEntity.getTags().forEach(tag->{
+        origEntity.getTags().forEach(tag -> {
             hrepo.deleteById(tag.getHid());
         });
 
@@ -96,7 +96,7 @@ public class ArticleServiceImpl implements ArticleService {
         lists.forEach(new Consumer<ImagesList>() {
             @Override
             public void accept(ImagesList i) {
-                if(!irepo.findById(i.getIid()).isPresent()){
+                if (!irepo.findById(i.getIid()).isPresent()) {
                     ImagesList.builder().fileName(i.getFileName()).articles(modifiedArticle).build();
                 }
             }
@@ -116,37 +116,37 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleDTO CheckBeforeModifyArticle(Long aid, Long userid) {
         Optional<ArticlesList> isit = repo.getArticleByAidAndUserId(aid, userid);
-        if(!isit.isPresent()){
+        if (!isit.isPresent()) {
             return null;
-        }else{
+        } else {
             ArticleDTO dto = EntityToDTO(isit.get());
             List<String> hashString = hrepo.getList(dto.getAid())
-                .stream()
-                .map(hentity -> hentity.getHashTagName())
-                .collect(Collectors.toList());
+                    .stream()
+                    .map(hentity -> hentity.getHashTagName())
+                    .collect(Collectors.toList());
             dto.setTags(hashString);
             return dto;
         }
     }
 
-    //이부분 카드 내용 참고!
+    // 이부분 카드 내용 참고!
     @Override
     public HashMap<String, Object> getCardInfosByHashTagName(Long aid, Pageable pageable) {
         HashMap<String, Object> cardInfo = new HashMap<>();
-        
-        Page<HashTags> result = hrepo.findByHashTagNameContainsIgnoreCaseOrderByHidDesc(repo.getByAid(aid).getTags().get(0).getHashTagName(), pageable);
-        List<ArticleDTO> aresult = result.get().map((Function<HashTags, ArticleDTO>) dto->{
+
+        Page<HashTags> result = hrepo.findByHashTagNameContainsIgnoreCaseOrderByHidDesc(
+                repo.getByAid(aid).getTags().get(0).getHashTagName(), pageable);
+        List<ArticleDTO> aresult = result.get().map((Function<HashTags, ArticleDTO>) dto -> {
             ArticleDTO dtoresult = EntityToDTO(dto.getArticles());
             return dtoresult;
         }).collect(Collectors.toList());
-        List<String> uresult = result.get().map((Function<HashTags, String>) dto->{
-            
-            String dtoresult = uservice.entityToDTO(urepo.findByUserId(dto.getArticles().getAUser()).get()).getAirName();
+        List<String> uresult = result.get().map((Function<HashTags, String>) dto -> {
+
+            String dtoresult = uservice.entityToDTO(urepo.findByUserId(dto.getArticles().getAUser()).get())
+                    .getAirName();
             return dtoresult;
         }).collect(Collectors.toList());
 
-
-            
         cardInfo.put("articles", aresult);
         cardInfo.put("page", pageable.getPageNumber());
         cardInfo.put("pageTotalCount", result.getTotalPages());
@@ -259,15 +259,15 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Long addNewComment(acommentDTO dto) {
         Optional<airUser> result = urepo.findByEmail(dto.getEmail());
-        Optional<acomments> checkingAirUser = crepo.getCommentByAidAndUserid(ArticlesList.builder().aid(dto.getAid()).build(), airUser.builder().userid(dto.getUserid()).build());
+        Optional<acomments> checkingAirUser = crepo.getCommentByAidAndUserid(
+                ArticlesList.builder().aid(dto.getAid()).build(), airUser.builder().userid(dto.getUserid()).build());
         if (!checkingAirUser.isPresent()) {
             Optional<List<Long>> latestg = crepo.getLatestCommentGroupWhereMatchWithAid(dto.getAid());
             Long setcg = 1L;
-            if (latestg.get().size()!=0) {
-                setcg = latestg.get().get(0)+1;
+            if (latestg.get().size() != 0) {
+                setcg = latestg.get().get(0) + 1;
             }
 
-            
             dto.setCommentGroup(setcg);
             dto.setCommnetDepth(0L);
             dto.setCommentSorts(0L);
@@ -286,7 +286,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Long addNewCommentReply(acommentDTO dto) {
         Optional<airUser> result = urepo.findByEmail(dto.getEmail());
-        log.info(result+"+아니 뭐");
+        log.info(result + "+아니 뭐");
         dto.setCommentGroup(dto.getCommentGroup());
         dto.setCommnetDepth(dto.getCommnetDepth());
         dto.setCommentSorts(dto.getCommentSorts());
@@ -386,8 +386,8 @@ public class ArticleServiceImpl implements ArticleService {
         airUser articleUserEntity = urepo.findByUserId(articleUserId).get();
         Optional<subscribList> subchecking = surepo.getIsSubcedByTargetIdAndUserid(articleUserId, userid);
         Long subcount = surepo.getSumByTargetId(articleUserId);
-        if (subcount==null) {
-            subcount=0L;            
+        if (subcount == null) {
+            subcount = 0L;
         }
         result.put("articleUserName", articleUserEntity.getAirName());
         result.put("articleUserImg", "./images/read/userid/" + (articleUserId.toString()));
@@ -400,7 +400,7 @@ public class ArticleServiceImpl implements ArticleService {
     public String subsFunction(Long aid, Long userid) {
         Long articleUserId = repo.getArticleAuthorIdByAid(aid);
         Optional<subscribList> subchecking = surepo.getIsSubcedByTargetIdAndUserid(articleUserId, userid);
-        log.info(articleUserId+"아니왜들어가는거야"+userid);
+        log.info(articleUserId + "아니왜들어가는거야" + userid);
         airUser articleUserEntity = urepo.findByUserId(userid).get();
         if (subchecking.isPresent()) {
             surepo.delete(subchecking.get());
@@ -420,14 +420,13 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Object[]> getSearchArticleList(String search) {
         String decode = "";
-        try{
+        try {
             decode = URLDecoder.decode(search, "UTF-8");
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return repo.getListAndAuthorByAuthorOrAtitle(decode);
     }
-
 
     @Override
     public Optional<Object[]> aaaaa(String search) {

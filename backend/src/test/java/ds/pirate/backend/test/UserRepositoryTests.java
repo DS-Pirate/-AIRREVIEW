@@ -10,7 +10,6 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import ds.pirate.backend.service.ApiMemberService.ApiMemberService;
 
-import ds.pirate.backend.vo.search;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -114,39 +113,39 @@ public class UserRepositoryTests {
     }
 
     @Test
-    void getListByUserIdAndAuthorId(){
+    void getListByUserIdAndAuthorId() {
         Optional<List<acomments>> result = crepo.getListByUserIdAndAuthorId(1L, 1L);
         log.info(result.get());
     }
 
-//    @Test
-//    void temporaltesttogetalarmlist() {
-//        List<ArticlesList> articleListByuserid = arepo.getListbyuserId(1L);
-//
-//        List<alarm> alarmList = articleListByuserid.stream().map((Function<ArticlesList, alarm>) v -> {
-//            alarm result = alrepo.findByArticleId(v.getAid());
-//            return result;
-//        }).collect(Collectors.toList());
-//
-//        log.info(alarmList);
-//
-//
-//    }
+    // @Test
+    // void temporaltesttogetalarmlist() {
+    // List<ArticlesList> articleListByuserid = arepo.getListbyuserId(1L);
+    //
+    // List<alarm> alarmList =
+    // articleListByuserid.stream().map((Function<ArticlesList, alarm>) v -> {
+    // alarm result = alrepo.findByArticleId(v.getAid());
+    // return result;
+    // }).collect(Collectors.toList());
+    //
+    // log.info(alarmList);
+    //
+    //
+    // }
 
     // @Test
     // void temporaltesttogetalarmlist() {
-    //     List<ArticlesList> articleListByuserid = arepo.getListbyuserId(1L);
+    // List<ArticlesList> articleListByuserid = arepo.getListbyuserId(1L);
 
-    //     List<alarm> alarmList = articleListByuserid.stream().map((Function<ArticlesList, alarm>) v -> {
-    //         alarm result = alrepo.findByArticleId(v.getAid());
-    //         return result;
-    //     }).collect(Collectors.toList());
+    // List<alarm> alarmList =
+    // articleListByuserid.stream().map((Function<ArticlesList, alarm>) v -> {
+    // alarm result = alrepo.findByArticleId(v.getAid());
+    // return result;
+    // }).collect(Collectors.toList());
 
-    //     log.info(alarmList);
-
+    // log.info(alarmList);
 
     // }
-
 
     @Test
     void findByArticlesAndHashTagName() {
@@ -447,7 +446,7 @@ public class UserRepositoryTests {
 
     @Test
 
-    public void insertulImage(){
+    public void insertulImage() {
         airUser userid = airUser.builder().userid(47L).build();
         uImagesList ulid = uImagesList.builder()
                 .airuser(userid)
@@ -457,11 +456,11 @@ public class UserRepositoryTests {
     }
 
     @Test
-    public void searchCards(){
+    public void searchCards() {
         String decode = "";
-        try{
+        try {
             decode = URLDecoder.decode("aa", "UTF-8");
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         log.info(decode);
@@ -470,18 +469,18 @@ public class UserRepositoryTests {
     }
 
     @Test
-    public void findUserIdbyEmailAndQ(){
-        log.info(urepo.findUserIdByEmailAndQ("3@3.3","","","11"));
+    public void findUserIdbyEmailAndQ() {
+        log.info(urepo.findUserIdByEmailAndQ("3@3.3", "", "", "11"));
     }
 
     @Test
-    public void changePass(){
+    public void changePass() {
         urepo.changePassbyId(43L, "12345");
 
     }
 
     @Test
-    public void findemail(){
+    public void findemail() {
         Optional<airUser> result = urepo.findByEmail("3@3.3");
         log.info(result);
     }
