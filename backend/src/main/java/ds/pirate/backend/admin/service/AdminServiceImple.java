@@ -1,6 +1,12 @@
 package ds.pirate.backend.admin.service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,7 +14,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.querydsl.core.BooleanBuilder;
+
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPADeleteClause;
+
+import com.querydsl.jpa.impl.JPAUpdateClause;
 
 import ds.pirate.backend.admin.Repository.AdminArticleRepository;
 import ds.pirate.backend.admin.Repository.AdminQuestionRepository;
@@ -22,12 +32,16 @@ import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.QArticlesList;
+import ds.pirate.backend.entity.QHashTags;
 import ds.pirate.backend.entity.QQuestionsList;
+import ds.pirate.backend.entity.Qacomments;
 import ds.pirate.backend.entity.QairUser;
+import ds.pirate.backend.entity.Qalarm;
 import ds.pirate.backend.entity.QreportList;
 import ds.pirate.backend.entity.QuestionsList;
 import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.entity.reportList;
+import ds.pirate.backend.repository.HashTagRepository;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import ds.pirate.backend.service.QuestionService.QuestionService;
 import ds.pirate.backend.service.UserService.UserService;
@@ -43,13 +57,109 @@ public class AdminServiceImple implements AdminService {
     private final ArticleService aser;
     private final UserService user;
     private final QuestionService qser;
+    private final HashTagRepository hrepo;
+    @PersistenceContext
+    EntityManager em;
 
+    @Override
+    @Transactional
+    public Boolean qaAnswer(QuestionDTO dto) {
+        QQuestionsList qQuestionsList = new QQuestionsList("qa");
+        JPAUpdateClause updateClause = new JPAUpdateClause(em, qQuestionsList);
+        updateClause.where(qQuestionsList.qid.eq(dto.getQid()))
+        .set(qQuestionsList.answerContext, dto.getAnswerContext())
+        .set(qQuestionsList.answered, true)
+        .execute();
+        return true;
+    }
+
+    @Transactional
+    @Override
+    public Boolean reportCancel(Long reid) {
+        QreportList report = new QreportList("report");
+        JPADeleteClause deleteClause = new JPADeleteClause(em, report);
+        deleteClause.where(report.reid.eq(reid)).execute();
+        return true;
+    }
+
+    @Transactional
+    @Override
+    public Boolean articleDelete(ArticleDTO dto) {
+        QArticlesList articlesList = new QArticlesList("article");
+        QHashTags hashTags = new QHashTags("hashtags");
+        Qacomments comment = new Qacomments("comment");
+        Qalarm qalarm = new Qalarm("alarm");
+        QreportList qreportList = new QreportList("report");
+
+        JPADeleteClause deleteReport = new JPADeleteClause(em, qreportList);
+        JPADeleteClause deletehash = new JPADeleteClause(em, hashTags);
+        JPADeleteClause deleteClause = new JPADeleteClause(em, articlesList);
+        JPADeleteClause deleteComment = new JPADeleteClause(em, comment);
+        JPADeleteClause deleteAlarm = new JPADeleteClause(em, qalarm);
+
+        deleteReport.where(qreportList.articles.aid.eq(dto.getAid())).execute();
+        deleteAlarm.where(qalarm.articleId.aid.eq(dto.getAid())).execute();
+        deleteComment.where(comment.articles.aid.eq(dto.getAid())).execute();
+        deletehash.where(hashTags.articles.aid.eq(dto.getAid())).execute();
+        deleteClause.where(articlesList.aid.eq(dto.getAid())).execute();
+        return true;
+    }
+
+    @Override
+    public List<String> getHashs(Long aid) {
+        Optional<List<String>> hashs  = hrepo.OptionalfindByArticles(aid);
+        if(hashs.isPresent()){
+            List<String> result = hashs.get();
+            return result;
+        }else{
+            return null;
+        }
+    }
+
+    @Override
+    @Transactional
+    public Boolean UserDeleter(airUserDTO dto) {
+        QairUser user = new QairUser("user");
+        QQuestionsList qQuestionsList = new QQuestionsList("question");
+        JPADeleteClause deleteQuestion = new JPADeleteClause(em, qQuestionsList);
+        JPADeleteClause deleteUser = new JPADeleteClause(em, user);
+        Optional<List<ArticlesList>> articlelist = arepo.getArticlesListByUserid(dto.getUserid());
+        if(articlelist.isPresent()) {
+            articlelist.get().forEach(v->{
+                articleDelete(aser.EntityToDTO(v));                
+            });
+        }
+        deleteQuestion.where(qQuestionsList.userid.userid.eq(dto.getUserid())).execute();
+        deleteUser.where(user.userid.eq(dto.getUserid())).execute();
+        return true;
+    }
+    @Override
+    @Transactional
+    public Boolean UserModifier(airUserDTO dto) {
+        QairUser user = new QairUser("user");
+        JPAUpdateClause updateClause = new JPAUpdateClause(em, user);
+
+        updateClause.where(user.userid.eq(dto.getUserid()))
+        .set(user.userid, dto.getUserid())
+        .set(user.eMail, dto.getEmail())
+        .set(user.airName, dto.getAirName())
+        .set(user.birthDay, dto.getBirthDay())
+        .set(user.gender, dto.getGender())
+        .set(user.auth, dto.isAuth())
+        .set(user.q1, dto.getQ1())
+        .set(user.q2, dto.getQ2())
+        .set(user.q3, dto.getQ3())
+        .set(user.chName, dto.getChName())
+        .set(user.userIntro, dto.getUserIntro())
+        .execute();
+        return true;
+    }
 
     @Override
     public Boolean adminChecker(Long userid) {
-        
         return urepo.isAdminCheck(userid);
     }
+
 
 
     @Override
@@ -64,7 +174,7 @@ public class AdminServiceImple implements AdminService {
 
     @Override
     public PageResultDTO<QuestionDTO, QuestionsList> getQuestionList(PageRequestDTO requestDTO) {
-        Pageable pageable = requestDTO.getPageable(Sort.by("qid").descending());
+        Pageable pageable = requestDTO.getPageable(Sort.by("answered").ascending());
         QQuestionsList qQuestionsList = QQuestionsList.questionsList;
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         BooleanExpression expression = qQuestionsList.qid.gt(0L);
@@ -76,7 +186,7 @@ public class AdminServiceImple implements AdminService {
 
     @Override
     public PageResultDTO<reportDTO, reportList> getReportList(PageRequestDTO requestDTO) {
-        Pageable pageable = requestDTO.getPageable(Sort.by("reid").descending());
+        Pageable pageable = requestDTO.getPageable(Sort.by("userid_userid").ascending());
         QreportList qreportList = QreportList.reportList;
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         BooleanExpression expression = qreportList.reid.gt(0L);
@@ -122,8 +232,8 @@ public class AdminServiceImple implements AdminService {
     private BooleanBuilder getArticleSearch(PageRequestDTO requestDTO) {
         String type = requestDTO.getType();
         String keyword = requestDTO.getKeyword();
-
         QArticlesList qArticlesList = QArticlesList.articlesList;
+        
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         BooleanExpression expression = qArticlesList.aid.gt(0L);
         booleanBuilder.and(expression);

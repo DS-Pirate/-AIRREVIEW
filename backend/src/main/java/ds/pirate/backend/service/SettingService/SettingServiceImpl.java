@@ -24,9 +24,11 @@ public class SettingServiceImpl implements SettingService {
 
   @Override
   public String changePasswd(userid vo) {
-    urepo.changePasswdbyIdAndcpass(vo.getUserid(), vo.getName(), vo.getEmail(), vo.getBirthday(), vo.getUserintro(),
-        encoder.encode(vo.getCpasswd()), encoder.encode(vo.getUpasswd()));
+    
+    
 
+
+    
     return "변경";
   }
 }

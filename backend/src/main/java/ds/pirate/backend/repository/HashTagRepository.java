@@ -30,4 +30,7 @@ public interface HashTagRepository extends JpaRepository<HashTags, Long>{
 
     @EntityGraph(attributePaths = "articles")
     Page<HashTags> findByHashTagNameContainsIgnoreCaseOrderByHidDesc(String keyword, Pageable pageable);
+
+    @Query("select h.hashTagName from HashTags h where articles_aid=:aid")
+    Optional<List<String>> OptionalfindByArticles(Long aid);
 }
