@@ -5,7 +5,7 @@
     <div class="btn-group" role="group" aria-label="Default button group">
       <button class="btn btn-outline-dark" @click="view()">조회순</button>
       <button type="button" class="btn btn-outline-dark">좋아요순</button>
-      <button type="button" class="btn btn-outline-dark">평점순</button>
+      <button type="button" class="btn btn-outline-dark" @click="star()">평점순</button>
       <button type="button" class="btn btn-outline-dark" @click="latest()">최신순</button>
     </div>
 
@@ -71,9 +71,14 @@ export default {
       await router.go(0)
     }
 
+    async function star(){
+      await router.push(`/search?cards=${searchword}&order=star`);
+      await router.go(0)
+    }
+
       getCardsInformation()
 
-  return {state, view, latest }
+  return {state, view, latest, star }
   },
 };
 </script>

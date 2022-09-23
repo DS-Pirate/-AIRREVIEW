@@ -437,6 +437,13 @@ public class ArticleServiceImpl implements ArticleService {
                 return new EmbedCard(v);
             }).collect(Collectors.toList());
             return result;
+        }
+        if (vo.getOrder().equals("star")) {
+            Sort sort = sortByArticleRate();
+            List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream().map(v -> {
+                return new EmbedCard(v);
+            }).collect(Collectors.toList());
+            return result;
         } else {
             Sort sort = sortByAid();
             List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream().map(v -> {
@@ -452,4 +459,9 @@ public class ArticleServiceImpl implements ArticleService {
     private Sort sortByOpencount() {
         return Sort.by(Sort.Direction.DESC, "opencount");
     }
+
+    private Sort sortByArticleRate() {
+        return Sort.by(Sort.Direction.DESC, "articleRate");
+    }
+
 }
