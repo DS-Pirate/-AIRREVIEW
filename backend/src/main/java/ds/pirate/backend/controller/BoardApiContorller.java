@@ -41,97 +41,92 @@ import lombok.RequiredArgsConstructor;
 public class BoardApiContorller {
 
     private final ArticleService aser;
+
     @RequestMapping(value = "/write", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> register(@RequestBody ArticleDTO dto) {
         List<String> hashlist = dto.getTags();
         return new ResponseEntity<>(aser.addArticle(dto, hashlist), HttpStatus.OK);
     }
 
-
     @ResponseBody
     @PostMapping("/write/image")
     public Map<String, Object> uploadImage(@RequestParam Map<String, Object> paramMap, MultipartRequest request)
             throws Exception {
         MultipartFile uploadFile = request.getFile("upload");
-        // String uploadDir = "c:\\testingimage\\"; //windows 일경우 이 경로 사용
-        String uploadDir = "/Users/hyunseokbyun/Documents/Imagefiles/";
+        String uploadDir = "c:\\testingimage\\"; // windows 일경우 이 경로 사용
+        // String uploadDir = "/Users/hyunseokbyun/Documents/Imagefiles/";
         String uploadId = UUID.randomUUID().toString() + "."
                 + FilenameUtils.getExtension(uploadFile.getOriginalFilename());
         uploadFile.transferTo(new File(uploadDir + uploadId));
-        paramMap.put("url", "/airreview/images/read/"+uploadId);
-        
+        paramMap.put("url", "/airreview/images/read/" + uploadId);
+
         return paramMap;
     }
 
     @RequestMapping(value = "/read/subcard/add", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> articleRead(@RequestBody subcard vo){
+    public ResponseEntity<String> articleRead(@RequestBody subcard vo) {
         return new ResponseEntity<>(aser.subsFunction(vo.getAid(), vo.getUserid()), HttpStatus.OK);
     }
 
-
     @RequestMapping(value = "/comment/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HashMap<String, Object>> commentRead2(@RequestBody comment comment){
+    public ResponseEntity<HashMap<String, Object>> commentRead2(@RequestBody comment comment) {
         Pageable pageable = PageRequest.of(comment.getReqPage(), 5);
         HashMap<String, Object> result = aser.getCommentListByAidTwo2(comment.getAid(), pageable, comment.getUserid());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/comment/add/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Long> addComment(@RequestBody acommentDTO dto){
+    public ResponseEntity<Long> addComment(@RequestBody acommentDTO dto) {
         Long result = aser.addNewComment(dto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/comment/add/reply", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Long> addCommentReply(@RequestBody acommentDTO dto){
+    public ResponseEntity<Long> addCommentReply(@RequestBody acommentDTO dto) {
         Long result = aser.addNewCommentReply(dto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/comment/add/rating/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> ratingCommentPlus(@RequestBody acommentRateDTO dto){
+    public ResponseEntity<String> ratingCommentPlus(@RequestBody acommentRateDTO dto) {
         return new ResponseEntity<>(aser.rateupComment(dto), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> reportingArticle(@RequestBody reportDTO dto){        
+    public ResponseEntity<String> reportingArticle(@RequestBody reportDTO dto) {
         return new ResponseEntity<>(aser.addArticleReport(dto), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/like", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> LikeArticle(@RequestBody likeUnlikeDTO dto){        
+    public ResponseEntity<String> LikeArticle(@RequestBody likeUnlikeDTO dto) {
         return new ResponseEntity<>(aser.addLikeUnlike(dto), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> saveArticle(@RequestBody SaveDTO dto){        
+    public ResponseEntity<String> saveArticle(@RequestBody SaveDTO dto) {
         return new ResponseEntity<>(aser.addSave(dto), HttpStatus.OK);
     }
-    
+
     @RequestMapping(value = "/comment/remove", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> removeComment(@RequestBody acommentDTO dto){        
+    public ResponseEntity<String> removeComment(@RequestBody acommentDTO dto) {
         return new ResponseEntity<>(aser.removeComment(dto), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/functions", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HashMap<String, Boolean>> functionsChecking(@RequestBody functioncheck vo){        
-        return new ResponseEntity<>(aser.getFunctionBtnStatusByUserid(vo.getUserid(), vo.getAid()) , HttpStatus.OK);
+    public ResponseEntity<HashMap<String, Boolean>> functionsChecking(@RequestBody functioncheck vo) {
+        return new ResponseEntity<>(aser.getFunctionBtnStatusByUserid(vo.getUserid(), vo.getAid()), HttpStatus.OK);
     }
 
-
     @RequestMapping(value = "/modify/check", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArticleDTO> CheckarticleBeforeModify(@RequestBody subcard vo){
+    public ResponseEntity<ArticleDTO> CheckarticleBeforeModify(@RequestBody subcard vo) {
         ArticleDTO articleInfo = aser.CheckBeforeModifyArticle(vo.getAid(), vo.getUserid());
         return new ResponseEntity<>(articleInfo, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/modify/send", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> articleModify(@RequestBody ArticleDTO dto){
+    public ResponseEntity<String> articleModify(@RequestBody ArticleDTO dto) {
         String articleInfo = aser.ArticleModify(dto, dto.getTags());
         return new ResponseEntity<>(articleInfo, HttpStatus.OK);
     }
-
-    
-
 
 }
