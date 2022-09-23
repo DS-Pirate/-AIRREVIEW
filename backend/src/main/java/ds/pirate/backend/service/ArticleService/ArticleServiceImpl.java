@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+
+import ds.pirate.backend.vo.EmbedCard;
+import ds.pirate.backend.vo.search;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -75,7 +78,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public String ArticleModify(ArticleDTO dto, List<String> tags) {
         ArticlesList origEntity = repo.findByAid(dto.getAid());
-        ArticleDTO getByAid = EntityToDTO(origEntity);
+        ArticleDTO getByAid =  EntityToDTO(origEntity);
 
         origEntity.getImages().forEach(image -> {
             irepo.deleteById(image.getIid());
@@ -134,18 +137,19 @@ public class ArticleServiceImpl implements ArticleService {
     public HashMap<String, Object> getCardInfosByHashTagName(Long aid, Pageable pageable) {
         HashMap<String, Object> cardInfo = new HashMap<>();
 
-        Page<HashTags> result = hrepo.findByHashTagNameContainsIgnoreCaseOrderByHidDesc(
-                repo.getByAid(aid).getTags().get(0).getHashTagName(), pageable);
-        List<ArticleDTO> aresult = result.get().map((Function<HashTags, ArticleDTO>) dto -> {
+
+        Page<HashTags> result = hrepo.findByHashTagNameContainsIgnoreCaseOrderByHidDesc(repo.getByAid(aid).getTags().get(0).getHashTagName(), pageable);
+        List<ArticleDTO> aresult = result.get().map((Function<HashTags, ArticleDTO>) dto->{
             ArticleDTO dtoresult = EntityToDTO(dto.getArticles());
             return dtoresult;
         }).collect(Collectors.toList());
-        List<String> uresult = result.get().map((Function<HashTags, String>) dto -> {
+        List<String> uresult = result.get().map((Function<HashTags, String>) dto->{
 
-            String dtoresult = uservice.entityToDTO(urepo.findByUserId(dto.getArticles().getAUser()).get())
-                    .getAirName();
+            String dtoresult = uservice.entityToDTO(urepo.findByUserId(dto.getArticles().getAUser()).get()).getAirName();
             return dtoresult;
         }).collect(Collectors.toList());
+
+
 
         cardInfo.put("articles", aresult);
         cardInfo.put("page", pageable.getPageNumber());
@@ -268,6 +272,7 @@ public class ArticleServiceImpl implements ArticleService {
                 setcg = latestg.get().get(0) + 1;
             }
 
+
             dto.setCommentGroup(setcg);
             dto.setCommnetDepth(0L);
             dto.setCommentSorts(0L);
@@ -386,8 +391,9 @@ public class ArticleServiceImpl implements ArticleService {
         airUser articleUserEntity = urepo.findByUserId(articleUserId).get();
         Optional<subscribList> subchecking = surepo.getIsSubcedByTargetIdAndUserid(articleUserId, userid);
         Long subcount = surepo.getSumByTargetId(articleUserId);
-        if (subcount == null) {
-            subcount = 0L;
+
+        if (subcount==null) {
+            subcount=0L;
         }
         result.put("articleUserName", articleUserEntity.getAirName());
         result.put("articleUserImg", "./images/read/userid/" + (articleUserId.toString()));
@@ -412,25 +418,28 @@ public class ArticleServiceImpl implements ArticleService {
 
     }
 
-    @Override
-    public List<Object[]> getArticleList() {
-        return repo.getListAndAuthor();
-    }
+//    @Override
+//    public List<Object[]> getArticleList() {
+//        log.info(repo.getListAndAuthor());
+//        return repo.getListAndAuthor();
+//    }
 
     @Override
-    public List<Object[]> getSearchArticleList(String search) {
-        String decode = "";
-        try {
-            decode = URLDecoder.decode(search, "UTF-8");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return repo.getListAndAuthorByAuthorOrAtitle(decode);
-    }
-
-    @Override
-    public Optional<Object[]> aaaaa(String search) {
-        Optional<Object[]> result = repo.aaaaaa(search);
+    public List<EmbedCard> getArticleList() {
+//        ArticleRepository.getEmbedCardsInformation geted = repo.getListAndAuthor().get();
+        List<EmbedCard> result = repo.getListAndAuthor().get().stream().map(v->{
+            return new EmbedCard(v);
+        }).collect(Collectors.toList());
         return result;
+    }
+
+    @Override
+    public Optional<Object[]> getSearchList(String search) {
+        if (search != "") {
+            Optional<Object[]> result = repo.getListAndAuthorByAuthorOrAtitle(search);
+            return result;
+        } else {
+            return null;
+        }
     }
 }

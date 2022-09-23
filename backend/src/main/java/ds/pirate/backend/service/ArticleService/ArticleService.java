@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import ds.pirate.backend.vo.EmbedCard;
+import ds.pirate.backend.vo.search;
 import org.springframework.data.domain.Pageable;
 
 import ds.pirate.backend.dto.ArticleDTO;
@@ -60,11 +62,13 @@ public interface ArticleService {
 
     String ArticleModify(ArticleDTO dto, List<String> tags);
 
-    List<Object[]> getArticleList();
-
     List<Object[]> getSearchArticleList(String search);
 
+    List<EmbedCard> getArticleList();
+
     List<acommentDTO> getListByUserIdAndAuthorId(Long userid, Long authorid);
+
+    Optional<Object[]> getSearchList(String search);
 
     Optional<Object[]> aaaaa(String search);
 
@@ -148,7 +152,7 @@ public interface ArticleService {
     }
 
     default reportList reportDTOtoEntity(reportDTO dto) {
-        reportList entity = reportList.builder()
+        reportList entity = reportList.builder().reid(dto.getReid())
                 .articles(ArticlesList.builder().aid(dto.getArticleid()).build())
                 .userid(airUser.builder().userid(dto.getUserid()).build())
                 .reportContext(dto.getReportContext()).build();
@@ -156,7 +160,7 @@ public interface ArticleService {
     }
 
     default reportDTO reportEntitytoDTO(reportList entity) {
-        reportDTO dto = reportDTO.builder()
+        reportDTO dto = reportDTO.builder().reid(entity.getReid())
                 .articleid(entity.getArticles().getAid())
                 .userid(entity.getUserid().getUserid())
                 .reportContext(entity.getReportContext()).build();

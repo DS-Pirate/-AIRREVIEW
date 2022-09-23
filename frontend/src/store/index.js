@@ -8,7 +8,8 @@ export default createStore({
     token:0,
     email:0,
     userid:0,
-    authorid:0
+    authorid:0,
+    searchWord:0,
   },
   getters: {
   },
@@ -30,7 +31,10 @@ export default createStore({
     },
     setAuthorid(state, payload){
       state.authorid = payload
-    }
+    },
+    setsearchWord(state, payload){
+      state.searchWord = payload
+    },
   },
   actions: {
   },
