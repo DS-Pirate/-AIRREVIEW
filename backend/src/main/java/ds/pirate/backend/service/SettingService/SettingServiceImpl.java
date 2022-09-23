@@ -1,6 +1,5 @@
 package ds.pirate.backend.service.SettingService;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ds.pirate.backend.dto.airUserDTO;
@@ -14,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 public class SettingServiceImpl implements SettingService {
   private final UserRepository urepo;
   private final UserService uService;
-  private final PasswordEncoder encoder;
 
   @Override
   public airUserDTO getByUserId(Long userid) {
