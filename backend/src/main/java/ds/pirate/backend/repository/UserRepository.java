@@ -34,8 +34,8 @@ public interface UserRepository extends JpaRepository<airUser, Long> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query("update airUser u set u.passwd=:upasswd, u.airName=:name, u.eMail=:email, u.userIntro=:userintro, u.birthDay=:birthday where u.userid=:userid and u.passwd=:cpasswd")
-    int changePasswdbyIdAndcpass(Long userid, String cpasswd, String upasswd, String name,
+    @Query("update airUser u set u.passwd=:upasswd, u.airName=:name, u.eMail=:email, u.userIntro=:userintro, u.birthDay=:birthday where u.userid=:userid")
+    void changePasswdbyIdAndcpass(Long userid, String upasswd, String name,
             String email,
             String userintro, LocalDateTime birthday);
 
