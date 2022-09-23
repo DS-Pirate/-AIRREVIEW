@@ -15,6 +15,7 @@ public class EmbedCard {
     private String context;
     private LocalDateTime regDate;
     private boolean opend;
+    private Integer articleRate;
 
     public EmbedCard(ArticleRepository.getEmbedCardsInformation em){
         this.airName = em.getAirName();
@@ -23,6 +24,7 @@ public class EmbedCard {
         this.context = updateContextToString(em.getContext());
         this.regDate = em.getRegDate();
         this.opend = em.getOpend();
+        this.articleRate = em.getArticleRate();
 
     }
 
