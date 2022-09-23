@@ -1,7 +1,6 @@
 package ds.pirate.backend.service.EmbedService;
 
 
-import ds.pirate.backend.vo.EmbedCard;
 import org.springframework.stereotype.Service;
 
 import ds.pirate.backend.repository.ArticleRepository;
