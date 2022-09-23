@@ -54,6 +54,11 @@
         totalPage : null
     })
 
+    let serchingInfo = reactive({
+        keyword:"",
+        type:"title"
+    })
+
     const headers = {
         "Content-Type": "application/json; charset=utf-8",
         "Authorization": store.state.token,
@@ -62,7 +67,7 @@
 
 
     function getUserList(page){
-        axios.post("../api/admin/articlemanagement", { page:page }, { headers })
+        axios.post("../api/admin/articlemanagement", { page: page, keyword: serchingInfo.keyword, type: serchingInfo.type }, { headers })
     .then(function(res){
         ArticleInfo.dtoList =  res.data.dtoList,
         ArticleInfo.end =  res.data.end,
@@ -88,10 +93,7 @@
         ArticleInfo.start =  res.data.start,
         ArticleInfo.totalPage = res.data.totalPag
     })
-    let serchingInfo = reactive({
-        keyword:null,
-        type:"name"
-    })
+
     function getSearchingList() {
         axios.post("../api/admin/articlemanagement", { page: 1, keyword: serchingInfo.keyword, type: serchingInfo.type }, { headers }).then(function (res) {
             (ArticleInfo.dtoList = res.data.dtoList), (ArticleInfo.end = res.data.end), (ArticleInfo.next = res.data.next), (ArticleInfo.page = res.data.page), (ArticleInfo.pageList = res.data.pageList), (ArticleInfo.prev = res.data.prev), (ArticleInfo.size = res.data.size), (ArticleInfo.start = res.data.start), (ArticleInfo.totalPage = res.data.totalPag);

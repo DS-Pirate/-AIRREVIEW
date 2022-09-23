@@ -2,9 +2,6 @@ package ds.pirate.backend.controller;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
-
-import ds.pirate.backend.service.EmbedService.EmbedService;
 import ds.pirate.backend.vo.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
