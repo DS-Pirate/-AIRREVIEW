@@ -38,6 +38,15 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
     ArticlesList findByAid(Long aid);
 
     @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate, a.opend as opend " +
+    // @Query("SELECT u.airName as airname,a.aid as aid, a.atitle as atitle,
+    // a.context as context, a.regDate as regdate, a.opend as opend " +
+    // "FROM ArticlesList a left join airUser u " +
+    // "on u.userid = a.aUser " +
+    // "ORDER BY a.aid DESC")
+    // List<Object[]> getListAndAuthor();
+
+    @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate, a.opend as opend "
+            +
             "FROM ArticlesList a left join  airUser u " +
             "on u.userid = a.aUser " +
             "ORDER BY a.aid DESC")
@@ -54,9 +63,10 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
             "a.atitle LIKE CONCAT('%',:search,'%') Or " +
             "h.hashTagName LIKE CONCAT('%',:search,'%') " +
             "group by a.aid" )
+
     Optional<List<getEmbedCardsInformation>> getListAndAuthorByAuthorOrAtitle(String search, Sort sort);
 
-//    "ORDER BY a.aid DESC"
+    // "ORDER BY a.aid DESC"
     @Query("update ArticlesList a set a.opencount = a.opencount+1 where a.aid=:aid")
     @Modifying
     void updateOpencount(Long aid);
@@ -67,22 +77,36 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
             "WHERE aid=:article")
     Optional<getEmbedInformation> getEmbedInfoByAid(Long article);
 
+    @Query("SELECT a FROM ArticlesList a WHERE a_user=:userid ")
+    Optional<List<ArticlesList>> getListbyuserId2(Long userid);
+
     public interface getEmbedInformation {
         LocalDateTime getRegdate();
+
         String getTitle();
+
         byte[] getContext();
+
         String getAuthor();
+
         Long getFavcount();
+
         Double getAvgrate();
     }
 
-    public interface getEmbedCardsInformation{
+    public interface getEmbedCardsInformation {
         String getAirName();
+
         Long getAid();
+
         String getAtitle();
+
         byte[] getContext();
+
         LocalDateTime getRegDate();
+
         boolean getOpend();
         Integer getArticleRate();
     }
+
 }

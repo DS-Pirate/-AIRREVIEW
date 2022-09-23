@@ -119,10 +119,6 @@
                     const box = document.createElement("div");
                     box.innerHTML = res.data.articleInfo.context
                     let contextText = box.innerText
-                    // meta.type = "article";
-                    // meta.description = res.data.articleInfo.context;
-                    // meta.url = document.location.href;
-                    // meta.image = `${document.location.href}:9090/images/read/`;
                     meta.meta.push(                    
                     res.data.articleInfo.images.lenth>0?{
                         type: "og:image",
