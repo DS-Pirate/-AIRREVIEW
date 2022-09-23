@@ -15,6 +15,7 @@ import ds.pirate.backend.vo.EmbedCard;
 import ds.pirate.backend.vo.search;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import ds.pirate.backend.dto.ArticleDTO;
@@ -418,12 +419,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     }
 
-//    @Override
-//    public List<Object[]> getArticleList() {
-//        log.info(repo.getListAndAuthor());
-//        return repo.getListAndAuthor();
-//    }
-
     @Override
     public List<EmbedCard> getArticleList() {
 //        ArticleRepository.getEmbedCardsInformation geted = repo.getListAndAuthor().get();
@@ -434,12 +429,27 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Optional<Object[]> getSearchList(String search) {
-        if (search != "") {
-            Optional<Object[]> result = repo.getListAndAuthorByAuthorOrAtitle(search);
+    public List<EmbedCard> getSearchList(search vo) {
+        log.info(vo.getOrder());
+        if (vo.getOrder().equals("view")) {
+            Sort sort = sortByOpencount();
+            List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream().map(v -> {
+                return new EmbedCard(v);
+            }).collect(Collectors.toList());
             return result;
         } else {
-            return null;
+            Sort sort = sortByAid();
+            List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream().map(v -> {
+                return new EmbedCard(v);
+            }).collect(Collectors.toList());
+            return result;
         }
+    }
+    private Sort sortByAid() {
+        return Sort.by(Sort.Direction.DESC, "aid");
+    }
+
+    private Sort sortByOpencount() {
+        return Sort.by(Sort.Direction.DESC, "opencount");
     }
 }
