@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-
 import ds.pirate.backend.vo.EmbedCard;
 import ds.pirate.backend.vo.search;
 import org.springframework.data.domain.Pageable;
@@ -64,7 +63,9 @@ public interface ArticleService {
     String ArticleModify(ArticleDTO dto, List<String> tags);
 
     List<EmbedCard> getArticleList();
-    List<acommentDTO>getListByUserIdAndAuthorId(Long userid, Long authorid);
+
+    List<acommentDTO> getListByUserIdAndAuthorId(Long userid, Long authorid);
+
     List<EmbedCard> getSearchList(search vo);
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {
@@ -146,20 +147,19 @@ public interface ArticleService {
         return entity;
     }
 
-
-    default reportList reportDTOtoEntity(reportDTO dto){
+    default reportList reportDTOtoEntity(reportDTO dto) {
         reportList entity = reportList.builder().reid(dto.getReid())
-        .articles(ArticlesList.builder().aid(dto.getArticleid()).build())
-        .userid(airUser.builder().userid(dto.getUserid()).build())
-        .reportContext(dto.getReportContext()).build();
+                .articles(ArticlesList.builder().aid(dto.getArticleid()).build())
+                .userid(airUser.builder().userid(dto.getUserid()).build())
+                .reportContext(dto.getReportContext()).build();
         return entity;
     }
 
-    default reportDTO reportEntitytoDTO(reportList entity){
+    default reportDTO reportEntitytoDTO(reportList entity) {
         reportDTO dto = reportDTO.builder().reid(entity.getReid())
-        .articleid(entity.getArticles().getAid())
-        .userid(entity.getUserid().getUserid())
-        .reportContext(entity.getReportContext()).build();
+                .articleid(entity.getArticles().getAid())
+                .userid(entity.getUserid().getUserid())
+                .reportContext(entity.getReportContext()).build();
         return dto;
     }
 

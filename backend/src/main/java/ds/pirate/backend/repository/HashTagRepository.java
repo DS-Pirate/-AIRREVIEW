@@ -22,14 +22,9 @@ public interface HashTagRepository extends JpaRepository<HashTags, Long>{
 
     List<HashTags> findByArticles(ArticlesList articles);
 
-    @Query("select h.hashTagName from HashTags h where articles_aid=:aid")
-    Optional<List<String>> OptionalfindByArticles(Long aid);
-
-    
     @Query(value = "select * from hash_tags ha where articles_id=:aid order by hid asc limit 1", nativeQuery = true)
     Optional<HashTags> findOneByArticle(Long aid);
 
-    
     @Query("SELECT ht FROM HashTags ht WHERE hash_tag_name like %:keyword%")
     Optional<List<HashTags>> getAidListByHashTagName(String keyword);
 

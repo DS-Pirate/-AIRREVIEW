@@ -5,10 +5,8 @@
                 <tr>
                     <th scope="col">글 번호</th>
                     <th scope="col">글쓴이</th>
-                    <th scope="col">신고 내용</th>
-                    <th scope="col">글 보기</th>
-                    <th scope="col">신고 취소</th>
-                    <th scope="col">글 삭제</th>
+                    <th scope="col">조회수</th>
+                    <th scope="col">삭제</th>
                 </tr>
             </thead>
             <tbody>
@@ -16,10 +14,7 @@
                     <td>{{dto.articleid}}</td>
                     <td>{{dto.userid}}</td>
                     <td>{{dto.reportContext}}</td>
-                    <td><a :href='"../read?article="+dto.articleid'><button class="btn btn-primary">글로 이동</button></a></td>
-                    
-                    <td><button class="btn btn-warning" @click="reportCancel(dto.reid)">신고 취소</button></td>
-                    <td><button class="btn btn-danger" @click=DeleteArticle(dto.articleid) >글 삭제</button></td>
+                    <td><button class="btn btn-danger">삭제</button></td>
                 </tr>
             </tbody>
         </table>
@@ -36,21 +31,6 @@
     import { reactive  } from 'vue';
     import axios from 'axios';
     import store from '@/store';
-    import router from '@/router';
-    const headers = {
-        "Content-Type": "application/json; charset=utf-8",
-        "Authorization": store.state.token,
-        "userid": store.state.userid,
-    };
-
-    function DeleteArticle(num) {
-        let body = {aid:num}
-        axios.post("../api/admin/articlemanagement/delete", body, { headers }).then(function (res) {res.data == true?router.go(0):alert("삭제실패")});
-    }
-    function reportCancel(num) {
-        let body = {reid:num}
-        axios.post("../api/admin/reportmanagement/delete", body, { headers }).then(function (res) {res.data == true?router.go(0):alert("삭제실패")});
-    }
 
     let reportInfo = reactive({
         dtoList : null,
@@ -64,7 +44,11 @@
         totalPage : null
     })
 
-
+    const headers = {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": store.state.token,
+        "userid": store.state.userid,
+    };
 
     function getUserList(page){
         axios.post("../api/admin/reportmanagement", { page:page }, { headers })
@@ -98,6 +82,4 @@
 <style lang="sass">
     thead, tbody
         text-align: center
-    tr, td
-        vertical-align: middle
 </style>
