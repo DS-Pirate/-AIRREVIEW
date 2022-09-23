@@ -3,39 +3,39 @@
     <!-- 이미지 -->
     <div class="imgBox position-relative">
       <div class="picDiv position-absolute">
-        <div class="filebox">
+        <form action="./setting/userimage" class="filebox" @change="submit($event)">
           <label for="ex_file" class="bi bi-camera picIcon position-absolute"></label>
           <input type="file" id="ex_file" />
-        </div>
+        </form>
       </div>
       <img class="imgIcon" src="../assets/dummy.webp" />
     </div>
     <div class="nameDiv mt-2">
-      <span class="fs-4 name">{{state.username}}</span>
+      <span class="fs-4 name">{{state.name}}</span>
     </div>
 
     <!-- 폼 -->
     <div class="row g-3 mt-3 myAccountForm pe-5 ps-5">
       <div class="col-md-3 w-50">
         <label for="inputEmail4" class="form-label">이름</label>
-        <input type="name" class="form-control" id="inputEmail4" :value="state.username" />
+        <input type="name" class="form-control" id="inputEmail4" v-model="state.name" />
       </div>
 
       <div class="col-md-6 w-50">
         <label for="inputEmail4" class="form-label">이메일</label>
-        <input type="email" class="form-control" id="inputEmail4" :value="state.email" />
+        <input type="email" class="form-control" id="inputEmail4" v-model="state.email" />
       </div>
 
       <div class="col-12">
         <label for="inputAddress" class="form-label">자기소개</label>
         <textarea class="form-control aboutMe" id="exampleFormControlTextarea1" rows="3"
-          :value="state.userintro"></textarea>
+          v-model="state.userintro"></textarea>
       </div>
 
       <div class="d-flex">
         <div class="col-md-2 w-15">
           <label for="inputState" class="form-label">생년월일</label>
-          <select id="inputState" class="form-select" :value="state.year">
+          <select id="inputState" class="form-select">
             <option selected>{{state.year}}</option>
             <option v-for="i in 82" :key="i">{{ i + 1940 }}</option>
           </select>
@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import router from "@/router";
 import { reactive } from "@vue/reactivity";
 import axios from "axios";
 import { useStore } from "vuex";
@@ -81,15 +82,14 @@ export default {
   name: "MyAccount",
   setup() {
     const state = reactive({
-      username: '',
+      userid: '',
+      name: '',
       email: '',
       birthday: '',
       userintro: '',
-      cpasswd: "",
-      upasswd: ""
+      cpasswd: '',
+      upasswd: ''
     })
-
-
 
     const store = useStore();
     const url = './api/setting/getuser'
@@ -101,14 +101,13 @@ export default {
 
     let body = {
       userid: store.state.userid,
-      cpasswd: state.cpasswd,
-      upasswd: state.upasswd
     }
 
     axios.post(url, body, { headers }).then(function (res) {
-      state.username = res.data.airName;
+      state.userid = res.data.userid;
+      state.name = res.data.airName;
       state.email = res.data.email;
-      state.birthday = res.data.birthday;
+      state.birthday = res.data.birthDay;
       state.userintro = res.data.userIntro;
 
       const regdate = new Date(Date.parse(res.data.birthDay))
@@ -118,27 +117,36 @@ export default {
       console.log(res.data);
     })
 
+    const regdate = new Date()
+    state.year = regdate.setFullYear();
+    state.date = regdate.setDate();
+    state.month = regdate.setMonth() + 1;
+
     const updatesetting = function () {
 
       const url2 = './api/setting/changePasswd'
 
-      let body2 = {
-        userid: store.state.userid,
-        cpasswd: state.cpasswd,
-        upasswd: state.upasswd,
-        name: state.username,
-        email: state.email,
-        userintro: state.userintro,
-        birthday: state.birthday
-      }
 
-      axios.post(url2, body2, { headers }).then(function (res) {
+      axios.post(url2, state, { headers }).then(function (res) {
+        alert(res.data)
+        res.data == "실패하였습니다" ? "" : router.go(0)
         console.log(res);
       })
     }
 
+    function submit(e) {
+      let headers = {
+        "Content-Type": "multipart/form-data",
+        "Authorization": store.state.token,
+        "userid": store.state.userid
+      }
+      let url = "./api/setting/userimage"
+      let body = { data: e.target}
+      console.log(e);
+      axios.post(url, body, { headers })
+    }
 
-    return { state, updatesetting }
+    return { state, updatesetting, submit }
   }
 };
 </script>

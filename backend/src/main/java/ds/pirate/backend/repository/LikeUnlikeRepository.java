@@ -15,4 +15,8 @@ public interface LikeUnlikeRepository extends JpaRepository<likeUnlikeList, Long
 
     @Query("SELECT lin FROM likeUnlikeList lin WHERE userid=:uid")
     Optional<List<likeUnlikeList>> getList(Long uid);
+
+    @Query("SELECT count(lin) FROM likeUnlikeList lin WHERE userid=:uid and aid=:aid")
+    Optional<Integer> checkFavoLogByUserIdAndArticleId2(Long uid, Long aid);
+
 }
