@@ -37,14 +37,6 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
 
     ArticlesList findByAid(Long aid);
 
-    @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate, a.opend as opend " +
-    // @Query("SELECT u.airName as airname,a.aid as aid, a.atitle as atitle,
-    // a.context as context, a.regDate as regdate, a.opend as opend " +
-    // "FROM ArticlesList a left join airUser u " +
-    // "on u.userid = a.aUser " +
-    // "ORDER BY a.aid DESC")
-    // List<Object[]> getListAndAuthor();
-
     @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate, a.opend as opend "
             +
             "FROM ArticlesList a left join  airUser u " +
@@ -55,14 +47,15 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
     @Query("SELECT a FROM ArticlesList a WHERE a_user=:userid ")
     List<ArticlesList> getListbyuserId(Long userid);
 
-    @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate, a.opend as opend, avg(c.articleRate) as articleRate " +
+    @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate, a.opend as opend, avg(c.articleRate) as articleRate "
+            +
             "FROM ArticlesList a left join  airUser u on u.userid = a.aUser " +
             "left join HashTags h on h.articles = a.aid " +
             "left join acomments c on c.articles = a.aid " +
             "where u.airName LIKE CONCAT('%',:search,'%') Or " +
             "a.atitle LIKE CONCAT('%',:search,'%') Or " +
             "h.hashTagName LIKE CONCAT('%',:search,'%') " +
-            "group by a.aid" )
+            "group by a.aid")
 
     Optional<List<getEmbedCardsInformation>> getListAndAuthorByAuthorOrAtitle(String search, Sort sort);
 
@@ -106,6 +99,7 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
         LocalDateTime getRegDate();
 
         boolean getOpend();
+
         Integer getArticleRate();
     }
 

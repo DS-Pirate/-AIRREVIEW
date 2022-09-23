@@ -141,7 +141,7 @@ export default {
         "userid": store.state.userid
       }
       let url = "./api/setting/userimage"
-      let body = { data: e.target}
+      let body = {data: e.target}
       console.log(e);
       axios.post(url, body, { headers })
     }
