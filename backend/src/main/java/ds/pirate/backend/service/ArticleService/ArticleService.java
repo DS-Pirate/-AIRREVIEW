@@ -63,16 +63,9 @@ public interface ArticleService {
 
     String ArticleModify(ArticleDTO dto, List<String> tags);
 
-
-
-    List<Object[]> getSearchArticleList(String search);
     List<EmbedCard> getArticleList();
     List<acommentDTO>getListByUserIdAndAuthorId(Long userid, Long authorid);
-    Optional<Object[]> getSearchList(String search);
-
-    List<acommentDTO> getListByUserIdAndAuthorId(Long userid, Long authorid);
-
-    Optional<Object[]> aaaaa(String search);
+    List<EmbedCard> getSearchList(search vo);
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {
         ArticlesList aentity = ArticlesList.builder()

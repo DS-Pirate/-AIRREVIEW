@@ -70,10 +70,9 @@ public class ArticleViewController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Optional<Object[]>> ArticleCardsSearch(@RequestBody search vo){
-        log.info(vo.getSearch());
-        Optional<Object[]> result = aservice.getSearchList(vo.getSearch());
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public ResponseEntity<List<EmbedCard>> ArticleCardsSearch(@RequestBody search vo){
+        log.info(vo);
+        return new ResponseEntity<>(aservice.getSearchList(vo), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/userdetail", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

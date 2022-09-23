@@ -455,18 +455,18 @@ public class UserRepositoryTests {
         uimgrepo.save(ulid);
     }
 
-    @Test
-    public void searchCards() {
-        String decode = "";
-        try {
-            decode = URLDecoder.decode("aa", "UTF-8");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        log.info(decode);
-        log.info(arepo.getListAndAuthorByAuthorOrAtitle("a"));
-        log.info(arepo.getListAndAuthor());
-    }
+//    @Test
+//    public void searchCards() {
+//        String decode = "";
+//        try {
+//            decode = URLDecoder.decode("aa", "UTF-8");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        log.info(decode);
+//        log.info(arepo.getListAndAuthorByAuthorOrAtitle("a"));
+//        log.info(arepo.getListAndAuthor());
+//    }
 
     @Test
     public void findUserIdbyEmailAndQ() {
