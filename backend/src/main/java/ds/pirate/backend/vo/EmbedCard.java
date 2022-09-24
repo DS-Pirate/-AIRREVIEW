@@ -16,6 +16,7 @@ public class EmbedCard {
     private LocalDateTime regDate;
     private boolean opend;
     private Integer articleRate;
+    private Long likeCount;
 
     public EmbedCard(ArticleRepository.getEmbedCardsInformation em){
         this.airName = em.getAirName();
@@ -25,6 +26,7 @@ public class EmbedCard {
         this.regDate = em.getRegDate();
         this.opend = em.getOpend();
         this.articleRate = em.getArticleRate();
+        this.likeCount = em.getLikeCount();
 
     }
 

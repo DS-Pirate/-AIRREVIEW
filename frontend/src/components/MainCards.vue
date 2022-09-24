@@ -11,7 +11,7 @@
 					<div class="content">
 						<div @click="read()">
 							<span class="author">{{ card.airName }}</span>
-							<h3 class="title"><a>{{ card.atitle }}</a></h3>
+							<h3 class="title"><a>{{ title }}</a></h3>
 							<p class="text" v-html="props.card.context"></p>
 						</div>
 						<label :for="props.cardinfo" class="menu-button"><span></span></label>
@@ -37,13 +37,27 @@ import router from "@/router";
 const props = defineProps({
   card: Object,
 })
+
 const monthNames = ["JAN", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
-const regdate = new Date(Date.parse(props.card.regDate))
-const year = regdate.getFullYear();
-const date = regdate.getDate();
-const month = monthNames[regdate.getMonth()];
+let regdate = new Date(Date.parse(props.card.regDate))
+let year = regdate.getFullYear();
+let date = regdate.getDate();
+let month = monthNames[regdate.getMonth()];
+let title = titleLength(props.card.atitle);
+
+console.log(year + date + month + "title" + title);
+
+function titleLength(title){
+  if (title.length < 30){
+    return title;
+  } else {
+    return title.substr(0, 30) + "...";
+  }
+}
+
+
 
 function read() {
   router.push(`/read?article=${props.card.aid}`)
