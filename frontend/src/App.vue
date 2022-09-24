@@ -9,7 +9,10 @@
           <input id="searching" v-model="search.context" type="text" class="form-control border-0 bg-white" @submit="searchingAxios()">
         </form>
         <ul class="list-group list-group-horizontal">
-          <li class="list-group-item border-0">
+          <li class="list-group-item border-0 alarm-icon">
+            <div class="alarm-icon-badge d-flex justify-content-center align-items-center" v-if="$store.state.isAlarm>0">
+                <span class="alarm-icon-badge_count">{{$store.state.isAlarm}}</span>
+            </div>
             <AlarmPopover v-if="$store.state.token"></AlarmPopover>
           </li>
           <router-link to="/login" v-if="!$store.state.token">
@@ -92,31 +95,35 @@ export default {
 };
 </script>
 
-<style>
-@media(max-width:1200px){
-  .content-area{
-    flex-direction: column;
-  }
-}
+<style lang="sass">
+@media(max-width:1200px)
+  .content-area
+    flex-direction: column
 
-@media(min-width:1201px){
-  .visually-hidden{
-    display: inline-block !important;
-  }
+@media(min-width:1201px)
+  .visually-hidden
+    display: inline-block !important
+body
+  min-width: 1100px
 
+#app::-webkit-scrollbar 
+  display: hidden
 
-}
-body{
-  min-width: 1100px;
-}
+.toggglesearching
+  cursor:pointer
 
-#app::-webkit-scrollbar {
-  display: hidden;
+.alarm-icon
+  position: relative
+  .alarm-icon-badge
+    position: absolute
+    background-color: #3041a9
+    color: white
+    border-radius: 100%
+    height: 32%
+    width: 27%
+    font-size: 0.5rem
+    right: 0.3rem
+    top: 0.3rem
 
-}
-.toggglesearching{
-  cursor:pointer;
-
-}
 
 </style>
