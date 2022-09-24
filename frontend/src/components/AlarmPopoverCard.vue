@@ -25,7 +25,6 @@
     import { defineProps } from "vue";
     import { useStore } from 'vuex'
     let props = defineProps(["info"]);
-    console.log(props.info);
     const store = useStore();   
     function getTimeFromJavaDateForComment(s) {
         const cont = new Date(s);

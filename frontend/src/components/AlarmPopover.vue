@@ -2,7 +2,7 @@
     <div class="popover__wrapper">
         <i class="bi bi-bell"></i>
         <div class="popover__content py-3">
-            <div class="text-center pb-3 border border-0 border-bottom">새소식</div>
+            <div class="text-center pb-3 border border-0 border-bottom">{{store.state.isAlarm}}건의 새소식</div>
             <div class="popover__context">
                 <AlarmPopoverCard v-for="info in cardInfo.info" :key="info" :info="info"  class="border border-0 border-bottom"></AlarmPopoverCard>
             </div>
@@ -27,17 +27,23 @@
     }
 
     let cardInfo = reactive({
-        info: null
+        info: null,
+        availableAlarm : 0
     })
-
 
     axios.post(url, body, { headers })
     .then(function(res){
         cardInfo.info = res.data
+        for (const key in cardInfo.info) {
+            if (Object.hasOwnProperty.call(cardInfo.info, key)) {
+                const element = cardInfo.info[key];
+                if(element[6] == false){
+                    cardInfo.availableAlarm+=1
+                }
+            }
+        }
+        store.commit("setAlarm", cardInfo.availableAlarm)
     })
-
-
-
 </script>
 <style scoped lang="sass">
     .popover__wrapper
@@ -52,10 +58,7 @@
         background-color: white
         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.25)
         width: 25rem
-
         transition: all 0.2s cubic-bezier(0.75, -0.02, 0.2, 0.97)
-
-
     .popover__content:before
         right:1%
         position: absolute

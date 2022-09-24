@@ -9,6 +9,7 @@ export default createStore({
     email:0,
     userid:0,
     authorid:0,
+    isAlarm:0,
   },
   getters: {
   },
@@ -30,6 +31,9 @@ export default createStore({
     },
     setAuthorid(state, payload){
       state.authorid = payload
+    },
+    setAlarm(state, payload){
+      state.isAlarm = payload
     }
   },
   actions: {
