@@ -64,6 +64,8 @@ public interface ArticleService {
 
     List<EmbedCard> getArticleList();
 
+    List<EmbedCard> getArticleListOrder(search vo);
+
     List<acommentDTO> getListByUserIdAndAuthorId(Long userid, Long authorid);
 
     List<EmbedCard> getSearchList(search vo);
