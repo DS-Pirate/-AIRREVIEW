@@ -436,6 +436,18 @@ public class ArticleServiceImpl implements ArticleService {
                 return new EmbedCard(v);
             }).collect(Collectors.toList());
             return result;
+        } else if (vo.getOrder().equals("like")) {
+            Sort sort = sortByLikeCount();
+            List<EmbedCard> result = repo.getListAndAuthor(sort).get().stream().map(v->{
+                return new EmbedCard(v);
+            }).collect(Collectors.toList());
+            return result;
+        } else if (vo.getOrder().equals("star")) {
+            Sort sort = sortByArticleRate();
+            List<EmbedCard> result = repo.getListAndAuthor(sort).get().stream().map(v->{
+                return new EmbedCard(v);
+            }).collect(Collectors.toList());
+            return result;
         } else {
         Sort sort = sortByAid();
         List<EmbedCard> result = repo.getListAndAuthor(sort).get().stream().map(v -> {

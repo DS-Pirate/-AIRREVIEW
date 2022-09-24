@@ -52,11 +52,11 @@ export default {
         search: searchword,
         order: orderword
       }
+      state.cards = null;
       console.log("2." + body);
       await axios.post(url, body, {headers}).then(function (res){
         console.log("3. 시작");
         console.log(res.data);
-        state.cards = 0;
         state.cards = res.data;
         console.log("4. 끝")
       })
@@ -64,24 +64,22 @@ export default {
 
     async function view (){
       await router.push(`/search?cards=${searchword}&order=view`);
-      await router.go(0)
+      getCardsInformation()
     }
 
     async function latest(){
       await router.push(`/search?cards=${searchword}&order=new`);
-      await router.go(0)
+      getCardsInformation()
     }
 
     async function star(){
       await router.push(`/search?cards=${searchword}&order=star`);
       getCardsInformation()
-      await router.go(0)
     }
 
     async function like(){
       await router.push(`/search?cards=${searchword}&order=like`);
       getCardsInformation()
-      await router.go(0)
     }
 
       getCardsInformation()
