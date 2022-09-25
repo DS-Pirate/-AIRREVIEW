@@ -6,6 +6,7 @@ import ds.pirate.backend.vo.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -55,15 +56,15 @@ public class ArticleViewController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-//    @GetMapping(value = "/card", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<List<Object[]>> ArticleCardsList(){
-//        List<Object[]> result = aservice.getArticleList();
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
-
     @GetMapping(value = "/card", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<EmbedCard>> ArticleCardsList(){
         return new ResponseEntity<>(aservice.getArticleList(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/card/order", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<EmbedCard>> ArticleCardsOrderList(@RequestBody search vo){
+        log.info(vo);
+        return new ResponseEntity<>(aservice.getArticleListOrder(vo), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -421,11 +421,28 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<EmbedCard> getArticleList() {
-//        ArticleRepository.getEmbedCardsInformation geted = repo.getListAndAuthor().get();
-        List<EmbedCard> result = repo.getListAndAuthor().get().stream().map(v->{
+            Sort sort = sortByAid();
+            List<EmbedCard> result = repo.getListAndAuthor(sort).get().stream().map(v -> {
+                return new EmbedCard(v);
+            }).collect(Collectors.toList());
+            return result;
+    }
+
+    @Override
+    public List<EmbedCard> getArticleListOrder(search vo) {
+        if (vo.getOrder().equals("view")) {
+            Sort sort = sortByOpencount();
+            List<EmbedCard> result = repo.getListAndAuthor(sort).get().stream().map(v->{
+                return new EmbedCard(v);
+            }).collect(Collectors.toList());
+            return result;
+        } else {
+        Sort sort = sortByAid();
+        List<EmbedCard> result = repo.getListAndAuthor(sort).get().stream().map(v -> {
             return new EmbedCard(v);
         }).collect(Collectors.toList());
         return result;
+        }
     }
 
     @Override
@@ -437,9 +454,14 @@ public class ArticleServiceImpl implements ArticleService {
                 return new EmbedCard(v);
             }).collect(Collectors.toList());
             return result;
-        }
-        if (vo.getOrder().equals("star")) {
+        } else if (vo.getOrder().equals("star")) {
             Sort sort = sortByArticleRate();
+            List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream().map(v -> {
+                return new EmbedCard(v);
+            }).collect(Collectors.toList());
+            return result;
+        } else if (vo.getOrder().equals("like")) {
+            Sort sort = sortByLikeCount();
             List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream().map(v -> {
                 return new EmbedCard(v);
             }).collect(Collectors.toList());
@@ -455,13 +477,14 @@ public class ArticleServiceImpl implements ArticleService {
     private Sort sortByAid() {
         return Sort.by(Sort.Direction.DESC, "aid");
     }
-
     private Sort sortByOpencount() {
         return Sort.by(Sort.Direction.DESC, "opencount");
     }
-
     private Sort sortByArticleRate() {
         return Sort.by(Sort.Direction.DESC, "articleRate");
+    }
+    private Sort sortByLikeCount() {
+        return Sort.by(Sort.Direction.DESC, "likeCount");
     }
 
 }

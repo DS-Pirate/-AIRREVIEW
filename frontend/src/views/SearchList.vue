@@ -1,22 +1,22 @@
 <template>
   <div class="searchlist">
-  <div class="all">
+<!--  <div class="all">-->
     <!-- 검색필터 -->
-    <div class="btn-group" role="group" aria-label="Default button group">
+    <div class="btn-group mb-4 ms-4 ps-1" role="group" aria-label="Default button group">
       <button class="btn btn-outline-dark" @click="view()">조회순</button>
-      <button type="button" class="btn btn-outline-dark">좋아요순</button>
+      <button type="button" class="btn btn-outline-dark" @click="like()">좋아요순</button>
       <button type="button" class="btn btn-outline-dark" @click="star()">평점순</button>
       <button type="button" class="btn btn-outline-dark" @click="latest()">최신순</button>
     </div>
 
     <!-- 검색카드 -->
-    <div class="row row-cols-1">
+    <div class="row row-cols-3">
       <div v-for="(card, idx) in state.cards" :key="idx">
         <Cards :card="card"></Cards>
       </div>
     </div>
   </div>
-  </div>
+<!--  </div>-->
 </template>
 
 <script>
@@ -61,6 +61,7 @@ export default {
         console.log("4. 끝")
       })
     }
+
     async function view (){
       await router.push(`/search?cards=${searchword}&order=view`);
       await router.go(0)
@@ -73,12 +74,19 @@ export default {
 
     async function star(){
       await router.push(`/search?cards=${searchword}&order=star`);
+      getCardsInformation()
+      await router.go(0)
+    }
+
+    async function like(){
+      await router.push(`/search?cards=${searchword}&order=like`);
+      getCardsInformation()
       await router.go(0)
     }
 
       getCardsInformation()
 
-  return {state, view, latest, star }
+  return {state, view, latest, star, like }
   },
 };
 </script>
