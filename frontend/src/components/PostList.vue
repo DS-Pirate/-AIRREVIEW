@@ -25,10 +25,12 @@
     </div>
 </template>
 <script setup>
-    import { reactive } from "vue";
+    import { reactive, defineProps } from "vue";
     import store from "@/store";
     import axios from "axios";
     import router from "@/router";
+
+    let props = defineProps(["id"])
 
     const headers = {
         "Content-Type": "application/json; charset=utf-8",
@@ -39,12 +41,13 @@
         info: [],
         body: 0,
     });
-    axios.post("./mypage/article", { userid: store.state.userid, pageNum: articleInfo.body }, { headers }).then(function (res) {
+
+    axios.post("./mypage/article", { userid: props.id, pageNum: articleInfo.body }, { headers }).then(function (res) {
         articleInfo.info.push(...res.data.content);
     });
 
     function getMorePostList() {
-        axios.post("./mypage/article", { userid: store.state.userid, pageNum: articleInfo.body }, { headers }).then(function (res) {
+        axios.post("./mypage/article", { userid: props.id, pageNum: articleInfo.body }, { headers }).then(function (res) {
             articleInfo.info.push(...res.data.content);
         });
     }

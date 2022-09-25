@@ -6,4 +6,6 @@ import ds.pirate.backend.repository.ArticleRepository.getMyChannelArticleList;
 
 public interface ChannelService {
     Page<getMyChannelArticleList> articleListByUserid(Long userid, Integer pageNum);
+    void uploadCHImage(Long userid, String fileName);
+    String getCHImage(Long userid);
 }
