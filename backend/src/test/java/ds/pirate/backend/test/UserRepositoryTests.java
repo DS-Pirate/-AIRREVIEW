@@ -147,6 +147,16 @@ public class UserRepositoryTests {
     // }
 
     @Test
+    void getArticleListByUserIdWithPageable(){
+        log.info("-----------------------------------------------------------------");
+        Pageable pageable = PageRequest.of(0, 10);
+        arepo.getArticleListByUserIdWithPageable(1L, pageable).forEach(v->{
+            log.info(v);
+        });
+        log.info("-----------------------------------------------------------------");
+    }
+
+    @Test
     void findByArticlesAndHashTagName() {
         log.info(hrepo.findByArticlesAndHashTagName(arepo.getByAid(56L), "코멘트페이징 테스트그으으을"));
     }

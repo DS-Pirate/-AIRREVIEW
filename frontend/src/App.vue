@@ -27,7 +27,7 @@
           <router-link to="/newpost">
             <li class="list-group-item border-0" v-if="$store.state.token">New Article</li>
           </router-link>
-          <router-link to="/mypage">
+          <router-link :to="'/mypage?channel='+$store.state.userid">
             <li class="list-group-item border-0" v-if="$store.state.token">My Page</li>
           </router-link>
           <router-link to="/setting" v-if="$store.state.token">
