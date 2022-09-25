@@ -51,11 +51,11 @@ export default {
           search: "null",
           order: a
         }
+        state.cards = null;
         console.log(body);
         await axios.post(url, body, {headers}).then(function (res) {
           console.log("3. 시작");
           console.log(res.data);
-          state.cards = null;
           state.cards = res.data;
           console.log("4. 끝")
         })
@@ -65,11 +65,20 @@ export default {
     async function view (){
       order("view")
     }
+    async function like (){
+      order("like")
+    }
+    async function star (){
+      order("star")
+    }
+    async function latest (){
+      order("latest")
+    }
 
     getCardsInformation()
 
 
-    return {state, view}
+    return {state, view, like, star, latest}
   }
 }
 
