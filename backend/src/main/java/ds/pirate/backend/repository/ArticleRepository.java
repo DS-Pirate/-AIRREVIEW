@@ -83,6 +83,25 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
     @Query("SELECT a FROM ArticlesList a WHERE a_user=:userid ")
     Optional<List<ArticlesList>> getListbyuserId2(Long userid);
 
+
+    @Query(value = 
+                "select at.aid as aid, at.atitle as atitle, "+
+                "(select count(ar.aid) from articles_list as ar left join like_unlike_list as li on ar.aid = li.aid where  at.aid = ar.aid) as favCount, "+
+                "(select count(ar.aid) from articles_list as ar left join save_list as sav on ar.aid = sav.aid where at.aid = ar.aid) as saveCount, "+
+                "at.opencount as openCount, at.regdate as regDate " +
+                "from articles_list as at " +
+                "where at.a_user=:userid" 
+            ,countQuery = 
+                "select at.aid as aid, at.atitle as atitle, "+
+                "(select count(ar.aid) from articles_list as ar left join like_unlike_list as li on ar.aid = li.aid where  at.aid = ar.aid) as favCount, "+
+                "(select count(ar.aid) from articles_list as ar left join save_list as sav on ar.aid = sav.aid where at.aid = ar.aid) as saveCount, "+
+                "at.opencount as openCount, at.regdate as regDate " +
+                "from articles_list as at " +
+                "where at.a_user=:userid" 
+        ,nativeQuery = true
+    )
+    Page<getMyChannelArticleList> getArticleListByUserIdWithPageable(Long userid, Pageable pageable);
+
     public interface getEmbedInformation {
         LocalDateTime getRegdate();
 
@@ -115,4 +134,12 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
         Long getLikeCount();
     }
 
+    public interface getMyChannelArticleList{
+        Long getAid();
+        String getAtitle();
+        Integer getFavCount();
+        Integer getSaveCount();
+        Integer getOpenCount();
+        LocalDateTime getRegDate();
+    }
 }
