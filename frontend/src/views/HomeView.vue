@@ -6,7 +6,7 @@
       <button type="button" class="btn btn-outline-dark" @click="like()">좋아요순</button>
       <button type="button" class="btn btn-outline-dark" @click="star()">평점순</button>
       <button type="button" class="btn btn-outline-dark" @click="latest()">최신순</button>
-      <button type="button" class="btn btn-outline-dark" @click="sub()">구독한 글</button>
+      <button type="button" class="btn btn-outline-dark" @click="sub()" v-if="$store.state.token">구독한 글</button>
     </div>
 
     <div class="fav p-1">
@@ -23,6 +23,7 @@
 import Cards from "@/components/MainCards.vue";
 import axios from "axios";
 import {reactive} from "@vue/reactivity";
+import store from "@/store";
 
 export default {
   name: "HomeView",
@@ -32,11 +33,11 @@ export default {
       cards: [],
     })
     function getCardsInformation() {
+      state.cards = null;
       const url = "/airreview/article/card"
-      axios.get(url).then((res) => {
+      axios.post(url).then((res) => {
         console.log("3. 시작");
         console.log(res.data);
-        state.cards = 0;
         state.cards = res.data;
         console.log("4. 끝")
       })
@@ -75,10 +76,31 @@ export default {
       order("latest")
     }
 
+    async function sub(){
+      const url = `/airreview/api/article/card/sub`
+      const headers = {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": store.state.token,
+        "userid" : store.state.userid
+      }
+      const body = {
+        userid : store.state.userid,
+        aid : 0
+      }
+      state.cards = null;
+      console.log(body);
+      await axios.post(url, body, {headers}).then(function (res) {
+        console.log("3. 시작");
+        console.log(res.data);
+        state.cards = res.data;
+        console.log("4. 끝")
+      })
+    }
+
     getCardsInformation()
 
 
-    return {state, view, like, star, latest}
+    return {state, view, like, star, latest, sub}
   }
 }
 

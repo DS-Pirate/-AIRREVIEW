@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import ds.pirate.backend.service.ApiMemberService.ApiMemberService;
 
+import ds.pirate.backend.vo.EmbedCard;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -495,8 +496,8 @@ public class UserRepositoryTests {
     }
 
 //    @Test
-//    public void searchTitle() {
-//        Optional<getEmbedCardsInformation> result = aser.getSearchList("a");
+//    public void cardsListOrderBySub(){
+//        Optional<List<ArticleRepository.getEmbedCardsInformation>> result = arepo.getCardsListBySub();
 //        log.info(result);
 //    }
 

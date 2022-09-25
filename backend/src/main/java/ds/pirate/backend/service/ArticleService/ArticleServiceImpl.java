@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 
 import ds.pirate.backend.vo.EmbedCard;
 import ds.pirate.backend.vo.search;
+import ds.pirate.backend.vo.subcard;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -486,6 +487,17 @@ public class ArticleServiceImpl implements ArticleService {
             return result;
         }
     }
+
+    @Override
+    public List<EmbedCard> getArticleListBySub(subcard vo) {
+        Sort sort = sortByAid();
+        log.info(vo);
+        List<EmbedCard> result = repo.getCardsListBySub(vo.getUserid(), sort).get().stream().map(v -> {
+            return new EmbedCard(v);
+        }).collect(Collectors.toList());
+        return result;
+    }
+
     private Sort sortByAid() {
         return Sort.by(Sort.Direction.DESC, "aid");
     }

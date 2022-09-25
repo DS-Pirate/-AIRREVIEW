@@ -6,6 +6,7 @@ import java.util.List;
 
 import ds.pirate.backend.vo.EmbedCard;
 import ds.pirate.backend.vo.search;
+import ds.pirate.backend.vo.subcard;
 import org.springframework.data.domain.Pageable;
 
 import ds.pirate.backend.dto.ArticleDTO;
@@ -69,6 +70,7 @@ public interface ArticleService {
     List<acommentDTO> getListByUserIdAndAuthorId(Long userid, Long authorid);
 
     List<EmbedCard> getSearchList(search vo);
+    List<EmbedCard> getArticleListBySub(subcard vo);
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {
         ArticlesList aentity = ArticlesList.builder()

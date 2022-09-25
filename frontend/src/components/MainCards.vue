@@ -47,7 +47,6 @@ let date = regdate.getDate();
 let month = monthNames[regdate.getMonth()];
 let title = titleLength(props.card.atitle);
 
-console.log(year + date + month + "title" + title);
 
 function titleLength(title){
   if (title.length < 30){
