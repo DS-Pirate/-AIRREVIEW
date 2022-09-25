@@ -56,8 +56,9 @@ public class ArticleViewController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/card", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/card", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<EmbedCard>> ArticleCardsList(){
+//        Pageable pageable = PageRequest.of(comment.getReqPage(), 9);
         return new ResponseEntity<>(aservice.getArticleList(), HttpStatus.OK);
     }
 

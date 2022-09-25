@@ -10,6 +10,9 @@
     </div>
 
     <!-- 검색카드 -->
+    <div class="mb-4 mt-5 ms-4 ps-1 text-center" v-if="state.notSearchWord">
+      <h1>검색 결과가 없습니다</h1>
+    </div>
     <div class="row row-cols-3">
       <div v-for="(card, idx) in state.cards" :key="idx">
         <Cards :card="card"></Cards>
@@ -35,6 +38,7 @@ export default {
   setup() {
     const state = reactive({
       cards: 0,
+      notSearchWord : false
     })
     const router = useRouter()
     let searchword = new URLSearchParams(window.location.search).get("cards");
@@ -59,6 +63,9 @@ export default {
         console.log(res.data);
         state.cards = res.data;
         console.log("4. 끝")
+        if (state.cards.length == 0){
+          state.notSearchWord = true;
+        } else state.notSearchWord = false;
       })
     }
 
