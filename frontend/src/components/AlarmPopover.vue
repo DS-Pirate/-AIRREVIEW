@@ -4,7 +4,7 @@
         <div class="popover__content py-3">
             <div class="text-center pb-3 border border-0 border-bottom">{{store.state.isAlarm}}건의 새소식</div>
             <div class="popover__context">
-                <AlarmPopoverCard v-for="info in cardInfo.info" :key="info" :info="info"  class="border border-0 border-bottom"></AlarmPopoverCard>
+                <AlarmPopoverCard  v-for="info in cardInfo.info" :key="info" :info="info" :getAlarm="getAlaram" class="border border-0 border-bottom popvoer__context__card"></AlarmPopoverCard>
             </div>
         </div>
     </div>
@@ -31,6 +31,7 @@
         availableAlarm : 0
     })
 
+    function getAlaram(){
     axios.post(url, body, { headers })
     .then(function(res){
         cardInfo.info = res.data
@@ -44,6 +45,8 @@
         }
         store.commit("setAlarm", cardInfo.availableAlarm)
     })
+}
+getAlaram()
 </script>
 <style scoped lang="sass">
     .popover__wrapper
@@ -59,6 +62,8 @@
         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.25)
         width: 25rem
         transition: all 0.2s cubic-bezier(0.75, -0.02, 0.2, 0.97)
+        .popvoer__context__card
+            position: relative
     .popover__content:before
         right:1%
         position: absolute

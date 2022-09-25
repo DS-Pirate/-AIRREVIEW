@@ -14,7 +14,7 @@
                             <h3 class="title">
                                 <a>{{ props.cardInfo.atitle }}</a>
                             </h3>
-                            <p class="text" v-html="props.cardInfo.context"></p>
+                            <p class="text" v-html="props.cardInfo.context.length>30?props.cardInfo.context.slice(0,33):props.cardInfo.context"></p>
 						</div>			
 					</div>
 				</a>
