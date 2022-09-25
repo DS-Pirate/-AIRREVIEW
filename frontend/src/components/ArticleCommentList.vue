@@ -19,7 +19,7 @@
     <hr />
     <div class="comment-area d-flex flex-column align-items-between">
         <ArticleCommentCard v-for="info in commentState" v-bind:key="info" v-bind:cardInfo="info"></ArticleCommentCard>
-        <button class="btn btn-primary w-100"  @click="getMoreComment" v-if="!(stateInfo[stateInfo.length - 1] == -999)">댓글 더 보기</button>
+        <button class="btn btn-primary w-100"  @click="getMoreComment" v-if="!(stateInfo[stateInfo.length - 1] == -999||stateInfo[stateInfo.length -1]==0)">댓글 더 보기</button>
     </div>
 </template>
 <script setup>
@@ -39,7 +39,7 @@
     let articleRating = ref(0)
     let commentcontext = ref(null)
     let commentState = reactive([])
-    let stateInfo = reactive([])
+    let stateInfo = reactive([0])
     let commentInfo = reactive({
         aid: id,
         reqPage: 0,

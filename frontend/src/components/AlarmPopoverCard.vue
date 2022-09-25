@@ -1,6 +1,6 @@
 <template>
-    <a :href="'./read?article='+props.info[2]" @click="checked(props.info[7])">
-        <div class="popovercard px-2" :style="props.info[6]==false?'opacity:1;':'opacity:0.3;'">
+    <div class="popovercard px-2" :style="props.info[6] == false ? 'opacity:1;' : 'opacity:0.3;'">
+        <a :href="'./read?article=' + props.info[2]" @click="checked(props.info[7])">
             <div class="popovercard-profilesection d-flex py-3">
                 <div class="popovercard-profilesection__left w-15 d-flex align-items-center">
                     <img class="img-fluid p-2" src="@/assets/pngwing.com.png" alt="" srcset="" />
@@ -13,19 +13,21 @@
                     </div>
                     <div class="popovercard-profilesection__right__date w-20 px-1 d-flex align-items-center flex-column">
                         <span>{{ getTimeFromJavaDateForComment(props.info[5]) }}</span>
-                        <span v-if="props.info[6]==true">읽음</span>
+                        <span v-if="props.info[6] == true">읽음</span>
                     </div>
                 </div>
             </div>
-        </div>
-    </a>
+        </a>
+        <i class="bi bi-x-lg" @click="deleteAlarm(props.info[7])"></i>
+    </div>
 </template>
 <script setup>
-    import axios from "axios";
+    import router from "@/router";
+import axios from "axios";
     import { defineProps } from "vue";
-    import { useStore } from 'vuex'
-    let props = defineProps(["info"]);
-    const store = useStore();   
+    import { useStore } from "vuex";
+    let props = defineProps(["info", "getAlaram"]);
+    const store = useStore();
     function getTimeFromJavaDateForComment(s) {
         const cont = new Date(s);
         let date = new Date();
@@ -53,13 +55,25 @@
         userid: store.state.userid,
     };
     const url = "./api/alarm/checked";
-    
 
-    function checked(i){
-        axios.post(url, i, { headers })
+    function checked(i) {
+        axios.post(url, i, { headers });
+    }
+
+    function deleteAlarm(i){
+        axios.post("./api/alarm/delete", i, { headers })
+        router.go(0)
     }
 </script>
 <style scoped lang="sass">
+    .popovercard
+        position: relative
+        i
+            position: absolute
+            z-index: 9999
+            top: 50%
+            right: 8%
+            cursor: pointer
     a
         text-decoration: none
         color: inherit

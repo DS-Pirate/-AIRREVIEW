@@ -38,6 +38,12 @@ public class AlarmServiceImpl implements AlarmService{
     }
 
     @Override
+    public void deleteAlarm(Long arid) {
+        repo.deleteById(arid);
+        
+    }
+
+    @Override
     public void addAlarm(acomments entity) {
         alarm alar = alarm.builder()
         .articleId(ArticlesList.builder().aid(entity.getArticles().getAid()).build())

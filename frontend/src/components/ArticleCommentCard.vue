@@ -6,7 +6,9 @@
                 <!-- <img class="img-fluid" :src="'./images/read/userid/' + props.cardInfo.userid" style="width: 2.75rem" /> -->
                 <img class="img-fluid py-2 px-3" style="max-height: 60px" src="@/assets/pngwing.com.png" />
             </div>
-            <div class="comment-section-left-delete"></div>
+            <div class="comment-section-left-delete">
+                <i class="bi bi-x-lg" @click="remove(props.cardInfo.cid)"></i>
+            </div>
         </div>
         
         <div class="comment-section-right w-90">
@@ -69,6 +71,11 @@
     let commentInfo = {
         reply: null,
     };
+
+    function remove(num){
+        axios.post("./api/article/comment/remove", {cid:num, userid:store.state.userid}, { headers })
+        router.go(0)
+    }
 
     async function ratingComment(ud) {
         let body = {
@@ -138,5 +145,7 @@
     .comment-section-right-commentauthor_articlerating_rating
         white-space: nowrap
     .comment-section-right-commentauthor-authorinfo_commentrating i
+        cursor: pointer
+    .comment-section-left-delete
         cursor: pointer
 </style>

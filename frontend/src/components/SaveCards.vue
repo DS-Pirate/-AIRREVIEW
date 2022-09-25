@@ -13,7 +13,7 @@
 						<div>
 							<span class="author">{{ props.name}}</span>
 							<h3 class="title"><a>{{ props.card.atitle }}</a></h3>
-							<p class="text" v-html="props.card.context"></p>
+							<p class="text" v-html="props.card.context.length>30?props.card.context.slice(0,33):props.card.context"></p>
 						</div>
 						<label class="menu-button"><span></span></label>
 					</div>
