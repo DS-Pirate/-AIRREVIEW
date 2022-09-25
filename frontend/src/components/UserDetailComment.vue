@@ -10,7 +10,8 @@
                     <UserDetailCommentCards :list="clist" m-0 p-0></UserDetailCommentCards>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a type="button" class="btn btn-primary" :href="'./mypage?channel='+body.userid">{{props.userDetail.userName}}님의 채널로 이동하기</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                 </div>
             </div>
         </div>
