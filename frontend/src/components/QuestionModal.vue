@@ -27,6 +27,7 @@
     </div>
 </template>
 <script setup>
+    import router from "@/router";
     import axios from "axios";
     import { ref } from "vue";
     import { useStore } from "vuex";
@@ -59,6 +60,8 @@
         await axios
             .post("./api/question", body, { headers })
             .then((res) => console.log("신호 나이이스", res))
-            .catch((e) => console.log(e));
+            .catch((e) => console.log(e))
+            alert("문의를 등록했습니다")
+            router.go(0)
     }
 </script>
