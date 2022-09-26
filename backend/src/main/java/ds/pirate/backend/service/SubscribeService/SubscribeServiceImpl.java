@@ -1,9 +1,13 @@
 package ds.pirate.backend.service.SubscribeService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.vo.MySubInfo;
+import ds.pirate.backend.vo.subcard;
 import org.springframework.stereotype.Service;
 
 import ds.pirate.backend.dto.airUserDTO;
@@ -30,4 +34,31 @@ public class SubscribeServiceImpl implements SubscribeService {
         }).collect(Collectors.toList());
     return result;
   }
+
+    @Override
+    public List<MySubInfo> getFollowingInfoList(subcard vo) {
+        List<MySubInfo> result = subrepo.getPostFollwerFollwingInSubByUserid(vo.getUserid()).get().stream().map(v->{
+            return new MySubInfo(v);
+        }).collect(Collectors.toList());
+        return result;
+    }
+
+    @Override
+    public Long getFollowUnFollowView(subcard vo) {
+      Long result = subrepo.getFollowingByUseridAndTargetid(vo.getUserid(), vo.getAid());
+        return result;
+    }
+
+    @Override
+    public String FollowUnFollow(subcard vo) {
+        Optional<subscribList> result = subrepo.getSubListByUseridAndTargetid(vo.getUserid(),vo.getAid());
+        airUser articleUserEntity = urepo.findByUserId(vo.getUserid()).get();
+        if (result.isPresent()){
+            subrepo.delete(result.get());
+            return "구독취소";
+        }{
+            subrepo.save(subscribList.builder().targetId(vo.getAid()).userid(articleUserEntity).build());
+            return "구독";
+        }
+    }
 }
