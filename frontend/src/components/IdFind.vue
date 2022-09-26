@@ -12,6 +12,7 @@
 <script>
 import {reactive, ref} from "@vue/reactivity";
 import axios from "axios";
+import store from "@/store";
 
 export default {
   setup() {
@@ -31,7 +32,7 @@ export default {
         return false;
       }
 
-      const url = './member/findemail'
+      const url = store.state.axiosLink+'/member/findemail'
       const headers = {
         "Content-Type": "application/json",
       }

@@ -26,6 +26,7 @@
 // @ is an alias to /src
 
 import Cards from "@/components/MainCards.vue";
+import store from "@/store";
 import {reactive} from "@vue/reactivity";
 import axios from "axios";
 import {useRouter} from "vue-router/dist/vue-router";
@@ -48,7 +49,7 @@ export default {
     async function getCardsInformation(){
       let orderword = new URLSearchParams(window.location.search).get("order");
       console.log("1. order : " + orderword);
-      const url= `/airreview/article/search`
+      const url= `${store.state.axiosLink}/article/search`
       const headers = {
         "Content-Type": "application/json; charset=utf-8",
       }
@@ -70,22 +71,22 @@ export default {
     }
 
     async function view (){
-      await router.push(`/search?cards=${searchword}&order=view`);
+      await router.push(`${store.state.axiosLink}/search?cards=${searchword}&order=view`);
       getCardsInformation()
     }
 
     async function latest(){
-      await router.push(`/search?cards=${searchword}&order=new`);
+      await router.push(`${store.state.axiosLink}/search?cards=${searchword}&order=new`);
       getCardsInformation()
     }
 
     async function star(){
-      await router.push(`/search?cards=${searchword}&order=star`);
+      await router.push(`${store.state.axiosLink}/search?cards=${searchword}&order=star`);
       getCardsInformation()
     }
 
     async function like(){
-      await router.push(`/search?cards=${searchword}&order=like`);
+      await router.push(`${store.state.axiosLink}/search?cards=${searchword}&order=like`);
       getCardsInformation()
     }
 

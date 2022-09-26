@@ -42,12 +42,12 @@
         body: 0,
     });
 
-    axios.post("./mypage/article", { userid: props.id, pageNum: articleInfo.body }, { headers }).then(function (res) {
+    axios.post(store.state.axiosLink+"/mypage/article", { userid: props.id, pageNum: articleInfo.body }, { headers }).then(function (res) {
         articleInfo.info.push(...res.data.content);
     });
 
     function getMorePostList() {
-        axios.post("./mypage/article", { userid: props.id, pageNum: articleInfo.body }, { headers }).then(function (res) {
+        axios.post(store.state.axiosLink+"/mypage/article", { userid: props.id, pageNum: articleInfo.body }, { headers }).then(function (res) {
             articleInfo.info.push(...res.data.content);
         });
     }

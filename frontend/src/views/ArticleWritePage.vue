@@ -76,7 +76,7 @@ export default {
 				language: "ko",
 				simpleUpload:
 				{
-					uploadUrl: "api/article/write/image",
+					uploadUrl: store.state.axiosLink+"/api/article/write/image",
 					withCredentials: true,
 					headers: {
 						"Authorization": store.state.token,
@@ -144,7 +144,7 @@ export default {
 			page.images = findImageName(page.context)
 			/////////////////////////////////////////
 			let result = JSON.stringify(page)
-			const url = "/airreview/api/article/write"
+			const url = store.state.axiosLink+"/api/article/write"
 			const headers = {
 				"Content-Type": "application/json; charset=utf-8",
 				"Authorization": store.state.token,

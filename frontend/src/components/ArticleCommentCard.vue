@@ -73,7 +73,7 @@
     };
 
     function remove(num){
-        axios.post("./api/article/comment/remove", {cid:num, userid:store.state.userid}, { headers })
+        axios.post(store.state.axiosLink+"/api/article/comment/remove", {cid:num, userid:store.state.userid}, { headers })
         router.go(0)
     }
 
@@ -85,7 +85,7 @@
             updown: ud,
         };
         await axios
-            .post("./api/article/comment/add/rating/", body, { headers })
+            .post(store.state.axiosLink+"/api/article/comment/add/rating/", body, { headers })
             .then((res) => console.log("레이팅들어간다아아아아", res))
             .catch((e) => console.log(e));
         router.go(0);
@@ -114,7 +114,7 @@
             commentContext: commentInfo.reply,
         };
         await axios
-            .post("./api/article/comment/add/reply", body, { headers })
+            .post(store.state.axiosLink+"/api/article/comment/add/reply", body, { headers })
             .then((res) => console.log("대댓들어간다아아아", res))
             .catch((e) => console.log(e));
         router.go(0);

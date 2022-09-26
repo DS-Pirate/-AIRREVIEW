@@ -34,7 +34,7 @@
         userid: props.userDetail.userid,
         authorid: store.state.authorid,
     };
-    axios.post("./article/userdetail", body, { headers }).then(function (res) {
+    axios.post(store.state.axiosLink+"/article/userdetail", body, { headers }).then(function (res) {
         commentList.list = [...res.data]
     });
 </script>

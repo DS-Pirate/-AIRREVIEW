@@ -67,7 +67,7 @@
 
 
     function getUserList(page){
-        axios.post("../api/admin/articlemanagement", { page: page, keyword: serchingInfo.keyword, type: serchingInfo.type }, { headers })
+        axios.post(store.state.axiosLinkAdmin+"/api/admin/articlemanagement", { page: page, keyword: serchingInfo.keyword, type: serchingInfo.type }, { headers })
     .then(function(res){
         ArticleInfo.dtoList =  res.data.dtoList,
         ArticleInfo.end =  res.data.end,
@@ -81,7 +81,7 @@
         console.log(res);
     })  
     }
-    axios.post("../api/admin/articlemanagement", { page:1 }, { headers })
+    axios.post(store.state.axiosLinkAdmin+"/api/admin/articlemanagement", { page:1 }, { headers })
     .then(function(res){
         ArticleInfo.dtoList =  res.data.dtoList,
         ArticleInfo.end =  res.data.end,
@@ -95,7 +95,7 @@
     })
 
     function getSearchingList() {
-        axios.post("../api/admin/articlemanagement", { page: 1, keyword: serchingInfo.keyword, type: serchingInfo.type }, { headers }).then(function (res) {
+        axios.post(store.state.axiosLinkAdmin+"/api/admin/articlemanagement", { page: 1, keyword: serchingInfo.keyword, type: serchingInfo.type }, { headers }).then(function (res) {
             (ArticleInfo.dtoList = res.data.dtoList), (ArticleInfo.end = res.data.end), (ArticleInfo.next = res.data.next), (ArticleInfo.page = res.data.page), (ArticleInfo.pageList = res.data.pageList), (ArticleInfo.prev = res.data.prev), (ArticleInfo.size = res.data.size), (ArticleInfo.start = res.data.start), (ArticleInfo.totalPage = res.data.totalPag);
             console.log(res);
         });

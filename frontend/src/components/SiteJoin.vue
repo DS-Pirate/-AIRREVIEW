@@ -71,6 +71,7 @@
 import { reactive, ref } from '@vue/reactivity'
 import axios from 'axios'
 import router from "@/router";
+import store from "@/store";
 
 export default {
   name: 'SiteJoin',
@@ -111,7 +112,7 @@ export default {
         alert('이메일 양식이 맞지 않습니다.'); email.value.focus(); return false;
       }
 
-      const url = './member/findemail'
+      const url = store.state.axiosLink+'/member/findemail'
       const headers = {
         "Content-Type": "application/json",
       }
@@ -159,7 +160,7 @@ export default {
       }
 
       const birthDay = new Date(state.year, state.month, state.day);
-      const url = '/airreview/member/register'
+      const url = store.state.axiosLink+'/member/register'
       const headers = {
         "Content-Type": "application/json",
       }

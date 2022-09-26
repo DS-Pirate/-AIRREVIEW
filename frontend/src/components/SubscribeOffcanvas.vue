@@ -29,7 +29,7 @@ const headers = {
         Info: {}
     })
 
-axios.post(`./api/subs`, body, {headers} ).then(function(res) {
+axios.post(`${store.state.axiosLink}/api/subs`, body, {headers} ).then(function(res) {
     subs.Info = res.data;
 })
 </script>

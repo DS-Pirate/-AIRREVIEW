@@ -92,7 +92,7 @@ export default {
     })
 
     const store = useStore();
-    const url = './api/setting/getuser'
+    const url = store.state.axiosLink+'/api/setting/getuser'
     const headers = {
       "Content-Type": "application/json",
       "Authorization": store.state.token,
@@ -124,7 +124,7 @@ export default {
 
     const updatesetting = function () {
 
-      const url2 = './api/setting/changePasswd'
+      const url2 = store.state.axiosLink+'/api/setting/changePasswd'
 
 
       axios.post(url2, state, { headers }).then(function (res) {
@@ -140,7 +140,7 @@ export default {
         "Authorization": store.state.token,
         "userid": store.state.userid
       }
-      let url = "./api/setting/userimage"
+      let url = store.state.axiosLink+"/api/setting/userimage"
       let body = {data: e.target}
       console.log(e);
       axios.post(url, body, { headers })

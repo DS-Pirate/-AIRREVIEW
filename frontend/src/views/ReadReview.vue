@@ -101,7 +101,7 @@
                     return `${Math.round(calculated / 31536000)}년 전`;
                 }
             }
-            axios.get(`./article/read/${id}`).then((res) => {
+            axios.get(`${store.state.axiosLink}/article/read/${id}`).then((res) => {
                 articleinfo.aid = res.data.articleInfo.aid;
                 articleinfo.atitle = res.data.articleInfo.atitle; //
                 articleinfo.context = res.data.articleInfo.context; //
@@ -123,8 +123,7 @@
                     res.data.articleInfo.images.lenth>0?{
                         type: "og:image",
                         description: "",
-                        url: document.location.href,
-                        image: `${document.location.href}:9090/images/read/${res.data.articleInfo.images[0]}`,
+                        image: `${store.state.axiosLink}/images/read/${res.data.articleInfo.images[0]}`,
                         //나중에 변경
                     }:"",
                     {

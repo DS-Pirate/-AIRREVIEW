@@ -45,11 +45,11 @@
 
     function DeleteArticle(num) {
         let body = {aid:num}
-        axios.post("../api/admin/articlemanagement/delete", body, { headers }).then(function (res) {res.data == true?router.go(0):alert("삭제실패")});
+        axios.post(store.state.axiosLinkAdmin+"/api/admin/articlemanagement/delete", body, { headers }).then(function (res) {res.data == true?router.go(0):alert("삭제실패")});
     }
     function reportCancel(num) {
         let body = {reid:num}
-        axios.post("../api/admin/reportmanagement/delete", body, { headers }).then(function (res) {res.data == true?router.go(0):alert("삭제실패")});
+        axios.post(store.state.axiosLinkAdmin+"/api/admin/reportmanagement/delete", body, { headers }).then(function (res) {res.data == true?router.go(0):alert("삭제실패")});
     }
 
     let reportInfo = reactive({
@@ -67,7 +67,7 @@
 
 
     function getUserList(page){
-        axios.post("../api/admin/reportmanagement", { page:page }, { headers })
+        axios.post(store.state.axiosLinkAdmin+"/api/admin/reportmanagement", { page:page }, { headers })
     .then(function(res){
         reportInfo.dtoList =  res.data.dtoList,
         reportInfo.end =  res.data.end,
@@ -81,7 +81,7 @@
         console.log(res);
     })  
     }
-    axios.post("../api/admin/reportmanagement", { page:1 }, { headers })
+    axios.post(store.state.axiosLinkAdmin+"/api/admin/reportmanagement", { page:1 }, { headers })
     .then(function(res){
         console.log(res);
         reportInfo.dtoList =  res.data.dtoList,
