@@ -62,7 +62,7 @@
 
     function getComments() {
         axios
-            .post(store.state.userid==0 ? `/airreview/article/comment/` : `/airreview/api/article/comment/`, commentInfo, { headers })
+            .post(store.state.userid==0 ? `${store.state.axiosLink}/article/comment/` : `${store.state.axiosLink}/api/article/comment/`, commentInfo, { headers })
             .then(function (res) {
                 if (res.data.pageTotalCount == commentInfo.reqPage + 1) {
                     updateStates(res.data.commentList, -999)
@@ -84,7 +84,7 @@
             articleRate: articleRating.value - 1,
         }
         axios
-            .post("./api/article/comment/add/", body, { headers })
+            .post(store.state.axiosLink+"/api/article/comment/add/", body, { headers })
             .then((res) => {
                 if (res.data == -1) {
                     alert("등록되었습니다")
