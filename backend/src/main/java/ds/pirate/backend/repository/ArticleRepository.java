@@ -147,4 +147,18 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
         Integer getOpenCount();
         LocalDateTime getRegDate();
     }
+
+
+    // Page<getMySettingArticleList> getSettingArticleListByUserIdWithPageable(Long userid, Pageable pageable);
+
+    // public interface getMySettingArticleList{
+    //     Long getAid();
+    //     String getAtitle();
+        
+    //     Integer getFavCount();
+    //     Integer getSaveCount();
+    //     Integer getOpenCount();
+    //     LocalDateTime getRegDate();
+    // }
+
 }

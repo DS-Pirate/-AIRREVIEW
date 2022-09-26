@@ -129,7 +129,7 @@ export default {
 
       axios.post(url2, state, { headers }).then(function (res) {
         alert(res.data)
-        res.data == "실패하였습니다" ? "" : router.go(0)
+        res.data == "다시 설정해주세요" ? "" : router.go(0)
         console.log(res);
       })
     }
