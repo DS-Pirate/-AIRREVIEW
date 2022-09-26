@@ -17,7 +17,7 @@
             <PostList :id="id" />
         </div>
         <div class="chcategory p-3 my-3 shadow-sm bg-white d-flex h-auto" v-else-if="state.form == 'category'">
-            <SubInfo />
+            <SubInfo :id="id" />
         </div>
         <div class="chcategory p-3 my-3 shadow-sm bg-white d-flex h-auto" v-else-if="state.form == 'channelinfo'">
             <MyInfo />
