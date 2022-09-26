@@ -39,7 +39,7 @@ export default {
         alert('비밀번호를 확인해주세요');
         return false;
       }
-      const url = "/airreview/member/login"
+      const url = store.state.axiosLink+"/member/login"
       const headers = { "Content-Type": "application/json; charset=utf-8;"}
       const body = { email: state.form.email, passwd: state.form.password };
       try{

@@ -33,7 +33,7 @@
 
     async function subsFunction(){
         if(IisSubed.value.dataset.is!="none"){
-            await axios.post("./api/article/read/subcard/add",body, {headers})
+            await axios.post(store.state.axiosLink+"/api/article/read/subcard/add",body, {headers})
             .then(function(res){
                 alert(res.data)
                 router.go(0)
@@ -45,7 +45,7 @@
 
     async function getCardInfo(){
 
-        await axios.post("./article/read/subcard", body, { headers })
+        await axios.post(store.state.axiosLink+"/article/read/subcard", body, { headers })
         .then(function(res){
             IuserIMG.value.src = res.data.articleUserImg
             IairName.value.textContent = res.data.articleUserName

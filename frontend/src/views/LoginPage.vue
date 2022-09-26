@@ -70,7 +70,7 @@ export default {
       console.log(userData.email +"------"+userData.sub);
       // console.log(notDecode);
 
-      const url = "/airreview/member/login"
+      const url = store.state.axiosLink+"/member/login"
       const headers = { "Content-Type": "application/json; charset=utf-8;"}
       const body = { email: userData.email, passwd: userData.sub};
       try{

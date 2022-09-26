@@ -76,17 +76,17 @@
     })
 
     function getUserList(page) {
-        axios.post("../api/admin/usermanagement", { page: page, keyword: serchingInfo.keyword, type: serchingInfo.type }, { headers }).then(function (res) {
+        axios.post(store.state.axiosLinkAdmin+"/api/admin/usermanagement", { page: page, keyword: serchingInfo.keyword, type: serchingInfo.type }, { headers }).then(function (res) {
             (userInfo.dtoList = res.data.dtoList), (userInfo.end = res.data.end), (userInfo.next = res.data.next), (userInfo.page = res.data.page), (userInfo.pageList = res.data.pageList), (userInfo.prev = res.data.prev), (userInfo.size = res.data.size), (userInfo.start = res.data.start), (userInfo.totalPage = res.data.totalPag);
             console.log(res);
         });
     }
-    axios.post("../api/admin/usermanagement", { page: 1 }, { headers }).then(function (res) {
+    axios.post(store.state.axiosLinkAdmin+"/api/admin/usermanagement", { page: 1 }, { headers }).then(function (res) {
         (userInfo.dtoList = res.data.dtoList), (userInfo.end = res.data.end), (userInfo.next = res.data.next), (userInfo.page = res.data.page), (userInfo.pageList = res.data.pageList), (userInfo.prev = res.data.prev), (userInfo.size = res.data.size), (userInfo.start = res.data.start), (userInfo.totalPage = res.data.totalPag);
     });
     
     function getSearchingList() {
-        axios.post("../api/admin/usermanagement", { page: 1, keyword: serchingInfo.keyword, type: serchingInfo.type }, { headers }).then(function (res) {
+        axios.post(store.state.axiosLinkAdmin+"/api/admin/usermanagement", { page: 1, keyword: serchingInfo.keyword, type: serchingInfo.type }, { headers }).then(function (res) {
             (userInfo.dtoList = res.data.dtoList), (userInfo.end = res.data.end), (userInfo.next = res.data.next), (userInfo.page = res.data.page), (userInfo.pageList = res.data.pageList), (userInfo.prev = res.data.prev), (userInfo.size = res.data.size), (userInfo.start = res.data.start), (userInfo.totalPage = res.data.totalPag);
             console.log(res);
             console.log(serchingInfo);

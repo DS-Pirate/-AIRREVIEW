@@ -72,10 +72,10 @@
         "userid": store.state.userid,
     };
     function modifyUser() {
-        axios.post("../api/admin/usermanagement/modify", info, { headers }).then(function (res) {res.data == true?router.go(0):alert("업데이트실패")});
+        axios.post(store.state.axiosLinkAdmin+"/api/admin/usermanagement/modify", info, { headers }).then(function (res) {res.data == true?router.go(0):alert("업데이트실패")});
     }
     function DeleteUser() {
-        axios.post("../api/admin/usermanagement/delete", info, { headers }).then(function (res) {res.data == true?router.go(0):alert("업데이트실패")});
+        axios.post(store.state.axiosLinkAdmin+"/api/admin/usermanagement/delete", info, { headers }).then(function (res) {res.data == true?router.go(0):alert("업데이트실패")});
     }
 </script>
 <style lang="sass">

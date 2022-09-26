@@ -33,6 +33,7 @@
 <script setup>
     import axios from "axios";
     import { reactive } from "vue";
+    import store from "@/store";
     let id = new URLSearchParams(window.location.search).get("article");
     let title = new URLSearchParams(window.location.search).get("title");
     let thumbnail = new URLSearchParams(window.location.search).get("thumbnail");
@@ -81,7 +82,7 @@
     }
 
 
-    axios.get(`././info/${id}`).then(function (res) {
+    axios.get(`${store.state.axiosLink}/./info/${id}`).then(function (res) {
         let info = res.data;
         (embedInfo.regdate = getTimeFromJavaDate(info.regdate)), (embedInfo.title = info.title), (embedInfo.username = info.author), (embedInfo.fav = info.favcount), (embedInfo.avg = info.avgrate), (embedInfo.context = info.context);
         if (embedInfo.context.indexOf("<iframe") > 0) {

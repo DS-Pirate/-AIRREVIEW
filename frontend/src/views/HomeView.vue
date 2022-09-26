@@ -34,7 +34,7 @@ export default {
     })
     function getCardsInformation() {
       state.cards = null;
-      const url = "/airreview/article/card"
+      const url = store.state.axiosLink+"/article/card"
       axios.post(url).then((res) => {
         console.log("3. 시작");
         console.log(res.data);
@@ -44,7 +44,7 @@ export default {
     }
 
       async function order(a) {
-        const url = `/airreview/article/card/order`
+        const url = `${store.state.axiosLink}/article/card/order`
         const headers = {
           "Content-Type": "application/json; charset=utf-8",
         }
@@ -77,7 +77,7 @@ export default {
     }
 
     async function sub(){
-      const url = `/airreview/api/article/card/sub`
+      const url = `${store.state.axiosLink}/api/article/card/sub`
       const headers = {
         "Content-Type": "application/json; charset=utf-8",
         "Authorization": store.state.token,

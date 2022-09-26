@@ -43,7 +43,7 @@
     };
 
     function addAnswer() {
-        axios.post("../api/admin/questionanswer", info, { headers }).then(function (res) {
+        axios.post(store.state.axiosLinkAdmin+"/api/admin/questionanswer", info, { headers }).then(function (res) {
             console.log(res);
             // router.go(0)
         });

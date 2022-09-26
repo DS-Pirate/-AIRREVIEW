@@ -68,7 +68,7 @@
                 editorConfig: {
                     language: "ko",
                     simpleUpload: {
-                        uploadUrl: "api/article/write/image",
+                        uploadUrl: store.state.axiosLink+"/api/article/write/image",
                         withCredentials: true,
                         headers: {
                             "Authorization": store.state.token,
@@ -93,7 +93,7 @@
                     aid: new URLSearchParams(window.location.search).get("article"),
                     userid: store.state.userid,
                 };
-                await axios.post("./api/article/modify/check", body, { headers }).then(function (res) {
+                await axios.post(store.state.axiosLink+"/api/article/modify/check", body, { headers }).then(function (res) {
                     console.log(res);
                     context = res.data.context
                     title = res.data.atitle
@@ -166,7 +166,7 @@
                 page.images = findImageName(page.context);
                 /////////////////////////////////////////
                 let result = JSON.stringify(page);
-                const url = "/airreview/api/article/modify/send";
+                const url = store.state.axiosLink+"/api/article/modify/send";
                 const headers = {
                     "Content-Type": "application/json; charset=utf-8",
                     "Authorization": store.state.token,

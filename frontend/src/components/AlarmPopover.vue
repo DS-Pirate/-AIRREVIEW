@@ -15,7 +15,7 @@
     import { reactive } from "vue"
     import axios from "axios";
     const store = useStore();
-    const url = "./api/alarm/list";
+    const url = store.state.axiosLink+"/api/alarm/list";
     const headers = {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: store.state.token,

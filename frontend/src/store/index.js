@@ -10,6 +10,9 @@ export default createStore({
     userid:0,
     authorid:0,
     isAlarm:0,
+    axiosLink:".",
+    axiosLinkAdmin:"..",
+    EmbedLink:"http://localhost:9090"
   },
   getters: {
   },

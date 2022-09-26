@@ -54,14 +54,14 @@ import axios from "axios";
         Authorization: store.state.token,
         userid: store.state.userid,
     };
-    const url = "./api/alarm/checked";
+    const url = store.state.axiosLin+"/api/alarm/checked";
 
     function checked(i) {
         axios.post(url, i, { headers });
     }
 
     function deleteAlarm(i){
-        axios.post("./api/alarm/delete", i, { headers })
+        axios.post(store.state.axiosLink+"/api/alarm/delete", i, { headers })
         router.go(0)
     }
 </script>

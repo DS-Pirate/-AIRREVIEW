@@ -151,7 +151,7 @@
         e.target.select()
     }
 
-    axios.get(`././info/${id}`).then(function (res) {
+    axios.get(`${store.state.axiosLink}/./info/${id}`).then(function (res) {
         let info = res.data;
         embedInfo.regdate = getTimeFromJavaDate(info.regdate), 
         embedInfo.title = info.title, 
@@ -177,12 +177,12 @@
         if (which == 1) {
             inputarea.description = window.location.href.toString();
         } else if (which == 2) {
-            inputarea.description = `<iframe src="http://localhost:8080/airreview/embed?article=${id}&title=${inputarea.title}&thumbnail=${inputarea.thumbnail}&date=${inputarea.date}&rating=${inputarea.rating}&like=${inputarea.like}&logo=${inputarea.logo}&author=${inputarea.author}" width="${embedInfo.width}" height="${embedInfo.width/2}"></iframe>`
+            inputarea.description = `<iframe src="${store.state.embedLink}/embed?article=${id}&title=${inputarea.title}&thumbnail=${inputarea.thumbnail}&date=${inputarea.date}&rating=${inputarea.rating}&like=${inputarea.like}&logo=${inputarea.logo}&author=${inputarea.author}" width="${embedInfo.width}" height="${embedInfo.width/2}"></iframe>`
         }
     }
 
     function changeInputRealtime(){
-        inputarea.description = `<iframe src="http://localhost:8080/airreview/embed?article=${id}&title=${inputarea.title}&thumbnail=${inputarea.thumbnail}&date=${inputarea.date}&rating=${inputarea.rating}&like=${inputarea.like}&logo=${inputarea.logo}&author=${inputarea.author}" width="${embedInfo.width}" height="${embedInfo.width/2}"></iframe>`
+        inputarea.description = `<iframe src="${store.state.embedLink}/embed?article=${id}&title=${inputarea.title}&thumbnail=${inputarea.thumbnail}&date=${inputarea.date}&rating=${inputarea.rating}&like=${inputarea.like}&logo=${inputarea.logo}&author=${inputarea.author}" width="${embedInfo.width}" height="${embedInfo.width/2}"></iframe>`
     }
 
     

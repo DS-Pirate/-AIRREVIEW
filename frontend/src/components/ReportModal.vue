@@ -49,7 +49,7 @@ function selectedValue(i){
 }
 
     async function submitReport(){
-        const url="./api/article/report"
+        const url=store.state.axiosLink+"/api/article/report"
         const headers = {
                 "Content-Type": "application/json; charset=utf-8",
                 "Authorization": store.state.token,

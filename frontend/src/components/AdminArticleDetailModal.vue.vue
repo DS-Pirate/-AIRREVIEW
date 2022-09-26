@@ -55,12 +55,12 @@
         "Authorization": store.state.token,
         "userid": store.state.userid,
     };
-    axios.post("../api/admin/articlemanagement/hashs", body, { headers }).then(function (res) {
+    axios.post(store.state.axiosLinkAdmin+"/api/admin/articlemanagement/hashs", body, { headers }).then(function (res) {
         info.tags = res.data.length!=0?res.data[0].split(" "):""
     })
     function DeleteArticle() {
         let body = {aid:info.aid}
-        axios.post("../api/admin/articlemanagement/delete", body, { headers }).then(function (res) {res.data == true?router.go(0):alert("삭제실패")});
+        axios.post(store.state.axiosLinkAdmin+"/api/admin/articlemanagement/delete", body, { headers }).then(function (res) {res.data == true?router.go(0):alert("삭제실패")});
     }
 
     

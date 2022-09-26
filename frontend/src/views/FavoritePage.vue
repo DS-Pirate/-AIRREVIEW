@@ -28,7 +28,7 @@ export default {
       cards: [], usernames: []
     })
 
-		const url = "/airreview/api/like";	
+		const url = store.state.axiosLink+"/api/like";	
 		const headers = {
             "Content-Type": "application/json; charset=utf-8",
             "Authorization": store.state.token,

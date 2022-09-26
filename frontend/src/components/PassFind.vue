@@ -54,6 +54,7 @@
 import {reactive, ref} from "@vue/reactivity";
 import axios from "axios";
 import router from "@/router";
+import store from "@/store";
 
 export default {
   setup(){
@@ -102,7 +103,7 @@ export default {
       }
 
       console.log(state.qtype);
-      const url = './member/findpass'
+      const url = store.state.axiosLink+'/member/findpass'
       const headers = {
         "Content-Type": "application/json",
       }
@@ -137,7 +138,7 @@ export default {
         pass.value.value = ''; repass.value.value = '';
         state.repass.value.focus(); return false;
       }
-      const url = './member/setpass'
+      const url = store.state.axiosLink+'/member/setpass'
       const headers = {
         "Content-Type": "application/json",
       }

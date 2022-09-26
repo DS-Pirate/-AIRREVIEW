@@ -12,17 +12,6 @@
 </template>
 
 
-const asdf = () => {
-
-	await 
-}
-
-asdf.then
-
-axios.post("sadfsadf.com", boyd,header)
-
-
-
 
 <script>
 // @ is an alias to /src
@@ -41,7 +30,7 @@ export default {
       cards: [], usernames: []
     })
 
-		const url = "/airreview/api/save";
+		const url = store.state.axiosLink+"/api/save";
 		const headers = {
             "Content-Type": "application/json; charset=utf-8",
             "Authorization": store.state.token,
