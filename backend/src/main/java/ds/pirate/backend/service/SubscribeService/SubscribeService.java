@@ -5,9 +5,14 @@ import java.util.List;
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.dto.subScribeDTO;
 import ds.pirate.backend.entity.subscribList;
+import ds.pirate.backend.vo.MySubInfo;
+import ds.pirate.backend.vo.subcard;
 
 public interface SubscribeService {
   List<airUserDTO> getListUserId(Long userid);
+  List<MySubInfo> getFollowingInfoList(subcard vo);
+  Long getFollowUnFollowView(subcard vo);
+  String FollowUnFollow(subcard vo);
 
   default subscribList dtoToEntity(subScribeDTO dto) {
     subscribList entity = subscribList.builder()

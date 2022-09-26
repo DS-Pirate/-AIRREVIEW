@@ -1,52 +1,41 @@
 <template>
     <div class="subInfo">
-        <div class="index-post">
-            <div v-for="contener in 20" :key="contener" class="contener">
-                <div class="image-contener">
-                    <img src="../assets/pngwing.com.png" alt="">
-                </div>
-                <div class="meta-contener">
-                    <h2 class="title">Jiyoung</h2>
-                    <span class="desc">간식 전용 리뷰어입니다. 주로...</span>
-                </div>
-                <div class="detail mb-1">
-                    <div class="row align-items-start">
-                        <div class="col">
-                            <span class="detailWriting">Posts</span>
-                            <br>
-                            <span class="detailNumbers">1.4k</span>
-                        </div>
-                        <div class="col">
-                            <span class="detailWriting">Followers</span>
-                            <br>
-                            <span class="detailNumbers">235</span>
-                        </div>
-                        <div class="col">
-                            <span class="detailWriting">Following</span>
-                            <br>
-                            <span class="detailNumbers">33</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="button-contener">
-                    <a href="#" class="button unfollow" v-if="following == true" @click="following = false">Unfollow</a>
-                    <a href="#" class="button followBtn" v-if="following == false" @click="following = true">Follow</a>
-                    <a href="#" class="button readMore">Read More</a>
-                </div>
-            </div>
+          <div class="index-post">
+          <Cards v-for="(card, idx) in state.cards" :key="idx" class="contener" :card="card" />
         </div>
     </div>
 </template>
 
-<script>
-export default {
-    name: 'SubscriptionInfo',
-    data() {
-        return {
-            following: true,
-        }
-    }
-};
+<script setup>
+import Cards from "@/components/SubsCards.vue";
+import { reactive, defineProps } from "vue";
+import axios from "axios";
+
+let props = defineProps(["id"])
+const state = reactive({
+  cards : [],
+    })
+
+async function getSub(){
+  const url = `./mypage/following`
+  const headers = {
+    "Content-Type": "application/json; charset=utf-8",
+  }
+  const body = {
+    userid: props.id,
+    aid: 0
+  }
+  state.cards = null;
+  console.log(body);
+  await axios.post(url, body, {headers}).then(function (res) {
+    console.log("3. 시작");
+    console.log(res.data);
+    state.cards = res.data;
+    console.log("4. 끝")
+  })
+}
+getSub()
+
 </script>
 
 <style scoped lang="scss">

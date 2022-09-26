@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import ds.pirate.backend.vo.MySubInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -107,6 +108,7 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
     )
     Page<getMyChannelArticleList> getArticleListByUserIdWithPageable(Long userid, Pageable pageable);
 
+
     public interface getEmbedInformation {
         LocalDateTime getRegdate();
 
@@ -147,4 +149,18 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
         Integer getOpenCount();
         LocalDateTime getRegDate();
     }
+
+
+    // Page<getMySettingArticleList> getSettingArticleListByUserIdWithPageable(Long userid, Pageable pageable);
+
+    // public interface getMySettingArticleList{
+    //     Long getAid();
+    //     String getAtitle();
+        
+    //     Integer getFavCount();
+    //     Integer getSaveCount();
+    //     Integer getOpenCount();
+    //     LocalDateTime getRegDate();
+    // }
+
 }
