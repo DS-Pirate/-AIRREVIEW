@@ -12,5 +12,5 @@ public class userid {
     String name;
     String email;
     String userintro;
-    LocalDateTime birthday;
+    LocalDateTime birthDay;
 }

@@ -51,7 +51,7 @@
             userid: store.state.userid,
         }
         axios
-        .post("./api/article/modify/check", body, { headers })
+        .post(store.state.axiosLink+"/api/article/modify/check", body, { headers })
         .then(function (res) {
             if (res.data.aid==props.id) {
                 stat.result = true
@@ -62,7 +62,7 @@
     }
 
     async function addToLike() {
-        const url = "./api/article/like";
+        const url = store.state.axiosLink+"/api/article/like";
         const headers = {
             "Content-Type": "application/json; charset=utf-8",
             "Authorization": store.state.token,
@@ -79,7 +79,7 @@
         router.go(0);
     }
     async function addSave() {
-        const url = "./api/article/save";
+        const url = store.state.axiosLink+"/api/article/save";
         const headers = {
             "Content-Type": "application/json; charset=utf-8",
             "Authorization": store.state.token,
@@ -97,7 +97,7 @@
     }
 
     function getArticleFunctionStatus() {
-        const url = "./api/article/functions";
+        const url = store.state.axiosLink+"/api/article/functions";
         const headers = {
             "Content-Type": "application/json; charset=utf-8",
             "Authorization": store.state.token,
