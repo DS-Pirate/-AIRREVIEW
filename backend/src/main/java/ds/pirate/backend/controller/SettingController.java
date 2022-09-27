@@ -3,7 +3,6 @@ package ds.pirate.backend.controller;
 
 import java.util.HashMap;
 
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.pirate.backend.dto.airUserDTO;
-// import ds.pirate.backend.repository.ArticleRepository.getMySettingArticleList;
 import ds.pirate.backend.service.SettingService.SettingService;
 import ds.pirate.backend.vo.userid;
 import lombok.RequiredArgsConstructor;
@@ -46,9 +44,4 @@ public class SettingController {
     return new ResponseEntity<>(result, HttpStatus.OK);
   }
 
-  // @RequestMapping(value = "./setting/articlelist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  // public ResponseEntity<Page<getMySettingArticleList>> commentUserDetail(@RequestBody settingArticleList info) {
-  //   log.info(info);
-  //     return new ResponseEntity<>(service.articleListByUserid(info.getUserid(), info.getPageNum()), HttpStatus.OK);
-  // }
 }

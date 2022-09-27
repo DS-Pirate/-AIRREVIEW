@@ -7,9 +7,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +15,15 @@ import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.repository.ArticleRepository;
-// import ds.pirate.backend.repository.ArticleRepository.getMySettingArticleList;
 import ds.pirate.backend.repository.LikeUnlikeRepository;
 import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import ds.pirate.backend.service.UserService.UserService;
 import ds.pirate.backend.vo.userid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @Service
 @RequiredArgsConstructor
-@Log4j2
 public class SettingServiceImpl implements SettingService {
   private final UserRepository urepo;
   private final UserService uService;
