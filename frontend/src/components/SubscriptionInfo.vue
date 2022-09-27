@@ -18,7 +18,7 @@ const state = reactive({
     })
 
 async function getSub(){
-  const url = store.state.axiosLinkAdmin+`/mypage/following`
+  const url = store.state.axiosLink+`/mypage/following`
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
   }

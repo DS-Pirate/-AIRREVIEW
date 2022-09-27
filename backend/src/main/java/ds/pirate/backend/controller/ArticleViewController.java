@@ -55,10 +55,19 @@ public class ArticleViewController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+//    @RequestMapping(value = "/card", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<List<EmbedCard>> ArticleCardsList(){
+//        return new ResponseEntity<>(aservice.getArticleList(), HttpStatus.OK);
+//    }
+
+//    @RequestMapping(value = "/card", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<List<EmbedCard>> ArticleCardsList(@RequestBody comment comment){
+//        return new ResponseEntity<>(aservice.getArticleList(comment), HttpStatus.OK);
+//    }
+
     @RequestMapping(value = "/card", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<EmbedCard>> ArticleCardsList(){
-//        Pageable pageable = PageRequest.of(comment.getReqPage(), 9);
-        return new ResponseEntity<>(aservice.getArticleList(), HttpStatus.OK);
+    public ResponseEntity<HashMap<String, Object>> ArticleCardsList(@RequestBody comment comment){
+        return new ResponseEntity<>(aservice.getArticleList(comment), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/card/order", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
