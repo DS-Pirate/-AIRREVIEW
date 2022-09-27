@@ -85,12 +85,11 @@ export default {
       userid: '',
       name: '',
       email: '',
-      birthday: '',
+      birthDay: '',
       userintro: '',
       cpasswd: '',
-      upasswd: ''
+      upasswd: '',
     })
-
     const store = useStore();
     const url = store.state.axiosLink+'/api/setting/getuser'
     const headers = {
@@ -98,36 +97,44 @@ export default {
       "Authorization": store.state.token,
       "userid": store.state.userid
     }
-
+    
     let body = {
       userid: store.state.userid,
     }
 
-    axios.post(url, body, { headers }).then(function (res) {
+    async function a (){
+    await axios.post(url, body, { headers }).then(function (res) {
       state.userid = res.data.userid;
       state.name = res.data.airName;
       state.email = res.data.email;
-      state.birthday = res.data.birthDay;
+      state.birthDay = res.data.birthDay;
       state.userintro = res.data.userIntro;
 
       const regdate = new Date(Date.parse(res.data.birthDay))
       state.year = regdate.getFullYear();
       state.date = regdate.getDate();
       state.month = regdate.getMonth() + 1;
-      console.log(res.data);
-    })
+      console.log(regdate);
 
+    })
+    console.log(state.year);
+    }
+    a()
+   
     const regdate = new Date()
-    state.year = regdate.setFullYear();
-    state.date = regdate.setDate();
-    state.month = regdate.setMonth() + 1;
+    regdate.setFullYear(state.year);
+    regdate.setDate();
+    regdate.setMonth();
 
     const updatesetting = function () {
 
-      const url2 = store.state.axiosLink+'/api/setting/changePasswd'
+      const url2 = store.state.axiosLink+'/api/setting/changepasswd'
 
+      // console.log(state.birthDay);
 
-      axios.post(url2, state, { headers }).then(function (res) {
+  
+
+        axios.post(url2, state, { headers }).then(function (res) {
         alert(res.data)
         res.data == "다시 설정해주세요" ? "" : router.go(0)
         console.log(res);

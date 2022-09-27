@@ -20,19 +20,16 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @ToString
-public class reportList {
+public class reportList extends DateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reid;
 
-
     @Column
     private String reportContext;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     private ArticlesList articles;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     private airUser userid;
