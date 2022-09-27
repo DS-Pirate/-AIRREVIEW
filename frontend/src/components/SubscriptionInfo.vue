@@ -10,6 +10,7 @@
 import Cards from "@/components/SubsCards.vue";
 import { reactive, defineProps } from "vue";
 import axios from "axios";
+import store from "@/store";
 
 let props = defineProps(["id"])
 const state = reactive({
@@ -17,7 +18,7 @@ const state = reactive({
     })
 
 async function getSub(){
-  const url = `./mypage/following`
+  const url = store.state.axiosLink+`/mypage/following`
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
   }

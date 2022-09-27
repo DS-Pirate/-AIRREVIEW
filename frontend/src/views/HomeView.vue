@@ -31,26 +31,47 @@ export default {
   setup() {
     const state = reactive({
       cards: [],
+      pageTotalCount: 0,
+      main : true,
+      view : false,
+      like : false,
+      star : false,
+      latest : false,
+      sub : false,
     })
+    let body = reactive({
+      reqPage: 0,
+    });
+    //state.cards 날리기
     function getCardsInformation() {
-      state.cards = null;
-      const url = store.state.axiosLink+"/article/card"
-      axios.post(url).then((res) => {
-        console.log("3. 시작");
-        console.log(res.data);
-        state.cards = res.data;
-        console.log("4. 끝")
-      })
+      console.log("body"+body.reqPage);
+        const url = store.state.axiosLink + "/article/card"
+        axios.post(url, body).then((res) => {
+          console.log(res.data);
+          state.pageTotalCount = res.data.pageTotalCount;
+          if (body.reqPage == 0) {
+            state.cards = res.data.articles;
+          } else {
+            for (let i = 0; i < 9; i++) {
+              state.cards.push(res.data.articles[i]);
+            }
+          }
+
+        })
     }
 
-      async function order(a) {
+
+      async function order(order) {
+        state.main = false;
+        state.sub = false;
+
         const url = `${store.state.axiosLink}/article/card/order`
         const headers = {
           "Content-Type": "application/json; charset=utf-8",
         }
         const body = {
           search: "null",
-          order: a
+          order: order
         }
         state.cards = null;
         console.log(body);
@@ -64,15 +85,22 @@ export default {
 
 
     async function view (){
-      order("view")
+      body.reqPage=0
+      state.like =false;
+      state.latest = false;
+      state.star = false;
+      order("view");
     }
     async function like (){
+      body.reqPage=0
       order("like")
     }
     async function star (){
+      body.reqPage=0
       order("star")
     }
     async function latest (){
+      body.reqPage=0
       order("latest")
     }
 
@@ -97,9 +125,21 @@ export default {
       })
     }
 
-    getCardsInformation()
+    function getMoreCards(){
+      body.reqPage+=1
+      if (state.main == true) {
+        getCardsInformation()
+      }
+    }
 
+    window.addEventListener("scroll", windowSize)
+    function windowSize(){
+      if(window.innerHeight+window.scrollY>=document.body.offsetHeight){
+        getMoreCards()
+      }
+      }
 
+      getCardsInformation()
     return {state, view, like, star, latest, sub}
   }
 }

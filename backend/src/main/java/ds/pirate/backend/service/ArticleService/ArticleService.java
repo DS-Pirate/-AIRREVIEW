@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import ds.pirate.backend.vo.EmbedCard;
+import ds.pirate.backend.vo.comment;
 import ds.pirate.backend.vo.search;
 import ds.pirate.backend.vo.subcard;
 import org.springframework.data.domain.Pageable;
@@ -63,7 +64,9 @@ public interface ArticleService {
 
     String ArticleModify(ArticleDTO dto, List<String> tags);
 
-    List<EmbedCard> getArticleList();
+//    List<EmbedCard> getArticleList(comment vo);
+
+    HashMap<String, Object> getArticleList(comment vo);
 
     List<EmbedCard> getArticleListOrder(search vo);
 
