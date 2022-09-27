@@ -54,7 +54,7 @@ import axios from "axios";
         Authorization: store.state.token,
         userid: store.state.userid,
     };
-    const url = store.state.axiosLin+"/api/alarm/checked";
+    const url = store.state.axiosLink+"/api/alarm/checked";
 
     function checked(i) {
         axios.post(url, i, { headers });

@@ -1,10 +1,7 @@
 package ds.pirate.backend.controller;
 
-import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.service.SubscribeService.SubscribeService;
-import ds.pirate.backend.vo.EmbedCard;
 import ds.pirate.backend.vo.MySubInfo;
-import ds.pirate.backend.vo.search;
 import ds.pirate.backend.vo.subcard;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

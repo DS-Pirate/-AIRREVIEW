@@ -2,7 +2,6 @@ package ds.pirate.backend.controller;
 
 import java.util.List;
 
-import ds.pirate.backend.vo.MySubInfo;
 import ds.pirate.backend.vo.subcard;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
