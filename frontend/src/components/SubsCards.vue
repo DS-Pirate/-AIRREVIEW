@@ -56,7 +56,7 @@ console.log(props.card);
 
 //구독유무
 function getSub(){
-  const url = `/airreview/api/followyn`;
+  const url = store.state.axiosLinkAdmin+`/api/followyn`;
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
     "Authorization": store.state.token,
@@ -77,7 +77,7 @@ function getSub(){
 
 //구독 버튼
 async function followClick(){
-  const url = `/airreview/api/follow`;
+  const url = store.state.axiosLinkAdmin+`/api/follow`;
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
     "Authorization": store.state.token,
