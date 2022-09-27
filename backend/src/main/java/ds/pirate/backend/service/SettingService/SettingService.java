@@ -6,7 +6,8 @@ import org.springframework.data.domain.Page;
 
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.entity.airUser;
-// import ds.pirate.backend.repository.ArticleRepository.getMySettingArticleList;
+import ds.pirate.backend.repository.ArticleReportRepository.getMySettingReportList;
+import ds.pirate.backend.repository.ArticleRepository.getMySettingArticleList;
 import ds.pirate.backend.vo.userid;
 
 public interface SettingService {
@@ -17,7 +18,9 @@ public interface SettingService {
 
   HashMap<String, Object> settingArticleList(Long userid);
 
-  // Page<getMySettingArticleList> articleListByUserid(Long userid, Integer pageNum);
+  Page<getMySettingArticleList> articleListByUserid(Long userid, Integer pageNum);
+
+  Page<getMySettingReportList> reportListByUserid(Long userid, Integer pageNum);
 
   default airUserDTO entityToDTO(airUser entity) {
     airUserDTO dto = airUserDTO.builder()

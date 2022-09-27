@@ -17,10 +17,12 @@ import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.repository.ArticleReportRepository;
 import ds.pirate.backend.repository.ArticleRepository;
-// import ds.pirate.backend.repository.ArticleRepository.getMySettingArticleList;
+import ds.pirate.backend.repository.ArticleRepository.getMySettingArticleList;
 import ds.pirate.backend.repository.LikeUnlikeRepository;
 import ds.pirate.backend.repository.UserRepository;
+import ds.pirate.backend.repository.ArticleReportRepository.getMySettingReportList;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import ds.pirate.backend.service.UserService.UserService;
 import ds.pirate.backend.vo.userid;
@@ -37,6 +39,7 @@ public class SettingServiceImpl implements SettingService {
   private final ArticleRepository arepo;
   private final ArticleService aService;
   private final LikeUnlikeRepository lrepo;
+  private final ArticleReportRepository rrepo;
 
   @Override
   public airUserDTO getByUserId(Long userid) {
@@ -50,7 +53,7 @@ public class SettingServiceImpl implements SettingService {
     if (encoder.matches(vo.getCpasswd(), result.get().getPasswd())) {
       urepo.changePasswdbyIdAndcpass(vo.getUserid(),
           encoder.encode(vo.getUpasswd()),
-          vo.getName(), vo.getEmail(), vo.getUserintro(), vo.getBirthday());
+          vo.getName(), vo.getEmail(), vo.getUserintro(), vo.getBirthDay());
       return "설정을 변경했습니다";
     } else {
       return "다시 설정해주세요";
@@ -78,10 +81,17 @@ public class SettingServiceImpl implements SettingService {
     return hash;
   }
 
-  // @Override
-  // public Page<getMySettingArticleList> articleListByUserid(Long userid, Integer pageNum) {
-  //     Pageable pageable = PageRequest.of(pageNum, 10);
-  //     log.info("page:::::::::::::" + pageNum);
-  //     return arepo.getSettingArticleListByUserIdWithPageable(userid, pageable);
-  // }
+  @Override
+  public Page<getMySettingArticleList> articleListByUserid(Long userid, Integer pageNum) {
+    Pageable pageable = PageRequest.of(pageNum, 10);
+    log.info("page:::::::::::::" + pageNum);
+    return arepo.getSettingArticleListByUserIdWithPageable(userid, pageable);
+  }
+
+  @Override
+  public Page<getMySettingReportList> reportListByUserid(Long userid, Integer pageNum) {
+    Pageable pageable = PageRequest.of(pageNum, 10);
+    log.info("page:::::::::::::" + pageNum);
+    return rrepo.getSettingReportListByUserIdWithPageable(userid, pageable);
+  }
 }

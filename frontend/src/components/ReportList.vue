@@ -1,6 +1,6 @@
 <template>
 <form class="d-flex flex-column pt-5" action="report" method="post">
-<h2>신고 관리</h2>
+<h1>신고 관리</h1><br>
 <table class="table table-hover">
   <thead>
     <tr class="table-header">
