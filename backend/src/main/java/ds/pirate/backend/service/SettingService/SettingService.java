@@ -10,6 +10,7 @@ import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.repository.ArticleRepository.getMySettingArticleList;
 import ds.pirate.backend.vo.userid;
+import org.springframework.data.domain.Page;
 
 public interface SettingService {
 

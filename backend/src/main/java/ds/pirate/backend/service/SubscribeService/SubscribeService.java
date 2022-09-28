@@ -1,5 +1,6 @@
 package ds.pirate.backend.service.SubscribeService;
 
+import java.util.HashMap;
 import java.util.List;
 
 import ds.pirate.backend.dto.airUserDTO;
@@ -11,6 +12,9 @@ import ds.pirate.backend.vo.subcard;
 public interface SubscribeService {
   List<airUserDTO> getListUserId(Long userid);
   List<MySubInfo> getFollowingInfoList(subcard vo);
+
+//  HashMap<String, Object> getFollowingInfoList(subcard vo);
+
   Long getFollowUnFollowView(subcard vo);
   String FollowUnFollow(subcard vo);
 
