@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class uImageDTO {
-    private Long iid; // pk
+    private Long iid; 
     private String fileName;
     private int idx;
     private airUser airuser;

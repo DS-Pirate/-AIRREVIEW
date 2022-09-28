@@ -41,7 +41,6 @@ public interface UserService {
         .q3(entity.getQ2())
         .userIntro(entity.getUserIntro())
         .build();
-        //UImageList와 acomments는 service에서 hashmap으로 합치거나 따로 불러서 넘겨주는 것을 추천 
         return dto;
     }
 }

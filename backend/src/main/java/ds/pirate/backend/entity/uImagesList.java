@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class uImagesList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long iid; // pk
+    private Long iid; 
 
     @Column
     private String fileName;

@@ -135,7 +135,6 @@ public class ArticleServiceImpl implements ArticleService {
         }
     }
 
-    // 이부분 카드 내용 참고!
     @Override
     public HashMap<String, Object> getCardInfosByHashTagName(Long aid, Pageable pageable) {
         HashMap<String, Object> cardInfo = new HashMap<>();
