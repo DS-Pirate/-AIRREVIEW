@@ -6,4 +6,5 @@ import lombok.Data;
 public class subcard {
     Long userid;
     Long aid;
+    int reqPage;
 }

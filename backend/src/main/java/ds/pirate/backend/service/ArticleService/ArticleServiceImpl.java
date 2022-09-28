@@ -468,34 +468,33 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<EmbedCard> getSearchList(search vo) {
+    public HashMap<String, Object> getSearchList(search vo) {
         log.info(vo.getOrder());
+        Pageable pageable;
         if (vo.getOrder().equals("view")) {
-            Sort sort = sortByOpencount();
-            List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream().map(v -> {
-                return new EmbedCard(v);
-            }).collect(Collectors.toList());
-            return result;
-        } else if (vo.getOrder().equals("star")) {
-            Sort sort = sortByArticleRate();
-            List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream().map(v -> {
-                return new EmbedCard(v);
-            }).collect(Collectors.toList());
-            return result;
+            pageable = PageRequest.of(vo.getReqPage(), 9,Sort.by(Sort.Direction.DESC, "opencount"));
         } else if (vo.getOrder().equals("like")) {
-            Sort sort = sortByLikeCount();
-            List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream().map(v -> {
-                return new EmbedCard(v);
-            }).collect(Collectors.toList());
-            return result;
+            pageable = PageRequest.of(vo.getReqPage(), 9,Sort.by(Sort.Direction.DESC, "likeCount"));
+        } else if (vo.getOrder().equals("star")) {
+            pageable = PageRequest.of(vo.getReqPage(), 9,Sort.by(Sort.Direction.DESC, "articleRate"));
         } else {
-            Sort sort = sortByAid();
-            List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream().map(v -> {
-                return new EmbedCard(v);
-            }).collect(Collectors.toList());
-            return result;
+            pageable = PageRequest.of(vo.getReqPage(), 9,Sort.by(Sort.Direction.DESC, "aid"));
         }
-    }
+
+        Pageable pageablee = PageRequest.of(vo.getReqPage(), 9,Sort.by(Sort.Direction.DESC, "aid"));
+        Page<ArticlesList> page = repo.getListAndAuthorByAuthorOrAtitlePage(vo.getSearch(), pageablee);
+        List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), pageable).get().stream().map(v -> {
+            return new EmbedCard(v);
+        }).collect(Collectors.toList());
+
+        HashMap<String, Object> cardInfo = new HashMap<>();
+        cardInfo.put("articles", result);
+        cardInfo.put("page", pageable.getPageNumber());
+        cardInfo.put("pageTotalCount", page.getTotalPages());
+
+        return cardInfo;
+        }
+
 
     @Override
     public HashMap<String, Object> getArticleListBySub(comment vo) {
