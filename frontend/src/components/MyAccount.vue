@@ -120,7 +120,6 @@ export default {
       console.log(regdate);
 
     })
-    console.log(state.year);
     }
     a()
 
@@ -128,7 +127,6 @@ export default {
 
       const url2 = store.state.axiosLink+'/api/setting/changepasswd'
 
-      // console.log(state.birthDay);
 
   
 

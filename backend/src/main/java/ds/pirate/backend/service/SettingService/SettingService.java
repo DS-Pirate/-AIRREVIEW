@@ -25,6 +25,8 @@ public interface SettingService {
 
   Boolean remove(Long reid);
 
+  // List<QuestionDTO> getQuestionList(Long userid);
+
   default airUserDTO entityToDTO(airUser entity) {
     airUserDTO dto = airUserDTO.builder()
         .passwd(entity.getPasswd())
@@ -61,4 +63,5 @@ public interface SettingService {
 
     return entity;
   }
+
 }

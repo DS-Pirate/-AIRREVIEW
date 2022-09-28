@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import java.util.HashMap;
+
 
 @Log4j2
 @RestController
@@ -23,10 +25,9 @@ public class ApiController {
     private final ArticleService aservice;
 
     @RequestMapping(value = "/article/card/sub", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HashMap<String, Object>> ArticleCardsOrderSub(@RequestBody comment vo){
+    public ResponseEntity<List<EmbedCard>> ArticleCardsOrderSub(@RequestBody comment vo) {
         log.info(vo);
         return new ResponseEntity<>(aservice.getArticleListBySub(vo), HttpStatus.OK);
     }
 
-    
 }

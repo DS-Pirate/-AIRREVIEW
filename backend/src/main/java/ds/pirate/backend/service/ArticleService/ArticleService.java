@@ -63,13 +63,13 @@ public interface ArticleService {
 
     HashMap<String, Object> getArticleList(comment vo);
 
-    HashMap<String, Object> getArticleListOrder(search vo);
+    List<EmbedCard> getArticleListOrder(search vo);
 
     List<acommentDTO> getListByUserIdAndAuthorId(Long userid, Long authorid);
 
     HashMap<String, Object> getSearchList(search vo);
     HashMap<String, Object> getArticleListBySub(comment vo);
-
+    
     default ArticlesList dtoToEntity(ArticleDTO dto) {
         ArticlesList aentity = ArticlesList.builder()
                 .aid(dto.getAid())

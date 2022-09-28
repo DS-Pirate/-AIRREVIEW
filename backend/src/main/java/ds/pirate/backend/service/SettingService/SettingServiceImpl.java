@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -110,5 +111,15 @@ public class SettingServiceImpl implements SettingService {
       return false;
     }
   }
+
+  // @Override
+  // public List<QuestionDTO> getQuestionList(Long userid) {
+  // List<QuestionsList> getList = qrepo.findByUserid(airUser.builder()
+  // .userid(userid)
+  // .build());
+  // return getList.stream().map((Function<QuestionsList, QuestionDTO>) v -> {
+  // return sService.entityToDTO(v);
+  // }).collect(Collectors.toList());
+  // }
 
 }
