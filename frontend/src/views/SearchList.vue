@@ -39,9 +39,7 @@ export default {
   setup() {
     const state = reactive({
       cards: 0,
-      notSearchWord : false,
-      reqPage: 0,
-      pageTotalCount: 0,
+      notSearchWord : false
     })
     const router = useRouter()
     let searchword = new URLSearchParams(window.location.search).get("cards");
@@ -57,57 +55,39 @@ export default {
       }
       const body = {
         search: searchword,
-        order: orderword,
-        reqPage: state.reqPage
+        order: orderword
       }
-      console.log(body)
-      if (state.reqPage == 0) state.cards = null;
+      state.cards = null;
+      console.log("2." + body);
       await axios.post(url, body, {headers}).then(function (res){
-        state.pageTotalCount = res.data.pageTotalCount;
-        if (body.reqPage == 0) {
-          state.cards = res.data.articles;
-        } else {
-          for (let i = 0; i < 9; i++) {
-            state.cards.push(res.data.articles[i]);
-          }
-        }
+        console.log("3. 시작");
+        console.log(res.data);
+        state.cards = res.data;
+        console.log("4. 끝")
+        if (state.cards.length == 0){
+          state.notSearchWord = true;
+        } else state.notSearchWord = false;
       })
     }
 
     async function view (){
-      state.reqPage=0
       await router.push(`${store.state.axiosLink}/search?cards=${searchword}&order=view`);
       getCardsInformation()
     }
 
     async function latest(){
-      state.reqPage=0
       await router.push(`${store.state.axiosLink}/search?cards=${searchword}&order=new`);
       getCardsInformation()
     }
 
     async function star(){
-      state.reqPage=0
       await router.push(`${store.state.axiosLink}/search?cards=${searchword}&order=star`);
       getCardsInformation()
     }
 
     async function like(){
-      state.reqPage=0
       await router.push(`${store.state.axiosLink}/search?cards=${searchword}&order=like`);
       getCardsInformation()
-    }
-
-    function getMoreCards(){
-      state.reqPage+=1
-      getCardsInformation()
-    }
-
-    window.addEventListener("scroll", windowSize)
-    function windowSize(){
-      if(window.innerHeight+window.scrollY>=document.body.offsetHeight){
-        getMoreCards()
-      }
     }
 
       getCardsInformation()

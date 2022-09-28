@@ -6,5 +6,4 @@ import lombok.Data;
 public class search {
     String search;
     String order;
-    int reqPage;
 }
