@@ -11,7 +11,11 @@
                 <li class="list-group-item border border-0" v-on:click="change('category')">구독 정보</li>
                 <span>|</span>
                 <li class="list-group-item border border-0" v-on:click="change('channelinfo')">내 정보</li>
+                <span>|</span>
+              <button type="button"  class="list-group-item border border-0 followsubmit" v-if="!(store.state.userid == state.following ) && $store.state.token" @click="followsubmit()" >구독하기</button>
+              <button type="button"  class="list-group-item border border-0 followsubmit" v-if="store.state.userid == state.following && $store.state.token" @click="followsubmit()" >구독해지</button>
             </ul>
+
         </div>
         <div class="chcategory p-3 my-3 shadow-sm bg-white d-flex h-auto" v-if="state.form == 'list'">
             <PostList :id="id" />
@@ -34,6 +38,7 @@
 
     let state = reactive({
         form: "list",
+      following: ''
     });
 
     let id = new URLSearchParams(window.location.search).get("channel");
@@ -54,6 +59,50 @@
     }
 
     console.log("현재채널" + id);
+
+    async function followsubmit(){
+      const url = store.state.axiosLink+`/api/follow`;
+      const headers = {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": store.state.token,
+        "userid": store.state.userid,
+      };
+      const body = {
+        userid: store.state.userid,
+        aid: id
+      }
+      await axios.post(url, body, {headers}).then(function (res) {
+        console.log("구독취소유무");
+        console.log(res.data);
+        if(res.data == "구독취소"){
+          alert("구독을 취소하였습니다!")
+        } else {
+          alert(`구독하였습니다!`)
+        }
+      })
+      await getSub()
+    }
+    function getSub(){
+      const url = store.state.axiosLink+`/api/followyn`;
+      const headers = {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": store.state.token,
+        "userid": store.state.userid,
+      };
+      const body = {
+        userid: store.state.userid,
+        aid: id
+      }
+      console.log(body);
+      state.following =  '';
+      axios.post(url, body, {headers}).then(function (res) {
+        console.log("구독유무");
+        console.log(res.data);
+        state.following = res.data;
+      })
+    }
+    getSub()
+
 </script>
 <style lang="sass" scoped>
     .chimg

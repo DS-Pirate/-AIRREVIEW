@@ -7,7 +7,7 @@
                 <img class="img-fluid py-2 px-3" style="max-height: 60px" src="@/assets/pngwing.com.png" />
             </div>
             <div class="comment-section-left-delete">
-                <i class="bi bi-x-lg" @click="remove(props.cardInfo.cid)"></i>
+                <i class="bi bi-x-lg" v-if="props.cardInfo.userid == store.state.userid" @click="remove(props.cardInfo.cid)"></i>
             </div>
         </div>
         
@@ -68,6 +68,8 @@
         userid: store.state.userid,
     };
 
+    console.log(props.cardInfo);
+    
     let commentInfo = {
         reply: null,
     };

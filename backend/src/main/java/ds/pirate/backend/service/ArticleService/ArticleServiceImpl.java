@@ -133,7 +133,6 @@ public class ArticleServiceImpl implements ArticleService {
         }
     }
 
-    // 이부분 카드 내용 참고!
     @Override
     public HashMap<String, Object> getCardInfosByHashTagName(Long aid, Pageable pageable) {
         HashMap<String, Object> cardInfo = new HashMap<>();
@@ -529,22 +528,6 @@ public class ArticleServiceImpl implements ArticleService {
             return new EmbedCard(v);
         }).collect(Collectors.toList());
         return result;
-    }
-
-    private Sort sortByAid() {
-        return Sort.by(Sort.Direction.DESC, "aid");
-    }
-
-    private Sort sortByOpencount() {
-        return Sort.by(Sort.Direction.DESC, "opencount");
-    }
-
-    private Sort sortByArticleRate() {
-        return Sort.by(Sort.Direction.DESC, "articleRate");
-    }
-
-    private Sort sortByLikeCount() {
-        return Sort.by(Sort.Direction.DESC, "likeCount");
     }
 
 }

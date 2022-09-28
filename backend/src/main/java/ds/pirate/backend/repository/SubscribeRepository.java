@@ -28,9 +28,8 @@ public interface SubscribeRepository extends JpaRepository<subscribList, Long> {
             "LEFT JOIN (SELECT u.userid, COUNT(s.target_id) AS following FROM air_user u LEFT JOIN subscrib_list s ON u.userid = s.userid_userid GROUP BY u.userid) f ON f.userid = ss.target_id " +
             "LEFT JOIN (SELECT u.userid, COUNT(s.userid_userid) AS follower FROM air_user u LEFT JOIN subscrib_list s ON u.userid = s.target_id GROUP BY u.userid) fo ON fo.userid = ss.target_id " +
             "WHERE u.userid = :userid " +
-            "GROUP BY ss.target_id " +
-            "ORDER BY follower DESC;", nativeQuery = true)
-    Optional<List<getMySubInfo>> getPostFollwerFollwingInSubByUserid(Long userid);
+            "GROUP BY ss.target_id " , nativeQuery = true)
+    Optional<Page<getMySubInfo>> getPostFollwerFollwingInSubByUserid(Long userid, Pageable pageable);
 
     @Query(value = "SELECT s.userid_userid FROM subscrib_list s WHERE s.userid_userid=:userid AND s.target_id = :targetid",nativeQuery = true)
     Long getFollowingByUseridAndTargetid(Long userid, Long targetid);

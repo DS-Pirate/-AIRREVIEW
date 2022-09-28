@@ -10,7 +10,9 @@ import ds.pirate.backend.vo.subcard;
 
 public interface SubscribeService {
   List<airUserDTO> getListUserId(Long userid);
+
   List<MySubInfo> getFollowingInfoList(subcard vo);
+
   Long getFollowUnFollowView(subcard vo);
   String FollowUnFollow(subcard vo);
 
