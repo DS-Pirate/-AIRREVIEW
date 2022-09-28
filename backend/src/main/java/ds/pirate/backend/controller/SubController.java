@@ -28,10 +28,4 @@ public class SubController {
     log.info(vo);
     return new ResponseEntity<>(service.getFollowingInfoList(vo), HttpStatus.OK);
   }
-
-//  @RequestMapping(value = "/following", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//  public ResponseEntity<HashMap<String, Object>> ArticleCardsOrderList(@RequestBody subcard vo){
-//    log.info(vo);
-//    return new ResponseEntity<>(service.getFollowingInfoList(vo), HttpStatus.OK);
-//  }
 }
