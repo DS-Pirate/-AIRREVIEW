@@ -1,6 +1,6 @@
 <template>
   <div class="myAccount p-5">
-    <!-- 이미지 -->
+    <!-- 이미지 --> 
     <div class="imgBox position-relative">
       <div class="picDiv position-absolute">
         <form action="./setting/userimage" class="filebox" @change="submit($event)">
@@ -35,7 +35,7 @@
       <div class="d-flex">
         <div class="col-md-2 w-15">
           <label for="inputState" class="form-label">생년월일</label>
-          <select id="inputState" class="form-select">
+          <select id="inputState" class="form-select" v-model="state.year">
             <option selected>{{state.year}}</option>
             <option v-for="i in 82" :key="i">{{ i + 1940 }}</option>
           </select>
@@ -43,14 +43,14 @@
 
         <div class="col-md-2 w-15 mx-2">
           <label for="inputState" class="form-label"> </label>
-          <select id="inputState" class="form-select mt-2">
+          <select id="inputState" class="form-select mt-2" v-model="state.month">
             <option selected>{{state.month}}</option>
             <option v-for="i in 12" :key="i">{{ i }}</option>
           </select>
         </div>
         <div class="col-md-2 w-15">
           <label for="inputState" class="form-label"> </label>
-          <select id="inputState" class="form-select mt-2">
+          <select id="inputState" class="form-select mt-2" v-model="state.date">
             <option selected>{{state.date}}</option>
             <option v-for="i in 31" :key="i">{{ i }}</option>
           </select>
@@ -86,6 +86,9 @@ export default {
       name: '',
       email: '',
       birthDay: '',
+      year: '',
+      month: '',
+      date: '',
       userintro: '',
       cpasswd: '',
       upasswd: '',
@@ -120,11 +123,6 @@ export default {
     console.log(state.year);
     }
     a()
-   
-    const regdate = new Date()
-    regdate.setFullYear(state.year);
-    regdate.setDate();
-    regdate.setMonth();
 
     const updatesetting = function () {
 
@@ -137,7 +135,6 @@ export default {
         axios.post(url2, state, { headers }).then(function (res) {
         alert(res.data)
         res.data == "다시 설정해주세요" ? "" : router.go(0)
-        console.log(res);
       })
     }
 

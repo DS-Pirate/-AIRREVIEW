@@ -3,7 +3,6 @@ package ds.pirate.backend.service.ArticleService;
 import java.util.HashMap;
 import java.util.List;
 
-
 import ds.pirate.backend.vo.EmbedCard;
 import ds.pirate.backend.vo.comment;
 import ds.pirate.backend.vo.search;
@@ -64,7 +63,7 @@ public interface ArticleService {
 
     String ArticleModify(ArticleDTO dto, List<String> tags);
 
-//    List<EmbedCard> getArticleList(comment vo);
+    // List<EmbedCard> getArticleList(comment vo);
 
     HashMap<String, Object> getArticleList(comment vo);
 
@@ -73,6 +72,7 @@ public interface ArticleService {
     List<acommentDTO> getListByUserIdAndAuthorId(Long userid, Long authorid);
 
     List<EmbedCard> getSearchList(search vo);
+
     List<EmbedCard> getArticleListBySub(subcard vo);
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {
@@ -166,7 +166,9 @@ public interface ArticleService {
         reportDTO dto = reportDTO.builder().reid(entity.getReid())
                 .articleid(entity.getArticles().getAid())
                 .userid(entity.getUserid().getUserid())
-                .reportContext(entity.getReportContext()).build();
+                .reportContext(entity.getReportContext())
+                .regDate(entity.getRegDate())
+                .build();
         return dto;
     }
 

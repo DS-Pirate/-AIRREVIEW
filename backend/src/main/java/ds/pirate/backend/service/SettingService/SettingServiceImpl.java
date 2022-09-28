@@ -1,5 +1,6 @@
 package ds.pirate.backend.service.SettingService;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,24 +8,30 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.airUserDTO;
+import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.entity.reportList;
 import ds.pirate.backend.repository.ArticleReportRepository;
 import ds.pirate.backend.repository.ArticleRepository;
 import ds.pirate.backend.repository.ArticleRepository.getMySettingArticleList;
 import ds.pirate.backend.repository.LikeUnlikeRepository;
 import ds.pirate.backend.repository.UserRepository;
-import ds.pirate.backend.repository.ArticleReportRepository.getMySettingReportList;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import ds.pirate.backend.service.UserService.UserService;
 import ds.pirate.backend.vo.userid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class SettingServiceImpl implements SettingService {
@@ -46,9 +53,11 @@ public class SettingServiceImpl implements SettingService {
   public String changePasswd(userid vo) {
     Optional<airUser> result = urepo.findByUserId(vo.getUserid());
     if (encoder.matches(vo.getCpasswd(), result.get().getPasswd())) {
+      LocalDateTime birthday = LocalDateTime.of(vo.getYear(), vo.getMonth(), vo.getDate(), 0, 0, 0);
+      log.info("생일 : " + birthday);
       urepo.changePasswdbyIdAndcpass(vo.getUserid(),
           encoder.encode(vo.getUpasswd()),
-          vo.getName(), vo.getEmail(), vo.getUserintro(), vo.getBirthDay());
+          vo.getName(), vo.getEmail(), vo.getUserintro(), birthday);
       return "설정을 변경했습니다";
     } else {
       return "다시 설정해주세요";
@@ -84,9 +93,24 @@ public class SettingServiceImpl implements SettingService {
   }
 
   @Override
-  public Page<getMySettingReportList> reportListByUserid(Long userid, Integer pageNum) {
-    Pageable pageable = PageRequest.of(pageNum, 10);
-    log.info("page:::::::::::::" + pageNum);
-    return rrepo.getSettingReportListByUserIdWithPageable(userid, pageable);
+  public List<reportDTO> getReportList(Long user) {
+    List<reportList> getList = rrepo.findByUserid(airUser.builder()
+        .userid(user)
+        .build());
+    return getList.stream().map((Function<reportList, reportDTO>) v -> {
+      return aService.reportEntitytoDTO(v);
+    }).collect(Collectors.toList());
   }
+
+  @Override
+  public Boolean remove(Long reid) {
+    try {
+      rrepo.deleteById(reid);
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
 }
