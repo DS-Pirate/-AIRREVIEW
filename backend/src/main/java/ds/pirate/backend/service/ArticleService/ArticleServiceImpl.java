@@ -512,18 +512,4 @@ public class ArticleServiceImpl implements ArticleService {
 
         return cardInfo;
     }
-
-    private Sort sortByAid() {
-        return Sort.by(Sort.Direction.DESC, "aid");
-    }
-    private Sort sortByOpencount() {
-        return Sort.by(Sort.Direction.DESC, "opencount");
-    }
-    private Sort sortByArticleRate() {
-        return Sort.by(Sort.Direction.DESC, "articleRate");
-    }
-    private Sort sortByLikeCount() {
-        return Sort.by(Sort.Direction.DESC, "likeCount");
-    }
-
 }

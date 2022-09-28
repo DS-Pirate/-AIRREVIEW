@@ -26,18 +26,34 @@ async function getSub(){
   const body = {
     userid: props.id,
     aid: 0,
-    // reqPage: state.reqPage
+    reqPage: state.reqPage
   }
-  // if(body.reqPage == 0)
-    state.cards = null;
-  console.log(body);
+  if(body.reqPage == 0) state.cards = null;
+  console.log("body :" + body);
   await axios.post(url, body, {headers}).then(function (res) {
-    console.log("3. 시작");
-    console.log(res.data);
-    state.cards = res.data;
-    console.log("4. 끝")
+    if (body.reqPage == 0) {
+      state.cards = res.data;
+    } else {
+      for (let i = 0; i < 9; i++) {
+        state.cards.push(res.data[i]);
+      }
+    }
   })
 }
+
+function getMoreCards(){
+  state.reqPage+=1
+  getSub()
+}
+
+window.addEventListener("scroll", windowSize)
+function windowSize(){
+  if(window.innerHeight+window.scrollY>=document.body.offsetHeight){
+    getMoreCards()
+  }
+}
+
+
 getSub()
 
 </script>
