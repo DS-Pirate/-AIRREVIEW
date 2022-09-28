@@ -67,7 +67,7 @@ public class ArticleViewController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<EmbedCard>> ArticleCardsSearch(@RequestBody search vo){
+    public ResponseEntity<HashMap<String, Object>> ArticleCardsSearch(@RequestBody search vo){
         log.info(vo);
         return new ResponseEntity<>(aservice.getSearchList(vo), HttpStatus.OK);
     }

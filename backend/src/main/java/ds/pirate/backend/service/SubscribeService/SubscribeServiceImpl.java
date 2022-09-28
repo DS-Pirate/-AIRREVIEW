@@ -1,5 +1,6 @@
 package ds.pirate.backend.service.SubscribeService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -8,6 +9,9 @@ import java.util.stream.Collectors;
 import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.vo.MySubInfo;
 import ds.pirate.backend.vo.subcard;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ds.pirate.backend.dto.airUserDTO;
@@ -42,6 +46,23 @@ public class SubscribeServiceImpl implements SubscribeService {
         }).collect(Collectors.toList());
         return result;
     }
+
+//    @Override
+//    public HashMap<String, Object> getFollowingInfoList(subcard vo) {
+//        Pageable pageable = PageRequest.of(vo.getReqPage(), 5);
+//        List<MySubInfo> result = subrepo.getPostFollwerFollwingInSubByUserid(vo.getUserid(), pageable).get().stream().map(v->{
+//            return new MySubInfo(v);
+//        }).collect(Collectors.toList());
+//        //pageablee은 page를 위해 임시로 만들었음
+//        Pageable pageablee = PageRequest.of(vo.getReqPage(), 5);
+//        Page<subscribList> page = subrepo.getPostFollwerFollwingInSubByUseridPage(vo.getUserid(), pageablee);
+//        HashMap<String, Object> cardInfo = new HashMap<>();
+//        cardInfo.put("articles", result);
+//        cardInfo.put("page", pageable.getPageNumber());
+//        cardInfo.put("pageTotalCount", page.getTotalPages());
+//
+//        return cardInfo;
+//    }
 
     @Override
     public Long getFollowUnFollowView(subcard vo) {
