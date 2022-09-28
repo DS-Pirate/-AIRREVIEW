@@ -1,6 +1,5 @@
 package ds.pirate.backend.service.SubscribeService;
 
-import java.util.HashMap;
 import java.util.List;
 
 import ds.pirate.backend.dto.airUserDTO;

@@ -1,9 +1,7 @@
 package ds.pirate.backend.controller;
 
 import ds.pirate.backend.service.ArticleService.ArticleService;
-import ds.pirate.backend.vo.EmbedCard;
 import ds.pirate.backend.vo.comment;
-import ds.pirate.backend.vo.subcard;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.List;
 
 @Log4j2
 @RestController
