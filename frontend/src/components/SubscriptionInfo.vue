@@ -15,6 +15,7 @@ import store from "@/store";
 let props = defineProps(["id"])
 const state = reactive({
   cards : [],
+  reqPage: 0,
     })
 
 async function getSub(){
@@ -24,9 +25,11 @@ async function getSub(){
   }
   const body = {
     userid: props.id,
-    aid: 0
+    aid: 0,
+    // reqPage: state.reqPage
   }
-  state.cards = null;
+  // if(body.reqPage == 0)
+    state.cards = null;
   console.log(body);
   await axios.post(url, body, {headers}).then(function (res) {
     console.log("3. 시작");
