@@ -1,6 +1,5 @@
 package ds.pirate.backend.service.SubscribeService;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -9,9 +8,7 @@ import java.util.stream.Collectors;
 import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.vo.MySubInfo;
 import ds.pirate.backend.vo.subcard;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 
 import ds.pirate.backend.dto.airUserDTO;

@@ -89,11 +89,6 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
                         "group by a.aid")
         Optional<Page<getEmbedCardsInformation>> getListAndAuthor2(Pageable pageable);
 
-        @Query("SELECT aid " +
-                        "FROM ArticlesList " +
-                        "where opend = 1L " +
-                        "group by aid")
-        Page<ArticlesList> getListAndAuthorPage(Pageable pageable);
 
         @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate, "
                         +
