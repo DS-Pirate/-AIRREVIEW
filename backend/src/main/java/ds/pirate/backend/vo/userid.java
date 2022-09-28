@@ -13,4 +13,7 @@ public class userid {
     String email;
     String userintro;
     LocalDateTime birthDay;
+    int year;
+    int month;
+    int date;
 }
