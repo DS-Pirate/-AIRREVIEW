@@ -8,8 +8,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-
-import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,12 +29,11 @@ import ds.pirate.backend.service.ArticleService.ArticleService;
 import ds.pirate.backend.service.UserService.UserService;
 import ds.pirate.backend.vo.userid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
-@Log4j2
+
 @Service
 @RequiredArgsConstructor
-@Log4j2
+
 public class SettingServiceImpl implements SettingService {
   private final UserRepository urepo;
   private final UserService uService;
@@ -57,7 +54,6 @@ public class SettingServiceImpl implements SettingService {
     Optional<airUser> result = urepo.findByUserId(vo.getUserid());
     if (encoder.matches(vo.getCpasswd(), result.get().getPasswd())) {
       LocalDateTime birthday = LocalDateTime.of(vo.getYear(), vo.getMonth(), vo.getDate(), 0, 0, 0);
-      log.info("생일 : " + birthday);
       urepo.changePasswdbyIdAndcpass(vo.getUserid(),
           encoder.encode(vo.getUpasswd()),
           vo.getName(), vo.getEmail(), vo.getUserintro(), birthday);
@@ -91,7 +87,6 @@ public class SettingServiceImpl implements SettingService {
   @Override
   public Page<getMySettingArticleList> articleListByUserid(Long userid, Integer pageNum) {
     Pageable pageable = PageRequest.of(pageNum, 10);
-    log.info("page:::::::::::::" + pageNum);
     return arepo.getSettingArticleListByUserIdWithPageable(userid, pageable);
   }
 
