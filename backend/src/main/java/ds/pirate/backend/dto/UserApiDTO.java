@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class UserApiDTO {
-    private Long userid; //자동으로 들어가니 찾는 거 아니면 안쓰시는걸 추천, email로 찾는 걸 더 추천
+    private Long userid; 
     private String passwd;
     private String eMail;
     private String airName;
