@@ -42,12 +42,11 @@ export default {
     let body = reactive({
       reqPage: 0,
     });
-    //state.cards 날리기
+
     function getCardsInformation() {
       console.log("body"+body.reqPage);
         const url = store.state.axiosLink + "/article/card"
         axios.post(url, body).then((res) => {
-          console.log(res.data);
           state.pageTotalCount = res.data.pageTotalCount;
           if (body.reqPage == 0) {
             state.cards = res.data.articles;
@@ -60,68 +59,83 @@ export default {
         })
     }
 
-
-      async function order(order) {
+      //()순 정렬
+      async function order(order, view,like,star,latest) {
         state.main = false;
         state.sub = false;
-
+        state.view = view;
+        state.like =like;
+        state.star = star;
+        state.latest = latest;
         const url = `${store.state.axiosLink}/article/card/order`
         const headers = {
           "Content-Type": "application/json; charset=utf-8",
         }
-        const body = {
+        const bodyOrder = {
           search: "null",
-          order: order
+          order: order,
+          reqPage: body.reqPage
         }
-        state.cards = null;
-        console.log(body);
-        await axios.post(url, body, {headers}).then(function (res) {
-          console.log("3. 시작");
-          console.log(res.data);
-          state.cards = res.data;
-          console.log("4. 끝")
+        if(body.reqPage == 0) state.cards = null;
+        console.log(bodyOrder);
+        await axios.post(url, bodyOrder, {headers}).then(function (res) {
+          state.pageTotalCount = res.data.pageTotalCount;
+          if (body.reqPage == 0) {
+            state.cards = res.data.articles;
+          } else {
+            for (let i = 0; i < 9; i++) {
+              state.cards.push(res.data.articles[i]);
+            }
+          }
         })
       }
 
 
     async function view (){
       body.reqPage=0
-      state.like =false;
-      state.latest = false;
-      state.star = false;
-      order("view");
+      order("view", true,false,false,false);
     }
     async function like (){
       body.reqPage=0
-      order("like")
+      order("like", false,true, false,false)
     }
     async function star (){
       body.reqPage=0
-      order("star")
+      order("star", false,false, true,false)
     }
     async function latest (){
       body.reqPage=0
-      order("latest")
+      order("latest", false,false,false, true)
     }
 
     async function sub(){
+      state.sub = true;
+      state.view = false;
+      state.like =false;
+      state.latest = false;
+      state.star = false;
+      state.main = false;
       const url = `${store.state.axiosLink}/api/article/card/sub`
       const headers = {
         "Content-Type": "application/json; charset=utf-8",
         "Authorization": store.state.token,
         "userid" : store.state.userid
       }
-      const body = {
+      const subbody = {
         userid : store.state.userid,
-        aid : 0
+        reqPage : body.reqPage
       }
-      state.cards = null;
-      console.log(body);
-      await axios.post(url, body, {headers}).then(function (res) {
-        console.log("3. 시작");
-        console.log(res.data);
-        state.cards = res.data;
-        console.log("4. 끝")
+      if(body.reqPage == 0) state.cards = null;
+      console.log(subbody);
+      await axios.post(url, subbody, {headers}).then(function (res) {
+        state.pageTotalCount = res.data.pageTotalCount;
+        if (body.reqPage == 0) {
+          state.cards = res.data.articles;
+        } else {
+          for (let i = 0; i < 9; i++) {
+            state.cards.push(res.data.articles[i]);
+          }
+        }
       })
     }
 
@@ -129,6 +143,16 @@ export default {
       body.reqPage+=1
       if (state.main == true) {
         getCardsInformation()
+      } else if (state.sub == true){
+        sub()
+      }else if (state.view == true){
+        order("view",true,false,false,false);
+      }else if (state.like == true){
+        order("like", false,true, false,false);
+      }else if (state.star == true){
+        order("star", false,false,true, false);
+      }else if (state.latest == true){
+        order("latest", false,false,false, true);
       }
     }
 

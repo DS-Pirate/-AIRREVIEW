@@ -15,6 +15,7 @@ import store from "@/store";
 let props = defineProps(["id"])
 const state = reactive({
   cards : [],
+  reqPage: 0,
     })
 
 async function getSub(){
@@ -24,7 +25,6 @@ async function getSub(){
   }
   const body = {
     userid: props.id,
-
     aid: 0,
     reqPage: state.reqPage
   }
