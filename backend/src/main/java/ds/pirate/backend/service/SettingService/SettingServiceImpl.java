@@ -113,4 +113,14 @@ public class SettingServiceImpl implements SettingService {
     }
   }
 
+  // @Override
+  // public List<QuestionDTO> getQuestionList(Long userid) {
+  // List<QuestionsList> getList = qrepo.findByUserid(airUser.builder()
+  // .userid(userid)
+  // .build());
+  // return getList.stream().map((Function<QuestionsList, QuestionDTO>) v -> {
+  // return sService.entityToDTO(v);
+  // }).collect(Collectors.toList());
+  // }
+
 }
