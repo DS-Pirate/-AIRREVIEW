@@ -31,7 +31,6 @@ import ds.pirate.backend.service.ArticleService.ArticleService;
 import ds.pirate.backend.service.UserService.UserService;
 import ds.pirate.backend.vo.userid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Service

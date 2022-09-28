@@ -1,6 +1,5 @@
 package ds.pirate.backend.service.ArticleService;
 
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -10,11 +9,9 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-
 import ds.pirate.backend.vo.EmbedCard;
 import ds.pirate.backend.vo.comment;
 import ds.pirate.backend.vo.search;
-import ds.pirate.backend.vo.subcard;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -82,7 +79,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public String ArticleModify(ArticleDTO dto, List<String> tags) {
         ArticlesList origEntity = repo.findByAid(dto.getAid());
-        ArticleDTO getByAid =  EntityToDTO(origEntity);
+        ArticleDTO getByAid = EntityToDTO(origEntity);
 
         origEntity.getImages().forEach(image -> {
             irepo.deleteById(image.getIid());
@@ -140,18 +137,18 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public HashMap<String, Object> getCardInfosByHashTagName(Long aid, Pageable pageable) {
         HashMap<String, Object> cardInfo = new HashMap<>();
-        Page<HashTags> result = hrepo.findByHashTagNameContainsIgnoreCaseOrderByHidDesc(repo.getByAid(aid).getTags().get(0).getHashTagName(), pageable);
-        List<ArticleDTO> aresult = result.get().map((Function<HashTags, ArticleDTO>) dto->{
+        Page<HashTags> result = hrepo.findByHashTagNameContainsIgnoreCaseOrderByHidDesc(
+                repo.getByAid(aid).getTags().get(0).getHashTagName(), pageable);
+        List<ArticleDTO> aresult = result.get().map((Function<HashTags, ArticleDTO>) dto -> {
             ArticleDTO dtoresult = EntityToDTO(dto.getArticles());
             return dtoresult;
         }).collect(Collectors.toList());
-        List<String> uresult = result.get().map((Function<HashTags, String>) dto->{
+        List<String> uresult = result.get().map((Function<HashTags, String>) dto -> {
 
-            String dtoresult = uservice.entityToDTO(urepo.findByUserId(dto.getArticles().getAUser()).get()).getAirName();
+            String dtoresult = uservice.entityToDTO(urepo.findByUserId(dto.getArticles().getAUser()).get())
+                    .getAirName();
             return dtoresult;
         }).collect(Collectors.toList());
-
-
 
         cardInfo.put("articles", aresult);
         cardInfo.put("page", pageable.getPageNumber());
@@ -274,7 +271,6 @@ public class ArticleServiceImpl implements ArticleService {
                 setcg = latestg.get().get(0) + 1;
             }
 
-
             dto.setCommentGroup(setcg);
             dto.setCommnetDepth(0L);
             dto.setCommentSorts(0L);
@@ -394,8 +390,8 @@ public class ArticleServiceImpl implements ArticleService {
         Optional<subscribList> subchecking = surepo.getIsSubcedByTargetIdAndUserid(articleUserId, userid);
         Long subcount = surepo.getSumByTargetId(articleUserId);
 
-        if (subcount==null) {
-            subcount=0L;
+        if (subcount == null) {
+            subcount = 0L;
         }
         result.put("articleUserName", articleUserEntity.getAirName());
         result.put("articleUserImg", "./images/read/userid/" + (articleUserId.toString()));
@@ -420,37 +416,39 @@ public class ArticleServiceImpl implements ArticleService {
 
     }
 
-//    @Override
-//    public List<EmbedCard> getArticleList() {
-//            Sort sort = sortByAid();
-//            List<EmbedCard> result = repo.getListAndAuthor(sort).get().stream().map(v -> {
-//                return new EmbedCard(v);
-//            }).collect(Collectors.toList());
-//            return result;
-//    }
+    // @Override
+    // public List<EmbedCard> getArticleList() {
+    // Sort sort = sortByAid();
+    // List<EmbedCard> result = repo.getListAndAuthor(sort).get().stream().map(v ->
+    // {
+    // return new EmbedCard(v);
+    // }).collect(Collectors.toList());
+    // return result;
+    // }
 
-//    page까지 구현
-//    @Override
-//    public List<EmbedCard> getArticleList(comment vo) {
-//
-//        Pageable pageable = PageRequest.of(vo.getReqPage(), 9,Sort.by(Sort.Direction.DESC, "aid"));
-//        Page<ArticlesList> page = repo.getListAndAuthorPage(pageable);
-//        List<EmbedCard> result = repo.getListAndAuthor2(pageable).get().stream().map(v -> {
-//            return new EmbedCard(v);
-//        }).collect(Collectors.toList());
-//
-//        return result;
-//    }
-
+    // page까지 구현
+    // @Override
+    // public List<EmbedCard> getArticleList(comment vo) {
+    //
+    // Pageable pageable = PageRequest.of(vo.getReqPage(),
+    // 9,Sort.by(Sort.Direction.DESC, "aid"));
+    // Page<ArticlesList> page = repo.getListAndAuthorPage(pageable);
+    // List<EmbedCard> result =
+    // repo.getListAndAuthor2(pageable).get().stream().map(v -> {
+    // return new EmbedCard(v);
+    // }).collect(Collectors.toList());
+    //
+    // return result;
+    // }
 
     @Override
     public HashMap<String, Object> getArticleList(comment vo) {
 
-        Pageable pageable = PageRequest.of(vo.getReqPage(), 9,Sort.by(Sort.Direction.DESC, "aid"));
+        Pageable pageable = PageRequest.of(vo.getReqPage(), 9, Sort.by(Sort.Direction.DESC, "aid"));
         Page<ArticlesList> page = repo.getListAndAuthorPage(pageable);
         List<EmbedCard> result = repo.getListAndAuthor2(pageable).get().stream().map(v -> {
-                return new EmbedCard(v);
-            }).collect(Collectors.toList());
+            return new EmbedCard(v);
+        }).collect(Collectors.toList());
 
         HashMap<String, Object> cardInfo = new HashMap<>();
         cardInfo.put("articles", result);
@@ -460,34 +458,32 @@ public class ArticleServiceImpl implements ArticleService {
         return cardInfo;
     }
 
-
-
     @Override
     public List<EmbedCard> getArticleListOrder(search vo) {
         if (vo.getOrder().equals("view")) {
             Sort sort = sortByOpencount();
-            List<EmbedCard> result = repo.getListAndAuthor(sort).get().stream().map(v->{
+            List<EmbedCard> result = repo.getListAndAuthor(sort).get().stream().map(v -> {
                 return new EmbedCard(v);
             }).collect(Collectors.toList());
             return result;
         } else if (vo.getOrder().equals("like")) {
             Sort sort = sortByLikeCount();
-            List<EmbedCard> result = repo.getListAndAuthor(sort).get().stream().map(v->{
+            List<EmbedCard> result = repo.getListAndAuthor(sort).get().stream().map(v -> {
                 return new EmbedCard(v);
             }).collect(Collectors.toList());
             return result;
         } else if (vo.getOrder().equals("star")) {
             Sort sort = sortByArticleRate();
-            List<EmbedCard> result = repo.getListAndAuthor(sort).get().stream().map(v->{
+            List<EmbedCard> result = repo.getListAndAuthor(sort).get().stream().map(v -> {
                 return new EmbedCard(v);
             }).collect(Collectors.toList());
             return result;
         } else {
-        Sort sort = sortByAid();
-        List<EmbedCard> result = repo.getListAndAuthor(sort).get().stream().map(v -> {
-            return new EmbedCard(v);
-        }).collect(Collectors.toList());
-        return result;
+            Sort sort = sortByAid();
+            List<EmbedCard> result = repo.getListAndAuthor(sort).get().stream().map(v -> {
+                return new EmbedCard(v);
+            }).collect(Collectors.toList());
+            return result;
         }
     }
 
@@ -496,33 +492,37 @@ public class ArticleServiceImpl implements ArticleService {
         log.info(vo.getOrder());
         if (vo.getOrder().equals("view")) {
             Sort sort = sortByOpencount();
-            List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream().map(v -> {
-                return new EmbedCard(v);
-            }).collect(Collectors.toList());
+            List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream()
+                    .map(v -> {
+                        return new EmbedCard(v);
+                    }).collect(Collectors.toList());
             return result;
         } else if (vo.getOrder().equals("star")) {
             Sort sort = sortByArticleRate();
-            List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream().map(v -> {
-                return new EmbedCard(v);
-            }).collect(Collectors.toList());
+            List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream()
+                    .map(v -> {
+                        return new EmbedCard(v);
+                    }).collect(Collectors.toList());
             return result;
         } else if (vo.getOrder().equals("like")) {
             Sort sort = sortByLikeCount();
-            List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream().map(v -> {
-                return new EmbedCard(v);
-            }).collect(Collectors.toList());
+            List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream()
+                    .map(v -> {
+                        return new EmbedCard(v);
+                    }).collect(Collectors.toList());
             return result;
         } else {
             Sort sort = sortByAid();
-            List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream().map(v -> {
-                return new EmbedCard(v);
-            }).collect(Collectors.toList());
+            List<EmbedCard> result = repo.getListAndAuthorByAuthorOrAtitle(vo.getSearch(), sort).get().stream()
+                    .map(v -> {
+                        return new EmbedCard(v);
+                    }).collect(Collectors.toList());
             return result;
         }
     }
 
     @Override
-    public List<EmbedCard> getArticleListBySub(subcard vo) {
+    public List<EmbedCard> getArticleListBySub(comment vo) {
         Sort sort = sortByAid();
         log.info(vo);
         List<EmbedCard> result = repo.getCardsListBySub(vo.getUserid(), sort).get().stream().map(v -> {
@@ -534,12 +534,15 @@ public class ArticleServiceImpl implements ArticleService {
     private Sort sortByAid() {
         return Sort.by(Sort.Direction.DESC, "aid");
     }
+
     private Sort sortByOpencount() {
         return Sort.by(Sort.Direction.DESC, "opencount");
     }
+
     private Sort sortByArticleRate() {
         return Sort.by(Sort.Direction.DESC, "articleRate");
     }
+
     private Sort sortByLikeCount() {
         return Sort.by(Sort.Direction.DESC, "likeCount");
     }

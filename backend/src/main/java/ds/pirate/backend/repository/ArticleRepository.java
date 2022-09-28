@@ -147,12 +147,6 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
                         "group by a.aid")
         Page<ArticlesList> getListAndAuthorByAuthorOrAtitlePage(String search, Pageable pageable);
 
-        @Query("SELECT aid " +
-                        "FROM ArticlesList " +
-                        "where opend = 1L " +
-                        "group by aid")
-        Page<ArticlesList> getListAndAuthorPage(Pageable pageable);
-
         // "ORDER BY a.aid DESC"
         @Query("update ArticlesList a set a.opencount = a.opencount+1 where a.aid=:aid")
         @Modifying
