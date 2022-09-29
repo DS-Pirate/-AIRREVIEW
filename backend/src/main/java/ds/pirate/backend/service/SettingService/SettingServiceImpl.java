@@ -15,21 +15,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ds.pirate.backend.dto.ArticleDTO;
+import ds.pirate.backend.dto.QuestionDTO;
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.entity.ArticlesList;
+import ds.pirate.backend.entity.QuestionsList;
 import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.entity.reportList;
 import ds.pirate.backend.repository.ArticleReportRepository;
 import ds.pirate.backend.repository.ArticleRepository;
 import ds.pirate.backend.repository.ArticleRepository.getMySettingArticleList;
 import ds.pirate.backend.repository.LikeUnlikeRepository;
+import ds.pirate.backend.repository.QuestionRepository;
 import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.ArticleService.ArticleService;
+import ds.pirate.backend.service.QuestionService.QuestionService;
 import ds.pirate.backend.service.UserService.UserService;
 import ds.pirate.backend.vo.userid;
 import lombok.RequiredArgsConstructor;
-
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +45,8 @@ public class SettingServiceImpl implements SettingService {
   private final ArticleService aService;
   private final LikeUnlikeRepository lrepo;
   private final ArticleReportRepository rrepo;
+  private final QuestionRepository qrepo;
+  private final QuestionService qService;
 
   @Override
   public airUserDTO getByUserId(Long userid) {
@@ -111,4 +116,13 @@ public class SettingServiceImpl implements SettingService {
     }
   }
 
+  @Override
+  public List<QuestionDTO> getQuestionList(Long userid) {
+    List<QuestionsList> result = qrepo.getQuestionList(airUser.builder()
+        .userid(userid)
+        .build());
+    return result.stream().map((Function<QuestionsList, QuestionDTO>) v -> {
+      return qService.EntitytoDTO(v);
+    }).collect(Collectors.toList());
+  }
 }
