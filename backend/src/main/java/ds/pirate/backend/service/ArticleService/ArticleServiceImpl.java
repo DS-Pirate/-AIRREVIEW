@@ -146,7 +146,7 @@ public class ArticleServiceImpl implements ArticleService {
             if(tmpImage.isPresent()){
                 cardInfo.put("ImageName",tmpImage.get().getFileName().strip().substring(0, tmpImage.get().getFileName().strip().length()-1));
             }else{
-                cardInfo.put("ImageName", "none");
+                cardInfo.put("ImageName", "basic.png");
             }
             return dtoresult;
         }).collect(Collectors.toList());
