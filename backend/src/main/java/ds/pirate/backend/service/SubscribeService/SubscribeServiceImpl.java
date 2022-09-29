@@ -9,6 +9,7 @@ import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.vo.MySubInfo;
 import ds.pirate.backend.vo.subcard;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -24,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-
+@Log4j2
 public class SubscribeServiceImpl implements SubscribeService {
   private final SubscribeRepository subrepo;
   private final UserRepository urepo;
@@ -50,6 +51,15 @@ public class SubscribeServiceImpl implements SubscribeService {
     }
 
     @Override
+    public List<MySubInfo> getFollowerInfoList(subcard vo) {
+        Pageable pageable = PageRequest.of(vo.getReqPage(), 9,Sort.by(Sort.Direction.DESC, "follower"));
+        List<MySubInfo> result = subrepo.getPostFollwerFollwingInFollowerByUserid(vo.getUserid(), pageable).get().stream().map(v->{
+            return new MySubInfo(v);
+        }).collect(Collectors.toList());
+        return result;
+    }
+
+    @Override
     public Long getFollowUnFollowView(subcard vo) {
       Long result = subrepo.getFollowingByUseridAndTargetid(vo.getUserid(), vo.getAid());
         return result;
@@ -66,5 +76,12 @@ public class SubscribeServiceImpl implements SubscribeService {
             subrepo.save(subscribList.builder().targetId(vo.getAid()).userid(articleUserEntity).build());
             return "구독";
         }
+    }
+
+    @Override
+    public MySubInfo getFolloCount(subcard vo) {
+        SubscribeRepository.getMySubInfo geted = subrepo.getFollwerFollwingCountByUserid(vo.getUserid()).get();
+        MySubInfo result = new MySubInfo(geted);
+        return result;
     }
 }
