@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ds.pirate.backend.dto.QuestionDTO;
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.repository.ArticleRepository.getMySettingArticleList;
@@ -57,4 +58,9 @@ public class SettingController {
     return new ResponseEntity<>(service.remove(Long.parseLong(reid)), HttpStatus.OK);
   }
 
+  @RequestMapping(value = "/setting/questionlist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<QuestionDTO>> getByQuestionList(@RequestBody String userid) {
+    List<QuestionDTO> result = service.getQuestionList(Long.parseLong(userid));
+    return new ResponseEntity<>(result, HttpStatus.OK);
+  }
 }

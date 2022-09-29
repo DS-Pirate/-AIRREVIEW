@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import ds.pirate.backend.dto.QuestionDTO;
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.entity.airUser;
@@ -24,6 +25,8 @@ public interface SettingService {
   List<reportDTO> getReportList(Long userid);
 
   Boolean remove(Long reid);
+
+  List<QuestionDTO> getQuestionList(Long userid);
 
   default airUserDTO entityToDTO(airUser entity) {
     airUserDTO dto = airUserDTO.builder()

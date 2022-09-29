@@ -1,20 +1,19 @@
 <template>
-<h2>Q&A</h2>
+<h1>Q&A</h1>
 <div class="accordion accordion-flush" id="accordionFlushExample">
   <div class="accordion-item">
     <h2 class="accordion-header" id="flush-headingOne">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-
-        <h5>나태일</h5>
+        <h5>나태일</h5> 
       </button>
     </h2>
     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">이태일씨는 왜 <code>나태일</code> 인가요?
+      <div class="accordion-body">이태일씨는 왜 <code>나태일</code> 인가요? 
           <hr><div class="p-1"><p>나태일이기 때문입니다.</p></div>
        </div>
-
     </div>
   </div>
+
   <div class="accordion-item">
     <h2 class="accordion-header" id="flush-headingTwo">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
@@ -58,4 +57,29 @@
   </div>
 </div>
 </template>
+<!-- <script setup>
+import { reactive } from 'vue';
+import axios from 'axios';
+import store from '@/store';
 
+const state = reactive({
+  questionlist: '',
+})
+
+const url = store.state.axiosLink+'/api/setting/questionlist'
+  const headers = {
+    "Content-Type": "application/json",
+    "Authorization": store.state.token,
+    "userid": store.state.userid
+  }
+
+axios.post(url, store.state.userid, { headers }).then(function (res) {
+  state.questionlist = res.data;
+  console.log(res.data);
+})
+
+</script>
+<style scoped lang="sass">
+  h1
+    text-align: center
+</style> -->
