@@ -160,7 +160,6 @@ public class ArticleServiceImpl implements ArticleService {
         cardInfo.put("page", pageable.getPageNumber());
         cardInfo.put("pageTotalCount", result.getTotalPages());
         cardInfo.put("userInfo", uresult);
-
         return cardInfo;
     }
 
@@ -437,6 +436,7 @@ public class ArticleServiceImpl implements ArticleService {
         cardInfo.put("articles", result);
         cardInfo.put("page", pageable.getPageNumber());
         cardInfo.put("pageTotalCount", page.getTotalPages());
+
 
         return cardInfo;
     }
