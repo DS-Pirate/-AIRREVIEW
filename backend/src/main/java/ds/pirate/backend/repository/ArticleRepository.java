@@ -103,18 +103,36 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
         Optional<List<getEmbedCardsInformation>> getCardsListBySub2(Long userid, Sort sort);
 
 
-    @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate, "
-            +
-            "a.opend as opend, avg(c.articleRate) as articleRate, COUNT(l.favid) as likeCount " +
-            "FROM ArticlesList a left join  airUser u on u.userid = a.aUser " +
-            "left join HashTags h on h.articles = a.aid " +
-            "left join acomments c on c.articles = a.aid " +
-            "left join likeUnlikeList l on l.aid = a.aid " +
-            "where a.opend = 1L AND (u.airName LIKE CONCAT('%',:search,'%') Or " +
-            "a.atitle LIKE CONCAT('%',:search,'%') Or " +
-            "h.hashTagName LIKE CONCAT('%',:search,'%')) " +
-            "group by a.aid")
+//    @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate, "
+//            +
+//            "a.opend as opend, avg(c.articleRate) as articleRate, COUNT(l.favid) as likeCount " +
+//            "FROM ArticlesList a left join  airUser u on u.userid = a.aUser " +
+//            "left join HashTags h on h.articles = a.aid " +
+//            "left join acomments c on c.articles = a.aid " +
+//            "left join likeUnlikeList l on l.aid = a.aid " +
+//            "where a.opend = 1L AND (u.airName LIKE CONCAT('%',:search,'%') Or " +
+//            "a.atitle LIKE CONCAT('%',:search,'%') Or " +
+//            "h.hashTagName LIKE CONCAT('%',:search,'%')) " +
+//            "group by a.aid")
+//    Optional<Page<getEmbedCardsInformation>> getListAndAuthorByAuthorOrAtitle(String search, Pageable pageable);
+
+    @Query(value = "SELECT u.air_name as airName ,a.aid as aid, a.atitle as atitle, a.context as context, a.regdate as regDate, " +
+            "a.opend as opend, AVG(c.article_rate) as articleRate, COUNT(l.favid) as likeCount , i.file_name as fileName " +
+            " FROM articles_list a left join air_user u ON u.userid = a.a_user " +
+            "LEFT JOIN hash_tags h ON h.articles_id = a.aid " +
+            "LEFT JOIN acomments c ON c.articles_aid = a.aid " +
+            "LEFT JOIN like_unlike_list l ON l.aid = a.aid " +
+            "LEFT JOIN (SELECT i.iid AS iid , i.file_name AS file_name , i.articles_id AS articles_id FROM images_list i " +
+            "LEFT JOIN (SELECT Min(iid) as min_iid FROM images_list GROUP BY articles_id) m ON m.min_iid = i.iid " +
+            "WHERE m.min_iid IS NOT NULL) i ON a.aid = i.articles_id " +
+            "WHERE a.atitle LIKE CONCAT('%',:search,'%') OR " +
+            "u.air_name LIKE CONCAT('%',:search,'%') OR " +
+            "h.hash_tag_name LIKE CONCAT('%',:search,'%') " +
+            "GROUP BY a.aid, i.iid " +
+            "ORDER BY aid DESC", nativeQuery = true)
     Optional<Page<getEmbedCardsInformation>> getListAndAuthorByAuthorOrAtitle(String search, Pageable pageable);
+
+
 
     @Query("SELECT a.aid, a.atitle " +
             "FROM ArticlesList a left join  airUser u on u.userid = a.aUser " +
@@ -195,6 +213,8 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
                 Integer getArticleRate();
 
                 Long getLikeCount();
+
+                String getFileName();
         }
 
         public interface getMyChannelArticleList {

@@ -12,6 +12,7 @@
 						<div @click="read()">
 							<span class="author">{{ card.airName }}</span>
 							<h3 class="title"><a>{{ title }}</a></h3>
+              {{imagee}}
 							<p class="text" v-html="props.card.context"></p>
 						</div>
 						<label :for="props.cardinfo" class="menu-button"><span></span></label>
@@ -46,6 +47,15 @@ let year = regdate.getFullYear();
 let date = regdate.getDate();
 let month = monthNames[regdate.getMonth()];
 let title = titleLength(props.card.atitle);
+let imagee = imageslice(props.card.fileName);
+
+function imageslice(a){
+  if(a == null){
+    return "basic.png"
+  }
+  a.slice(0, -1)
+}
+
 
 
 function titleLength(title){

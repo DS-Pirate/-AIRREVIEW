@@ -47,6 +47,7 @@ export default {
       console.log("body"+body.reqPage);
         const url = store.state.axiosLink + "/article/card"
         axios.post(url, body).then((res) => {
+          console.log(res.data);
           state.pageTotalCount = res.data.pageTotalCount;
           if (body.reqPage == 0) {
             state.cards = res.data.articles;

@@ -63,6 +63,7 @@ export default {
       console.log(body)
       if (state.reqPage == 0) state.cards = null;
       await axios.post(url, body, {headers}).then(function (res){
+        console.log(res.data);
         state.pageTotalCount = res.data.pageTotalCount;
         if (body.reqPage == 0) {
           state.cards = res.data.articles;
