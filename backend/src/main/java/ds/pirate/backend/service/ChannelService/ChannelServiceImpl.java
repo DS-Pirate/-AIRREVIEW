@@ -1,6 +1,8 @@
 package ds.pirate.backend.service.ChannelService;
 
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +25,10 @@ public class ChannelServiceImpl implements ChannelService{
 
     @Override
     public void uploadCHImage(Long userid, String fileName) {
+        Optional<uImagesList> isimage = uirepo.getCHImageByUserId(userid);
+        if(isimage.isPresent()){
+            uirepo.deleteById(isimage.get().getIid());    
+        }
         uirepo.save(uImagesList.builder().airuser(airUser.builder().userid(userid).build()).fileName(fileName).idx(99).build());
     }
     @Override
@@ -34,7 +40,12 @@ public class ChannelServiceImpl implements ChannelService{
 
     @Override
     public String getCHImage(Long userid) {
-        uirepo.getCHImageByUserId(userid).getFileName();
-        return uirepo.getCHImageByUserId(userid).getFileName();
+        Optional<uImagesList> result = uirepo.getCHImageByUserId(userid);
+        if (result.isPresent()) {
+            return uirepo.getCHImageByUserId(userid).get().getFileName();    
+        }else{
+            return "basic.png";
+        }
+        
     }
 }
