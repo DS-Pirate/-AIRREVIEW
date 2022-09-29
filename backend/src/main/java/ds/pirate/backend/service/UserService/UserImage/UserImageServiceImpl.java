@@ -1,5 +1,7 @@
 package ds.pirate.backend.service.UserService.UserImage;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import ds.pirate.backend.entity.uImagesList;
@@ -15,8 +17,12 @@ public class UserImageServiceImpl implements UserImageService{
     
     @Override
     public String getUImageNameByUserid(Long userid) {
-        uImagesList entity = uilrepo.getByAiruser(userid);
-        return entity.getFileName();
+        Optional<uImagesList> entity = uilrepo.getByAiruser(userid);
+        if(entity.isPresent()){
+            return entity.get().getFileName();
+        }else{
+            return "basic.png";
+        }
     }
 
 }

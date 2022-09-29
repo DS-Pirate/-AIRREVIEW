@@ -1,20 +1,20 @@
 <template>
     <div class="col maincards">
         <div class="card-1 card border-0 w-100 mb-5">
-            <div class="wrapper">
+            <div class="wrapper" ref="wrapper" :style="'background-image: url('+store.state.axiosLink+'/images/read/'+props.uImage+'); background-size:cover;'" >
                 <div class="date">
                     <span class="day">{{props.cardInfo.regdate.split("-")[2].split("T")[0]}}</span>
                     <span class="month">{{props.cardInfo.regdate.split("-")[1]}}</span>
-                    <span class="year">{{props.cardInfo.regdate.split("-")[0]}}</span>			
+                    <span class="year">{{props.cardInfo.regdate.split("-")[0]}}</span>		
                 </div>
 				<a :href="'./read?article='+props.cardInfo.aid">
-                <div class="data">
+                    <div class="data">
                     <div class="content">
                             <span class="author">{{ props.uInfo }}</span>
                             <h3 class="title">
-                                <a>{{ props.cardInfo.atitle }}</a>
+                                <a>{{ props.cardInfo.atitle.length>10?props.cardInfo.atitle.slice(0, 10):props.cardInfo.atitle }}</a>
                             </h3>
-                            <p class="text" v-html="props.cardInfo.context.length>30?props.cardInfo.context.slice(0,33):props.cardInfo.context"></p>
+                            <p class="text" v-html="props.cardInfo.context"></p>
 						</div>			
 					</div>
 				</a>
@@ -24,8 +24,12 @@
 </template>
 
 <script setup>
+
+    import store from "@/store";
     import { defineProps } from "vue";
-    const props = defineProps(["cardInfo", "uInfo"]);
+
+    const props = defineProps(["cardInfo", "uInfo", "uImage"]);
+
 </script>
 
 <style scoped lang="scss">
@@ -92,6 +96,7 @@
             height: 4.5rem;
             margin: 0;
             color: black;
+            white-space: nowrap;
         }
 
         input[type="checkbox"] {
@@ -100,7 +105,7 @@
     }
     .card-1 {
         .wrapper {
-            background: url(https://images.unsplash.com/photo-1496979551903-46e46589a88b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=cda12b505afa1beb06e49d89014cbd65&auto=format&fit=crop&w=634&q=80) 20% 1% / cover no-repeat;
+            background: white
         }
 
         .date {
