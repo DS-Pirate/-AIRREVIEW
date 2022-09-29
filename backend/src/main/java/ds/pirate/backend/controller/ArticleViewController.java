@@ -55,29 +55,19 @@ public class ArticleViewController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-//    @RequestMapping(value = "/card", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<List<EmbedCard>> ArticleCardsList(){
-//        return new ResponseEntity<>(aservice.getArticleList(), HttpStatus.OK);
-//    }
-
-//    @RequestMapping(value = "/card", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<List<EmbedCard>> ArticleCardsList(@RequestBody comment comment){
-//        return new ResponseEntity<>(aservice.getArticleList(comment), HttpStatus.OK);
-//    }
-
     @RequestMapping(value = "/card", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HashMap<String, Object>> ArticleCardsList(@RequestBody comment comment){
         return new ResponseEntity<>(aservice.getArticleList(comment), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/card/order", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<EmbedCard>> ArticleCardsOrderList(@RequestBody search vo){
+    public ResponseEntity<HashMap<String, Object>> ArticleCardsOrderList(@RequestBody search vo){
         log.info(vo);
         return new ResponseEntity<>(aservice.getArticleListOrder(vo), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<EmbedCard>> ArticleCardsSearch(@RequestBody search vo){
+    public ResponseEntity<HashMap<String, Object>> ArticleCardsSearch(@RequestBody search vo){
         log.info(vo);
         return new ResponseEntity<>(aservice.getSearchList(vo), HttpStatus.OK);
     }

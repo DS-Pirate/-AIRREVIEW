@@ -57,12 +57,4 @@ public class SettingController {
     return new ResponseEntity<>(service.remove(Long.parseLong(reid)), HttpStatus.OK);
   }
 
-  // @RequestMapping(value = "/setting/questionlist", method = RequestMethod.POST,
-  // consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  // public ResponseEntity<List<QuestionDTO>> getQuestionList(@RequestBody String
-  // userid) {
-  // List<QuestionDTO> result = service.getQuestionList(Long.parseLong(userid));
-  // log.info(userid);
-  // return new ResponseEntity<>(result, HttpStatus.OK);
-  // }
 }
