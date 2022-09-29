@@ -138,19 +138,24 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public HashMap<String, Object> getCardInfosByHashTagName(Long aid, Pageable pageable) {
         HashMap<String, Object> cardInfo = new HashMap<>();
-        Page<HashTags> result = hrepo.findByHashTagNameContainsIgnoreCaseOrderByHidDesc(repo.getByAid(aid).getTags().get(0).getHashTagName(), pageable);
-        List<ArticleDTO> aresult = result.get().map((Function<HashTags, ArticleDTO>) dto->{
+        Page<HashTags> result = hrepo.findByHashTagNameContainsIgnoreCaseOrderByHidDesc(
+                repo.getByAid(aid).getTags().get(0).getHashTagName(), pageable);
+        List<ArticleDTO> aresult = result.get().map((Function<HashTags, ArticleDTO>) dto -> {
             ArticleDTO dtoresult = EntityToDTO(dto.getArticles());
+            Optional<ImagesList> tmpImage = irepo.findFirstByArticlesOrderByIidAsc(ArticlesList.builder().aid(dtoresult.getAid()).build());
+            if(tmpImage.isPresent()){
+                cardInfo.put("ImageName",tmpImage.get().getFileName().strip().substring(0, tmpImage.get().getFileName().strip().length()-1));
+            }else{
+                cardInfo.put("ImageName", "none");
+            }
             return dtoresult;
         }).collect(Collectors.toList());
-        List<String> uresult = result.get().map((Function<HashTags, String>) dto->{
+        List<String> uresult = result.get().map((Function<HashTags, String>) dto -> {
 
-            String dtoresult = uservice.entityToDTO(urepo.findByUserId(dto.getArticles().getAUser()).get()).getAirName();
+            String dtoresult = uservice.entityToDTO(urepo.findByUserId(dto.getArticles().getAUser()).get())
+                    .getAirName();
             return dtoresult;
         }).collect(Collectors.toList());
-
-
-
         cardInfo.put("articles", aresult);
         cardInfo.put("page", pageable.getPageNumber());
         cardInfo.put("pageTotalCount", result.getTotalPages());
