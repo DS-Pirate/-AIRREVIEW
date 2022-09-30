@@ -49,66 +49,65 @@
     // It scheduled when backend server developed
     // import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
     import router from "@/router";
-    import ClassicEditor from "@ckeditor/ckeditor5-custom/build/ckeditor"
+    import ClassicEditor from "@ckeditor/ckeditor5-custom/build/ckeditor";
     import axios from "axios";
     import store from "@/store";
     export default {
         name: "WritePage",
         data() {
-            let title =""
+            let title = "";
             return {
-                aid : null,
+                aid: null,
                 shareable: true,
                 openable: true,
                 title: title,
                 tag: "",
                 taghistory: [],
                 editor: ClassicEditor,
-                editorData : "",
+                editorData: "",
                 editorConfig: {
                     language: "ko",
                     simpleUpload: {
-                        uploadUrl: store.state.axiosLink+"/api/article/write/image",
+                        uploadUrl: store.state.axiosLink + "/api/article/write/image",
                         withCredentials: true,
                         headers: {
-                            "Authorization": store.state.token,
-                            "userid" : store.state.userid
+                            Authorization: store.state.token,
+                            userid: store.state.userid,
                         },
                     },
                 },
             };
         },
         mounted() {
-            const getInfo= async()=> {
-                let title = ""
-                let context = ""
-                let tags = []
-                let aid = 0
+            const getInfo = async () => {
+                let title = "";
+                let context = "";
+                let tags = [];
+                let aid = 0;
                 const headers = {
                     "Content-Type": "application/json; charset=utf-8",
-                    "Authorization": store.state.token,
-                    "userid" : store.state.userid
+                    Authorization: store.state.token,
+                    userid: store.state.userid,
                 };
                 let body = {
                     aid: new URLSearchParams(window.location.search).get("article"),
                     userid: store.state.userid,
                 };
-                await axios.post(store.state.axiosLink+"/api/article/modify/check", body, { headers }).then(function (res) {
+                await axios.post(store.state.axiosLink + "/api/article/modify/check", body, { headers }).then(function (res) {
                     console.log(res);
-                    context = res.data.context
-                    title = res.data.atitle
-                    tags = res.data.tags
-                    aid = res.data.aid
+                    context = res.data.context;
+                    title = res.data.atitle;
+                    tags = res.data.tags;
+                    aid = res.data.aid;
                 });
-                this.editorData = context
-                this.title = title
-                this.aid = aid
+                this.editorData = context;
+                this.title = title;
+                this.aid = aid;
                 for (const i in tags) {
-                    this.taghistory.push(tags[i])    
+                    this.taghistory.push(tags[i]);
                 }
-                
-            }
-            getInfo()
+            };
+            getInfo();
         },
         methods: {
             onReady: function onReady(editor) {
@@ -146,6 +145,14 @@
                     images: [],
                 };
 
+                if (page.atitle.trim().length == 0) {
+                    alert("타이틀을 입력해주세요");
+                    return;
+                } else if (page.context.trim().length == 0) {
+                    alert("내용을 입력해주세요");
+                    return;
+                }
+
                 //find image name where in context
                 function findImageName(list) {
                     let bonary = list.split("/");
@@ -166,11 +173,11 @@
                 page.images = findImageName(page.context);
                 /////////////////////////////////////////
                 let result = JSON.stringify(page);
-                const url = store.state.axiosLink+"/api/article/modify/send";
+                const url = store.state.axiosLink + "/api/article/modify/send";
                 const headers = {
                     "Content-Type": "application/json; charset=utf-8",
-                    "Authorization": store.state.token,
-                    "userid" : store.state.userid
+                    Authorization: store.state.token,
+                    userid: store.state.userid,
                 };
                 const body = result;
                 await axios
