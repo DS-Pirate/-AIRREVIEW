@@ -2,6 +2,9 @@
 	<div class="mainviewpage">
     <h2>저장된 글</h2>
 		<div class="fav p-4 m-0 w-100 bg-white">
+      <div class="mb-4 mt-5 ms-4 ps-1 text-center" v-if="state.notSavedPage">
+        <h1>저장된 글이 존재하지 않습니다</h1>
+      </div>
 			<div class="row row-cols-2 gx-5 gy-3">
 				<div v-for="(card, idx) in state.cards" :key="idx">
           <Cards :name="state.usernames[idx]" :card="card"></Cards>
@@ -27,7 +30,8 @@ export default {
 	setup() {
     const store = useStore();
 		const state = reactive({
-      cards: [], usernames: []
+      cards: [], usernames: [],
+      notSavedPage: false
     })
 
 		const url = store.state.axiosLink+"/api/save";
@@ -43,7 +47,11 @@ export default {
 				state.cards = res.data.card;
 				state.usernames = res.data.username;
 				console.log(res);
+        if (state.cards.length == 0){
+          state.notSavedPage = true;
+        } else state.notSavedPage = false;
     })
+
     return {state}
 	}
 };

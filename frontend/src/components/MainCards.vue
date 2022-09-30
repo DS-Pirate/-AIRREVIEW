@@ -14,7 +14,7 @@
 							<h3 class="title"><a>{{ title }}</a></h3>
 							<p class="text" v-html="convertIframeToText(props.card.context)"></p>
 						</div>
-						<label :for="props.cardinfo" class="menu-button"><span></span></label>
+						<div class="menu-button"><span>조회수 {{card.opencount}}</span></div>
 					</div>
 					<input type="checkbox" :id="props.cardinfo" />
 					<ul class="menu-content">
@@ -252,37 +252,9 @@ h3 {
 		z-index: 999;
 		top: 16px;
 		right: 16px;
-		width: 25px;
-		text-align: center;
-		cursor: pointer;
-
 		span {
-			width: 5px;
-			height: 5px;
-			background-color: lighten($black, 50%);
 			color: lighten($black, 50%);
-			position: relative;
-			display: inline-block;
-			border-radius: 50%;
-
-			&::after,
-			&::before {
-				content: '';
-				display: block;
-				width: 5px;
-				height: 5px;
-				background-color: currentColor;
-				position: absolute;
-				border-radius: 50%;
-			}
-
-			&::before {
-				left: -10px;
-			}
-
-			&::after {
-				right: -10px;
-			}
+      font-size: 10px;
 		}
 	}
 	.menu-content {

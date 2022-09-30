@@ -39,7 +39,7 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
 
         @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate,  i.fileName as fileName, "
                         +
-                        "a.opend as opend, avg(c.articleRate) as articleRate, COUNT(l.favid) as likeCount " +
+                        "a.opend as opend, avg(c.articleRate) as articleRate, COUNT(l.favid) as likeCount, a.opencount as opencount " +
                         "FROM ArticlesList a left join  airUser u on u.userid = a.aUser " +
                         "left join HashTags h on h.articles = a.aid " +
                         "left join acomments c on c.articles = a.aid " +
@@ -51,7 +51,7 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
 
         @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate, i.fileName as fileName, "
                         +
-                        "a.opend as opend, avg(c.articleRate) as articleRate, COUNT(l.favid) as likeCount " +
+                        "a.opend as opend, avg(c.articleRate) as articleRate, COUNT(l.favid) as likeCount , a.opencount as opencount " +
                         "FROM ArticlesList a left join  airUser u on u.userid = a.aUser " +
                         "left join HashTags h on h.articles = a.aid " +
                         "left join acomments c on c.articles = a.aid " +
@@ -105,8 +105,8 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
         Optional<List<getEmbedCardsInformation>> getCardsListBySub2(Long userid, Sort sort);
 
 
-    @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate, i.fileName as fileName, " +
-            " a.opend as opend, avg(c.articleRate) as articleRate, COUNT(l.favid) as likeCount " +
+    @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate, i.fileName as fileName,  " +
+            " a.opend as opend, avg(c.articleRate) as articleRate, COUNT(l.favid) as likeCount , a.opencount as opencount  " +
             "FROM ArticlesList a left join  airUser u on u.userid = a.aUser " +
             "left join HashTags h on h.articles = a.aid " +
             "left join acomments c on c.articles = a.aid " +
@@ -198,6 +198,8 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
                 Long getLikeCount();
 
                 String getFileName();
+
+                Long getOpencount();
         }
 
         public interface getMyChannelArticleList {
