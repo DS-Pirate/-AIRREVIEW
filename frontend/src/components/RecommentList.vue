@@ -1,8 +1,8 @@
 <template>
     <section class="recommend w-15">
         <span class="title">추천 게시글</span>
-        <div class="row-cols-1 py-4" v-for="(info, idx) in state.hashInfo" v-bind:key="idx">
-            <Cards v-bind:cardInfo="info.articles[info.articles.length-1]" v-if="props.id!=info.aid" :uImage="info.ImageName" :uInfo="info.userInfo[0]"></Cards>
+        <div class="row-cols-1 py-4" v-for="(info, idx) in state.hashInfo || []" v-bind:key="idx">
+            <Cards v-bind:cardInfo="info.articles[info.articles.length-1]" v-if="props.id!=info.aid && info.articles.length!=0" :uImage="info.ImageName" :uInfo="info.userInfo[0]"></Cards>
         </div>
     </section>
 
@@ -27,6 +27,7 @@
             .post("./article/articlerecommend/", body)
             .then(function (res) {
                 state.hashInfo.push(res.data)
+                console.log(res);
             })
             .catch(function (error) {
                 console.log(error)
@@ -46,4 +47,5 @@
         
     }
     getCardInfoByHashTagWithAid();
+    console.log(state);
 </script>
