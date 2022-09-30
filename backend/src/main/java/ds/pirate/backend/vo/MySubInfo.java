@@ -13,6 +13,9 @@ public class MySubInfo {
     private Long post;
     private Long following;
     private Long follower;
+    private String userIntro;
+    private  String fileName;
+    private Long idx;
 
     public MySubInfo(SubscribeRepository.getMySubInfo si){
         this.myuserid = si.getMyuserid();
@@ -21,5 +24,8 @@ public class MySubInfo {
         this.post = si.getPost();
         this.following = si.getFollowing();
         this.follower = si.getFollower();
+        this.userIntro = si.getUserintro();
+        this.fileName = si.getFileName();
+        this.idx = si.getIdx();
     }
 }

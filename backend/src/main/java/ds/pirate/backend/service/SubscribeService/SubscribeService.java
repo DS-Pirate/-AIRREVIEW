@@ -1,7 +1,6 @@
 package ds.pirate.backend.service.SubscribeService;
 
 import java.util.List;
-import java.util.Optional;
 
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.dto.subScribeDTO;

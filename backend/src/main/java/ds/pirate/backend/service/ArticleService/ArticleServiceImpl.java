@@ -33,9 +33,11 @@ import ds.pirate.backend.entity.SaveList;
 import ds.pirate.backend.entity.acommentRate;
 import ds.pirate.backend.entity.acomments;
 import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.entity.alarm;
 import ds.pirate.backend.entity.likeUnlikeList;
 import ds.pirate.backend.entity.reportList;
 import ds.pirate.backend.entity.subscribList;
+import ds.pirate.backend.repository.AlarmRepository;
 import ds.pirate.backend.repository.ArticleReportRepository;
 import ds.pirate.backend.repository.ArticleRepository;
 import ds.pirate.backend.repository.CommentRateRepository;
@@ -67,6 +69,7 @@ public class ArticleServiceImpl implements ArticleService {
     private final SubscribeRepository surepo;
     private final UserService uservice;
     private final AlarmService alser;
+    private final AlarmRepository alrepo;
 
     @Override
     public List<acommentDTO> getListByUserIdAndAuthorId(Long userid, Long authorid) {
@@ -191,9 +194,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional
     public String removeComment(acommentDTO dto) {
         Optional<acomments> checkingComment = crepo.getCommentByCidAndUserid(dto.getCid(), dto.getUserid());
-
+        Optional<alarm> iscCheck = alrepo.getByCid(dto.getCid());
+        if(iscCheck.isPresent()){
+            alrepo.delete(iscCheck.get());
+        }
         if (checkingComment.isPresent()) {
             crepo.delete(checkingComment.get());
             return "삭제되었습니다";

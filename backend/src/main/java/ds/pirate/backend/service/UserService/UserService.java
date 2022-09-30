@@ -4,11 +4,13 @@ import java.util.HashMap;
 
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.repository.UserRepository.UserIntroPage;
 
 public interface UserService {
     
 
     HashMap<String, String> getUserInfoByuseridForarticle(Long userid);
+    UserIntroPage getUserInfoByUserId(Long userid);
 
     default airUser dtoToEntity(airUserDTO dto){
         airUser entity = airUser.builder()

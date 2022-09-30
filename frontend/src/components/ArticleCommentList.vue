@@ -83,6 +83,14 @@
             commentContext: commentcontext.value.value,
             articleRate: articleRating.value - 1,
         }
+        if(body.commentContext.trim().length==0){
+            alert("내용을 입력해주세요")
+            return
+        }else if(body.articleRate==-1){
+            alert("별점을 클릭해주세요")
+            return
+        }
+
         axios
             .post(store.state.axiosLink+"/api/article/comment/add/", body, { headers })
             .then((res) => {

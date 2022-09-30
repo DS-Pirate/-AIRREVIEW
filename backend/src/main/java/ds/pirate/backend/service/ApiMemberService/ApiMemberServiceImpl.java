@@ -2,6 +2,8 @@ package ds.pirate.backend.service.ApiMemberService;
 
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.entity.emailAuth;
+import ds.pirate.backend.repository.MailRepository;
 import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.vo.findpass;
 import ds.pirate.backend.vo.setpass;
@@ -17,14 +19,20 @@ import java.util.Optional;
 public class ApiMemberServiceImpl implements ApiMemberService{
     private final UserRepository repository;
     private final PasswordEncoder encoder;
-
+    private final MailRepository mrepo;
 
     @Transactional
     @Override
     public String register(airUserDTO dto) {
         dto.setPasswd(encoder.encode(dto.getPasswd()));
-        repository.save(dtoToEntity(dto));
-        return "회원가입에 성공하였습니다";
+        Optional<emailAuth> resultcheck = mrepo.getByEmail(dto.getEmail());
+        if(resultcheck.get().getEmail().length()>0&&resultcheck.get().getIsAuthrized()==true){
+            repository.save(dtoToEntity(dto));
+            mrepo.delete(resultcheck.get());
+            return "회원가입이 완료되었습니다.";
+        } else{
+            return "회원가입에 실패하였습니다.";
+        }
 
     }
 

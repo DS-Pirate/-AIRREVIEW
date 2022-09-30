@@ -17,8 +17,8 @@ public class EmbedCard {
     private boolean opend;
     private Integer articleRate;
     private Long likeCount;
-
     private String fileName;
+    private Long opencount;
 
     public EmbedCard(ArticleRepository.getEmbedCardsInformation em){
         this.airName = em.getAirName();
@@ -30,6 +30,7 @@ public class EmbedCard {
         this.articleRate = em.getArticleRate();
         this.likeCount = em.getLikeCount();
         this.fileName = em.getFileName();
+        this.opencount = em.getOpencount();
 
     }
 
