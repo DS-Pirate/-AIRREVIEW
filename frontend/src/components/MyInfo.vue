@@ -3,7 +3,7 @@
         <div class="row d-flex align-items-start justify-content-between">
             <div class="col d-flex flex-column align-items-center">
                 <div class="about mb-3">About Me</div>
-                <div>{{userinfo.userIntro}}
+                <div>{{userinfo.userIntro!=""?userinfo.userIntro:"사용자 소개글이 없습니다"}}
                 </div>
             </div>
             <div class="col d-flex flex-column align-items-center">
@@ -19,7 +19,6 @@
                 <div class="detailContent mb-2">{{userinfo.airName}}</div>
                 <div class="detail mb-2">Age:</div>
                 <div class="detailContent mb-2">{{userinfo.age}}</div>
-                <div class="detail mb-2">Location:</div>
             </div>
         </div>
     </div>
