@@ -16,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import ds.pirate.backend.dto.ArticleDTO;
@@ -91,6 +93,20 @@ public class UserRepositoryTests {
 
     @Autowired
     ApiMemberService memberService;
+
+    @Autowired
+    JavaMailSender mailSender;
+    @Test
+    void mailsendTest(){
+        
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo("bbb301@naver.com");
+        message.setFrom("gumyoincirno@gmail.com");
+        message.setSubject("에어메일테스트22");
+        message.setText("이 메일은 테스팅용 메일입니다22");
+
+        mailSender.send(message);
+    }
 
     @Test
     void getUserInfoByUserId(){
