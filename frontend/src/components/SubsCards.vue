@@ -1,16 +1,18 @@
 <template>
 <div >
   <div class="image-contener">
-    <div class="position-relative">
-    <div div class=" ms-2 mt-2 badge bg-secondary position:absolute"  v-if="state.following == store.state.userid && $store.state.token">
+    <div div class=" ms-2 mt-2 badge bg-secondary position-absolute" :style="`z-index: 1;`" v-if="state.following == store.state.userid && $store.state.token">
       구독중
     </div>
-    <img  src="../assets/pngwing.com.png" alt="">
+    <div class="position-relative">
+
+<!--    <img  src="../assets/pngwing.com.png" alt="">-->
+      <img  :src="store.state.axiosLink+'/images/read/'+image" alt="">
     </div>
   </div>
   <div class="meta-contener">
     <h2 class="title">{{card.airName}}</h2>
-    <span class="desc">{{card.myuserid}}가 {{card.userid}}를 구독하고 있습니다. 여기 자기소개칸!</span>
+    <span class="desc">{{intro}}</span>
   </div>
   <div class="detail mb-1">
     <div class="row align-items-start">
@@ -52,6 +54,21 @@ const props = defineProps({
 const state = reactive({
   following: ''
 })
+let intro = introNull(props.card.userIntro);
+
+let image = imageslice(props.card.fileName, props.card.idx);
+function imageslice(a, b){
+  if(a == null || b == 99){
+    return "basic.png"
+  } else { return a}
+}
+
+function introNull(intro){
+  if(intro != null){
+    return intro
+  } return props.card.airName + "님은 아직 등록된 자기소개가 없습니다."
+}
+
 console.log(props.card);
 
 //구독유무
@@ -105,6 +122,7 @@ async function readMore(a) {
   await router.push(`/mypage?channel=${a}`);
   router.go(0)
 }
+console.log(props.card)
 </script>
 
 <style scoped>

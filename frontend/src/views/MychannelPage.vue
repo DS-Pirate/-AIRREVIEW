@@ -9,10 +9,10 @@
                 <li class="list-group-item border border-0" v-on:click="change('list')">글 목록</li>
                 <span>|</span>
                 <li class="list-group-item border border-0" v-on:click="change('category')">Following</li>
-              <div div class="badge bg-secondary position:absolute"> {{ state.followingCount }} </div>
+              <div div class="badge bg-secondary position:absolute" v-if="state.followingCount != 0"> {{ state.followingCount }} </div>
                 <span>|</span>
               <li class="list-group-item border border-0" v-on:click="change('follower')">Follower</li>
-              <div div class="badge bg-secondary position:absolute"> {{ state.followerCount }} </div>
+              <div div class="badge bg-secondary position:absolute" v-if="state.followerCount != 0" > {{ state.followerCount }} </div>
               <span>|</span>
                 <li class="list-group-item border border-0" v-on:click="change('channelinfo')">내 정보</li>
                 <span>|</span>
@@ -36,7 +36,7 @@
     </div>
 </template>
 <script setup>
-    import { reactive } from "vue";
+import {onMounted, reactive} from "vue";
     import SubInfo from "@/components/SubscriptionInfo.vue";
     import PostList from "@/components/PostList.vue";
     import MyInfo from "@/components/MyInfo.vue";
@@ -91,6 +91,7 @@
         }
       })
       await getSub()
+      await getCount();
     }
 
     function getSub(){
@@ -129,8 +130,11 @@
       })
     }
 
-    getSub()
-    getCount()
+    onMounted(() => {
+      getSub()
+      getCount()
+    })
+
 </script>
 <style lang="sass" scoped>
     .chimg
