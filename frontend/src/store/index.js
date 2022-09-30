@@ -35,7 +35,7 @@ export default createStore({
     setAuthorid(state, payload){
       state.authorid = payload
     },
-    setAlarm(state, payload){
+    setIsAlarm(state, payload){
       state.isAlarm = payload
     }
   },

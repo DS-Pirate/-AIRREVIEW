@@ -25,7 +25,7 @@ public class MailServiceImpl implements MailService {
         if(isCheck.isPresent()){
             mrepo.delete(isCheck.get());
         }
-        mrepo.save(emailAuth.builder().email(useremail).authNum(authnum).build());
+        mrepo.save(emailAuth.builder().email(useremail).authNum(authnum).isAuthrized(false).build());
         mailSender.send(useremail, "[에어리뷰] 이메일 인증을 위한 인증번호를 안내 드립니다.", "인증번호 : " + authnum);
         return true;
     }

@@ -12,7 +12,7 @@
 						<div @click="read()">
 							<span class="author">{{ card.airName }}</span>
 							<h3 class="title"><a>{{ title }}</a></h3>
-							<p class="text" v-html="props.card.context"></p>
+							<p class="text" v-html="convertIframeToText(props.card.context)"></p>
 						</div>
 						<label :for="props.cardinfo" class="menu-button"><span></span></label>
 					</div>
@@ -48,6 +48,16 @@ let date = regdate.getDate();
 let month = monthNames[regdate.getMonth()];
 let title = titleLength(props.card.atitle);
 let image = imageslice(props.card.fileName);
+
+function convertIframeToText(context){
+	if (context.indexOf("<iframe") > 0) {
+		context = context.replace(context.slice(context.indexOf("<iframe"), context.indexOf("</iframe>") + 9), `[아이프레임 링크]`);
+		return context
+    }
+	else {
+		return context
+	}
+}
 
 function imageslice(a){
   if(a != null){
