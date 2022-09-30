@@ -23,26 +23,28 @@ public interface SubscribeRepository extends JpaRepository<subscribList, Long> {
     @Query("SELECT s FROM subscribList s WHERE userid_userid=:userid")
     Optional<List<subscribList>> getByUserId(Long userid);
 
-    @Query(value = "SELECT u.userid as myuserid, ss.target_id AS userid, uu.air_name AS airName, po.post, f.following AS following, fo.follower AS follower " +
-            "FROM air_user u " +
-            "LEFT JOIN subscrib_list ss ON u.userid = ss.userid_userid " +
-            "LEFT JOIN (SELECT u.air_name, u.userid FROM air_user u  ) uu ON ss.target_id = uu.userid " +
+    @Query(value = "SELECT u.userid as myuserid, uu.user_intro as userintro , ss.target_id AS userid, uu.air_name AS airName, po.post, f.following AS following, fo.follower AS follower, " +
+            "i.file_name AS fileName, i.idx as idx " +
+            "FROM air_user u LEFT JOIN subscrib_list ss ON u.userid = ss.userid_userid " +
+            "LEFT JOIN (SELECT u.air_name, u.userid, u.user_intro FROM air_user u) uu ON ss.target_id = uu.userid " +
+            "LEFT JOIN u_images_list i ON uu.userid = i.airuser " +
             "LEFT JOIN (SELECT u.userid, COUNT(a.aid) AS post FROM air_user u LEFT JOIN articles_list a on u.userid =  a.a_user group by u.userid) po ON po.userid=ss.target_id  " +
             "LEFT JOIN (SELECT u.userid, COUNT(s.target_id) AS following FROM air_user u LEFT JOIN subscrib_list s ON u.userid = s.userid_userid GROUP BY u.userid) f ON f.userid = ss.target_id " +
             "LEFT JOIN (SELECT u.userid, COUNT(s.userid_userid) AS follower FROM air_user u LEFT JOIN subscrib_list s ON u.userid = s.target_id GROUP BY u.userid) fo ON fo.userid = ss.target_id " +
-            "WHERE u.userid = :userid " +
-            "GROUP BY ss.target_id " , nativeQuery = true)
+            "WHERE u.userid = :userid AND (i.iid IN  (SELECT Max(i.iid) FROM u_images_list i WHERE i.idx = 0 or i.idx = 99 GROUP BY i.airuser) OR i.iid IS NULL)" +
+            "GROUP BY ss.target_id, i.iid " , nativeQuery = true)
     Optional<Page<getMySubInfo>> getPostFollwerFollwingInSubByUserid(Long userid, Pageable pageable);
 
-    @Query(value = "SELECT u.userid as myuserid, ss.target_id AS userid, uu.air_name AS airName, po.post, f.following AS following, fo.follower AS follower " +
-            "            FROM air_user u " +
-            "            LEFT JOIN subscrib_list ss ON u.userid = ss.target_id " +
-            "            LEFT JOIN (SELECT u.air_name, u.userid FROM air_user u  ) uu ON ss.userid_userid = uu.userid " +
-            "            LEFT JOIN (SELECT u.userid, COUNT(a.aid) AS post FROM air_user u LEFT JOIN articles_list a on u.userid =  a.a_user group by u.userid) po ON po.userid=ss.userid_userid " +
-            "            LEFT JOIN (SELECT u.userid, COUNT(s.target_id) AS following FROM air_user u LEFT JOIN subscrib_list s ON u.userid = s.userid_userid GROUP BY u.userid) f ON f.userid = ss.userid_userid " +
-            "            LEFT JOIN (SELECT u.userid, COUNT(s.userid_userid) AS follower FROM air_user u LEFT JOIN subscrib_list s ON u.userid = s.target_id GROUP BY u.userid) fo ON fo.userid = ss.userid_userid " +
-            "            WHERE u.userid = :userid" +
-            "            GROUP BY  ss.userid_userid " , nativeQuery = true)
+    @Query(value = "SELECT u.userid as myuserid, uu.user_intro as userintro, ss.userid_userid AS userid, uu.air_name AS airName, po.post, f.following AS following, fo.follower AS follower, i.file_name AS fileName, i.idx " +
+            "   FROM air_user u " +
+            "      LEFT JOIN subscrib_list ss ON u.userid = ss.target_id " +
+            "      LEFT JOIN u_images_list i ON ss.userid_userid = i.airuser " +
+            "      LEFT JOIN (SELECT air_name, userid, user_intro FROM air_user ) uu ON ss.userid_userid = uu.userid " +
+            "      LEFT JOIN (SELECT u.userid, COUNT(a.aid) AS post FROM air_user u LEFT JOIN articles_list a on u.userid =  a.a_user group by u.userid) po ON po.userid=ss.userid_userid " +
+            "      LEFT JOIN (SELECT u.userid, COUNT(s.target_id) AS following FROM air_user u LEFT JOIN subscrib_list s ON u.userid = s.userid_userid GROUP BY u.userid) f ON f.userid = ss.userid_userid " +
+            "      LEFT JOIN (SELECT u.userid, COUNT(s.userid_userid) AS follower FROM air_user u LEFT JOIN subscrib_list s ON u.userid = s.target_id GROUP BY u.userid) fo ON fo.userid = ss.userid_userid " +
+            "   WHERE u.userid = :userid AND (i.iid IN (SELECT Max(iid) FROM u_images_list WHERE i.idx = 0 or i.idx = 99 GROUP BY airuser) OR i.iid IS NULL ) " +
+            "   GROUP BY  ss.userid_userid, i.iid" , nativeQuery = true)
     Optional<Page<getMySubInfo>> getPostFollwerFollwingInFollowerByUserid(Long userid, Pageable pageable);
 
     @Query(value = "SELECT s.userid_userid FROM subscrib_list s WHERE s.userid_userid=:userid AND s.target_id = :targetid",nativeQuery = true)
@@ -63,5 +65,8 @@ public interface SubscribeRepository extends JpaRepository<subscribList, Long> {
         Long getPost();
         Long getFollowing();
         Long getFollower();
+        String getUserintro();
+        String getFileName();
+        Long getIdx();
     }
 }
