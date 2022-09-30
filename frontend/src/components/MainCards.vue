@@ -1,7 +1,7 @@
 <template>
 	<div class="col maincards">
 		<div class="card-1 card border-0 w-100 mb-5">
-			<div class="wrapper">
+			<div class="wrapper" :style="'background-image: url('+store.state.axiosLink+'/images/read/'+image+'); background-size:cover;'">
 				<div class="date">
 					<span class="day">{{date}}</span>
 					<span class="month">{{month}}</span>
@@ -12,7 +12,6 @@
 						<div @click="read()">
 							<span class="author">{{ card.airName }}</span>
 							<h3 class="title"><a>{{ title }}</a></h3>
-              {{imagee}}
 							<p class="text" v-html="props.card.context"></p>
 						</div>
 						<label :for="props.cardinfo" class="menu-button"><span></span></label>
@@ -34,6 +33,7 @@
 <script setup>
 import { defineProps } from "vue";
 import router from "@/router";
+import store from "@/store";
 
 const props = defineProps({
   card: Object,
@@ -47,13 +47,12 @@ let year = regdate.getFullYear();
 let date = regdate.getDate();
 let month = monthNames[regdate.getMonth()];
 let title = titleLength(props.card.atitle);
-let imagee = imageslice(props.card.fileName);
+let image = imageslice(props.card.fileName);
 
 function imageslice(a){
-  if(a == null){
-    return "basic.png"
-  }
-  a.slice(0, -1)
+  if(a != null){
+    return a.slice(0, -1)
+  } else { return "basic.png"}
 }
 
 

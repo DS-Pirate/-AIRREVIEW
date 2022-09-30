@@ -3,6 +3,7 @@ package ds.pirate.backend.repository;
 import java.util.List;
 import java.util.Optional;
 
+import ds.pirate.backend.vo.MySubInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,11 +34,27 @@ public interface SubscribeRepository extends JpaRepository<subscribList, Long> {
             "GROUP BY ss.target_id " , nativeQuery = true)
     Optional<Page<getMySubInfo>> getPostFollwerFollwingInSubByUserid(Long userid, Pageable pageable);
 
+    @Query(value = "SELECT u.userid as myuserid, ss.target_id AS userid, uu.air_name AS airName, po.post, f.following AS following, fo.follower AS follower " +
+            "            FROM air_user u " +
+            "            LEFT JOIN subscrib_list ss ON u.userid = ss.target_id " +
+            "            LEFT JOIN (SELECT u.air_name, u.userid FROM air_user u  ) uu ON ss.userid_userid = uu.userid " +
+            "            LEFT JOIN (SELECT u.userid, COUNT(a.aid) AS post FROM air_user u LEFT JOIN articles_list a on u.userid =  a.a_user group by u.userid) po ON po.userid=ss.userid_userid " +
+            "            LEFT JOIN (SELECT u.userid, COUNT(s.target_id) AS following FROM air_user u LEFT JOIN subscrib_list s ON u.userid = s.userid_userid GROUP BY u.userid) f ON f.userid = ss.userid_userid " +
+            "            LEFT JOIN (SELECT u.userid, COUNT(s.userid_userid) AS follower FROM air_user u LEFT JOIN subscrib_list s ON u.userid = s.target_id GROUP BY u.userid) fo ON fo.userid = ss.userid_userid " +
+            "            WHERE u.userid = :userid" +
+            "            GROUP BY  ss.userid_userid " , nativeQuery = true)
+    Optional<Page<getMySubInfo>> getPostFollwerFollwingInFollowerByUserid(Long userid, Pageable pageable);
+
     @Query(value = "SELECT s.userid_userid FROM subscrib_list s WHERE s.userid_userid=:userid AND s.target_id = :targetid",nativeQuery = true)
     Long getFollowingByUseridAndTargetid(Long userid, Long targetid);
 
     @Query(value = "SELECT * FROM subscrib_list WHERE userid_userid=:userid AND target_id = :targetid",nativeQuery = true)
     Optional<subscribList> getSubListByUseridAndTargetid(Long userid, Long targetid);
+
+    @Query(value = "SELECT f.following as following, fo.follower as follower " +
+            "FROM (SELECT COUNT(sbid) AS following FROM subscrib_list l WHERE l.userid_userid =:userid) f, " +
+            "(SELECT COUNT(sbid) AS follower FROM subscrib_list l WHERE l.target_id =:userid) fo ",nativeQuery = true)
+    Optional<getMySubInfo> getFollwerFollwingCountByUserid(Long userid);
 
     public interface getMySubInfo{
         Long getMyuserid();

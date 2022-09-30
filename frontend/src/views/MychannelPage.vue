@@ -8,8 +8,12 @@
             <ul class="list-group list-group-horizontal h-10 align-items-center">
                 <li class="list-group-item border border-0" v-on:click="change('list')">글 목록</li>
                 <span>|</span>
-                <li class="list-group-item border border-0" v-on:click="change('category')">구독 정보</li>
+                <li class="list-group-item border border-0" v-on:click="change('category')">Following</li>
+              <div div class="badge bg-secondary position:absolute"> {{ state.followingCount }} </div>
                 <span>|</span>
+              <li class="list-group-item border border-0" v-on:click="change('follower')">Follower</li>
+              <div div class="badge bg-secondary position:absolute"> {{ state.followerCount }} </div>
+              <span>|</span>
                 <li class="list-group-item border border-0" v-on:click="change('channelinfo')">내 정보</li>
                 <span>|</span>
               <button type="button"  class="list-group-item border border-0 followsubmit" v-if="!(store.state.userid == state.following ) && $store.state.token" @click="followsubmit()" >구독하기</button>
@@ -23,6 +27,9 @@
         <div class="chcategory p-3 my-3 shadow-sm bg-white d-flex h-auto" v-else-if="state.form == 'category'">
             <SubInfo :id="id" />
         </div>
+      <div class="chcategory p-3 my-3 shadow-sm bg-white d-flex h-auto" v-else-if="state.form == 'follower'">
+        <FollowerInfo :id="id" />
+      </div>
         <div class="chcategory p-3 my-3 shadow-sm bg-white d-flex h-auto" v-else-if="state.form == 'channelinfo'">
             <MyInfo />
         </div>
@@ -35,10 +42,13 @@
     import MyInfo from "@/components/MyInfo.vue";
     import axios from "axios";
     import store from "@/store";
+    import FollowerInfo from "@/components/FollowerInfo";
 
     let state = reactive({
         form: "list",
-      following: ''
+      following: '',
+      followingCount:0,
+      followerCount:0,
     });
 
     let id = new URLSearchParams(window.location.search).get("channel");
@@ -82,6 +92,7 @@
       })
       await getSub()
     }
+
     function getSub(){
       const url = store.state.axiosLink+`/api/followyn`;
       const headers = {
@@ -96,13 +107,30 @@
       console.log(body);
       state.following =  '';
       axios.post(url, body, {headers}).then(function (res) {
-        console.log("구독유무");
         console.log(res.data);
         state.following = res.data;
       })
     }
-    getSub()
 
+    function getCount(){
+      const url = store.state.axiosLink+`/mypage/followcount`;
+      const headers = {
+        "Content-Type": "application/json; charset=utf-8"
+      };
+      const body = {
+        userid: id
+      }
+      console.log(body);
+      axios.post(url, body, {headers}).then(function (res) {
+        console.log("이거 숫자");
+        console.log(res.data);
+        state.followingCount = res.data.following;
+        state.followerCount = res.data.follower;
+      })
+    }
+
+    getSub()
+    getCount()
 </script>
 <style lang="sass" scoped>
     .chimg
