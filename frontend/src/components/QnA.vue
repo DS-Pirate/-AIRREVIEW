@@ -38,6 +38,6 @@ axios.post(url, store.state.userid, { headers }).then(function (res) {
 
 </script>
 <style scoped lang="sass">
-  .accordion-flush 
+  .accordion-collapse
     background-color:gray
 </style>

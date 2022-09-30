@@ -8,9 +8,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +21,13 @@ import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.entity.reportList;
 import ds.pirate.backend.repository.ArticleReportRepository;
 import ds.pirate.backend.repository.ArticleRepository;
-import ds.pirate.backend.repository.ArticleRepository.getMySettingArticleList;
 import ds.pirate.backend.repository.LikeUnlikeRepository;
 import ds.pirate.backend.repository.QuestionRepository;
 import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import ds.pirate.backend.service.QuestionService.QuestionService;
 import ds.pirate.backend.service.UserService.UserService;
+import ds.pirate.backend.vo.settingArticleList;
 import ds.pirate.backend.vo.userid;
 import lombok.RequiredArgsConstructor;
 
@@ -90,12 +87,6 @@ public class SettingServiceImpl implements SettingService {
   }
 
   @Override
-  public Page<getMySettingArticleList> articleListByUserid(Long userid, Integer pageNum) {
-    Pageable pageable = PageRequest.of(pageNum, 10);
-    return arepo.getSettingArticleListByUserIdWithPageable(userid, pageable);
-  }
-
-  @Override
   public List<reportDTO> getReportList(Long user) {
     List<reportList> getList = rrepo.findByUserid(airUser.builder()
         .userid(user)
@@ -125,4 +116,16 @@ public class SettingServiceImpl implements SettingService {
       return qService.EntitytoDTO(v);
     }).collect(Collectors.toList());
   }
+
 }
+
+// @Override
+// public Boolean remove2(Long aid) {
+// try {
+// arepo.deleteById(aid);
+// return true;
+// } catch (Exception e) {
+// e.printStackTrace();
+// return false;
+// }
+// }

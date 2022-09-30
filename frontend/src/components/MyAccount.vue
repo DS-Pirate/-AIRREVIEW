@@ -117,10 +117,7 @@ export default {
       state.year = regdate.getFullYear();
       state.date = regdate.getDate();
       state.month = regdate.getMonth() + 1;
-      console.log(regdate);
-
     })
-    console.log(state.year);
     }
     a()
 

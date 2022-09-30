@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import ds.pirate.backend.dto.QuestionDTO;
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.dto.reportDTO;
-import ds.pirate.backend.repository.ArticleRepository.getMySettingArticleList;
+import ds.pirate.backend.repository.ArticleRepository.getMyChannelArticleList;
 import ds.pirate.backend.service.SettingService.SettingService;
-import ds.pirate.backend.vo.settingArticleList;
+import ds.pirate.backend.vo.channelArticleList;
 import ds.pirate.backend.vo.userid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -41,10 +41,19 @@ public class SettingController {
     return new ResponseEntity<>(service.changePasswd(vo), HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/setting/articlelist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Page<getMySettingArticleList>> commentUserDetail(@RequestBody settingArticleList info) {
-    log.info(info);
-    return new ResponseEntity<>(service.articleListByUserid(info.getUserid(), info.getPageNum()), HttpStatus.OK);
+  // @RequestMapping(value = "/setting/articlelist", method = RequestMethod.POST,
+  // consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  // public ResponseEntity<HashMap<String, Object>> register(@RequestBody String
+  // userid) {
+  // log.info(userid);
+  // HashMap<String, Object> result =
+  // service.settingArticleList(Long.parseLong(userid));
+  // return new ResponseEntity<>(result, HttpStatus.OK);
+  // }
+
+  @RequestMapping(value = "/setting/articleremove", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Boolean> remove2(@RequestBody String aid) {
+    return new ResponseEntity<>(service.remove(Long.parseLong(aid)), HttpStatus.OK);
   }
 
   @RequestMapping(value = "/setting/reportlist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -63,4 +72,10 @@ public class SettingController {
     List<QuestionDTO> result = service.getQuestionList(Long.parseLong(userid));
     return new ResponseEntity<>(result, HttpStatus.OK);
   }
+
+  @RequestMapping(value = "/setting/articlelist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Page<getMyChannelArticleList>> commentUserDetail(@RequestBody channelArticleList info) {
+    return new ResponseEntity<>(service.articleListByUserid(info.getUserid(), info.getPageNum()), HttpStatus.OK);
+  }
+
 }

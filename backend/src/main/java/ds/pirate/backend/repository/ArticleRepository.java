@@ -45,7 +45,8 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
                         "left join acomments c on c.articles = a.aid " +
                         "left join likeUnlikeList l on l.aid = a.aid " +
                         "LEFT JOIN ImagesList i ON a.aid = i.articles.aid " +
-                        "where a.opend = 1L AND (i.iid IN (SELECT MIN(iid)  FROM ImagesList GROUP BY articles.aid) OR i.iid IS null)" +
+                        "where a.opend = 1L AND (i.iid IN (SELECT MIN(iid)  FROM ImagesList GROUP BY articles.aid) OR i.iid IS null)"
+                        +
                         "group by a.aid, i.iid")
         Optional<Page<getEmbedCardsInformation>> getListAndAuthor(Pageable pageable);
 
@@ -58,13 +59,13 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
                         "left join likeUnlikeList l on l.aid = a.aid " +
                         "LEFT JOIN ImagesList i ON a.aid = i.articles.aid " +
                         "left join subscribList s on s.targetId = a.aUser " +
-                        "where s.userid.userid=:userid and a.opend = 1L AND (i.iid IN (SELECT MIN(iid)  FROM ImagesList GROUP BY articles.aid) OR i.iid IS null) " +
+                        "where s.userid.userid=:userid and a.opend = 1L AND (i.iid IN (SELECT MIN(iid)  FROM ImagesList GROUP BY articles.aid) OR i.iid IS null) "
+                        +
                         "group by a.aid, i.iid ")
         Optional<Page<getEmbedCardsInformation>> getCardsListBySub(Long userid, Pageable pageable);
 
         @Query("SELECT a FROM ArticlesList a WHERE a_user=:userid ")
         List<ArticlesList> getListbyuserId(Long userid);
-
 
         @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate, "
                         +
@@ -91,7 +92,6 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
                         "group by a.aid")
         Optional<Page<getEmbedCardsInformation>> getListAndAuthor2(Pageable pageable);
 
-
         @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate, "
                         +
                         "a.opend as opend, avg(c.articleRate) as articleRate, COUNT(l.favid) as likeCount " +
@@ -104,36 +104,37 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
                         "group by a.aid ")
         Optional<List<getEmbedCardsInformation>> getCardsListBySub2(Long userid, Sort sort);
 
+        @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate, i.fileName as fileName, "
+                        +
+                        " a.opend as opend, avg(c.articleRate) as articleRate, COUNT(l.favid) as likeCount " +
+                        "FROM ArticlesList a left join  airUser u on u.userid = a.aUser " +
+                        "left join HashTags h on h.articles = a.aid " +
+                        "left join acomments c on c.articles = a.aid " +
+                        "left join likeUnlikeList l on l.aid = a.aid " +
+                        "LEFT JOIN ImagesList i ON a.aid = i.articles.aid " +
+                        "where a.opend = 1L AND (i.iid IN (SELECT MIN(iid)  FROM ImagesList GROUP BY articles.aid) OR i.iid IS null) AND "
+                        +
+                        "(u.airName LIKE CONCAT('%',:search,'%') Or a.atitle LIKE CONCAT('%',:search,'%') Or h.hashTagName LIKE CONCAT('%',:search,'%')) "
+                        +
+                        "group by a.aid, i.iid")
+        Optional<Page<getEmbedCardsInformation>> getListAndAuthorByAuthorOrAtitle(String search, Pageable pageable);
 
-    @Query("SELECT u.airName as airName, a.aid as aid, a.atitle as atitle, a.context as context, a.regDate as regDate, i.fileName as fileName, " +
-            " a.opend as opend, avg(c.articleRate) as articleRate, COUNT(l.favid) as likeCount " +
-            "FROM ArticlesList a left join  airUser u on u.userid = a.aUser " +
-            "left join HashTags h on h.articles = a.aid " +
-            "left join acomments c on c.articles = a.aid " +
-            "left join likeUnlikeList l on l.aid = a.aid " +
-            "LEFT JOIN ImagesList i ON a.aid = i.articles.aid " +
-            "where a.opend = 1L AND (i.iid IN (SELECT MIN(iid)  FROM ImagesList GROUP BY articles.aid) OR i.iid IS null) AND " +
-            "(u.airName LIKE CONCAT('%',:search,'%') Or a.atitle LIKE CONCAT('%',:search,'%') Or h.hashTagName LIKE CONCAT('%',:search,'%')) " +
-            "group by a.aid, i.iid")
-    Optional<Page<getEmbedCardsInformation>> getListAndAuthorByAuthorOrAtitle(String search, Pageable pageable);
+        @Query("SELECT a.aid, a.atitle " +
+                        "FROM ArticlesList a left join  airUser u on u.userid = a.aUser " +
+                        "left join HashTags h on h.articles = a.aid " +
+                        "left join acomments c on c.articles = a.aid " +
+                        "left join likeUnlikeList l on l.aid = a.aid " +
+                        "where a.opend = 1L AND (u.airName LIKE CONCAT('%',:search,'%') Or " +
+                        "a.atitle LIKE CONCAT('%',:search,'%') Or " +
+                        "h.hashTagName LIKE CONCAT('%',:search,'%')) " +
+                        "group by a.aid")
+        Page<ArticlesList> getListAndAuthorByAuthorOrAtitlePage(String search, Pageable pageable);
 
-    @Query("SELECT a.aid, a.atitle " +
-            "FROM ArticlesList a left join  airUser u on u.userid = a.aUser " +
-            "left join HashTags h on h.articles = a.aid " +
-            "left join acomments c on c.articles = a.aid " +
-            "left join likeUnlikeList l on l.aid = a.aid " +
-            "where a.opend = 1L AND (u.airName LIKE CONCAT('%',:search,'%') Or " +
-            "a.atitle LIKE CONCAT('%',:search,'%') Or " +
-            "h.hashTagName LIKE CONCAT('%',:search,'%')) " +
-            "group by a.aid")
-    Page<ArticlesList> getListAndAuthorByAuthorOrAtitlePage(String search, Pageable pageable);
-
-    @Query("SELECT aid " +
-            "FROM ArticlesList " +
-            "where opend = 1L " +
-            "group by aid")
-    Page<ArticlesList> getListAndAuthorPage(Pageable pageable);
-
+        @Query("SELECT aid " +
+                        "FROM ArticlesList " +
+                        "where opend = 1L " +
+                        "group by aid")
+        Page<ArticlesList> getListAndAuthorPage(Pageable pageable);
 
         // "ORDER BY a.aid DESC"
         @Query("update ArticlesList a set a.opencount = a.opencount+1 where a.aid=:aid")
@@ -204,39 +205,6 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
                 Long getAid();
 
                 String getAtitle();
-
-                Integer getFavCount();
-
-                Integer getSaveCount();
-
-                Integer getOpenCount();
-
-                LocalDateTime getRegDate();
-        }
-
-        @Query(value = "select at.aid as aid, at.atitle as atitle, " +
-                        "(select count(ar.aid) from articles_list as ar left join like_unlike_list as li on ar.aid = li.aid where  at.aid = ar.aid) as favCount, "
-                        +
-                        "(select count(ar.aid) from articles_list as ar left join save_list as sav on ar.aid = sav.aid where at.aid = ar.aid) as saveCount, "
-                        +
-                        "at.opencount as openCount, at.regdate as regDate " +
-                        "from articles_list as at " +
-                        "where at.a_user=:userid", countQuery = "select at.aid as aid, at.atitle as atitle, " +
-                                        "(select count(ar.aid) from articles_list as ar left join like_unlike_list as li on ar.aid = li.aid where  at.aid = ar.aid) as favCount, "
-                                        +
-                                        "(select count(ar.aid) from articles_list as ar left join save_list as sav on ar.aid = sav.aid where at.aid = ar.aid) as saveCount, "
-                                        +
-                                        "at.opencount as openCount, at.regdate as regDate " +
-                                        "from articles_list as at " +
-                                        "where at.a_user=:userid", nativeQuery = true)
-        Page<getMySettingArticleList> getSettingArticleListByUserIdWithPageable(Long userid, Pageable pageable);
-
-        public interface getMySettingArticleList {
-                Long getAid();
-
-                String getAtitle();
-
-                Byte[] getContext();
 
                 Integer getFavCount();
 
