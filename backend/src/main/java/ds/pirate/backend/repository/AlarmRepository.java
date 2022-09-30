@@ -20,5 +20,6 @@ public interface AlarmRepository extends JpaRepository<alarm, Long>{
             , nativeQuery = true)
     Optional<List<Object>> getAlarmInfoByUserid(Long userid);
 
-
+    @Query("select arm from alarm arm where comment_id_cid=:cid")
+    Optional<alarm> getByCid(Long cid);
 }

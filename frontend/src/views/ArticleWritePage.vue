@@ -122,6 +122,14 @@ export default {
 				token: store.state.token,
 				images: []
 			}
+			if(page.atitle.trim().length==0){
+				alert("타이틀을 입력해주세요")
+				return
+			}
+			else if(page.context.trim().length==0){
+				alert("내용을 입력해주세요")
+				return
+			}
 
 
 			//find image name where in context
