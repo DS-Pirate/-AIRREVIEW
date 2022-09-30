@@ -66,7 +66,7 @@ export default {
       store.commit('setUserId',0);
       store.commit('setToken',0);
       store.commit('setEmail',0);
-      store.commit('setIsAlarm', 0);
+      store.commit('setAlarm', 0);
       router.push({path:"/logout"})
     }
 
