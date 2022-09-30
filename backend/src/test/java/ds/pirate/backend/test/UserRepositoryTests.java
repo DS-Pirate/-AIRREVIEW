@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import ds.pirate.backend.service.ApiMemberService.ApiMemberService;
 
+import ds.pirate.backend.vo.MySubInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -494,10 +495,11 @@ public class UserRepositoryTests {
         log.info(result);
     }
 
-//    @Test
-//    public void cardsListOrderBySub(){
-//        Optional<List<ArticleRepository.getEmbedCardsInformation>> result = arepo.getCardsListBySub();
-//        log.info(result);
-//    }
+    @Test
+    public void cardsListOrderBySub(){
+        SubscribeRepository.getMySubInfo result = subrepo.getFollwerFollwingCountByUserid(42L).get();
+        log.info("resulttttttttttttttttttttttt");
+        log.info(result);
+    }
 
 }
