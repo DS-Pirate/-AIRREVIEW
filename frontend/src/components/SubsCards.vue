@@ -1,6 +1,6 @@
 <template>
-<div >
-  <div class="image-contener">
+<div v-if="card.userid">
+  <div class="image-contener" >
     <div div class=" ms-2 mt-2 badge bg-secondary position-absolute" :style="`z-index: 1;`" v-if="state.following == store.state.userid && $store.state.token">
       구독중
     </div>

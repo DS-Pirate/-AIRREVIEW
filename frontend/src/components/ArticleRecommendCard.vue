@@ -14,6 +14,7 @@
                             <h3 class="title">
                                 <a>{{ props.cardInfo.atitle.length>10?props.cardInfo.atitle.slice(0, 10):props.cardInfo.atitle }}</a>
                             </h3>
+                      <div class="menu-button"><span>조회수 {{ props.cardInfo.opencount }}</span></div>
                             <p class="text" v-html="props.cardInfo.context"></p>
 						</div>			
 					</div>
@@ -83,6 +84,18 @@
                 z-index: 1;
             }
         }
+
+      .menu-button {
+        position: absolute;
+        z-index: 999;
+        top: 16px;
+        right: 16px;
+        span {
+          color: lighten(black, 50%);
+          font-size: 10px;
+        }
+      }
+
 
         .author {
             font-size: 0.8rem;

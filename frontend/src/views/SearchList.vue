@@ -73,6 +73,9 @@ export default {
           }
         }
       })
+      if (state.cards.length == 0){
+        state.notSearchWord = true;
+      } else state.notSearchWord = false;
     }
 
     async function view (){
