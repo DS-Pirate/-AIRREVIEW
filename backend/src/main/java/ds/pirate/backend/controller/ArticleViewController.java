@@ -58,9 +58,7 @@ public class ArticleViewController {
     @RequestMapping(value = "/card", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HashMap<String, Object>> ArticleCardsList(@RequestBody comment comment){
         return new ResponseEntity<>(aservice.getArticleList(comment), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/card/order", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    }    @RequestMapping(value = "/card/order", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HashMap<String, Object>> ArticleCardsOrderList(@RequestBody search vo){
         log.info(vo);
         return new ResponseEntity<>(aservice.getArticleListOrder(vo), HttpStatus.OK);

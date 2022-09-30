@@ -18,6 +18,7 @@ module.exports = defineConfig(
         "/airreview/member/" :{target, changeOrigin: true},
         "/airreview/info/" :{target, changeOrigin: true},
         "/airreview/mypage/" :{target, changeOrigin: true},
+        "/airreview/email/" :{target, changeOrigin: true},
         }
 },
 

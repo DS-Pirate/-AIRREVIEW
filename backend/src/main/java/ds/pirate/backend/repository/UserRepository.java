@@ -42,4 +42,17 @@ public interface UserRepository extends JpaRepository<airUser, Long> {
     @Query("select userid from airUser where eMail=:email and (q1=:q1 or q2=:q2 or q3=:q3)")
     Long findUserIdByEmailAndQ(String email, String q1, String q2, String q3);
 
+    @Query("SELECT air.userIntro as userIntro, air.airName as airName, uf.fileName as fileName, air.birthDay as birthDay "+
+    "FROM airUser as air left join uImagesList as uf on air.userid=uf.airuser WHERE air.userid=:userid")
+    Optional<UserIntroPage> getUserInfoByUserId(Long userid);
+
+    public interface UserIntroPage {
+        String getUserIntro();
+        String getAirName();
+        String getFileName();
+        LocalDateTime getBirthDay();
+
+
+        
+    }
 }
