@@ -28,6 +28,7 @@ public class ApiMemberServiceImpl implements ApiMemberService{
         Optional<emailAuth> resultcheck = mrepo.getByEmail(dto.getEmail());
         if(resultcheck.get().getEmail().length()>0&&resultcheck.get().getIsAuthrized()==true){
             repository.save(dtoToEntity(dto));
+            mrepo.delete(resultcheck.get());
             return "회원가입이 완료되었습니다.";
         } else{
             return "회원가입에 실패하였습니다.";
