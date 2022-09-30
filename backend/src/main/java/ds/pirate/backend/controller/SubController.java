@@ -24,18 +24,19 @@ public class SubController {
   private final SubscribeService service;
 
   @RequestMapping(value = "/following", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<MySubInfo>> channelFollowing (@RequestBody subcard vo){
+  public ResponseEntity<List<MySubInfo>> channelFollowing(@RequestBody subcard vo) {
     log.info(vo);
     return new ResponseEntity<>(service.getFollowingInfoList(vo), HttpStatus.OK);
   }
+
   @RequestMapping(value = "/follower", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<MySubInfo>> channelFollower (@RequestBody subcard vo){
+  public ResponseEntity<List<MySubInfo>> channelFollower(@RequestBody subcard vo) {
     log.info(vo);
     return new ResponseEntity<>(service.getFollowerInfoList(vo), HttpStatus.OK);
   }
 
   @RequestMapping(value = "/followcount", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<MySubInfo> FollCount(@RequestBody subcard vo){
+  public ResponseEntity<MySubInfo> FollCount(@RequestBody subcard vo) {
     log.info("이거 숫자");
     log.info(vo);
     return new ResponseEntity<>(service.getFolloCount(vo), HttpStatus.OK);

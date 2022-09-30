@@ -11,7 +11,6 @@ import lombok.Data;
 public class settingArticleList {
   private Long aid;
   private String atitle;
-  private Byte[] context;
   private Integer favCount;
   private Integer saveCount;
   private Integer openCount;
@@ -19,14 +18,12 @@ public class settingArticleList {
   private Long userid;
   private Integer pageNum;
 
-  public settingArticleList(ArticleRepository.getMySettingArticleList em) {
+  public settingArticleList(ArticleRepository.getMyChannelArticleList em) {
     this.aid = em.getAid();
     this.atitle = em.getAtitle();
-    this.context = em.getContext();
     this.favCount = em.getFavCount();
     this.saveCount = em.getSaveCount();
     this.openCount = em.getOpenCount();
     this.regDate = em.getRegDate();
   }
-
 }

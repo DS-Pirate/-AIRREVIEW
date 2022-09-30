@@ -3,13 +3,10 @@ package ds.pirate.backend.service.SettingService;
 import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-
 import ds.pirate.backend.dto.QuestionDTO;
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.entity.airUser;
-import ds.pirate.backend.repository.ArticleRepository.getMySettingArticleList;
 import ds.pirate.backend.vo.userid;
 
 public interface SettingService {
@@ -20,13 +17,13 @@ public interface SettingService {
 
   HashMap<String, Object> settingArticleList(Long userid);
 
-  Page<getMySettingArticleList> articleListByUserid(Long userid, Integer pageNum);
-
   List<reportDTO> getReportList(Long userid);
 
   Boolean remove(Long reid);
 
   List<QuestionDTO> getQuestionList(Long userid);
+
+  // Boolean remove2(Long aid);
 
   default airUserDTO entityToDTO(airUser entity) {
     airUserDTO dto = airUserDTO.builder()
