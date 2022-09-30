@@ -18,6 +18,8 @@ public class EmbedCard {
     private Integer articleRate;
     private Long likeCount;
 
+    private String fileName;
+
     public EmbedCard(ArticleRepository.getEmbedCardsInformation em){
         this.airName = em.getAirName();
         this.aid = em.getAid();
@@ -27,6 +29,7 @@ public class EmbedCard {
         this.opend = em.getOpend();
         this.articleRate = em.getArticleRate();
         this.likeCount = em.getLikeCount();
+        this.fileName = em.getFileName();
 
     }
 
