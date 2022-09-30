@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import ds.pirate.backend.service.ApiMemberService.ApiMemberService;
 
-import ds.pirate.backend.vo.MySubInfo;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -91,6 +91,11 @@ public class UserRepositoryTests {
 
     @Autowired
     ApiMemberService memberService;
+
+    @Test
+    void getUserInfoByUserId(){
+        log.info(urepo.getUserInfoByUserId(52L).get().getAirName());
+    }
 
     @Test
     void insertDummyAlarm() {

@@ -20,7 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import ds.pirate.backend.repository.ArticleRepository.getMyChannelArticleList;
+import ds.pirate.backend.repository.UserRepository.UserIntroPage;
 import ds.pirate.backend.service.ChannelService.ChannelService;
+import ds.pirate.backend.service.UserService.UserService;
 import ds.pirate.backend.vo.channelArticleList;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.DefaultClaims;
@@ -35,6 +37,12 @@ public class ChannelController {
 
     private final ChannelService cser;
     private final String secretKey = "airreviewsecretkeyyyyyyyyyyyyyyyyyyyyyyyy";
+    private final UserService user;
+
+    @RequestMapping(value = "/mypage/userinfo", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserIntroPage> userintroduce(@RequestBody Long userid) {
+        return new ResponseEntity<>(user.getUserInfoByUserId(userid), HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/mypage/article", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<getMyChannelArticleList>> commentUserDetail(@RequestBody channelArticleList info) {
@@ -52,10 +60,8 @@ public class ChannelController {
 
         if(Integer.parseInt(uid) == userid){
             MultipartFile imageFile = request.getFile("upload");
-            log.info(imageFile);
             String uploadDir = "/Users/hyunseokbyun/Documents/Imagefiles/";
-            String uploadId = UUID.randomUUID().toString() + "."
-                    + FilenameUtils.getExtension(imageFile.getOriginalFilename());
+            String uploadId = UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(imageFile.getOriginalFilename());
             imageFile.transferTo(new File(uploadDir + uploadId));
             log.info(userid);
             log.info(uploadDir + uploadId);
