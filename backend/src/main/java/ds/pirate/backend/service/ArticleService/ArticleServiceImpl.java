@@ -49,6 +49,7 @@ import ds.pirate.backend.repository.SavedRepository;
 import ds.pirate.backend.repository.SubscribeRepository;
 import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.AlarmService.AlarmService;
+import ds.pirate.backend.service.RankingService.RankingService;
 import ds.pirate.backend.service.UserService.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -70,6 +71,7 @@ public class ArticleServiceImpl implements ArticleService {
     private final UserService uservice;
     private final AlarmService alser;
     private final AlarmRepository alrepo;
+    private final RankingService rkser;
 
     @Override
     public List<acommentDTO> getListByUserIdAndAuthorId(Long userid, Long authorid) {
@@ -501,6 +503,8 @@ public class ArticleServiceImpl implements ArticleService {
         cardInfo.put("articles", result);
         cardInfo.put("page", pageable.getPageNumber());
         cardInfo.put("pageTotalCount", page.getTotalPages());
+
+        rkser.addRanking(vo.getSearch());
 
         return cardInfo;
         }
