@@ -14,7 +14,7 @@
             <span class="ms-3 rankingsection__keyword text-nowrap w-50">{{ranking.caroRank==null?"1. "+ranking.info[0].keyword:`${ranking.caroRank}. ${ranking.caroKey}`}}</span>
             <div class="rankingsection__board">
               <ul>
-                <li><span class="rankingsection__title w-40"> <i class="bi bi-fire"></i> 실시간 검색어 순위</span></li>
+                <li><span class="rankingsection__title w-40"> <i class="bi bi-fire"></i> 실시간 검색어 순위</span> <i @click="getRankingList" class="bi bi-arrow-clockwise" style="cursor: pointer;"></i></li>
                 <li v-for="(info, idx) in ranking.info" :key="(info, idx)"><a :href="`/search?cards=${info.keyword}&order=new`">{{idx+1 +". "+ info.keyword}}</a></li>
               </ul>
             </div>
@@ -120,7 +120,7 @@ export default {
     setInterval(getRankingList, 10000);
     onMounted(() => {
       setInterval(()=>{
-      if(ranking.i==Math.floor(ranking.info.length/9*10)){
+      if(ranking.i==Math.floor(ranking.info.length/9*10)-1){
         ranking.i = 0
       }
       ranking.caroKey = ranking.info[ranking.i].keyword
