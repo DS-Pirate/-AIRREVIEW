@@ -4,16 +4,26 @@
     <SubNavigationBar class="w-15 px-4"/>
     <div class="routing-section w-85">
       <div class="routing-header mb-5 mt-4 border-bottom d-flex justify-content-between sticky-top">
-        <form class="searching-area d-flex align-items-center gap-1 w-50" @submit.prevent="searchingAxios()">
+        <form class="searching-area d-flex align-items-center gap-1 w-30" @submit.prevent="searchingAxios()">
           <label for="searching"><i class="bi bi-search"></i></label>
           <input id="searching" v-model="search.context" type="text" class="form-control border-0 bg-white" @submit="searchingAxios()">
         </form>
-        <ul class="list-group list-group-horizontal">
+        <ul class="list-group list-group-horizontal w-65 justify-content-between">
+          <li class="list-group-item border-0 rankingsection w-40 d-flex justify-content-start gap-0" >
+            <span class="rankingsection__title w-50"> <i class="bi bi-fire"></i> 실시간 검색어 순위</span>
+            <span class="ms-3 rankingsection__keyword text-nowrap w-50">{{ranking.caroRank==null?"1. "+ranking.info[0].keyword:`${ranking.caroRank}. ${ranking.caroKey}`}}</span>
+            <div class="rankingsection__board">
+              <ul>
+                <li><span class="rankingsection__title w-40"> <i class="bi bi-fire"></i> 실시간 검색어 순위</span></li>
+                <li v-for="(info, idx) in ranking.info" :key="(info, idx)"><a :href="`/search?cards=${info.keyword}&order=new`">{{idx+1 +". "+ info.keyword}}</a></li>
+              </ul>
+            </div>
+          </li>
           <li class="list-group-item border-0 alarm-icon">
             <div class="alarm-icon-badge d-flex justify-content-center align-items-center" v-if="$store.state.isAlarm>0">
                 <span class="alarm-icon-badge_count">{{$store.state.isAlarm}}</span>
             </div>
-            <AlarmPopover v-if="$store.state.token"></AlarmPopover>
+            <AlarmPopover v-if="$store.state.token" class="text-wrap"></AlarmPopover>
           </li>
           <router-link to="/login" v-if="!$store.state.token">
             <li class="list-group-item border-0" >Login</li>
@@ -44,11 +54,12 @@
 import SubNavigationBar from "@/components/SubNavigationBar.vue";
 import QuestionModal from "@/components/QuestionModal.vue";
 
-import {reactive} from "vue"
+import {reactive, onMounted} from "vue"
 import { useRouter } from 'vue-router'
 import store from "@/store";
 import AlarmPopover from "@/components/AlarmPopover.vue";
 import { useMeta } from "vue-meta";
+import axios from "axios";
 
 
 export default {
@@ -60,6 +71,10 @@ export default {
     AlarmPopover
 },
   setup(){
+    const headers = {
+        "Content-Type": "application/json; charset=utf-8",
+    }
+
     const router = useRouter()
 
     const logout =()=>{
@@ -69,6 +84,13 @@ export default {
       store.commit('setAlarm', 0);
       router.push({path:"/logout"})
     }
+
+    let ranking = reactive({
+      info:[],
+      i:0,
+      caroKey:null,
+      caroRank:null,
+    })
 
     let search = reactive({
       context:"",
@@ -88,8 +110,26 @@ export default {
     const { meta } = useMeta({
                 title:  ':: 에어리뷰',
             })
+    function getRankingList(){
+      axios.post(`${store.state.axiosLink}/ranking/list`, { headers }).then(function(res){
+        ranking.info=[]
+        ranking.info.push(...[...res.data])
+      })
+    }
+    getRankingList()
+    setInterval(getRankingList, 10000);
+    onMounted(() => {
+      setInterval(()=>{
+      if(ranking.i==Math.floor(ranking.info.length/9*10)){
+        ranking.i = 0
+      }
+      ranking.caroKey = ranking.info[ranking.i].keyword
+      ranking.caroRank = ranking.i +1
+      ranking.i++
+    }, 2500)
+    })
 
-    return{ searchingAxios, search, logout,meta}
+    return{ searchingAxios, search, logout, meta, getRankingList, ranking}
   }
 
 
@@ -125,6 +165,32 @@ body
     font-size: 0.5rem
     right: 0.3rem
     top: 0.3rem
-
-
+.rankingsection
+  &:hover .rankingsection__board
+    max-height: 30rem
+    height: auto
+.rankingsection__keyword
+  text-overflow:ellipsis
+  max-width: 5rem
+.rankingsection__board
+  box-sizing: border-box
+  max-height: 0
+  overflow: hidden
+  width: 95%
+  background-color: white
+  position: absolute
+  padding: 0 1rem
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.25)  
+  left:0
+  transition: ease-in-out all 0.5s
+  ul
+    box-sizing: border-box
+    display: flex
+    flex-direction: column
+    gap: 1rem
+    padding: 1.5rem
+    padding-top: 1rem
+    list-style: none
+    a
+      color: inherit
 </style>

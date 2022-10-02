@@ -73,9 +73,9 @@ public class SettingController {
     return new ResponseEntity<>(result, HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/setting/articlelist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Page<getMyChannelArticleList>> commentUserDetail(@RequestBody channelArticleList info) {
-    return new ResponseEntity<>(service.articleListByUserid(info.getUserid(), info.getPageNum()), HttpStatus.OK);
-  }
+  // @RequestMapping(value = "/setting/articlelist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  // public ResponseEntity<Page<getMyChannelArticleList>> commentUserDetail(@RequestBody channelArticleList info) {
+  //   return new ResponseEntity<>(service.articleListByUserid(info.getUserid(), info.getPageNum()), HttpStatus.OK);
+  // }
 
 }

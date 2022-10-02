@@ -2,6 +2,8 @@ package ds.pirate.backend.config;
 
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.EntityManager;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import ds.pirate.backend.security.filter.ApiCheckFilter;
 import ds.pirate.backend.security.filter.ApiLoginFilter;
@@ -61,6 +65,10 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    JPAQueryFactory jpaQueryFactory(EntityManager entityManager){
+        return new JPAQueryFactory(entityManager);
+    }
 
 }
 
