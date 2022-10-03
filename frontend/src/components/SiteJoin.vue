@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex flex-column">
         <div class="input-group idsection px-5 my-2">
-            <input class="form-control" type="text" name="id" id="id" v-model="state.email" @change="state.emailCheck=false" placeholder="이메일" required>
+            <input ref="email" class="form-control" type="text" name="id" id="id" v-model="state.email" @change="state.emailCheck=false" placeholder="이메일" required>
           <button class="btn btn-outline-primary w-25" @click="check()">중복 확인</button>  
         </div> 
         <div class="input-group idsection px-5 my-2" v-if="state.emailCheck">
@@ -24,7 +24,7 @@
         </div>
 
         <div class="input-group idsection px-5 my-2">
-            <input class="form-control" type="text" name="name" id="name" v-model="state.year" placeholder="년" required>
+            <input class="form-control" type="text" name="name" id="year" v-model="state.year" placeholder="년" required>
             <select class="form-select"  aria-label="Default select example" v-model="state.month" name="select" id="select">
                 <option selected>월</option>
                 <option value="1">1</option>
@@ -40,7 +40,7 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
             </select>
-            <input class="form-control" type="text" name="name" id="name" v-model="state.day" required placeholder="일">
+            <input class="form-control" type="text" name="name" id="day" v-model="state.day" required placeholder="일">
         </div>
 
         <div class="input-group idsection px-5 my-2">
@@ -53,19 +53,19 @@
         </div>
 
         <div class="input-group idsection px-5 my-2">
-            <input class="form-control" type="text" name="email" id="eamil" v-model="state.q1"  required placeholder="인상 깊게 읽은 책 이름은??">
+            <input class="form-control" type="text" name="email" id="q1" v-model="state.q1"  required placeholder="인상 깊게 읽은 책 이름은??">
         </div>
 
         <div class="input-group questionsection px-5 my-2">
-            <input class="form-control" type="text" name="email" id="eamil" v-model="state.q2" required placeholder="나의 보물 1호는?">
+            <input class="form-control" type="text" name="email" id="q2" v-model="state.q2" required placeholder="나의 보물 1호는?">
         </div>
         
         <div class="input-group questionsection px-5 my-2">
-            <input class="form-control" type="text" name="email" id="eamil" v-model="state.q3" required placeholder="기억에 남는 추억의 장소는?">
+            <input class="form-control" type="text" name="email" id="q3" v-model="state.q3" required placeholder="기억에 남는 추억의 장소는?">
         </div>
         
         <div class="px-5 my-4">
-            <button class="btn btn-outline-primary w-100" ck="submit()">가입하기</button>
+            <button class="btn btn-outline-primary w-100" @click="submit()">가입하기</button>
         </div>
         
     </div>
@@ -121,6 +121,7 @@ export default {
         if (res.data == true) {
           alert("해당이메일로 발송되었습니다")
           state.authCheck = 1
+          state.authNum=""
         }
       })
     }
@@ -191,6 +192,7 @@ export default {
         password.value.focus(); return false;
       } else if (state.authCheck !=2){
         alert('이메일 인증이 필요합니다.')
+        return false;
       }
 
       const birthDay = new Date(state.year, state.month, state.day);
@@ -204,13 +206,13 @@ export default {
       };
       console.log(body)
       const response = await axios.post(url, body, { headers })
-      console.log(response.data)
-      if (response.date == "회원가입이 완료되었습니다.") {
+      console.log(response)
+      if (response.status == 200) {
         alert('회원가입이 완료되었습니다.')
         router.push(`/login`)
 
       } else {
-        alert('회원가입에 실패하였습니다.')
+        alert(response.data)
       }
     }
 
