@@ -1,7 +1,7 @@
 <template>
     <div class="col maincards">
         <div class="card-1 card border-0 w-100 mb-5">
-            <div class="wrapper" ref="wrapper" :style="'background-image: url('+store.state.axiosLink+'/images/read/'+props.uImage+'); background-size:cover;'" >
+            <div class="wrapper" ref="wrapper" :style="'background-image: url('+store.state.axiosLink+'/images/read/'+props.cardInfo.images[0]+'); background-size:cover;'" >
                 <div class="date">
                     <span class="day">{{props.cardInfo.regdate.split("-")[2].split("T")[0]}}</span>
                     <span class="month">{{props.cardInfo.regdate.split("-")[1]}}</span>

@@ -7,7 +7,7 @@
                 </div>
                 <hr />
                 <div class="preview-context d-flex gap-2 align-items-top">
-                    <img src="@/assets/aaaa.png" alt="image" class="w-30 preview-context-thumbnailimg img-fluid" v-show="inputarea.thumbnail" />
+                    <img :src="`${store.state.EmbedLink}/airreview/images/read/${embedInfo.img}`" alt="image" class="w-30 preview-context-thumbnailimg img-fluid" v-show="inputarea.thumbnail" />
                     <div class="preview-context-context w-70 d-flex flex-column gap-3">
                         <span class="preview-context-context-rating" v-show="inputarea.rating">★★★★★</span>
                         <p class="preview-context-context_description" v-html="embedInfo.context"></p>
@@ -60,6 +60,7 @@
         username: null,
         fav: null,
         avg: null,
+        img: null,
     });
 
     function getTimeFromJavaDate(s) {
@@ -84,7 +85,15 @@
 
     axios.get(`${store.state.axiosLink}/./info/${id}`).then(function (res) {
         let info = res.data;
-        (embedInfo.regdate = getTimeFromJavaDate(info.regdate)), (embedInfo.title = info.title), (embedInfo.username = info.author), (embedInfo.fav = info.favcount), (embedInfo.avg = info.avgrate), (embedInfo.context = info.context);
+        embedInfo.regdate = getTimeFromJavaDate(info.regdate)
+        embedInfo.title = info.title
+        embedInfo.username = info.author
+        embedInfo.fav = info.favcount
+        embedInfo.avg = info.avgrate
+        embedInfo.context = info.context
+        embedInfo.img = info.imageList[0]
+        embedInfo.img = embedInfo.img.replace('"', '')
+
         if (embedInfo.context.indexOf("<iframe") > 0) {
             embedInfo.context = embedInfo.context.replace(embedInfo.context.slice(embedInfo.context.indexOf("<iframe"), embedInfo.context.indexOf("</iframe>") + 9), `>> ${id}번 글 링크<br>`);
         }
@@ -101,7 +110,6 @@
         display: none !important
 
     .sharePreview
-
         background-color: white
         position: absolute
         top: 0
