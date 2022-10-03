@@ -27,7 +27,7 @@ import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import ds.pirate.backend.service.QuestionService.QuestionService;
 import ds.pirate.backend.service.UserService.UserService;
-import ds.pirate.backend.vo.settingArticleList;
+// import ds.pirate.backend.vo.settingArticleList;
 import ds.pirate.backend.vo.userid;
 import lombok.RequiredArgsConstructor;
 
