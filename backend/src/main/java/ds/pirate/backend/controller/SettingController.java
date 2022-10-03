@@ -2,7 +2,7 @@ package ds.pirate.backend.controller;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
+// import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import ds.pirate.backend.dto.QuestionDTO;
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.dto.reportDTO;
-import ds.pirate.backend.repository.ArticleRepository.getMyChannelArticleList;
+// import ds.pirate.backend.repository.ArticleRepository.getMyChannelArticleList;
 import ds.pirate.backend.service.SettingService.SettingService;
-import ds.pirate.backend.vo.channelArticleList;
+// import ds.pirate.backend.vo.channelArticleList;
 import ds.pirate.backend.vo.userid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

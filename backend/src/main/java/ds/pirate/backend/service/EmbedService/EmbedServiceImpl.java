@@ -3,7 +3,6 @@ package ds.pirate.backend.service.EmbedService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 import org.springframework.stereotype.Service;
 
