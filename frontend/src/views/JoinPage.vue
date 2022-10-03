@@ -1,10 +1,10 @@
 <template>
-	<Join class="d-flex justify-content-center align-items-center">
+	<div class="d-flex justify-content-center align-items-center joinform">
 		<div class="join ">
 			<div class="joinlogo text-center"><img class="img-fluid" src="@/assets/airreviewlogo.png" alt="" srcset=""></div>
 			<SiteJoin></SiteJoin>
 		</div>
-	</Join>
+	</div>
 </template>
 <script>
 import SiteJoin from "../components/SiteJoin.vue";
