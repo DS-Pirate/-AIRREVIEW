@@ -1,12 +1,12 @@
 <template>
   <div class="mainviewpage">
 
-    <div class="btn-group mb-4 ms-4 ps-2" role="group" aria-label="Default button group">
-      <button class="btn btn-outline-dark" @click="view()">조회순</button>
-      <button type="button" class="btn btn-outline-dark" @click="like()">좋아요순</button>
-      <button type="button" class="btn btn-outline-dark" @click="star()">평점순</button>
-      <button type="button" class="btn btn-outline-dark" @click="latest()">최신순</button>
-      <button type="button" class="btn btn-outline-dark" @click="sub()" v-if="$store.state.token">구독한 글</button>
+    <div class="mb-4 ms-4 ps-2 d-flex flex-row-reverse" role="group" aria-label="Default button group">
+      <button  class="button-81" :class="{btnblue: state.view === true }" @click="view()">조회순</button>
+      <button class="button-81" :class="{btnblue: state.like === true }" type="button" @click="like()">좋아요순</button>
+      <button class="button-81" :class="{btnblue: state.star === true }" type="button"  @click="star()">평점순</button>
+      <button class="button-81" :class="{btnblue: state.latest === true }" type="button" @click="latest()">최신순</button>
+      <button class="button-81" :class="{btnblue: state.sub === true }" type="button"  @click="sub()" v-if="$store.state.token">구독한 글</button>
     </div>
 
     <div class="fav p-1">
@@ -170,3 +170,42 @@ export default {
 }
 
 </script>
+
+<style lang="sass">
+
+@media (min-width: 768px)
+  .button-81
+    font-size: 1.125rem
+    padding: 1rem 2rem
+
+
+.button-81
+  font-family: Pretendard-Regular
+  background-color: #fff
+  border: 0 solid #e2e8f0
+  border-radius: 1.5rem
+  box-sizing: border-box
+  color: #0d172a
+  cursor: pointer
+  display: inline-block
+  font-size: 0.9rem
+  font-weight: 400
+  line-height: 1
+  padding: 0.5rem 1.1rem
+  text-align: center
+  text-decoration: none #0d172a solid
+  text-decoration-thickness: auto
+  transition: all .1s cubic-bezier(.4, 0, .2, 1)
+  user-select: none
+  -webkit-user-select: none
+  touch-action: manipulation
+
+//.button-81:hover, .button-81:active
+//  background-color: #0D6EFD
+//  color: #fff
+
+.btnblue
+  background-color: #0D6EFD
+  color: #fff
+
+</style>
