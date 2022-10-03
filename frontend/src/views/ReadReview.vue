@@ -3,29 +3,36 @@
     <div class="readReview justify-content-between">
         <section class="info w-100">
             <div class="metadata">
-                <div class="title">
-                    <h1>{{ articleinfo.atitle }}</h1>
+                <div class="title mb-3">
+                    <h1 style="display: inline; font-family: Pretendard-Regular;font-weight: 800;">{{ articleinfo.atitle }}</h1> &nbsp;
+                    <h1 style="display: inline;" v-html="articleinfo.starIcon"></h1>
                 </div>
-                <hr />
-                <div class="hashAndStar d-flex justify-content-between">
-                    <ul class="hash m-0 p-0 px-1 d-flex align-items-center" v-html="articleinfo.tags"></ul>
-                    <div class="rating-stars-section">
-                        <div v-html="articleinfo.starIcon"></div>
-                        <div class="rating-stars-section_accuraterating d-flex justify-content-between" style="font-size: 0.1rem; color: #aaa">
-                            <span>현재평점</span>
-                            <span class="rating-stars-section_accuraterating_num">{{ articleinfo.articleAVG }}</span>
-                        </div>                        
-                        <div class="rating-stars-section_opencount d-flex justify-content-between" style="font-size: 0.1rem; color: #aaa">
-                            <span>조회수</span>
-                            <span class="rating-stars-section_opencount_num">{{ articleinfo.opencount }}</span>
+
+                <div class="hashAndStar d-flex flex-row mb-3">
+                  <!--   별-->
+<!--                        <div v-html="articleinfo.starIcon"></div>-->
+                        <div class="p-1" style="font-size: 0.9rem; color: #aaa">
+                            <span> 조회수 {{ articleinfo.opencount }}</span>
+<!--                            <span class="rating-stars-section_opencount_num">{{ articleinfo.opencount }}</span>-->
                         </div>
-                    </div>
+                  <div class="pt-1 pb-1" style="font-size: 0.9rem; color: #aaa"><span> · </span></div>
+                        <div class="p-1" style="font-size: 0.9rem; color: #aaa">
+                          <span> 현재평점 {{ articleinfo.articleAVG }} </span>
+                          <!--                            <span class="rating-stars-section_accuraterating_num">{{ articleinfo.articleAVG }}</span>-->
+                        </div>
                 </div>
                 <hr />
-                <div class="contentAndButton">
+                <div class="contentAndButton mt-5 pt-5">
                     <div class="reviewContent clamp" v-html="articleinfo.context"></div>
                 </div>
-                <span class="views">{{ articleinfo.regdate }}</span>
+
+              <div class="d-flex mb-3 mt-5 pt-5">
+                <div style="display: inline;" class="" v-for="(a, idx) in articleinfo.tag" :key="idx">
+                  <button class="btntag" style="border: 1px solid #e7e7e7" @click="tagbtn(a)">#{{a}}</button>
+                </div>
+                <span style="display: inline;" class="views ms-auto p-2">{{ articleinfo.regdate }}</span>
+              </div>
+
             </div>
             <hr />
             <ArticleBtnSection :id="id"></ArticleBtnSection>
@@ -59,12 +66,14 @@
                 opened: null,
                 shareable: null,
                 tags: [],
-                userId: null,
+              tag: [],
+              userId: null,
                 regdate: null,
                 images: null,
                 articleAVG: null,
                 starIcon: null,
-                opencount: null
+                opencount: null,
+              dateformat:null
             });
             const { meta } = useMeta({
                 title: "에어리뷰",
@@ -108,9 +117,11 @@
                 articleinfo.opened = res.data.articleInfo.opened;
                 articleinfo.shareable = res.data.articleInfo.shareable;
                 articleinfo.tags = res.data.articleInfo.tags;
-                articleinfo.userId = res.data.articleInfo.userId;
+                articleinfo.tag = res.data.articleInfo.tags;
+              articleinfo.userId = res.data.articleInfo.userId;
                 articleinfo.regdate = getTimeFromJavaDate(res.data.articleInfo.regdate);
-                articleinfo.images = res.data.articleInfo.images;
+              articleinfo.dateformat = res.data.articleInfo.regdate;
+              articleinfo.images = res.data.articleInfo.images;
                 articleinfo.articleAVG = res.data.articleAVG != undefined ? res.data.articleAVG.toFixed(2) : 0;
                 articleinfo.opencount = res.data.articleInfo.opencount
                 store.commit("setAuthorid", articleinfo.userId)
@@ -172,5 +183,35 @@
                 articleinfo.tags = tag.join("  ");
                 articleinfo.starIcon = tmp.join("");
             });
+
+             async function tagbtn(a){
+              await router.push(`/search?cards=${a}&order=new`);
+               await router.go(0);
+            }
     
 </script>
+
+<style lang="sass">
+
+.btntag
+  font-family: Pretendard-Regular
+  border: 1px solid #e7e7e7
+  background-color: #fff
+  border-radius: 1.5rem
+  box-sizing: border-box
+  color: #8c8c8c
+  cursor: pointer
+  display: inline-block
+  font-size: 0.9rem
+  font-weight: 400
+  line-height: 1
+  padding: 0.5rem 0.9rem
+  text-align: center
+  text-decoration: none #0d172a solid
+  text-decoration-thickness: auto
+  transition: all .1s cubic-bezier(.4, 0, .2, 1)
+  user-select: none
+  -webkit-user-select: none
+  touch-action: manipulation
+
+</style>
