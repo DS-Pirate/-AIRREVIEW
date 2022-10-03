@@ -2,7 +2,7 @@
   <div class="subnav">
     <div class="navbar container-fluid d-flex flex-column justify-content-center align-items-start sticky-top">
       <section class="navlogo">
-        <router-link to="/"><h1 class="mb-5 fw-bold my-2">AIR
+        <router-link to="/"><h1 class="mb-5 fw-bold my-2"  style="font-family: PyeongChangPeace-Bold; font-size: 35px;">AIR
           <br>REVIEW</h1></router-link>
       </section>
       <div class="navarea" v-if="toggle.nav =='true'">

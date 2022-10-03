@@ -1,12 +1,12 @@
 <template>
-  <metainfo /> 
+  <metainfo />
   <div class="content-area container-fluid d-flex justify-content-between p-4 gap-3">
     <SubNavigationBar class="w-15 px-4"/>
     <div class="routing-section w-85">
       <div class="routing-header mb-5 mt-4 border-bottom d-flex justify-content-between sticky-top">
         <form class="searching-area d-flex align-items-center gap-1 w-30" @submit.prevent="searchingAxios()">
           <label for="searching"><i class="bi bi-search"></i></label>
-          <input id="searching" v-model="search.context" type="text" class="form-control border-0 bg-white" @submit="searchingAxios()">
+          <input id="searching" v-model="search.context" type="text" class="form-control border-0 bg-white" @submit="searchingAxios()" >
         </form>
         <ul class="list-group list-group-horizontal w-65 justify-content-between">
           <li class="list-group-item border-0 rankingsection w-40 d-flex justify-content-start gap-0" >
@@ -26,22 +26,22 @@
             <AlarmPopover v-if="$store.state.token" class="text-wrap"></AlarmPopover>
           </li>
           <router-link to="/login" v-if="!$store.state.token">
-            <li class="list-group-item border-0" >Login</li>
+            <li class="list-group-item border-0 navFont"  >LOGIN</li>
           </router-link>
           <router-link to="/logout" @click="logout()" v-if="$store.state.token">
-            <li class="list-group-item border-0" >Logout</li>
+            <li class="list-group-item border-0 navFont" >LOGOUT</li>
           </router-link>
           <router-link to="/join" v-if="!$store.state.token" >
-            <li class="list-group-item border-0">Join</li>
+            <li class="list-group-item border-0 navFont">Join</li>
           </router-link>
           <router-link to="/newpost">
-            <li class="list-group-item border-0" v-if="$store.state.token">New Article</li>
+            <li class="list-group-item border-0 navFont" v-if="$store.state.token">NEW ARTICLE</li>
           </router-link>
           <router-link :to="'/mypage?channel='+$store.state.userid">
-            <li class="list-group-item border-0" v-if="$store.state.token">My Page</li>
+            <li class="list-group-item border-0 navFont" v-if="$store.state.token">MY PAGE</li>
           </router-link>
           <router-link to="/setting" v-if="$store.state.token">
-            <li class="list-group-item border-0">Setting</li>
+            <li class="list-group-item border-0 navFont">SETTING</li>
           </router-link>
         </ul>
       </div>
@@ -137,6 +137,7 @@ export default {
 </script>
 
 <style lang="sass">
+
 @media(max-width:1200px)
   .content-area
     flex-direction: column
@@ -165,6 +166,11 @@ body
     font-size: 0.5rem
     right: 0.3rem
     top: 0.3rem
+
+
+.navFont
+  font-family: MabinogiClassic
+
 .rankingsection
   &:hover .rankingsection__board
     max-height: 30rem
