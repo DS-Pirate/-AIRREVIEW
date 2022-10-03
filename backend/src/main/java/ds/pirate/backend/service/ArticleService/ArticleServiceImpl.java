@@ -88,7 +88,11 @@ public class ArticleServiceImpl implements ArticleService {
     public String ArticleModify(ArticleDTO dto, List<String> tags) {
         ArticlesList origEntity = repo.findByAid(dto.getAid());
         ArticleDTO getByAid =  EntityToDTO(origEntity);
+        alrepo.findByArticleId(dtoToEntity(dto)).forEach(v->{
+            log.info(v.getArid()+"지워짐");
+            alser.deleteAlarm(v.getArid());
 
+        });
         origEntity.getImages().forEach(image -> {
             irepo.deleteById(image.getIid());
             ;
@@ -96,24 +100,26 @@ public class ArticleServiceImpl implements ArticleService {
         origEntity.getTags().forEach(tag -> {
             hrepo.deleteById(tag.getHid());
         });
-
+        getByAid.setAid(dto.getAid());
         getByAid.setAtitle(dto.getAtitle());
         getByAid.setContext(dto.getContext());
         getByAid.setOpened((dto.isOpened()));
         getByAid.setShareable((dto.isShareable()));
         ArticlesList modifiedArticle = dtoToEntity(getByAid);
         repo.save(modifiedArticle);
-
+        
+        log.info("imageeeeeeeeereeeee"+dto.getImages());
         List<ImagesList> lists = dto.getImages();
+        log.info("usrrerrrrrr"+modifiedArticle.getAid());
         lists.forEach(new Consumer<ImagesList>() {
             @Override
             public void accept(ImagesList i) {
                 if (!irepo.findByFileName(i.getFileName()).isPresent()) {
-                    ImagesList.builder().fileName(i.getFileName()).articles(modifiedArticle).build();
+                    irepo.save(ImagesList.builder().fileName(i.getFileName()).articles(modifiedArticle).build());
                 }
             }
         });
-
+        
         for (String i : tags) {
             Optional<HashTags> hashTemp = hrepo.findByArticlesAndHashTagName(modifiedArticle, i);
             if (!hashTemp.isPresent()) {
@@ -145,9 +151,8 @@ public class ArticleServiceImpl implements ArticleService {
     public HashMap<String, Object> getCardInfosByHashTagName(Long aid, Pageable pageable) {
         HashMap<String, Object> cardInfo = new HashMap<>();
         List<String> ImageList = new ArrayList<>();
-        Page<HashTags> result = hrepo.findByHashTagNameContainsIgnoreCaseOrderByHidDesc(
-                repo.getByAid(aid).getTags().get(0).getHashTagName(), pageable);            
-            List<ArticleDTO> aresult = result.get().map((Function<HashTags, ArticleDTO>) dto -> {
+        Page<HashTags> result = hrepo.findByHashTagNameContainsIgnoreCaseOrderByHidDesc(Optional.ofNullable(repo.getByAid(aid).getTags().get(0).getHashTagName()).get(), pageable);            
+        List<ArticleDTO> aresult = result.get().map((Function<HashTags, ArticleDTO>) dto -> {
             ArticleDTO dtoresult = EntityToDTO(dto.getArticles());
             Optional<ImagesList> tmpImage = irepo.findFirstByArticlesOrderByIidAsc(ArticlesList.builder().aid(dtoresult.getAid()).build());
             if(tmpImage.isPresent()){

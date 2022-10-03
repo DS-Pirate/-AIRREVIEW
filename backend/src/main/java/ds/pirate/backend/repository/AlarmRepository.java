@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.alarm;
 
 @Repository
@@ -22,4 +23,7 @@ public interface AlarmRepository extends JpaRepository<alarm, Long>{
 
     @Query("select arm from alarm arm where comment_id_cid=:cid")
     Optional<alarm> getByCid(Long cid);
+
+    @Query("select arm from alarm arm where arm.articleId=:articleId")
+    List<alarm> findByArticleId(ArticlesList articleId);
 }

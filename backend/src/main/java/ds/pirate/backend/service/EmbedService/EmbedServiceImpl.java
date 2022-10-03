@@ -1,6 +1,10 @@
 package ds.pirate.backend.service.EmbedService;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+
 import org.springframework.stereotype.Service;
 
 import ds.pirate.backend.repository.ArticleRepository;
@@ -16,9 +20,14 @@ public class EmbedServiceImpl implements EmbedService{
 
     @Override
     public Embed getEmbedInfo(Long article) {
+        List<String> basic = new ArrayList<>();
+        basic.add("basic.png'");
         ArticleRepository.getEmbedInformation geted = arepo.getEmbedInfoByAid(article).get();
         Embed result = new Embed(geted);
         log.info(result);
+        if(result.getImageList() == null){
+            result.setImageList(basic);
+        }
 
 
         return result;

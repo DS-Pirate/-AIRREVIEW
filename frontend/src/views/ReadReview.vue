@@ -174,3 +174,9 @@
             });
     
 </script>
+<style lang="sass">
+    .reviewContent
+        img
+            width: 100%
+            height: auto
+</style>

@@ -15,6 +15,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import ds.pirate.backend.entity.ArticlesList;
+import ds.pirate.backend.entity.ImagesList;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
@@ -112,9 +113,9 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
         @Modifying
         void updateOpencount(Long aid);
 
-        @Query("SELECT att.regDate as regdate, att.atitle as title, att.context as context, au.airName as author, (select count(fav) from likeUnlikeList as fav where fav.aid=:article) as favcount, ((select AVG(articleRate) FROM acomments ct WHERE articles_aid=:article and articleRate>0)) as avgrate "
+        @Query("SELECT att.regDate as regdate, att.atitle as title, att.context as context, au.airName as author, (select count(fav) from likeUnlikeList as fav where fav.aid=:article) as favcount, ((select AVG(articleRate) FROM acomments ct WHERE articles_aid=:article and articleRate>0)) as avgrate, img.fileName as imageList "
                         +
-                        "FROM ArticlesList att left join airUser au on att.aUser = au.userid " +
+                        "FROM ArticlesList att left join airUser au on att.aUser = au.userid left join ImagesList img on att.aid = img.articles " +
                         "WHERE aid=:article")
         Optional<getEmbedInformation> getEmbedInfoByAid(Long article);
 
@@ -167,6 +168,8 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
                 Long getFavcount();
 
                 Double getAvgrate();
+
+                List<String> getImageList();
         }
 
         public interface getEmbedCardsInformation {

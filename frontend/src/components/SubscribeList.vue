@@ -11,9 +11,6 @@
 <script setup>
   import { defineProps } from 'vue';
   let props = defineProps(["subsinfo"])
-  console.log(props.subsinfo.airName);
-
-
 </script>
 <style lang="">
     

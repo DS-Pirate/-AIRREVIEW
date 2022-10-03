@@ -57,6 +57,10 @@ public interface SubscribeRepository extends JpaRepository<subscribList, Long> {
             "(SELECT COUNT(sbid) AS follower FROM subscrib_list l WHERE l.target_id =:userid) fo ",nativeQuery = true)
     Optional<getMySubInfo> getFollwerFollwingCountByUserid(Long userid);
 
+    @Query("select sl from subscribList sl where sl.targetId=:userid")
+    Optional<List<subscribList>> getByuserid(Long userid);
+
+
     public interface getMySubInfo{
         Long getMyuserid();
         Long getUserid();

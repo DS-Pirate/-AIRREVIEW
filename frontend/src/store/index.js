@@ -12,7 +12,7 @@ export default createStore({
     isAlarm:0,
     axiosLink:".",
     axiosLinkAdmin:"..",
-    EmbedLink:"http://localhost:9090"
+    EmbedLink:"."
   },
   getters: {
   },

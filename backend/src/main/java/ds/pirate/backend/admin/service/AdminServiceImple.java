@@ -38,10 +38,13 @@ import ds.pirate.backend.entity.Qacomments;
 import ds.pirate.backend.entity.QairUser;
 import ds.pirate.backend.entity.Qalarm;
 import ds.pirate.backend.entity.QreportList;
+import ds.pirate.backend.entity.QuImagesList;
 import ds.pirate.backend.entity.QuestionsList;
 import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.entity.reportList;
+import ds.pirate.backend.entity.subscribList;
 import ds.pirate.backend.repository.HashTagRepository;
+import ds.pirate.backend.repository.SubscribeRepository;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import ds.pirate.backend.service.QuestionService.QuestionService;
 import ds.pirate.backend.service.UserService.UserService;
@@ -54,10 +57,11 @@ public class AdminServiceImple implements AdminService {
     private final AdminQuestionRepository qrepo;
     private final AdminUserRepository urepo;
     private final AdminReportRepository rrepo;
-    private final ArticleService aser;
+    private final ArticleService aservice;
     private final UserService user;
     private final QuestionService qser;
     private final HashTagRepository hrepo;
+    private final SubscribeRepository srepo;
     @PersistenceContext
     EntityManager em;
 
@@ -121,16 +125,38 @@ public class AdminServiceImple implements AdminService {
     public Boolean UserDeleter(airUserDTO dto) {
         QairUser user = new QairUser("user");
         QQuestionsList qQuestionsList = new QQuestionsList("question");
+        QuImagesList quImagesList = new QuImagesList("uimg");
+        Qacomments comment = new Qacomments("comment");
+        QreportList qreportList = new QreportList("report");
+        Qalarm qalarm = new Qalarm("alarm");
+        JPADeleteClause deleteReport = new JPADeleteClause(em, qreportList);
         JPADeleteClause deleteQuestion = new JPADeleteClause(em, qQuestionsList);
         JPADeleteClause deleteUser = new JPADeleteClause(em, user);
+        JPADeleteClause deleteUserimg = new JPADeleteClause(em, quImagesList);
+        JPADeleteClause deleteComment = new JPADeleteClause(em, comment);
+        JPADeleteClause deleteAlarm = new JPADeleteClause(em, qalarm);
         Optional<List<ArticlesList>> articlelist = arepo.getArticlesListByUserid(dto.getUserid());
         if(articlelist.isPresent()) {
             articlelist.get().forEach(v->{
-                articleDelete(aser.EntityToDTO(v));                
+                articleDelete(aservice.EntityToDTO(v));                
             });
         }
+        Optional<List<subscribList>> sublist = srepo.getByuserid(dto.getUserid());
+        sublist.ifPresent(list ->{
+            list.forEach(v->{srepo.delete(v);});
+        });
+        Optional<List<subscribList>> sublist2 = srepo.getByUserId(dto.getUserid());
+        sublist2.ifPresent(list ->{
+            list.forEach(v->{srepo.delete(v);});
+        });
+        deleteReport.where(qreportList.userid.userid.eq(dto.getUserid())).execute();
+        deleteAlarm.where(qalarm.whoUser.userid.eq(dto.getUserid())).execute();
+        deleteAlarm.where(qalarm.toUser.userid.eq(dto.getUserid())).execute();
+        deleteComment.where(comment.airuser.userid.eq(dto.getUserid())).execute();
+        deleteUserimg.where(quImagesList.airuser.userid.eq(dto.getUserid())).execute();
         deleteQuestion.where(qQuestionsList.userid.userid.eq(dto.getUserid())).execute();
         deleteUser.where(user.userid.eq(dto.getUserid())).execute();
+
         return true;
     }
     @Override
@@ -167,7 +193,7 @@ public class AdminServiceImple implements AdminService {
         Pageable pageable = requestDTO.getPageable(Sort.by("aid").ascending());
         BooleanBuilder booleanBuilder = getArticleSearch(requestDTO);
         Page<ArticlesList> result = arepo.findAll(booleanBuilder, pageable);
-        Function<ArticlesList, ArticleDTO> fn = entity -> aser.EntityToDTO(entity);
+        Function<ArticlesList, ArticleDTO> fn = entity -> aservice.EntityToDTO(entity);
         return new PageResultDTO<>(result, fn);
 
     }
@@ -192,7 +218,7 @@ public class AdminServiceImple implements AdminService {
         BooleanExpression expression = qreportList.reid.gt(0L);
         booleanBuilder.and(expression);
         Page<reportList> result = rrepo.findAll(booleanBuilder, pageable);
-        Function<reportList, reportDTO> fn = entity-> aser.reportEntitytoDTO(entity);
+        Function<reportList, reportDTO> fn = entity-> aservice.reportEntitytoDTO(entity);
         return new PageResultDTO<>(result, fn);
     }
 

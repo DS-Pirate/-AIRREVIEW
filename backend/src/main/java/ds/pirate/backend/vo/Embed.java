@@ -2,6 +2,8 @@ package ds.pirate.backend.vo;
 
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
+import java.util.List;
+
 
 import ds.pirate.backend.repository.ArticleRepository;
 import lombok.Data;
@@ -16,6 +18,7 @@ public class Embed {
     private String author;
     private Long favcount;
     private Double avgrate;
+    private List<String> imageList;
 
     public Embed(ArticleRepository.getEmbedInformation em){
         this.regdate = em.getRegdate();
@@ -24,6 +27,7 @@ public class Embed {
         this.author = em.getAuthor();
         this.favcount = em.getFavcount();
         this.avgrate = em.getAvgrate();
+        this.imageList = em.getImageList();
 
     }
     public String updateContextToString(byte[] context){

@@ -13,7 +13,7 @@
             <button class="border-0 bg-white" data-bs-toggle="modal" data-bs-target="#ReportModal"><span ref="report">Report</span></button>
         </li>
         <li v-if="stat.result">
-            <button type="button" v-on:click="router.push(`/modify?article=` + id)" class="border-0 bg-white"><span class="text-primary">Modify</span></button>
+            <button type="button" v-on:click="reask" class="border-0 bg-white"><span class="text-primary">Modify</span></button>
         </li>
     </ul>
     <ShareModal></ShareModal>
@@ -125,6 +125,13 @@
             .catch((e) => {
                 console.log(e);
             });
+    }
+    function reask(){
+        let result = confirm("리뷰 정확도를 위해 수정할 경우 모든 평가(댓글)가 사라집니다 수정하시겠습니까 ?")
+        if(result){
+            router.push(`/modify?article=` + props.id)
+        }
+        
     }
     getArticleFunctionStatus();
     modifiable()

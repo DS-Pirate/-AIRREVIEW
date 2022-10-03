@@ -62,14 +62,14 @@
                         <form>
                             <textarea class="content w-100" readonly v-model="inputarea.description" @click="selectAll($event)"></textarea>
                         </form>
-                        <div ref="shareModal" class="sharePreview w-100">
+                        <div ref="shareModal" class="sharePreview">
                             <div class="preview p-3 mb-2 border">
                                 <div class="preview-title text-center" v-show="inputarea.title">
                                     <h3>{{ embedInfo.title }}</h3>
                                 </div>
                                 <hr />
                                 <div class="preview-context d-flex gap-2 align-items-top">
-                                    <img src="@/assets/aaaa.png" alt="image" class="w-30 preview-context-thumbnailimg img-fluid" v-show="inputarea.thumbnail" />
+                                    <img :src="`${store.state.EmbedLink}/airreview/images/read/${embedInfo.img}`" alt="image" class="w-30 preview-context-thumbnailimg img-fluid" v-show="inputarea.thumbnail" />
                                     <div class="preview-context-context w-70 d-flex flex-column gap-3">
                                         <span class="preview-context-context-rating" v-show="inputarea.rating" v-html="embedInfo.avg"></span>
                                         <p class="preview-context-context_description" v-html="embedInfo.context"></p>
@@ -156,6 +156,7 @@
         username: null,
         fav: null,
         avg: null,
+        img: null,
         width: 800,
     });
 
@@ -170,9 +171,12 @@
         embedInfo.username = info.author, 
         embedInfo.fav = info.favcount, 
         embedInfo.context = info.context
+        embedInfo.img = info.imageList[0]
+        embedInfo.img = embedInfo.img.replace('"', '')
         if(embedInfo.context.indexOf("<iframe")>0){
             embedInfo.context = embedInfo.context.replace(embedInfo.context.slice(embedInfo.context.indexOf("<iframe"), embedInfo.context.indexOf("</iframe>")+9), `>> ${id}번 글 링크<br>`)
         }
+
 
         let tmp = [];
         for (let i = 0; i < Math.round(info.avgrate); i++) {
@@ -189,7 +193,7 @@
         if (which == 1) {
             inputarea.description = window.location.href.toString();
         } else if (which == 2) {
-            inputarea.description = `<iframe src="${store.state.embedLink}/embed?article=${id}&title=${inputarea.title}&thumbnail=${inputarea.thumbnail}&date=${inputarea.date}&rating=${inputarea.rating}&like=${inputarea.like}&logo=${inputarea.logo}&author=${inputarea.author}" width="${embedInfo.width}" height="${embedInfo.width/2}"></iframe>`
+            inputarea.description = `<iframe src="${store.state.EmbedLink}/embed?article=${id}&title=${inputarea.title}&thumbnail=${inputarea.thumbnail}&date=${inputarea.date}&rating=${inputarea.rating}&like=${inputarea.like}&logo=${inputarea.logo}&author=${inputarea.author}" width="${embedInfo.width}" height="${embedInfo.width/2}"></iframe>`
         } else if (which == 3){
             getShareModalImg()
             inputarea.description = '복사되었습니다. CTRL + V로 원하시는 사이트에 붙여넣어보세요!'
@@ -197,7 +201,7 @@
     }
 
     function changeInputRealtime(){
-        inputarea.description = `<iframe src="${store.state.embedLink}/embed?article=${id}&title=${inputarea.title}&thumbnail=${inputarea.thumbnail}&date=${inputarea.date}&rating=${inputarea.rating}&like=${inputarea.like}&logo=${inputarea.logo}&author=${inputarea.author}" width="${embedInfo.width}" height="${embedInfo.width/2}"></iframe>`
+        inputarea.description = `<iframe src="${store.state.EmbedLink}/embed?article=${id}&title=${inputarea.title}&thumbnail=${inputarea.thumbnail}&date=${inputarea.date}&rating=${inputarea.rating}&like=${inputarea.like}&logo=${inputarea.logo}&author=${inputarea.author}" width="${embedInfo.width}" height="${embedInfo.width/2}"></iframe>`
     }
 
     
@@ -279,4 +283,7 @@
     .md-nav .link,
     .md-nav .embed
         cursor: pointer
+    .preview-context-context_description
+        img
+            width: 10%
 </style>

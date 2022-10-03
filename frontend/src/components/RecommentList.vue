@@ -4,6 +4,7 @@
         <div class="row-cols-1 py-4" v-for="(info, idx) in state.hashInfo || []" v-bind:key="idx">
             <Cards :cardInfo="info"></Cards>
         </div>
+        <span v-if="state.hashInfo.length==0"><br><br> 연관 게시글이 없습니다</span>
     </section>
 
 </template>
@@ -15,7 +16,7 @@
         hashInfo : [],
         pageTotalCount:null,
         currentPage:null,
-        tmpList: []
+        tmpList: [],
     })
     let props = defineProps(["id"]);
     let body = reactive({
@@ -26,8 +27,6 @@
     function appendListToState(res){
         state.pageTotalCount = res.pageTotalCount
         state.currentPage = res.page+=1
-        console.log("------------------");
-        console.log(res);
         for (let i = 0; i < res.articles.length; i++) {
             let element = res.articles[i];
             element.images.push(res.ImageList[i])
@@ -36,20 +35,19 @@
                 state.tmpList.push(element.aid)
             }
         }
-        console.log("------------------");
 
     }
 
 
     function getCardInfoByHashTagWithAid() {
+        
         if(state.currentPage>state.pageTotalCount){
             return false
         }
         axios
             .post("./article/articlerecommend/", body)
             .then(function (res) {
-                appendListToState(res.data)
-                
+                appendListToState(res.data)   
             })
             .catch(function (error) {
                 console.log(error)
@@ -69,5 +67,4 @@
         
     }
     getCardInfoByHashTagWithAid();
-    console.log(state);
 </script>
