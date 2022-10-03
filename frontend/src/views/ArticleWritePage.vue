@@ -163,7 +163,11 @@ export default {
 				console.log(res);//글번호들어옴
 				sessionStorage.setItem("aid", res.data)
 				// router.push({name : "readReview", params: {"articleId" : res.data}})
-				router.push(`/read?article=${res.data}`)
+        async function routerPush(){
+          await router.push(`/read?article=${res.data}`)
+          await router.go(0)
+        }
+        routerPush()
 			}).catch((e) => {
 				console.log(e + "통신실패");
 			}).then(
