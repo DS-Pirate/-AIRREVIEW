@@ -32,22 +32,26 @@
 
     let props = defineProps(["id"])
 
+    let articleInfo = reactive({
+      info: [],
+      body: 0,
+      search : ''
+    });
+
+    articleInfo.search = new URLSearchParams(window.location.search).get("search");
+
     const headers = {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: store.state.token,
         userid: store.state.userid,
     };
-    let articleInfo = reactive({
-        info: [],
-        body: 0,
-    });
 
-    axios.post(store.state.axiosLink+"/mypage/article", { userid: props.id, pageNum: articleInfo.body }, { headers }).then(function (res) {
+    axios.post(store.state.axiosLink+"/mypage/article", { userid: props.id, pageNum: articleInfo.body, atitle:articleInfo.search }, { headers }).then(function (res) {
         articleInfo.info.push(...res.data.content);
     });
 
     function getMorePostList() {
-        axios.post(store.state.axiosLink+"/mypage/article", { userid: props.id, pageNum: articleInfo.body }, { headers }).then(function (res) {
+        axios.post(store.state.axiosLink+"/mypage/article", { userid: props.id, pageNum: articleInfo.body, atitle:articleInfo.search  }, { headers }).then(function (res) {
             articleInfo.info.push(...res.data.content);
         });
     }

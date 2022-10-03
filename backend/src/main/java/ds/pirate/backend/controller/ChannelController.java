@@ -46,7 +46,7 @@ public class ChannelController {
 
     @RequestMapping(value = "/mypage/article", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<getMyChannelArticleList>> commentUserDetail(@RequestBody channelArticleList info) {
-        return new ResponseEntity<>(cser.articleListByUserid(info.getUserid(), info.getPageNum()), HttpStatus.OK);
+        return new ResponseEntity<>(cser.articleListByUserid(info.getUserid(), info.getPageNum(),info.getAtitle()), HttpStatus.OK);
     }
     @SuppressWarnings("rawtypes")
     @RequestMapping(value = "/mypage/image/upload/{userid}", method = RequestMethod.POST)
