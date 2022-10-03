@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import ds.pirate.backend.entity.airUser;
@@ -32,9 +33,12 @@ public class ChannelServiceImpl implements ChannelService{
         uirepo.save(uImagesList.builder().airuser(airUser.builder().userid(userid).build()).fileName(fileName).idx(99).build());
     }
     @Override
-    public Page<getMyChannelArticleList> articleListByUserid(Long userid, Integer pageNum) {
-        Pageable pageable = PageRequest.of(pageNum, 10);
+    public Page<getMyChannelArticleList> articleListByUserid(Long userid, Integer pageNum, String search) {
+        Pageable pageable = PageRequest.of(pageNum, 10, Sort.by(Sort.Direction.DESC, "aid"));
         log.info("page:::::::::::::" + pageNum);
+        if (search != null){
+            return arepo.getArticleListByUserIdAndSearchWithPageable(userid,search,pageable);
+        }
         return arepo.getArticleListByUserIdWithPageable(userid, pageable);
     }
 

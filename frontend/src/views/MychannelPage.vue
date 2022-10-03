@@ -19,6 +19,13 @@
               <button type="button"  class="list-group-item border border-0 followsubmit" v-if="!(store.state.userid == state.following ) && $store.state.token" @click="followsubmit()" >구독하기</button>
               <button type="button"  class="list-group-item border border-0 followsubmit" v-if="store.state.userid == state.following && $store.state.token" @click="followsubmit()" >구독해지</button>
             </ul>
+          <form action="" class="searching-area d-flex align-items-center gap-1" @submit.prevent="searchingAxios()">
+            <input type="text" v-model="state.context" class="form-control border-0 bg-white " @submit="searchingAxios()">
+            <label for="searching"><i class="bi bi-search"></i></label>
+          </form>
+
+
+
 
         </div>
         <div class="chcategory p-3 my-3 shadow-sm bg-white d-flex h-auto" v-if="state.form == 'list'">
@@ -43,15 +50,32 @@ import {onMounted, reactive} from "vue";
     import axios from "axios";
     import store from "@/store";
     import FollowerInfo from "@/components/FollowerInfo";
+import {useRouter} from "vue-router/dist/vue-router";
+
+const router = useRouter()
 
     let state = reactive({
         form: "list",
       following: '',
       followingCount:0,
       followerCount:0,
+      context:''
     });
 
     let id = new URLSearchParams(window.location.search).get("channel");
+
+  function searchingAxios(){
+    if (state.context.trim().length == 0){
+      return
+    }
+
+    async function routing (){
+      await router.push(`/mypage?channel=${id}&search=${state.context}`)
+      console.log("이동(app)")
+      await router.go(0)
+    }
+    routing();
+  }
 
     function change(which) {
         state.form = which;

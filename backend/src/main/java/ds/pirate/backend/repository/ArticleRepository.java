@@ -138,6 +138,23 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
                                         "where at.a_user=:userid", nativeQuery = true)
         Page<getMyChannelArticleList> getArticleListByUserIdWithPageable(Long userid, Pageable pageable);
 
+    @Query(value = "select at.aid as aid, at.atitle as atitle, " +
+            "(select count(ar.aid) from articles_list as ar left join like_unlike_list as li on ar.aid = li.aid where  at.aid = ar.aid) as favCount, "
+            +
+            "(select count(ar.aid) from articles_list as ar left join save_list as sav on ar.aid = sav.aid where at.aid = ar.aid) as saveCount, "
+            +
+            "at.opencount as openCount, at.regdate as regDate " +
+            "from articles_list as at " +
+            "where at.a_user=:userid AND at.atitle LIKE %:search%", countQuery = "select at.aid as aid, at.atitle as atitle, " +
+            "(select count(ar.aid) from articles_list as ar left join like_unlike_list as li on ar.aid = li.aid where  at.aid = ar.aid) as favCount, "
+            +
+            "(select count(ar.aid) from articles_list as ar left join save_list as sav on ar.aid = sav.aid where at.aid = ar.aid) as saveCount, "
+            +
+            "at.opencount as openCount, at.regdate as regDate " +
+            "from articles_list as at " +
+            "where at.a_user=:userid AND at.atitle LIKE %:search%", nativeQuery = true)
+    Page<getMyChannelArticleList> getArticleListByUserIdAndSearchWithPageable(Long userid, String search, Pageable pageable);
+
         public interface getEmbedInformation {
                 LocalDateTime getRegdate();
 
