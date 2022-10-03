@@ -11,6 +11,8 @@
                     <span class="link" @click="changeInput(1)">링크로 퍼가기</span>
                     <span>|</span>
                     <span class="embed" @click="changeInput(2)">embed</span>
+                    <span>|</span>
+                    <span style="cursor: pointer;" @click="changeInput(3)">이미지로 퍼가기</span>
                 </div>
                 <hr class="my-2" style="opacity: 0.2" />
                 <div class="modal-body pt-0 d-flex w-100">
@@ -60,7 +62,7 @@
                         <form>
                             <textarea class="content w-100" readonly v-model="inputarea.description" @click="selectAll($event)"></textarea>
                         </form>
-                        <div class="sharePreview w-100">
+                        <div ref="shareModal" class="sharePreview w-100">
                             <div class="preview p-3 mb-2 border">
                                 <div class="preview-title text-center" v-show="inputarea.title">
                                     <h3>{{ embedInfo.title }}</h3>
@@ -101,9 +103,19 @@
 <script setup>
     import store from "@/store";
     import axios from "axios";
-    import { reactive } from "vue";
+    import { reactive, ref } from "vue";
+    import html2canvas from "html2canvas"
     
+    const { ClipboardItem } = window;
     let id = store.state.articleId
+    let shareModal = ref(null)
+    function getShareModalImg(){
+        html2canvas(shareModal.value).then(function(img){
+            img.toBlob(function(blob){
+                navigator.clipboard.write([new ClipboardItem({"image/png":blob})])
+            })
+        })
+    }
 
     function getTimeFromJavaDate(s) {
         const cont = new Date(s);
@@ -178,6 +190,9 @@
             inputarea.description = window.location.href.toString();
         } else if (which == 2) {
             inputarea.description = `<iframe src="${store.state.embedLink}/embed?article=${id}&title=${inputarea.title}&thumbnail=${inputarea.thumbnail}&date=${inputarea.date}&rating=${inputarea.rating}&like=${inputarea.like}&logo=${inputarea.logo}&author=${inputarea.author}" width="${embedInfo.width}" height="${embedInfo.width/2}"></iframe>`
+        } else if (which == 3){
+            getShareModalImg()
+            inputarea.description = '복사되었습니다. CTRL + V로 원하시는 사이트에 붙여넣어보세요!'
         }
     }
 
