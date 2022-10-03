@@ -14,7 +14,7 @@ public interface ImageRepository extends JpaRepository<ImagesList, Long>{
 
 
 
-
+    Optional<ImagesList> findByFileName(String filename);
 
     Optional<ImagesList> findFirstByArticlesOrderByIidAsc(ArticlesList article);
 }

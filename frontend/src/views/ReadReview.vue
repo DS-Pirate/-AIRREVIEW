@@ -214,4 +214,9 @@
   -webkit-user-select: none
   touch-action: manipulation
 
+  .reviewContent
+      img
+          width: 100%
+          height: auto
+
 </style>

@@ -2,8 +2,9 @@
     <section class="recommend w-15">
         <span class="title">추천 게시글</span>
         <div class="row-cols-1 py-4" v-for="(info, idx) in state.hashInfo || []" v-bind:key="idx">
-            <Cards v-bind:cardInfo="info.articles[info.articles.length-1]" v-if="props.id!=info.aid && info.articles.length!=0" :uImage="info.ImageName" :uInfo="info.userInfo[0]"></Cards>
+            <Cards :cardInfo="info"></Cards>
         </div>
+        <span v-if="state.hashInfo.length==0"><br><br> 연관 게시글이 없습니다</span>
     </section>
 
 </template>
@@ -12,7 +13,10 @@
     import { defineProps, reactive } from "vue";
     import Cards from "./ArticleRecommendCard.vue";
     let state = reactive({
-        hashInfo : []
+        hashInfo : [],
+        pageTotalCount:null,
+        currentPage:null,
+        tmpList: [],
     })
     let props = defineProps(["id"]);
     let body = reactive({
@@ -20,14 +24,30 @@
         reqPage: 0,
     });
 
+    function appendListToState(res){
+        state.pageTotalCount = res.pageTotalCount
+        state.currentPage = res.page+=1
+        for (let i = 0; i < res.articles.length; i++) {
+            let element = res.articles[i];
+            element.images.push(res.ImageList[i])
+            if(element.aid!=props.id && !state.tmpList.includes(element.aid)){
+                state.hashInfo.push(element)
+                state.tmpList.push(element.aid)
+            }
+        }
+
+    }
 
 
     function getCardInfoByHashTagWithAid() {
+        
+        if(state.currentPage>state.pageTotalCount){
+            return false
+        }
         axios
             .post("./article/articlerecommend/", body)
             .then(function (res) {
-                state.hashInfo.push(res.data)
-                console.log(res);
+                appendListToState(res.data)   
             })
             .catch(function (error) {
                 console.log(error)
@@ -47,5 +67,4 @@
         
     }
     getCardInfoByHashTagWithAid();
-    console.log(state);
 </script>
