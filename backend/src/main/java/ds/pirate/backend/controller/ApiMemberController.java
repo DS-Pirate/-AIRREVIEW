@@ -24,6 +24,9 @@ public class ApiMemberController {
             consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> register(@RequestBody airUserDTO dto) {
         String email = service.register(dto);
+        if (email =="회원가입에 실패하였습니다.") {
+            return new ResponseEntity<>(email, HttpStatus.BAD_REQUEST);    
+        }
         return new ResponseEntity<>(email, HttpStatus.OK);
     }
 
