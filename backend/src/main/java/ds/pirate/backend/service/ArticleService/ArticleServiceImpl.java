@@ -1,6 +1,7 @@
 package ds.pirate.backend.service.ArticleService;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -107,7 +108,7 @@ public class ArticleServiceImpl implements ArticleService {
         lists.forEach(new Consumer<ImagesList>() {
             @Override
             public void accept(ImagesList i) {
-                if (!irepo.findById(i.getIid()).isPresent()) {
+                if (!irepo.findByFileName(i.getFileName()).isPresent()) {
                     ImagesList.builder().fileName(i.getFileName()).articles(modifiedArticle).build();
                 }
             }
@@ -143,15 +144,16 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public HashMap<String, Object> getCardInfosByHashTagName(Long aid, Pageable pageable) {
         HashMap<String, Object> cardInfo = new HashMap<>();
+        List<String> ImageList = new ArrayList<>();
         Page<HashTags> result = hrepo.findByHashTagNameContainsIgnoreCaseOrderByHidDesc(
-                repo.getByAid(aid).getTags().get(0).getHashTagName(), pageable);
-        List<ArticleDTO> aresult = result.get().map((Function<HashTags, ArticleDTO>) dto -> {
+                repo.getByAid(aid).getTags().get(0).getHashTagName(), pageable);            
+            List<ArticleDTO> aresult = result.get().map((Function<HashTags, ArticleDTO>) dto -> {
             ArticleDTO dtoresult = EntityToDTO(dto.getArticles());
             Optional<ImagesList> tmpImage = irepo.findFirstByArticlesOrderByIidAsc(ArticlesList.builder().aid(dtoresult.getAid()).build());
             if(tmpImage.isPresent()){
-                cardInfo.put("ImageName",tmpImage.get().getFileName().strip().substring(0, tmpImage.get().getFileName().strip().length()-1));
+                ImageList.add(tmpImage.get().getFileName().strip().substring(0, tmpImage.get().getFileName().strip().length()-1));
             }else{
-                cardInfo.put("ImageName", "basic.png");
+                ImageList.add("basic.png");
             }
             return dtoresult;
         }).collect(Collectors.toList());
@@ -165,6 +167,7 @@ public class ArticleServiceImpl implements ArticleService {
         cardInfo.put("page", pageable.getPageNumber());
         cardInfo.put("pageTotalCount", result.getTotalPages());
         cardInfo.put("userInfo", uresult);
+        cardInfo.put("ImageList", ImageList);
         return cardInfo;
     }
 

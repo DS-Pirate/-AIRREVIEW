@@ -180,12 +180,17 @@
                     userid: store.state.userid,
                 };
                 const body = result;
+                console.log(page);
                 await axios
                     .post(url, body, { headers })
                     .then(function (res) {
                         console.log(res);
                         sessionStorage.setItem("aid", res.data);
-                        router.push(`/read?article=${res.data}`);
+                        async function routerPush(){
+                            await router.push(`/read?article=${res.data}`)
+                            await router.go(0)
+                        }
+                        routerPush()
                     })
                     .catch((e) => {
                         console.log(e + "통신실패");
