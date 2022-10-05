@@ -2,7 +2,7 @@
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="subscribe"
         aria-labelledby="subscribe">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="subscribeTitle">Subscribe List</h5>
+            <h5 class="offcanvas-title mt-1" id="subscribeTitle" style="font-family: 'MabinogiClassic;">SUBSCRIBE LIST</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
