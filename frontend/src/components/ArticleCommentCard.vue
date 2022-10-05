@@ -3,7 +3,7 @@
         <div class="comment-section-left w-10 d-flex flex-column align-items-center">
             <div class="comment-section-left-profile d-flex justify-content-between">
                 <!-- 기본 이미지 일단 넣어둠 -->
-                <img class="img-fluid" :src="'./images/read/userid/' + props.cardInfo.userid" style="width: 2.75rem; height:2.75rem; border-radius: 30rem;" />
+                <img class="img-fluid" :src="store.state.axiosLink+'/images/read/userid/' + props.cardInfo.userid" style="width: 2.75rem; height:2.75rem; border-radius: 30rem;" />
                 <!-- <img class="img-fluid py-2 px-3" style="max-height: 60px" src="@/assets/pngwing.com.png" /> -->
             </div>
             <div class="comment-section-left-delete">

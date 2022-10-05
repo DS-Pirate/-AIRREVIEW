@@ -69,7 +69,7 @@
                                 </div>
                                 <hr />
                                 <div class="preview-context d-flex gap-2 align-items-top">
-                                    <img :src="`${store.state.EmbedLink}/airreview/images/read/${embedInfo.img}`" alt="image" class="w-30 preview-context-thumbnailimg img-fluid" v-show="inputarea.thumbnail" />
+                                    <img :src="`${store.state.axiosLink}/images/read/${embedInfo.img}`" alt="image" class="w-30 preview-context-thumbnailimg img-fluid" v-show="inputarea.thumbnail" />
                                     <div class="preview-context-context w-70 d-flex flex-column gap-3">
                                         <span class="preview-context-context-rating" v-show="inputarea.rating" v-html="embedInfo.avg"></span>
                                         <p class="preview-context-context_description" v-html="embedInfo.context"></p>
@@ -105,7 +105,6 @@
     import axios from "axios";
     import { reactive, ref } from "vue";
     import html2canvas from "html2canvas"
-    
     const { ClipboardItem } = window;
     let id = store.state.articleId
     let shareModal = ref(null)
@@ -164,15 +163,14 @@
         e.target.select()
     }
 
-    axios.get(`${store.state.axiosLink}/./info/${id}`).then(function (res) {
+    axios.get(`${store.state.axiosLink}/info/${id}`).then(function (res) {
         let info = res.data;
         embedInfo.regdate = getTimeFromJavaDate(info.regdate), 
         embedInfo.title = info.title, 
         embedInfo.username = info.author, 
         embedInfo.fav = info.favcount, 
         embedInfo.context = info.context
-        embedInfo.img = info.imageList[0]
-        embedInfo.img = embedInfo.img.replace('"', '')
+        embedInfo.img = info.imageList[0].replace(/['|"|<|>|]|&lt|&gt|\\/g, "")
         if(embedInfo.context.indexOf("<iframe")>0){
             embedInfo.context = embedInfo.context.replace(embedInfo.context.slice(embedInfo.context.indexOf("<iframe"), embedInfo.context.indexOf("</iframe>")+9), `>> ${id}번 글 링크<br>`)
         }

@@ -47,7 +47,7 @@ let year = regdate.getFullYear();
 let date = regdate.getDate();
 let month = monthNames[regdate.getMonth()];
 let title = titleLength(props.card.atitle);
-let image = imageslice(props.card.fileName);
+let image = imageslice(props.card.fileName).replace(/['|"|<|>|]|&lt|&gt|\\/g, "")
 
 function convertIframeToText(context){
 	if (context.indexOf("<iframe") > 0) {

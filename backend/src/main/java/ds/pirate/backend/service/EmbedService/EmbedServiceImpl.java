@@ -21,8 +21,12 @@ public class EmbedServiceImpl implements EmbedService{
     public Embed getEmbedInfo(Long article) {
         List<String> basic = new ArrayList<>();
         basic.add("basic.png'");
-        ArticleRepository.getEmbedInformation geted = arepo.getEmbedInfoByAid(article).get();
-        Embed result = new Embed(geted);
+        log.info("얘가오류니");
+        List<ArticleRepository.getEmbedInformation> geted = arepo.getEmbedInfoByAid(article).get();
+        ArticleRepository.getEmbedInformation converted = geted.get(0);
+        
+        log.info("얘는아님");
+        Embed result = new Embed(converted);
         log.info(result);
         if(result.getImageList() == null){
             result.setImageList(basic);

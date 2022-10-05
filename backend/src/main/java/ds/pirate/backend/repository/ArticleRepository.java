@@ -116,7 +116,7 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
                         +
                         "FROM ArticlesList att left join airUser au on att.aUser = au.userid left join ImagesList img on att.aid = img.articles " +
                         "WHERE aid=:article")
-        Optional<getEmbedInformation> getEmbedInfoByAid(Long article);
+        Optional<List<getEmbedInformation>> getEmbedInfoByAid(Long article);
 
         @Query("SELECT a FROM ArticlesList a WHERE a_user=:userid ")
         Optional<List<ArticlesList>> getListbyuserId2(Long userid);
