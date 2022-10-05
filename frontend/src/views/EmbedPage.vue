@@ -83,7 +83,7 @@
     }
 
 
-    axios.get(`${store.state.axiosLink}/./info/${id}`).then(function (res) {
+    axios.get(`${store.state.axiosLink}/info/${id}`).then(function (res) {
         let info = res.data;
         embedInfo.regdate = getTimeFromJavaDate(info.regdate)
         embedInfo.title = info.title
@@ -91,8 +91,7 @@
         embedInfo.fav = info.favcount
         embedInfo.avg = info.avgrate
         embedInfo.context = info.context
-        embedInfo.img = info.imageList[0]
-        embedInfo.img = embedInfo.img.replace('"', '')
+        embedInfo.img = info.imageList[0].replace(/['|"|<|>|]|&lt|&gt|\\/g, "")
 
         if (embedInfo.context.indexOf("<iframe") > 0) {
             embedInfo.context = embedInfo.context.replace(embedInfo.context.slice(embedInfo.context.indexOf("<iframe"), embedInfo.context.indexOf("</iframe>") + 9), `>> ${id}번 글 링크<br>`);

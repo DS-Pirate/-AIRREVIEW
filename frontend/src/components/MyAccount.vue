@@ -3,7 +3,7 @@
     <!-- 이미지 --> 
     <div class="imgBox position-relative">
       <div class="picDiv position-absolute">
-        <form action="./setting/userimage" class="filebox" @change="submit($event)">
+        <form action="/setting/userimage" class="filebox" @change="submit($event)">
           <label for="ex_file" class="bi bi-camera picIcon position-absolute"></label>
           <input type="file" id="ex_file" />
         </form>

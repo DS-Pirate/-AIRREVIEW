@@ -9,7 +9,8 @@
 
 </template>
 <script setup>
-    import axios from "axios";
+    import store from "@/store";
+import axios from "axios";
     import { defineProps, reactive } from "vue";
     import Cards from "./ArticleRecommendCard.vue";
     let state = reactive({
@@ -31,8 +32,10 @@
             let element = res.articles[i];
             element.images.push(res.ImageList[i])
             if(element.aid!=props.id && !state.tmpList.includes(element.aid)){
+                element.images[0]= element.images[0].replace(/['|"|<|>|]|&lt|&gt/g, "")
                 state.hashInfo.push(element)
                 state.tmpList.push(element.aid)
+                console.log(state);
             }
         }
 
@@ -45,7 +48,7 @@
             return false
         }
         axios
-            .post("./article/articlerecommend/", body)
+            .post(store.state.axiosLink+"/article/articlerecommend/", body)
             .then(function (res) {
                 appendListToState(res.data)   
             })
