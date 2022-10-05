@@ -8,6 +8,8 @@ import ds.pirate.backend.entity.likeUnlikeList;
 public interface LikeUnlikeService {
   HashMap<String, Object> getListAid(Long aid);
 
+  String getUImageNameByUserid(Long userid);
+
   default likeUnlikeList dtoToEntity(likeUnlikeDTO dto) {
     likeUnlikeList entity = likeUnlikeList.builder()
         .aid(dto.getAid())

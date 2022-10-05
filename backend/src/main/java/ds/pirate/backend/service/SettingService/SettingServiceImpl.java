@@ -1,8 +1,6 @@
 package ds.pirate.backend.service.SettingService;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -11,25 +9,20 @@ import java.util.stream.Collectors;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import ds.pirate.backend.dto.ArticleDTO;
 import ds.pirate.backend.dto.QuestionDTO;
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.dto.reportDTO;
-import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.QuestionsList;
 import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.entity.reportList;
 import ds.pirate.backend.entity.uImagesList;
 import ds.pirate.backend.repository.ArticleReportRepository;
-import ds.pirate.backend.repository.ArticleRepository;
-import ds.pirate.backend.repository.LikeUnlikeRepository;
 import ds.pirate.backend.repository.QuestionRepository;
 import ds.pirate.backend.repository.UserImageListRepository;
 import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import ds.pirate.backend.service.QuestionService.QuestionService;
 import ds.pirate.backend.service.UserService.UserService;
-// import ds.pirate.backend.vo.settingArticleList;
 import ds.pirate.backend.vo.userid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -42,9 +35,7 @@ public class SettingServiceImpl implements SettingService {
   private final UserImageListRepository uirepo;
   private final UserService uService;
   private final PasswordEncoder encoder;
-  private final ArticleRepository arepo;
   private final ArticleService aService;
-  private final LikeUnlikeRepository lrepo;
   private final ArticleReportRepository rrepo;
   private final QuestionRepository qrepo;
   private final QuestionService qService;
@@ -80,27 +71,6 @@ public class SettingServiceImpl implements SettingService {
     } else {
       return "다시 설정해주세요";
     }
-  }
-
-  @Override
-  public HashMap<String, Object> settingArticleList(Long userid) {
-    List<Integer> countlist = new ArrayList<>();
-    List<ArticleDTO> result = arepo.getListbyuserId2(userid).get().stream()
-        .map((Function<ArticlesList, ArticleDTO>) v -> {
-          aService.EntityToDTO(v);
-          Optional<Integer> tmp = lrepo.checkFavoLogByUserIdAndArticleId2(userid, v.getAid());
-          if (!tmp.isPresent()) {
-            countlist.add(tmp.get());
-          } else {
-            countlist.add(0);
-          }
-
-          return aService.EntityToDTO(v);
-        }).collect(Collectors.toList());
-    HashMap<String, Object> hash = new HashMap<>();
-    hash.put("article", result);
-    hash.put("count", countlist);
-    return hash;
   }
 
   @Override
