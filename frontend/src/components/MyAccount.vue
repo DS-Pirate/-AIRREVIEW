@@ -3,12 +3,12 @@
     <!-- 이미지 --> 
     <div class="imgBox position-relative">
       <div class="picDiv position-absolute">
-        <form action="/setting/userimage" class="filebox" @change="submit($event)">
+        <form action="/setting/userimage" class="filebox" @change="fileUpload($event)">
           <label for="ex_file" class="bi bi-camera picIcon position-absolute"></label>
           <input type="file" id="ex_file" />
         </form>
       </div>
-      <img class="imgIcon" src="../assets/dummy.webp" />
+      <img class="imgIcon" :src="`./images/read/${state.userImgName}`" />
     </div>
     <div class="nameDiv mt-2">
       <span class="fs-4 name">{{state.name}}</span>
@@ -72,15 +72,13 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import router from "@/router";
 import { reactive } from "@vue/reactivity";
 import axios from "axios";
 import { useStore } from "vuex";
 
-export default {
-  name: "MyAccount",
-  setup() {
+
     const state = reactive({
       userid: '',
       name: '',
@@ -92,62 +90,55 @@ export default {
       userintro: '',
       cpasswd: '',
       upasswd: '',
+      userImgName: ''
     })
     const store = useStore();
     const url = store.state.axiosLink+'/api/setting/getuser'
     const headers = {
       "Content-Type": "application/json",
       "Authorization": store.state.token,
-      "userid": store.state.userid
+      "userid": store.state.userid,
+      token: store.state.token 
     }
     
     let body = {
       userid: store.state.userid,
     }
 
-    async function a (){
+    async function getUserList(){
     await axios.post(url, body, { headers }).then(function (res) {
       state.userid = res.data.userid;
       state.name = res.data.airName;
       state.email = res.data.email;
       state.birthDay = res.data.birthDay;
       state.userintro = res.data.userIntro;
-
+      state.userImgName = res.data.userImgName;
       const regdate = new Date(Date.parse(res.data.birthDay))
       state.year = regdate.getFullYear();
       state.date = regdate.getDate();
       state.month = regdate.getMonth() + 1;
+      console.log(res);
     })
     }
-    a()
+    getUserList()
 
     const updatesetting = function () {
 
       const url2 = store.state.axiosLink+'/api/setting/changepasswd'
-
-      // console.log(state.birthDay);
-
-  
-
         axios.post(url2, state, { headers }).then(function (res) {
         alert(res.data)
         res.data == "다시 설정해주세요" ? "" : router.go(0)
       })
     }
 
-    function submit(e) {
-      let headers = {
-        "Content-Type": "multipart/form-data",
-        "Authorization": store.state.token,
-        "userid": store.state.userid
-      }
-      let url = store.state.axiosLink+"/api/setting/userimage"
-      let body = {data: e.target}
-      console.log(e);
-      axios.post(url, body, { headers })
+
+    function fileUpload(e) {
+        let formData = new FormData();
+        formData.append("upload", e.target.files[0]);
+        axios.post(`${store.state.axiosLink}/api/setting/image/upload/${store.state.userid}`, formData, { headers }).then(function (res) {
+            console.log(res);
+        });
     }
 
-    return { state, updatesetting, submit }
-  }
-};
+
 </script>

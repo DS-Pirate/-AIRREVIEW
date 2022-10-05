@@ -19,10 +19,12 @@ import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.QuestionsList;
 import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.entity.reportList;
+import ds.pirate.backend.entity.uImagesList;
 import ds.pirate.backend.repository.ArticleReportRepository;
 import ds.pirate.backend.repository.ArticleRepository;
 import ds.pirate.backend.repository.LikeUnlikeRepository;
 import ds.pirate.backend.repository.QuestionRepository;
+import ds.pirate.backend.repository.UserImageListRepository;
 import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.ArticleService.ArticleService;
 import ds.pirate.backend.service.QuestionService.QuestionService;
@@ -30,12 +32,14 @@ import ds.pirate.backend.service.UserService.UserService;
 // import ds.pirate.backend.vo.settingArticleList;
 import ds.pirate.backend.vo.userid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @Service
 @RequiredArgsConstructor
-
+@Log4j2
 public class SettingServiceImpl implements SettingService {
   private final UserRepository urepo;
+  private final UserImageListRepository uirepo;
   private final UserService uService;
   private final PasswordEncoder encoder;
   private final ArticleRepository arepo;
@@ -47,8 +51,21 @@ public class SettingServiceImpl implements SettingService {
 
   @Override
   public airUserDTO getByUserId(Long userid) {
-    airUserDTO result = uService.entityToDTO(urepo.findByUserId(userid).get());
+    airUser entity = urepo.findByUserIdWithUserImage(userid).get();
+    airUserDTO result = uService.entityToDTO(urepo.findByUserIdWithUserImage(userid).get());
+    List<uImagesList> filteredImg = entity.getUserImg().stream().filter(i-> i.getIdx()==0).toList();
+    result.setUserImgName(filteredImg.get(0).getFileName());
     return result;
+  }
+
+  @Override
+  public void uploadProfileImg(Long userid, String fileName) {
+      Optional<uImagesList> isimage = uirepo.getByAiruser(userid);
+      if(isimage.isPresent()){
+          uirepo.delete(isimage.get());
+      }
+      log.info("09009090909090909099090909090909099090990909909090909090");
+      uirepo.save(uImagesList.builder().airuser(airUser.builder().userid(userid).build()).fileName(fileName).idx(0).build());
   }
 
   @Override
