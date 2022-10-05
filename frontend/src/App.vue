@@ -9,7 +9,7 @@
           <input id="searching" v-model="search.context" type="text" class="form-control border-0 bg-white" @submit="searchingAxios()" >
         </form>
         <ul class="list-group list-group-horizontal w-65 justify-content-between">
-          <!-- <li class="list-group-item border-0 rankingsection w-40 d-flex justify-content-start gap-0" >
+          <li class="list-group-item border-0 rankingsection w-40 d-flex justify-content-start gap-0" >
             <span class="rankingsection__title w-50"> <i class="bi bi-fire"></i> 실시간 검색어 순위</span>
             <span class="ms-3 rankingsection__keyword text-nowrap w-50">{{ranking.caroRank==null?"1. "+ranking.info[0].keyword:`${ranking.caroRank}. ${ranking.caroKey}`}}</span>
             <div class="rankingsection__board">
@@ -18,7 +18,7 @@
                 <li v-for="(info, idx) in ranking.info" :key="(info, idx)"><a :href="`/search?cards=${info.keyword}&order=new`">{{idx+1 +". "+ info.keyword}}</a></li>
               </ul>
             </div>
-          </li> -->
+          </li>
           <li class="list-group-item border-0 alarm-icon">
             <div class="alarm-icon-badge d-flex justify-content-center align-items-center" v-if="$store.state.isAlarm>0">
                 <span class="alarm-icon-badge_count">{{$store.state.isAlarm}}</span>

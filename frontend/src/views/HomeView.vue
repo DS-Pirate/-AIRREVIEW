@@ -1,6 +1,5 @@
 <template>
   <div class="mainviewpage">
-
     <div class="mb-4 ms-4 ps-2 d-flex flex-row-reverse" role="group" aria-label="Default button group">
       <button  class="button-81" :class="{btnblue: state.view === true }" @click="view()">조회순</button>
       <button class="button-81" :class="{btnblue: state.like === true }" type="button" @click="like()">좋아요순</button>
@@ -10,7 +9,7 @@
     </div>
 
     <div class="fav p-1">
-      <div  class="row row-cols-3">
+      <div  class="cardsection">
         <div v-for="(card, idx) in state.cards" :key="idx">
           <Cards :card="card"></Cards>
         </div>
@@ -171,7 +170,7 @@ export default {
 
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 
 @media (min-width: 768px)
   .button-81
@@ -208,4 +207,7 @@ export default {
   background-color: #0D6EFD
   color: #fff
 
+.cardsection
+  display: grid
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr))
 </style>
