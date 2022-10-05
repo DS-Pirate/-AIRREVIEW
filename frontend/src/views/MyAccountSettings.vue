@@ -1,6 +1,6 @@
 <template>
   <div class="MyAccountSettings">
-    <!-- 컴포넌트작업이 끝났을 경우bg-~삭제 -->
+
     <div class="settingpage">
       <div class="myaccount section py-5 px-3" id="myaccount">
         <MyAccount/>

@@ -23,6 +23,8 @@ public interface SettingService {
 
   List<QuestionDTO> getQuestionList(Long userid);
 
+  void uploadProfileImg(Long userid, String fileName);
+
   // Boolean remove2(Long aid);
 
   default airUserDTO entityToDTO(airUser entity) {

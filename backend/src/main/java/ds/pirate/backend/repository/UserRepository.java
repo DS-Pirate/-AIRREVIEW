@@ -27,6 +27,10 @@ public interface UserRepository extends JpaRepository<airUser, Long> {
     @Query("select user from airUser user where userid=:userId ")
     Optional<airUser> findByUserId(Long userId);
 
+    @EntityGraph(attributePaths = { "userImg" }, type = EntityGraphType.LOAD)
+    @Query("select user from airUser user where userid=:userId")
+    Optional<airUser> findByUserIdWithUserImage(Long userId);
+
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("update airUser u set u.passwd=:passwd where u.userid=:userid")
