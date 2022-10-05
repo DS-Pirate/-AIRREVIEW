@@ -80,6 +80,14 @@ const router = useRouter()
     function change(which) {
         state.form = which;
         console.log(state.form);
+      async function routinglist (){
+        await router.push(`/mypage?channel=${id}`)
+        console.log("이동(app)")
+        await router.go(0)
+      }
+        if(which == "list"){
+          routinglist ()
+        }
     }
 
     let headers = { token: store.state.token };

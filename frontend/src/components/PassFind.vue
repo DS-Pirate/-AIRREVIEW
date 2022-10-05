@@ -3,6 +3,7 @@
 		<span class="text-center">이메일</span>
 		<div class="input-group idsection px-5 my-2">
 			<input class="form-control" type="text" name="id" id="id" v-model="state.email"  required placeholder="email" />
+      <input type="password" name="password" id="password" style="display:none" aria-hidden="true">
 		</div>
 
     <span class="text-center" id="pwFindAnswer">비밀번호 찾기 질문</span>
@@ -16,7 +17,7 @@
     </div>
 
 		<div class="input-group passwordsection px-5 my-2 w-100">
-			<input class="form-control" type="password" name="password" id="password" v-model="state.answer" placeholder="답변" required />
+			<input class="form-control" type="text" v-model="state.answer" placeholder="답변" required />
 		</div>
 		<div class="px-5 my-4">
 			<button type="button" class="btn btn-outline-primary w-100" @click="submit()">비밀번호 찾기</button>

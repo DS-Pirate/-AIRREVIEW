@@ -38,7 +38,7 @@
             <li class="list-group-item border-0 navFont" v-if="$store.state.token">NEW ARTICLE</li>
           </router-link>
           <router-link :to="'/mypage?channel='+$store.state.userid">
-            <li class="list-group-item border-0 navFont" v-if="$store.state.token">MY PAGE</li>
+            <li class="list-group-item border-0 navFont" v-if="$store.state.token" @click="mypage()">MY PAGE</li>
           </router-link>
           <router-link to="/setting" v-if="$store.state.token">
             <li class="list-group-item border-0 navFont">SETTING</li>
@@ -128,8 +128,11 @@ export default {
       ranking.i++
     }, 2500)
     })
-
-    return{ searchingAxios, search, logout, meta, getRankingList, ranking}
+    async function mypage(){
+      await router.push("/mypage?channel="+store.state.userid);
+      await router.go(0)
+    }
+    return{ searchingAxios, search, logout, meta, getRankingList, ranking, mypage}
   }
 
 
