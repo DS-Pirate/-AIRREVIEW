@@ -11,7 +11,7 @@ import ds.pirate.backend.entity.uImagesList;
 
 @Repository
 public interface UserImageListRepository extends JpaRepository<uImagesList, Long>{
-    @Query("select aimgs from uImagesList aimgs where airuser.userid=:userid")
+    @Query("select aimgs from uImagesList aimgs where airuser.userid=:userid and idx=0")
     Optional<uImagesList> getByAiruser(Long userid);
 
     @Query("select aimgs from uImagesList aimgs where airuser.userid=:userid and idx=99")
