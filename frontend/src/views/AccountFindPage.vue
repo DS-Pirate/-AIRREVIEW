@@ -2,7 +2,7 @@
 	<Login class="d-flex justify-content-center align-items-center">
 		<div class=" login p-5 ">
 			<div class="loginlogo text-center"><img class="img-fluid" src="@/assets/airreviewlogo.png" alt="" srcset=""></div>
-			
+
 
 			<div class="loginmenu d-flex justify-content-center justalign-item-center w-100">
 				<ul class="list-group list-group-horizontal w-100 px-5 my-4">
@@ -23,8 +23,6 @@
 import { reactive} from "vue";
 import IdFind from "@/components/IdFind.vue";
 import PassFind from "@/components/PassFind.vue";
-import store from "@/store";
-import router from "@/router";
 export default {
 	components: { IdFind, PassFind },
 
@@ -41,13 +39,6 @@ export default {
             }
             console.log(state.form);
         }
-    function loginUser(){
-      if (store.state.token){
-        alert("잘못된 접근입니다.")
-        router.push("/")
-      }
-    }
-    loginUser();
 		return {state, changeform};
 	},
 };
