@@ -1,7 +1,7 @@
 <template>
 	<div class="col maincards">
 		<div class="card-1 card border-0 w-100 mb-5">
-			<div class="wrapper">
+			<div class="wrapper" :style="'background-image: url('+store.state.axiosLink+'/images/read/'+image+'); background-size:cover;'">
 				<div class="date">
 					<span class="day">{{props.card.regdate.split("-")[2].split("T")[0]}}</span>
                     <span class="month">{{props.card.regdate.split("-")[1]}}</span>
@@ -15,7 +15,7 @@
 							<h3 class="title"><a>{{ props.card.atitle }}</a></h3>
 							<p class="text" v-html="props.card.context.length>30?props.card.context.slice(0,33):props.card.context"></p>
 						</div>
-						<label class="menu-button"><span></span></label>
+						<div class="menu-button"><span>조회수 {{card.opencount}}</span></div>
 					</div>
 					<input type="checkbox"  />
 					<ul class="menu-content">
@@ -137,6 +137,7 @@ h3 {
 
 	.author {
 		font-size: 0.8rem;
+		color: black;
 	}
 
 	.title {
@@ -207,39 +208,12 @@ h3 {
 		z-index: 999;
 		top: 16px;
 		right: 16px;
-		width: 25px;
-		text-align: center;
-		cursor: pointer;
-
 		span {
-			width: 5px;
-			height: 5px;
-			background-color: lighten($black, 50%);
 			color: lighten($black, 50%);
-			position: relative;
-			display: inline-block;
-			border-radius: 50%;
-
-			&::after,
-			&::before {
-				content: '';
-				display: block;
-				width: 5px;
-				height: 5px;
-				background-color: currentColor;
-				position: absolute;
-				border-radius: 50%;
-			}
-
-			&::before {
-				left: -10px;
-			}
-
-			&::after {
-				right: -10px;
-			}
+      font-size: 10px;
 		}
 	}
+	
 	.menu-content {
 		text-align: center;
 		position: absolute;

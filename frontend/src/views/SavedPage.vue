@@ -5,7 +5,7 @@
       <div class="mb-4 mt-5 ms-4 ps-1 text-center" v-if="state.notSavedPage">
         <h1>저장된 글이 존재하지 않습니다</h1>
       </div>
-			<div class="row row-cols-2 gx-5 gy-3">
+			<div class="row row-cols-4 gx-5 gy-3">
 				<div v-for="(card, idx) in state.cards" :key="idx">
           <Cards :name="state.usernames[idx]" :card="card"></Cards>
 				</div>

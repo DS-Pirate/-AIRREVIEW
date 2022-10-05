@@ -1,6 +1,5 @@
 package ds.pirate.backend.service.SettingService;
 
-import java.util.HashMap;
 import java.util.List;
 
 import ds.pirate.backend.dto.QuestionDTO;
@@ -14,8 +13,6 @@ public interface SettingService {
   airUserDTO getByUserId(Long userid);
 
   String changePasswd(userid vo);
-
-  HashMap<String, Object> settingArticleList(Long userid);
 
   List<reportDTO> getReportList(Long userid);
 
