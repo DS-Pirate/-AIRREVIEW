@@ -23,6 +23,8 @@
 import { reactive} from "vue";
 import IdFind from "@/components/IdFind.vue";
 import PassFind from "@/components/PassFind.vue";
+import store from "@/store";
+import router from "@/router";
 export default {
 	components: { IdFind, PassFind },
 
@@ -39,6 +41,13 @@ export default {
             }
             console.log(state.form);
         }
+    function loginUser(){
+      if (store.state.token){
+        alert("잘못된 접근입니다.")
+        router.push("/")
+      }
+    }
+    loginUser();
 		return {state, changeform};
 	},
 };

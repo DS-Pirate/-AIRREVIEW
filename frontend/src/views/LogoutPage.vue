@@ -5,11 +5,19 @@
 </template>
 <script setup>
 import {useRouter} from "vue-router/dist/vue-router";
+import store from "@/store";
 
 const router = useRouter()
 function home(){
   router.push(`/`);
 }
 setTimeout(home, 1000);
+function notloginUser(){
+  if (!store.state.token){
+    alert("잘못된 접근입니다.")
+    router.push("/")
+  }
+}
+notloginUser();
 
 </script>

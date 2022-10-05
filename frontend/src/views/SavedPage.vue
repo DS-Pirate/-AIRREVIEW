@@ -23,6 +23,7 @@ import Cards from "@/components/SaveCards.vue";
 import axios from "axios";
 import { useStore } from 'vuex'
 import {reactive} from "@vue/reactivity";
+import router from "@/router";
 
 export default {
 	name: "SavedPage",
@@ -51,6 +52,14 @@ export default {
           state.notSavedPage = true;
         } else state.notSavedPage = false;
     })
+
+    function notloginUser(){
+      if (!store.state.token){
+        alert("잘못된 접근입니다.")
+        router.push("/")
+      }
+    }
+    notloginUser();
 
     return {state}
 	}

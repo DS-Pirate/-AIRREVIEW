@@ -36,6 +36,8 @@ import ReportList from '@/components/ReportList.vue'
 import QnA from '@/components/QnA.vue'
 import MyAccount from '@/components/MyAccount.vue'
 import PostManagement from '@/components/PostManagement.vue';
+import store from "@/store";
+import router from "@/router";
 
 export default {
   name: 'MyAccountSettings',
@@ -45,7 +47,16 @@ export default {
     MyAccount,
     PostManagement
 
-}
+},
+  setup(){
+    function notloginUser(){
+      if (!store.state.token){
+        alert("잘못된 접근입니다.")
+        router.push("/")
+      }
+    }
+    notloginUser();
+  }
 }
 </script>
 

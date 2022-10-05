@@ -32,7 +32,7 @@
             <li class="list-group-item border-0 navFont" >LOGOUT</li>
           </router-link>
           <router-link to="/join" v-if="!$store.state.token" >
-            <li class="list-group-item border-0 navFont">Join</li>
+            <li class="list-group-item border-0 navFont">JOIN</li>
           </router-link>
           <router-link to="/newpost">
             <li class="list-group-item border-0 navFont" v-if="$store.state.token">NEW ARTICLE</li>

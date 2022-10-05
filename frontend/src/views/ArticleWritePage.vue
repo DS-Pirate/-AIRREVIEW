@@ -177,5 +177,14 @@ export default {
 
 		},
 	},
+  setup(){
+    function notloginUser(){
+      if (!store.state.token){
+        alert("잘못된 접근입니다.")
+        router.push("/")
+      }
+    }
+    notloginUser();
+  }
 }
 </script>
