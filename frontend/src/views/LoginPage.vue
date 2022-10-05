@@ -99,9 +99,13 @@ export default {
       // locale: "",
     };
 
-
-
-
+    function loginUser(){
+      if (store.state.token){
+        alert("잘못된 접근입니다.")
+        router.push("/")
+      }
+    }
+    loginUser();
 
     return { state, changeform, callback, buttonConfig };
 	},

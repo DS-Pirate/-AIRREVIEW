@@ -21,6 +21,7 @@ import Cards from "@/components/FavCards.vue";
 import axios from "axios";
 import { useStore } from 'vuex'
 import {reactive} from "@vue/reactivity";
+import router from "@/router";
 
 export default {
 	name: "FavPage",
@@ -49,6 +50,14 @@ export default {
           state.notFavCards = true;
         } else state.notFavCards = false;
     })
+
+    function notloginUser(){
+      if (!store.state.token){
+        alert("잘못된 접근입니다.")
+        router.push("/")
+      }
+    }
+    notloginUser();
     return {state}
 	}
 };
