@@ -11,7 +11,7 @@
     </div>
 </template>
 <script setup>
-import { reactive } from "vue"
+import { ref } from "vue"
 import store from '@/store';
 import axios from 'axios';
 import SubscribeList from './SubscribeList.vue';
@@ -25,12 +25,13 @@ const headers = {
         userid: store.state.userid
     }
 
-    let subs = reactive({
+    let subs = ref({
         Info: {}
     })
 
 axios.post(`${store.state.axiosLink}/api/subs`, body, {headers} ).then(function(res) {
-    subs.Info = res.data;
+    subs.value.Info = res.data;
+    console.log(res.data);
 })
 </script>
 <style lang="">

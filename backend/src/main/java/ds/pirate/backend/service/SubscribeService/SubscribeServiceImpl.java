@@ -30,12 +30,15 @@ public class SubscribeServiceImpl implements SubscribeService {
   private final UserService uService;
 
   @Override
-  public List<airUserDTO> getListUserId(Long userid) {
-    List<airUserDTO> result = subrepo.getByUserId(userid).get().stream()
-        .map((Function<? super subscribList, ? extends airUserDTO>) v -> {
-          airUserDTO list = uService.entityToDTO(urepo.findByUserId(v.getTargetId()).get());
-          return list;
-        }).collect(Collectors.toList());
+  public List<MySubInfo> getListUserId(Long userid) {
+//    List<airUserDTO> result = subrepo.getByUserId(userid).get().stream()
+//        .map((Function<? super subscribList, ? extends airUserDTO>) v -> {
+//          airUserDTO list = uService.entityToDTO(urepo.findByUserId(v.getTargetId()).get());
+//          return list;
+//        }).collect(Collectors.toList());
+      List<MySubInfo> result = subrepo.getSubInfoAndImgByUserId(userid).get().stream().map(v->{
+          return new MySubInfo(v);
+      }).collect(Collectors.toList());
     return result;
   }
   
