@@ -10,11 +10,11 @@
         </form>
         <ul class="list-group list-group-horizontal w-65 justify-content-between">
           <li class="list-group-item border-0 rankingsection w-40 d-flex justify-content-start gap-0" >
-            <span class="rankingsection__title w-50"> <i class="bi bi-fire"></i> 실시간 검색어 순위</span>
+            <span class="rankingsection__title w-50" style="font-weight: 600; color: #0D6EFD"> <i class="bi bi-fire"></i> 실시간 검색어 순위</span>
             <span class="ms-3 rankingsection__keyword text-nowrap w-50">{{ranking.caroRank==null?"1. "+ranking.info[0].keyword:`${ranking.caroRank}. ${ranking.caroKey}`}}</span>
             <div class="rankingsection__board">
               <ul>
-                <li><span class="rankingsection__title w-40"> <i class="bi bi-fire"></i> 실시간 검색어 순위</span> <i @click="getRankingList" class="bi bi-arrow-clockwise" style="cursor: pointer;"></i></li>
+                <li><span class="rankingsection__title w-40" style="font-weight: 600;"> <i class="bi bi-fire"></i> 실시간 검색어 순위</span> <i @click="getRankingList" class="bi bi-arrow-clockwise" style="cursor: pointer;"></i></li>
                 <li v-for="(info, idx) in ranking.info" :key="(info, idx)"><a :href="`/search?cards=${info.keyword}&order=new`">{{idx+1 +". "+ info.keyword}}</a></li>
               </ul>
             </div>
@@ -129,14 +129,13 @@ export default {
     }, 3500)
     })
     async function mypage(){
-      await router.push("/mypage?channel="+store.state.userid);
       let id = new URLSearchParams(window.location.search).get("channel");
+      await router.push("/mypage?channel="+store.state.userid);
       console.log("id"+id)
-      if (id == store.state.userid || id !== null){
+      if (id == null){
         console.log("mypage")
-      } else if (id == null){
-        console.log("mypage")
-      } else {
+      } else if (id !== null){
+        console.log("mypagee")
         await router.go(0)
       }
     }
