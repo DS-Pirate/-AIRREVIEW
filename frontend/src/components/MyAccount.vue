@@ -59,11 +59,11 @@
 
       <div class="col-md-3 w-50">
         <label for="inputPassword4" class="form-label">현재 비밀번호</label>
-        <input type="password" class="form-control" id="inputPassword4" v-model="state.cpasswd" />
+        <input type="password" class="form-control" id="inputPassword" v-model="state.cpasswd" />
       </div>
       <div class="col-md-6 w-50">
         <label for="inputPassword4" class="form-label">변경할 비밀번호</label>
-        <input type="password" class="form-control" id="inputPassword4" v-model="state.upasswd" />
+        <input type="password" class="form-control" id="inputPasswordre" v-model="state.upasswd" />
       </div>
       <div class="col-12">
         <button class="btn btn-primary" @click="updatesetting()">수정하기</button>
@@ -117,7 +117,6 @@ import { useStore } from "vuex";
       state.year = regdate.getFullYear();
       state.date = regdate.getDate();
       state.month = regdate.getMonth() + 1;
-      console.log(res);
     })
     }
     getUserList()
@@ -135,8 +134,8 @@ import { useStore } from "vuex";
     function fileUpload(e) {
         let formData = new FormData();
         formData.append("upload", e.target.files[0]);
-        axios.post(`${store.state.axiosLink}/api/setting/image/upload/${store.state.userid}`, formData, { headers }).then(function (res) {
-            console.log(res);
+        axios.post(`${store.state.axiosLink}/api/setting/image/upload/${store.state.userid}`, formData, { headers }).then(function () {
+          console.log("업로드 후 이미지 설정 필요");
         });
     }
 
