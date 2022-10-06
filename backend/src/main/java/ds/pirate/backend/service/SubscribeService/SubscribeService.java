@@ -9,7 +9,7 @@ import ds.pirate.backend.vo.MySubInfo;
 import ds.pirate.backend.vo.subcard;
 
 public interface SubscribeService {
-  List<airUserDTO> getListUserId(Long userid);
+  List<MySubInfo> getListUserId(Long userid);
 
   List<MySubInfo> getFollowingInfoList(subcard vo);
   List<MySubInfo> getFollowerInfoList(subcard vo);

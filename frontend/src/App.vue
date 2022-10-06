@@ -130,7 +130,15 @@ export default {
     })
     async function mypage(){
       await router.push("/mypage?channel="+store.state.userid);
-      await router.go(0)
+      let id = new URLSearchParams(window.location.search).get("channel");
+      console.log("id"+id)
+      if (id == store.state.userid || id !== null){
+        console.log("mypage")
+      } else if (id == null){
+        console.log("mypage")
+      } else {
+        await router.go(0)
+      }
     }
     return{ searchingAxios, search, logout, meta, getRankingList, ranking, mypage}
   }
