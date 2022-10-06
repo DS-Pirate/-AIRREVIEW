@@ -131,7 +131,6 @@
         if(result){
             router.push(`/modify?article=` + props.id)
         }
-        
     }
     getArticleFunctionStatus();
     modifiable()

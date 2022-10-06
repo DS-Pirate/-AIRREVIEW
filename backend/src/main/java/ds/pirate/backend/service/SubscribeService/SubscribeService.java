@@ -2,7 +2,6 @@ package ds.pirate.backend.service.SubscribeService;
 
 import java.util.List;
 
-import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.dto.subScribeDTO;
 import ds.pirate.backend.entity.subscribList;
 import ds.pirate.backend.vo.MySubInfo;

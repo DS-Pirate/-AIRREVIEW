@@ -33,6 +33,7 @@ import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.entity.ArticlesList;
 import ds.pirate.backend.entity.QArticlesList;
 import ds.pirate.backend.entity.QHashTags;
+import ds.pirate.backend.entity.QImagesList;
 import ds.pirate.backend.entity.QQuestionsList;
 import ds.pirate.backend.entity.Qacomments;
 import ds.pirate.backend.entity.QairUser;
@@ -89,18 +90,23 @@ public class AdminServiceImple implements AdminService {
     @Transactional
     @Override
     public Boolean articleDelete(ArticleDTO dto) {
+
+        
+        QImagesList qImagesList = new QImagesList("img");
         QArticlesList articlesList = new QArticlesList("article");
         QHashTags hashTags = new QHashTags("hashtags");
         Qacomments comment = new Qacomments("comment");
         Qalarm qalarm = new Qalarm("alarm");
         QreportList qreportList = new QreportList("report");
-
+        
+        JPADeleteClause deleteImage = new JPADeleteClause(em, qImagesList);
         JPADeleteClause deleteReport = new JPADeleteClause(em, qreportList);
         JPADeleteClause deletehash = new JPADeleteClause(em, hashTags);
         JPADeleteClause deleteClause = new JPADeleteClause(em, articlesList);
         JPADeleteClause deleteComment = new JPADeleteClause(em, comment);
         JPADeleteClause deleteAlarm = new JPADeleteClause(em, qalarm);
-
+        
+        deleteImage.where(qImagesList.articles.aid.eq(dto.getAid())).execute();
         deleteReport.where(qreportList.articles.aid.eq(dto.getAid())).execute();
         deleteAlarm.where(qalarm.articleId.aid.eq(dto.getAid())).execute();
         deleteComment.where(comment.articles.aid.eq(dto.getAid())).execute();

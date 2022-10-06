@@ -58,7 +58,7 @@
         }
 
         await axios
-            .post(store.state.axiosLinkAdmin+"/api/question", body, { headers })
+            .post(store.state.axiosLink+"/api/question", body, { headers })
             .then((res) => console.log("신호 나이이스", res))
             .catch((e) => console.log(e))
             alert("문의를 등록했습니다")

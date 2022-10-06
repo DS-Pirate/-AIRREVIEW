@@ -1,11 +1,14 @@
 package ds.pirate.backend.service.SettingService;
 
-import java.util.List;
+import java.util.HashMap;
 
-import ds.pirate.backend.dto.QuestionDTO;
+import org.springframework.data.domain.Page;
+
 import ds.pirate.backend.dto.airUserDTO;
-import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.entity.airUser;
+import ds.pirate.backend.repository.ArticleRepository.getMyChannelArticleList;
+import ds.pirate.backend.vo.channelArticleList;
+import ds.pirate.backend.vo.settingArticleList;
 import ds.pirate.backend.vo.userid;
 
 public interface SettingService {
@@ -14,15 +17,17 @@ public interface SettingService {
 
   String changePasswd(userid vo);
 
-  List<reportDTO> getReportList(Long userid);
+  HashMap<String, Object> getReportList(settingArticleList vo);
 
   Boolean remove(Long reid);
 
-  List<QuestionDTO> getQuestionList(Long userid);
+  HashMap<String, Object> getQuestionList(settingArticleList vo) ;
 
   void uploadProfileImg(Long userid, String fileName);
 
-  // Boolean remove2(Long aid);
+  Page<getMyChannelArticleList> articleListByUserid(channelArticleList vo);
+
+  Boolean articleRemove(Long aid);
 
   default airUserDTO entityToDTO(airUser entity) {
     airUserDTO dto = airUserDTO.builder()
