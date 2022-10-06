@@ -68,6 +68,7 @@ public interface ArticleService {
     List<acommentDTO> getListByUserIdAndAuthorId(Long userid, Long authorid);
 
     HashMap<String, Object> getSearchList(search vo);
+
     HashMap<String, Object> getArticleListBySub(comment vo);
 
     default ArticlesList dtoToEntity(ArticleDTO dto) {

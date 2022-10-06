@@ -1,7 +1,7 @@
 <template>
 	<div class="col maincards">
 		<div class="card-1 card border-0 w-100 mb-5">
-			<div class="wrapper" :style="'background-image: url('+store.state.axiosLink+'/images/read/'+props.card.images[0]+'); background-size:cover;'">
+			<div class="wrapper" :style="'background-image: url('+store.state.axiosLink+'/images/read/like'+'); background-size:cover;'">
 				<div class="date">
 					<span class="day">{{props.card.regdate.split("-")[2].split("T")[0]}}</span>
                     <span class="month">{{props.card.regdate.split("-")[1]}}</span>
@@ -34,27 +34,10 @@
 
 	<script setup>
 import { defineProps } from "vue";
-import { reactive } from 'vue';
-import axios from 'axios';
 import store from '@/store';
-let props = defineProps(["card", "name"]);
-console.log(props.name);
+let props = defineProps(["card", "name", "ImageList"]);
+console.log(props.ImageList);
 
-const state = reactive({
-  articlelist: '',
-})
-
-const url = store.state.axiosLink+'/api/like'
-    const headers = {
-      "Content-Type": "application/json",
-      "Authorization": store.state.token,
-      "userid": store.state.userid
-    }
-  
-  axios.post(url, store.state.userid, { headers }).then(function (res) {
-    state.articlelist = res.data.article;
-    console.log(res);
-  })
 </script>
 
 <style scoped lang="scss">

@@ -29,7 +29,7 @@ export default {
 	setup() {
     const store = useStore();
 		const state = reactive({
-      cards: [], usernames: [],
+      cards: [], usernames: [], ImageList: [],
       notFavCards: false
     })
 
@@ -45,6 +45,7 @@ export default {
 			.then((res) => {
 				state.cards = res.data.card;
 				state.usernames = res.data.username;
+        state.ImageList = res.data.ImageList;
 				console.log(res);
         if (state.cards.length == 0){
           state.notFavCards = true;
