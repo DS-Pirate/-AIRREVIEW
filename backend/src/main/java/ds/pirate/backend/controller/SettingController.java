@@ -8,7 +8,6 @@ import java.util.UUID;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.data.domain.Page;
-// import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
-import ds.pirate.backend.dto.QuestionDTO;
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.repository.ArticleRepository.getMyChannelArticleList;
-// import ds.pirate.backend.repository.ArticleRepository.getMyChannelArticleList;
 import ds.pirate.backend.service.SettingService.SettingService;
 import ds.pirate.backend.vo.channelArticleList;
 import ds.pirate.backend.vo.settingArticleList;
-// import ds.pirate.backend.vo.channelArticleList;
 import ds.pirate.backend.vo.userid;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.DefaultClaims;

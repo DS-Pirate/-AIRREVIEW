@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.service.SubscribeService.SubscribeService;
 import ds.pirate.backend.vo.userid;
 import lombok.RequiredArgsConstructor;

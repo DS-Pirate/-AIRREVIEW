@@ -2,7 +2,6 @@ package ds.pirate.backend.service.SubscribeService;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import ds.pirate.backend.entity.airUser;
@@ -14,12 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import org.springframework.stereotype.Service;
-
-import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.entity.subscribList;
 import ds.pirate.backend.repository.SubscribeRepository;
 import ds.pirate.backend.repository.UserRepository;
-import ds.pirate.backend.service.UserService.UserService;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -27,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 public class SubscribeServiceImpl implements SubscribeService {
   private final SubscribeRepository subrepo;
   private final UserRepository urepo;
-  private final UserService uService;
 
   @Override
   public List<MySubInfo> getListUserId(Long userid) {
