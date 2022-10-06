@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-column align-items-center">
+    <div class="d-flex flex-column">
         <h1>Q&A</h1>
         <br />
         <div class="accordion accordion-flush w-100" id="accordionFlushExample">
@@ -20,8 +20,8 @@
                 </div>
             </div>
         </div>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
+        <nav aria-label="Page">
+            <ul class="pagination justify-content-center">
                 <li class="page-item" v-if="state.questionlist.page != 0">
                     <span class="page-link" @click="getQNAList(body.pageNum-1)">이전</span>
                 </li>

@@ -1,5 +1,5 @@
 <template>
-    <div class="admin-article d-flex flex-column w-100 align-items-center">
+    <div class="admin-article d-flex flex-column w-100">
         <h1>신고 관리</h1>
         <br />
         <table class="table table-hover">
@@ -20,14 +20,14 @@
                 </tr>
             </tbody>
         </table>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
+        <nav aria-label="Page">
+            <ul class="pagination my-3 justify-content-center">
                 <li class="page-item" v-if="state.reportlist.page != 0">
-                    <span class="page-link" @click="getPostList(body.pageNum-1)">이전</span>
+                    <span class="page-link" @click="getPostList(body.pageNum - 1)">이전</span>
                 </li>
                 <li :class="`page-item page-link ${state.reportlist.page == page - 1 ? 'active' : ''}`" v-for="page in state.reportlist.totalPage" @click="getPostList(page - 1)" :key="page">{{ page }}</li>
-                <li class="page-item" v-if="state.next &&totalPage>10">
-                    <span class="page-link" @click="getPostList(body.pageNum+1)">다음</span>
+                <li class="page-item" v-if="state.next && totalPage > 10">
+                    <span class="page-link" @click="getPostList(body.pageNum + 1)">다음</span>
                 </li>
             </ul>
         </nav>
@@ -41,7 +41,7 @@
 
     let state = reactive({
         reportlist: "",
-        pageNum: 0
+        pageNum: 0,
     });
 
     const url = store.state.axiosLink + "/api/setting/reportlist";
@@ -56,11 +56,11 @@
         userid: store.state.userid,
     };
     function getPostList(reqNum) {
-        reqNum>0||reqNum!=null? body.pageNum=reqNum : 0
-        state.reportlist = ""
+        reqNum > 0 || reqNum != null ? (body.pageNum = reqNum) : 0;
+        state.reportlist = "";
         axios.post(url, body, { headers }).then(function (res) {
             state.reportlist = JSON.parse(JSON.stringify(res.data));
-            body.pageNum = reqNum
+            body.pageNum = reqNum;
         });
     }
     getPostList(state.pageNum);

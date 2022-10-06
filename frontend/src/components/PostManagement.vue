@@ -1,5 +1,5 @@
 <template>
-    <div class="admin-article d-flex flex-column w-100 align-items-center">
+    <div class="admin-article d-flex flex-column w-100 ">
         <h1>글 관리</h1>
         <br />
         <table class="table table-hover">
@@ -29,8 +29,8 @@
                 </tr>
             </tbody>
         </table>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
+        <nav aria-label="Page">
+            <ul class="pagination justify-content-center">
                 <li class="page-item" v-if="state.info.number != 0">
                     <span class="page-link" @click="getPage(body.pageNum-1)">이전</span>
                 </li>
