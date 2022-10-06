@@ -22,6 +22,15 @@ public interface SubscribeRepository extends JpaRepository<subscribList, Long> {
     @Query("SELECT s FROM subscribList s WHERE userid_userid=:userid")
     Optional<List<subscribList>> getByUserId(Long userid);
 
+    @Query(value = "SELECT u.userid as myuserid, ss.target_id AS userid, uu.air_name AS airName, " +
+            "            i.file_name AS fileName, i.idx as idx   " +
+            "            FROM air_user u LEFT JOIN subscrib_list ss ON u.userid = ss.userid_userid " +
+            "            LEFT JOIN (SELECT u.air_name, u.userid, u.user_intro FROM air_user u) uu ON ss.target_id = uu.userid  " +
+            "            LEFT JOIN u_images_list i ON uu.userid = i.airuser\n" +
+            "            WHERE u.userid = 42 AND (i.iid IN  (SELECT Max(i.iid) FROM u_images_list i WHERE i.idx = 0 or i.idx = 99 GROUP BY i.airuser) OR i.iid IS NULL) " +
+            "            GROUP BY ss.target_id, i.iid ", nativeQuery = true)
+    Optional<List<getMySubInfo>> getSubInfoAndImgByUserId(Long userid);
+
     @Query(value = "SELECT u.userid as myuserid, uu.user_intro as userintro , ss.target_id AS userid, uu.air_name AS airName, po.post, f.following AS following, fo.follower AS follower, " +
             "i.file_name AS fileName, i.idx as idx " +
             "FROM air_user u LEFT JOIN subscrib_list ss ON u.userid = ss.userid_userid " +

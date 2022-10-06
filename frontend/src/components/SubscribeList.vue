@@ -1,9 +1,10 @@
 <template>
     <ul class="flex-column p-0 subscribelist"><br>
       <li class="nav-item d-flex m-0 p-0">
-        <span class="me-2" @click="deleteSub()">x</span>
+        <span class="me-2" @click="unfollowsubmit()">x</span>
           <a :href="'./mypage?channel=' + props.subsinfo.userid" class="nav-link d-flex justify-content-center align-items-left " aria-current="page">
-            <img src="@/assets/pngwing.com.png" class="bi me-2" width="25" height="25"/>
+<!--            <img src="@/assets/pngwing.com.png" class="bi me-2" width="25" height="25"/>-->
+            <img  :src="store.state.axiosLink+'/images/read/'+props.subsinfo.fileName" width="25" height="25"  style="border-radius: 50%;" alt="">
             <span>{{props.subsinfo.airName}}</span>
           </a>
       </li>
@@ -11,9 +12,30 @@
 </template>
 <script setup>
   import { defineProps } from 'vue';
+  import store from "@/store";
+  import axios from "axios";
   let props = defineProps(["subsinfo"])
-  function deleteSub() {
-    alert("삭제준비중.. x 버튼도 수정할 예정입니다.")
+
+  async function unfollowsubmit(){
+    const url = store.state.axiosLink+`/api/follow`;
+    const headers = {
+      "Content-Type": "application/json; charset=utf-8",
+      "Authorization": store.state.token,
+      "userid": store.state.userid,
+    };
+    const body = {
+      userid: store.state.userid,
+      aid: props.subsinfo.userid
+    }
+    await axios.post(url, body, {headers}).then(function (res) {
+      console.log("구독취소유무");
+      console.log(res.data);
+      if(res.data == "구독취소"){
+        alert("구독을 취소하였습니다!")
+      } else {
+        alert(`구독하였습니다!`)
+      }
+    })
   }
 </script>
 <style lang="">
