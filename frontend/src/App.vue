@@ -126,7 +126,7 @@ export default {
       ranking.caroKey = ranking.info[ranking.i].keyword
       ranking.caroRank = ranking.i +1
       ranking.i++
-    }, 2500)
+    }, 3500)
     })
     async function mypage(){
       await router.push("/mypage?channel="+store.state.userid);
@@ -181,6 +181,26 @@ body
 .rankingsection__keyword
   text-overflow:ellipsis
   max-width: 5rem
+  animation: 3.5s anim-lineUp ease-out infinite
+  animation-delay: 7s
+
+@keyframes anim-lineUp 
+  0% 
+    opacity: 0
+    transform: translateY(30%)
+
+  10% 
+    opacity: 1
+    transform: translateY(0%)
+
+  50% 
+    opacity: 1
+    transform: translateY(0%)
+
+  100% 
+    opacity: 1
+    transform: translateY(0%)
+  
 .rankingsection__board
   box-sizing: border-box
   max-height: 0
