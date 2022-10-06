@@ -43,10 +43,8 @@ export default {
     });
 
     function getCardsInformation() {
-      console.log("body"+body.reqPage);
         const url = store.state.axiosLink + "/article/card"
         axios.post(url, body).then((res) => {
-          console.log(res.data);
           state.pageTotalCount = res.data.pageTotalCount;
           if (body.reqPage == 0) {
             state.cards = res.data.articles;
@@ -77,7 +75,6 @@ export default {
           reqPage: body.reqPage
         }
         if(body.reqPage == 0) state.cards = null;
-        console.log(bodyOrder);
         await axios.post(url, bodyOrder, {headers}).then(function (res) {
           state.pageTotalCount = res.data.pageTotalCount;
           if (body.reqPage == 0) {
@@ -126,7 +123,6 @@ export default {
         reqPage : body.reqPage
       }
       if(body.reqPage == 0) state.cards = null;
-      console.log(subbody);
       await axios.post(url, subbody, {headers}).then(function (res) {
         state.pageTotalCount = res.data.pageTotalCount;
         if (body.reqPage == 0) {
