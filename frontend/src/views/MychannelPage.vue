@@ -117,8 +117,10 @@ const router = useRouter()
         console.log("구독취소유무");
         console.log(res.data);
         if(res.data == "구독취소"){
+          router.go(0);
           alert("구독을 취소하였습니다!")
         } else {
+          router.go(0);
           alert(`구독하였습니다!`)
         }
       })

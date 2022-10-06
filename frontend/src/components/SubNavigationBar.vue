@@ -2,16 +2,16 @@
   <div class="subnav">
     <div class="navbar container-fluid d-flex flex-column justify-content-center align-items-start sticky-top">
       <section class="navlogo">
-        <router-link to="/"><h1 class="mb-5 fw-bold my-2"  style="font-family: PyeongChangPeace-Bold; font-size: 35px;">AIR
+        <router-link to="/"><h1 class="mb-5 fw-bold my-2"  style="font-family: PyeongChangPeace-Bold; font-size: 35px;" @click="btnclick(false,false,false,false)">AIR
           <br>REVIEW</h1></router-link>
       </section>
       <div class="navarea" v-if="toggle.nav =='true'">
         <div class="navbody my-2">
           <ul class="list-group list-group-flush">
-            <router-link to="/"><li class="list-group-item my-1">HOME</li></router-link>
-            <router-link to="/fav"><li class="list-group-item my-1" v-if="$store.state.token">FAVORITE</li></router-link>
-            <router-link to="/save"><li class="list-group-item my-1" v-if="$store.state.token">SAVED</li></router-link>
-            <router-link to="/recent"><li class="list-group-item my-1" v-if="$store.state.token">RECENTLY</li></router-link>
+            <router-link to="/"><li class="list-group-item my-1" :class="{btnclick: state.home === true }" @click="btnclick(true,false,false,false)">HOME</li></router-link>
+            <router-link to="/fav"><li class="list-group-item my-1" v-if="$store.state.token" :class="{btnclick: state.fav === true }" @click="btnclick(false,true,false,false)">FAVORITE</li></router-link>
+            <router-link to="/save"><li class="list-group-item my-1" v-if="$store.state.token" :class="{btnclick: state.saved === true }" @click="btnclick(false,false,true,false)">SAVED</li></router-link>
+            <router-link to="/recent"><li class="list-group-item my-1" v-if="$store.state.token" :class="{btnclick: state.recently === true }" @click="btnclick(false,false,false,true)">RECENTLY</li></router-link>
             <li class="list-group-item my-1" data-bs-toggle="modal" data-bs-target="#question" v-if="$store.state.token">1:1 Q&A</li>
             <li class="list-group-item my-1" data-bs-toggle="offcanvas" data-bs-target="#subscribe" aria-controls="offcanvasWithBothOptions" v-if="$store.state.token">SUBSCRIBE</li>
           </ul>
@@ -51,6 +51,12 @@ import {reactive, onMounted} from 'vue'
 export default {
   components: { SubscribeOffcanvas },
   setup(){
+    const state = reactive({
+      home : false,
+      fav : false,
+      saved : false,
+      recently : false,
+    })
     onMounted(() => {
       if (window.innerWidth <1200){
         toggle.nav = "false"
@@ -64,10 +70,17 @@ export default {
       })
     })
 
+    function btnclick(home, fav, saved, recently){
+      state.home = home;
+      state.fav = fav;
+      state.saved = saved;
+      state.recently = recently;
+    }
+
     const toggle=reactive({
       nav:"true"
     })
-    return{ toggle }
+    return{ toggle, state,btnclick }
   }
 };
 </script>
@@ -104,5 +117,10 @@ h6:hover{
   display: none;
 }
 
+
+.btnclick{
+  color: #0D6EFD;
+  font-weight: 700;
+  }
 
 </style>
