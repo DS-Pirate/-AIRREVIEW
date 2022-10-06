@@ -51,6 +51,7 @@ import ds.pirate.backend.repository.SubscribeRepository;
 import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.AlarmService.AlarmService;
 import ds.pirate.backend.service.RankingService.RankingService;
+import ds.pirate.backend.service.RecentArticleService.RecentArticleService;
 import ds.pirate.backend.service.UserService.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -73,6 +74,7 @@ public class ArticleServiceImpl implements ArticleService {
     private final AlarmService alser;
     private final AlarmRepository alrepo;
     private final RankingService rkser;
+    private final RecentArticleService raser;
 
     @Override
     public List<acommentDTO> getListByUserIdAndAuthorId(Long userid, Long authorid) {
@@ -420,6 +422,7 @@ public class ArticleServiceImpl implements ArticleService {
         result.put("articleUserImg", "./images/read/userid/" + (articleUserId.toString()));
         result.put("isgudoked", subchecking.isPresent() ? "true" : "false");
         result.put("subCount", subcount.toString());
+        raser.addRecentOpenedArticleNumToAirUser(userid, aid);
         return result;
     }
 

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -155,6 +156,18 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
             "where at.a_user=:userid AND at.atitle LIKE %:search%", nativeQuery = true)
     Page<getMyChannelArticleList> getArticleListByUserIdAndSearchWithPageable(Long userid, String search, Pageable pageable);
 
+        // @Query(value = "select ar.userid as userid, att.atitle as title, att.context as context, att.opencount as opencount, img.file_name as filename, att.regdate as regdate "+
+        //                 "from articles_list as att left join air_user as ar on ar.userid = att.a_user left join (select distinct iid, articles_id, file_name from images_list group by iid) as img on img.articles_id = att.aid  "+
+        //                 "where     :condition", 
+        //                 countQuery = "select ar.userid as userid, att.atitle as title, att.context as context, att.opencount as opencount, img.file_name as filename, att.regdate as regdate "+
+        //                 "from articles_list as att left join air_user as ar on ar.userid = att.a_user left join (select distinct iid, articles_id, file_name from images_list group by iid) as img on img.articles_id = att.aid  "+
+        //                 "where     :condition",
+                        // nativeQuery = true)
+        @Query("select ar.userid as userid, att.atitle as title, att.context as context, att.opencount as opencount, img.fileName as filename, att.regDate as regdate "+
+        "from ArticlesList as att left join airUser as ar on ar.userid = att.aUser left join ImagesList as img on img.articles = att.aid "+
+        "where att.aid in(:condition)"
+        )
+        Page<getRecentArticleCardInfo> getRecentArticleInfoByUserIdAndPageableAndStringCondition(@Param("condition") String condition, Pageable pageable);
         public interface getEmbedInformation {
                 LocalDateTime getRegdate();
 
@@ -205,6 +218,15 @@ public interface ArticleRepository extends JpaRepository<ArticlesList, String> {
                 Integer getOpenCount();
 
                 LocalDateTime getRegDate();
+        }
+
+        public interface getRecentArticleCardInfo{
+                Long getUserid();
+                String getTitle();
+                byte[] getContext();
+                Integer getOpenCount();
+                List<String> getFilename();
+                LocalDateTime getRegdate();
         }
 
 }
