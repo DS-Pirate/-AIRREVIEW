@@ -20,7 +20,7 @@
             </div>
           </li>
           <li class="list-group-item border-0 alarm-icon">
-            <div class="alarm-icon-badge d-flex justify-content-center align-items-center" v-if="$store.state.isAlarm>0">
+            <div class="alarm-icon-badge d-flex justify-content-center align-items-center" style="background-color: #0D6EFD" v-if="$store.state.isAlarm>0">
                 <span class="alarm-icon-badge_count">{{$store.state.isAlarm}}</span>
             </div>
             <AlarmPopover v-if="$store.state.token" class="text-wrap"></AlarmPopover>
