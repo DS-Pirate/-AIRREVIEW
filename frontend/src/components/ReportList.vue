@@ -1,5 +1,5 @@
 <template>
-    <div class="admin-article d-flex flex-column w-100">
+    <div class="admin-article d-flex flex-column">
         <h1>신고 관리</h1>
         <br />
         <table class="table table-hover">

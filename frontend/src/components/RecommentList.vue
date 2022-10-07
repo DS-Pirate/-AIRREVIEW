@@ -1,7 +1,7 @@
 <template>
-    <section class="recommend w-15">
+    <section class="recommend">
         <span class="title">추천 게시글</span>
-        <div class="row-cols-1 py-4" v-for="(info, idx) in state.hashInfo || []" v-bind:key="idx">
+        <div class="row-cols-1 py-4 pt-5" v-for="(info, idx) in state.hashInfo || []" v-bind:key="idx">
             <Cards :cardInfo="info"></Cards>
         </div>
         <span v-if="state.hashInfo.length==0"><br><br> 연관 게시글이 없습니다</span>
@@ -64,10 +64,34 @@ import axios from "axios";
 
     window.addEventListener("scroll", windowSize)
     function windowSize(){
-        if(window.innerHeight+window.scrollY>=document.body.offsetHeight){
+        if(window.innerHeight+window.scrollY>=document.body.offsetHeight-(window.innerHeight/1.2)){
             getMoreRecommend()
         }
         
     }
     getCardInfoByHashTagWithAid();
 </script>
+<style scoped lang="sass">
+    .recommend
+        position: relative
+        .title
+            animation-duration: 1s
+            animation-name: blink
+            animation-iteration-count: infinite
+            color: #3041a9
+            font-size: bold
+            position: absolute
+            right: 1rem            
+            transition: 0.25s ease-in-out all
+            &:hover
+                animation: none
+            
+@keyframes blink 
+    0% 
+        opacity: 0
+    50% 
+        opacity: 1
+    100%
+        opacity: 0
+  
+</style>
