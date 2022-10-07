@@ -18,12 +18,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserIntroPage getUserInfoByUserId(Long userid) {
         Optional<UserIntroPage> result = urepo.getUserInfoByUserId(userid);
-        if(result.isPresent()){
+        if (result.isPresent()) {
             return result.get();
-        }else{
+        } else {
             return null;
         }
-        
+
     }
 
     @Override
@@ -34,7 +34,5 @@ public class UserServiceImpl implements UserService {
         airUserDTO.put("userIntro", dto.getUserIntro());
         return airUserDTO;
     }
-
-
 
 }
