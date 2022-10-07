@@ -9,7 +9,6 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import ds.pirate.backend.service.ApiMemberService.ApiMemberService;
 
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -96,9 +95,10 @@ public class UserRepositoryTests {
 
     @Autowired
     JavaMailSender mailSender;
+
     @Test
-    void mailsendTest(){
-        
+    void mailsendTest() {
+
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo("bbb301@naver.com");
         message.setFrom("gumyoincirno@gmail.com");
@@ -109,7 +109,7 @@ public class UserRepositoryTests {
     }
 
     @Test
-    void getUserInfoByUserId(){
+    void getUserInfoByUserId() {
         log.info(urepo.getUserInfoByUserId(52L).get().getAirName());
     }
 
@@ -169,10 +169,10 @@ public class UserRepositoryTests {
     // }
 
     @Test
-    void getArticleListByUserIdWithPageable(){
+    void getArticleListByUserIdWithPageable() {
         log.info("-----------------------------------------------------------------");
         Pageable pageable = PageRequest.of(0, 10);
-        arepo.getArticleListByUserIdWithPageable(1L, pageable).forEach(v->{
+        arepo.getArticleListByUserIdWithPageable(1L, pageable).forEach(v -> {
             log.info(v);
         });
         log.info("-----------------------------------------------------------------");
@@ -486,18 +486,18 @@ public class UserRepositoryTests {
         uimgrepo.save(ulid);
     }
 
-//    @Test
-//    public void searchCards() {
-//        String decode = "";
-//        try {
-//            decode = URLDecoder.decode("aa", "UTF-8");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        log.info(decode);
-//        log.info(arepo.getListAndAuthorByAuthorOrAtitle("a"));
-//        log.info(arepo.getListAndAuthor());
-//    }
+    // @Test
+    // public void searchCards() {
+    // String decode = "";
+    // try {
+    // decode = URLDecoder.decode("aa", "UTF-8");
+    // } catch (Exception e) {
+    // e.printStackTrace();
+    // }
+    // log.info(decode);
+    // log.info(arepo.getListAndAuthorByAuthorOrAtitle("a"));
+    // log.info(arepo.getListAndAuthor());
+    // }
 
     @Test
     public void findUserIdbyEmailAndQ() {
@@ -517,7 +517,7 @@ public class UserRepositoryTests {
     }
 
     @Test
-    public void cardsListOrderBySub(){
+    public void cardsListOrderBySub() {
         SubscribeRepository.getMySubInfo result = subrepo.getFollwerFollwingCountByUserid(42L).get();
         log.info("resulttttttttttttttttttttttt");
         log.info(result);
