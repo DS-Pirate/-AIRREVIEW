@@ -25,7 +25,7 @@ public class SavedController {
 
   @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<HashMap<String, Object>> register(@RequestBody userid userid) {
-    log.info(userid);
+    log.info(userid.getUserid());
     HashMap<String, Object> result = service.getListAid(userid.getUserid());
     return new ResponseEntity<>(result, HttpStatus.OK);
   }

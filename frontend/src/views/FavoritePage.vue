@@ -5,13 +5,15 @@
       <div class="mb-4 mt-5 ms-4 ps-1 text-center" v-if="state.notFavCards">
         <h1>좋아요 글이 존재하지 않습니다</h1>
       </div>
-			<div class="row row-cols-3 gx-5 gy-3">
+      <div class="fav p-1">
+			<div class="recentCardSection">
 				<div v-for="(card, idx) in state.cards" :key="idx">
-          <Cards :name="state.usernames[idx]" :card="card"></Cards>
+          <Cards :name="state.usernames[idx]" :card="card" :imageList="state.imageLists"></Cards>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 </template>
 
 <script>
@@ -29,7 +31,7 @@ export default {
 	setup() {
     const store = useStore();
 		const state = reactive({
-      cards: [], usernames: [], ImageList: [],
+      cards: [], usernames: [], imageLists: [],
       notFavCards: false
     })
 
@@ -45,7 +47,7 @@ export default {
 			.then((res) => {
 				state.cards = res.data.card;
 				state.usernames = res.data.username;
-        state.ImageList = res.data.ImageList;
+        state.imageLists = res.data.imageList;
 				console.log(res);
         if (state.cards.length == 0){
           state.notFavCards = true;
@@ -63,3 +65,8 @@ export default {
 	}
 };
 </script>
+<style scoped lang="sass">
+  .recentCardSection
+    display: grid
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr))
+</style>
