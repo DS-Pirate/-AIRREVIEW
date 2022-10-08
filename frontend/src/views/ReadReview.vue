@@ -37,7 +37,7 @@
             <ArticleCommentList></ArticleCommentList>
             <ReportModal :id="id"></ReportModal>
         </section>
-        <div class="recommend-section w-10">
+        <div class="recommend-section w-30 h-100">
             <RecommentList :id="id"></RecommentList>
         </div>
     </div>

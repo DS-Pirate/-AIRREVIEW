@@ -2,9 +2,7 @@
     <div class="comment-section d-flex justify-content-between me-4" :style="'margin-left:' + props.cardInfo.commnetDepth * 3 + 'rem'">
         <div class="comment-section-left w-10 d-flex flex-column align-items-center">
             <div class="comment-section-left-profile d-flex justify-content-between">
-                <!-- 기본 이미지 일단 넣어둠 -->
                 <img class="img-fluid" :src="store.state.axiosLink+'/images/read/userid/' + props.cardInfo.userid" style="width: 2.75rem; height:2.75rem; border-radius: 30rem;" />
-                <!-- <img class="img-fluid py-2 px-3" style="max-height: 60px" src="@/assets/pngwing.com.png" /> -->
             </div>
             <div class="comment-section-left-delete">
                 <i class="bi bi-x-lg" v-if="props.cardInfo.userid == store.state.userid" @click="remove(props.cardInfo.cid)"></i>
@@ -29,7 +27,7 @@
                             <i class="bi bi-hand-thumbs-down-fill" v-if="props.cardInfo.israted == -1" @click="ratingComment(-1)"></i>
                         </div>
 
-                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" :data-bs-target="'#commentreply' + props.cardInfo.cid" aria-expanded="false" aria-controls="commentreply">답글</button>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" :data-bs-target="'#commentreply' + props.cardInfo.cid" aria-expanded="false" aria-controls="commentreply" v-if ="props.cardInfo.commnetDepth<1">답글</button>
                     </div>
                 </div>
                 <div class="comment-section-right-commentauthor_articlerating">
