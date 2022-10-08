@@ -89,8 +89,6 @@ public class SettingController {
           String uploadDir = "/Users/hyunseokbyun/Documents/Imagefiles/";
           String uploadId = UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(imageFile.getOriginalFilename());
           imageFile.transferTo(new File(uploadDir + uploadId));
-          log.info(userid+"getouttttttttttt");
-          log.info(uploadDir + uploadId);
           service.uploadProfileImg(userid, uploadId);
           return new ResponseEntity<>(uploadId, HttpStatus.OK);
       }else{

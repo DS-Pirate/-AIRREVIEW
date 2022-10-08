@@ -44,9 +44,11 @@ import ds.pirate.backend.vo.channelArticleList;
 import ds.pirate.backend.vo.settingArticleList;
 import ds.pirate.backend.vo.userid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class SettingServiceImpl implements SettingService {
   private final UserRepository urepo;
   private final UserImageListRepository uirepo;
@@ -78,10 +80,15 @@ public class SettingServiceImpl implements SettingService {
   }
 
   @Override
+  @Transactional
   public void uploadProfileImg(Long userid, String fileName) {
-      Optional<uImagesList> isimage = uirepo.getByAiruser(userid);
+      Optional<uImagesList> isimage = uirepo.getByAiruserEntity(airUser.builder().userid(userid).build());
       if(isimage.isPresent()){
+        log.info(isimage.get().getIid());
+          urepo.findByUserId(isimage.get().getAiruser().getUserid()).get().getUserImg().removeIf(isimg->{return isimg.getAiruser().getUserid().equals(isimage.get().getAiruser().getUserid());});
           uirepo.delete(isimage.get());
+          Optional<uImagesList> img = uirepo.getByAiruserEntity(airUser.builder().userid(userid).build());
+          img.ifPresent(v->{log.info(v);});
       }
       uirepo.save(uImagesList.builder().airuser(airUser.builder().userid(userid).build()).fileName(fileName).idx(0).build());
   }

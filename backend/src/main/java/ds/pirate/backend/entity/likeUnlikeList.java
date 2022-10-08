@@ -10,7 +10,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
 public class likeUnlikeList extends DateEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

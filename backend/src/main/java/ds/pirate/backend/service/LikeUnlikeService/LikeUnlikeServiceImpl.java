@@ -10,11 +10,12 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import ds.pirate.backend.dto.ArticleDTO;
+import ds.pirate.backend.dto.ImageListDTO;
 import ds.pirate.backend.dto.airUserDTO;
 import ds.pirate.backend.entity.ArticlesList;
-import ds.pirate.backend.entity.ImagesList;
 import ds.pirate.backend.entity.likeUnlikeList;
 import ds.pirate.backend.repository.ArticleRepository;
+import ds.pirate.backend.repository.ImageRepository;
 import ds.pirate.backend.repository.LikeUnlikeRepository;
 import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.service.ArticleService.ArticleService;
@@ -32,24 +33,20 @@ public class LikeUnlikeServiceImpl implements LikeUnlikeService {
   private final ArticleService aService;
   private final UserRepository urepo;
   private final UserService uService;
+  private final ImageRepository irepo;
 
   @Override
   public HashMap<String, Object> getListAid(Long userid) {
-    List<ImagesList> imageList = new ArrayList<>();
-    imageList.add(0, ImagesList.builder().fileName("basic.png").build());
+    List<ImageListDTO> imageList = new ArrayList<>();
     List<airUserDTO> user = new ArrayList<>();
     Optional<List<likeUnlikeList>> tmp = lurepo.getList(userid);
 
     List<ArticleDTO> result = tmp.get().stream().map((Function<likeUnlikeList, ArticleDTO>) v -> {
       ArticlesList tmp2 = arepo.findByAid(v.getAid());
       ArticleDTO dto = aService.EntityToDTO(tmp2);
+      irepo.findFirstByArticlesOrderByIidAsc(tmp2).ifPresentOrElse(set->{imageList.add(ImageListDTO.builder().fileName(set.getFileName()).build());}, ()->imageList.add(ImageListDTO.builder().fileName("basic.png").build()));
       user.add(uService.entityToDTO(urepo.findByUserId(dto.getUserId()).get()));
 
-      if (!tmp2.getImages().isEmpty()) {
-        dto.setImages(tmp2.getImages());
-      } else {
-        dto.setImages(imageList);
-      }
 
       return dto;
     }).toList();

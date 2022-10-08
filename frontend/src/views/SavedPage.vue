@@ -8,7 +8,7 @@
       <div class="fav p-1">
 			<div class="recentCardSection">
 				<div v-for="(card, idx) in state.cards" :key="idx">
-          <Cards :name="state.usernames[idx]" :card="card" :imageList="state.imageLists"></Cards>
+          <Cards :name="state.usernames[idx]" :card="card" :imageList="state.imageLists[idx]"></Cards>
 				</div>
 			</div>
 		</div>
