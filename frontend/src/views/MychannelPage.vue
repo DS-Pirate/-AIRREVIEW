@@ -95,8 +95,8 @@ const router = useRouter()
     function fileUpload(e) {
         let formData = new FormData();
         formData.append("upload", e.target.files[0]);
-        axios.post(`${store.state.axiosLink}/mypage/image/upload/${store.state.userid}`, formData, { headers }).then(function (res) {
-            console.log(res);
+        axios.post(`${store.state.axiosLink}/mypage/image/upload/${store.state.userid}`, formData, { headers }).then(function () {
+            router.go(0)
         });
     }
 

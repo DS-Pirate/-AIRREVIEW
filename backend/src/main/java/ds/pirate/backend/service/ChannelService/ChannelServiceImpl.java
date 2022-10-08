@@ -13,6 +13,7 @@ import ds.pirate.backend.entity.airUser;
 import ds.pirate.backend.entity.uImagesList;
 import ds.pirate.backend.repository.ArticleRepository;
 import ds.pirate.backend.repository.UserImageListRepository;
+import ds.pirate.backend.repository.UserRepository;
 import ds.pirate.backend.repository.ArticleRepository.getMyChannelArticleList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -21,6 +22,7 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 @Log4j2
 public class ChannelServiceImpl implements ChannelService{
+    private final UserRepository urepo;
     private final ArticleRepository arepo;
     private final UserImageListRepository uirepo;
 
@@ -28,6 +30,7 @@ public class ChannelServiceImpl implements ChannelService{
     public void uploadCHImage(Long userid, String fileName) {
         Optional<uImagesList> isimage = uirepo.getCHImageByUserId(userid);
         if(isimage.isPresent()){
+            urepo.findByUserId(isimage.get().getAiruser().getUserid()).get().getUserImg().removeIf(isimg->{return isimg.getAiruser().getUserid().equals(isimage.get().getAiruser().getUserid());});
             uirepo.deleteById(isimage.get().getIid());    
         }
         uirepo.save(uImagesList.builder().airuser(airUser.builder().userid(userid).build()).fileName(fileName).idx(99).build());

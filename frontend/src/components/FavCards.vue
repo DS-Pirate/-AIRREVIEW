@@ -1,7 +1,7 @@
 <template>
 	<div class="col maincards">
 			<div class="card-1 card border-0 w-100 mb-5">
-					<div class="wrapper" :style="'background-image: url(' + store.state.axiosLink + '/images/read/' + props.imageList[0].fileName + '); background-size:cover;'">
+					<div class="wrapper" :style="'background-image: url(' + store.state.axiosLink + '/images/read/' + imageNameConverter(props.imageList.fileName) + '); background-size:cover;'">
 							<div class="date">
 									<span class="day">{{props.card.regdate.split("-")[2].split("T")[0]}}</span>
 									<span class="month">{{props.card.regdate.split("-")[1]}}</span>
@@ -35,6 +35,10 @@ console.log(props.imageList);
 
 function read() {
   router.push(`/read?article=${props.card.aid}`);
+}
+
+function imageNameConverter(name){
+    return name.replace(/['|"|<|>|]|&lt|&gt|\\/g, "")
 }
 </script>
 

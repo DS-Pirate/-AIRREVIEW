@@ -134,7 +134,8 @@ import { useStore } from "vuex";
     function fileUpload(e) {
         let formData = new FormData();
         formData.append("upload", e.target.files[0]);
-        axios.post(`${store.state.axiosLink}/api/setting/image/upload/${store.state.userid}`, formData, { headers }).then(function () {
+        axios.post(`${store.state.axiosLink}/api/setting/image/upload/${store.state.userid}`, formData, { headers }).then(function (res) {
+          state.userImgName = JSON.parse(JSON.stringify(res.data))
           console.log("업로드 후 이미지 설정 필요");
         });
     }
