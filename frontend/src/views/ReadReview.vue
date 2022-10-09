@@ -132,7 +132,7 @@
                 ? {
                       type: "og:image",
                       description: "",
-                      image: `${store.state.axiosLink}/images/read/${res.data.articleInfo.images[0]}`,
+                      image: `https://hyns.co.kr/airreview/images/read/${res.data.articleInfo.images[0]}`,
                   }
                 : "",
             {

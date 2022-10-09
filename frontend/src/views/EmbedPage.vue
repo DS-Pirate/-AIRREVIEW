@@ -7,7 +7,7 @@
                 </div>
                 <hr />
                 <div class="preview-context d-flex gap-2 align-items-top">
-                    <img :src="`https://hyns.co.kr/images/read/${embedInfo.img}`" alt="image" class="w-30 preview-context-thumbnailimg img-fluid" v-show="inputarea.thumbnail" />
+                    <img :src="`https://hyns.co.kr/airreview/images/read/${embedInfo.img}`" alt="image" class="w-30 preview-context-thumbnailimg img-fluid" v-show="inputarea.thumbnail" />
                     <div class="preview-context-context w-70 d-flex flex-column gap-3">
                         <span class="preview-context-context-rating" v-show="inputarea.rating">★★★★★</span>
                         <p class="preview-context-context_description" v-html="embedInfo.context"></p>
