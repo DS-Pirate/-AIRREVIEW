@@ -187,7 +187,7 @@
 
     function changeInput(which) {
         if (which == 2) {
-            inputarea.description = `<iframe src="http://hyns.co.kr/embed?article=${id}&title=${inputarea.title}&thumbnail=${inputarea.thumbnail}&date=${inputarea.date}&rating=${inputarea.rating}&like=${inputarea.like}&logo=${inputarea.logo}&author=${inputarea.author}" width="${embedInfo.width}" height="${embedInfo.width/2}"></iframe>`
+            inputarea.description = `<iframe src="https://hyns.co.kr/embed?article=${id}&title=${inputarea.title}&thumbnail=${inputarea.thumbnail}&date=${inputarea.date}&rating=${inputarea.rating}&like=${inputarea.like}&logo=${inputarea.logo}&author=${inputarea.author}" width="${embedInfo.width}" height="${embedInfo.width/2}"></iframe>`
         } else if (which == 3){
             getShareModalImg()
             inputarea.description = '복사되었습니다. CTRL + V로 원하시는 사이트에 붙여넣어보세요!'
@@ -195,7 +195,7 @@
     }
 
     function changeInputRealtime(){
-        inputarea.description = `<iframe src="http://hyns.co.kr/embed?article=${id}&title=${inputarea.title}&thumbnail=${inputarea.thumbnail}&date=${inputarea.date}&rating=${inputarea.rating}&like=${inputarea.like}&logo=${inputarea.logo}&author=${inputarea.author}" width="${embedInfo.width}" height="${embedInfo.width/2}"></iframe>`
+        inputarea.description = `<iframe src="https://hyns.co.kr/embed?article=${id}&title=${inputarea.title}&thumbnail=${inputarea.thumbnail}&date=${inputarea.date}&rating=${inputarea.rating}&like=${inputarea.like}&logo=${inputarea.logo}&author=${inputarea.author}" width="${embedInfo.width}" height="${embedInfo.width/2}"></iframe>`
     }
 
     
