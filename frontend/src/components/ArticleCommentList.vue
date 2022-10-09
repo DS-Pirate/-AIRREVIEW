@@ -7,8 +7,8 @@
                     <span class="me-2">별점 : </span>
                     <div class="comment-input-stars fs-5 me-3 pb-1 d-flex justify-content-end align-items-center">
                         <div v-for="i in 5" :key="i" v-on:click="clicked(i)">
-                            <a class="bi bi-star-fill comment-input-stars_star" v-if="i < articleRating"></a>
-                            <a class="bi bi-star comment-input-stars_star" v-if="i >= articleRating"></a>
+                            <a class="bi bi-star-fill comment-input-stars_star" v-if="i < commentInfo.articleRating"></a>
+                            <a class="bi bi-star comment-input-stars_star" v-if="i >= commentInfo.articleRating"></a>
                         </div>
                     </div>
                     <button class="btn btn-sm btn-primary pull-right my-2" type="button" @click="addNewcomment">입력</button>
@@ -36,7 +36,6 @@
         "userid" : store.state.userid
     }
 
-    let articleRating = ref(0)
     let commentcontext = ref(null)
     let commentState = reactive([])
     let stateInfo = reactive([0])
@@ -44,6 +43,8 @@
         aid: id,
         reqPage: 0,
         userid: store.state.userid,
+        articleRating:0
+        
     })
 
     function getMoreComment() {
@@ -57,7 +58,7 @@
     }
 
     function clicked(i) {
-        this.articleRating = i + 1
+        commentInfo.articleRating = i + 1
     }
 
     function getComments() {
@@ -81,7 +82,7 @@
             email: store.state.email,
             aid: id,
             commentContext: commentcontext.value.value,
-            articleRate: articleRating.value - 1,
+            articleRate: commentInfo.articleRating - 1,
         }
         if(body.commentContext.trim().length==0){
             alert("내용을 입력해주세요")

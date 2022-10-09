@@ -2,7 +2,7 @@
     <div class="comment-section d-flex justify-content-between me-4" :style="'margin-left:' + props.cardInfo.commnetDepth * 3 + 'rem'">
         <div class="comment-section-left w-10 d-flex flex-column align-items-center">
             <div class="comment-section-left-profile d-flex justify-content-between">
-                <img class="img-fluid" :src="store.state.axiosLink+'/images/read/userid/' + props.cardInfo.userid" style="width: 2.75rem; height:2.75rem; border-radius: 30rem;" />
+                <img class="img-fluid" :src="'https://hyns.co.kr/airreview/images/read/userid/' + props.cardInfo.userid" style="width: 2.75rem; height:2.75rem; border-radius: 30rem;" />
             </div>
             <div class="comment-section-left-delete">
                 <i class="bi bi-x-lg" v-if="props.cardInfo.userid == store.state.userid" @click="remove(props.cardInfo.cid)"></i>

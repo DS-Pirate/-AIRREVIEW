@@ -25,8 +25,10 @@ import ds.pirate.backend.dto.reportDTO;
 import ds.pirate.backend.entity.QArticlesList;
 import ds.pirate.backend.entity.QHashTags;
 import ds.pirate.backend.entity.QImagesList;
+import ds.pirate.backend.entity.QSaveList;
 import ds.pirate.backend.entity.Qacomments;
 import ds.pirate.backend.entity.Qalarm;
+import ds.pirate.backend.entity.QlikeUnlikeList;
 import ds.pirate.backend.entity.QreportList;
 import ds.pirate.backend.entity.QuestionsList;
 import ds.pirate.backend.entity.airUser;
@@ -103,6 +105,11 @@ public class SettingServiceImpl implements SettingService {
     Qalarm qalarm = new Qalarm("alarm");
     QreportList qreportList = new QreportList("report");
     QImagesList qImagesList = new QImagesList("img");
+    QlikeUnlikeList qlikeUnlikeList = new QlikeUnlikeList("lik");
+    QSaveList qSaveList = new QSaveList("sav");
+
+    JPADeleteClause deltesave = new JPADeleteClause(em, qSaveList);
+    JPADeleteClause deletelikClause = new JPADeleteClause(em, qlikeUnlikeList);
     JPADeleteClause deleteImage = new JPADeleteClause(em, qImagesList);
     JPADeleteClause deleteReport = new JPADeleteClause(em, qreportList);
     JPADeleteClause deletehash = new JPADeleteClause(em, hashTags);
@@ -110,6 +117,8 @@ public class SettingServiceImpl implements SettingService {
     JPADeleteClause deleteComment = new JPADeleteClause(em, comment);
     JPADeleteClause deleteAlarm = new JPADeleteClause(em, qalarm);
 
+    deltesave.where(qSaveList.aid.eq(aid)).execute();
+    deletelikClause.where(qlikeUnlikeList.aid.eq(aid)).execute();
     deleteImage.where(qImagesList.articles.aid.eq(aid)).execute();
     deleteReport.where(qreportList.articles.aid.eq(aid)).execute();
     deleteAlarm.where(qalarm.articleId.aid.eq(aid)).execute();
