@@ -8,9 +8,7 @@
                 </div>
 
                 <div class="md-nav text-center mt-2 d-flex gap-3 justify-content-center">
-                    <span class="link" @click="changeInput(1)">링크로 퍼가기</span>
-                    <span>|</span>
-                    <span class="embed" @click="changeInput(2)">embed</span>
+                    <span class="embed" @click="changeInput(2)">Iframe으로 퍼가기</span>
                     <span>|</span>
                     <span style="cursor: pointer;" @click="changeInput(3)">이미지로 퍼가기</span>
                 </div>
@@ -188,9 +186,7 @@
     });
 
     function changeInput(which) {
-        if (which == 1) {
-            inputarea.description = window.location.href.toString();
-        } else if (which == 2) {
+        if (which == 2) {
             inputarea.description = `<iframe src="${store.state.EmbedLink}/embed?article=${id}&title=${inputarea.title}&thumbnail=${inputarea.thumbnail}&date=${inputarea.date}&rating=${inputarea.rating}&like=${inputarea.like}&logo=${inputarea.logo}&author=${inputarea.author}" width="${embedInfo.width}" height="${embedInfo.width/2}"></iframe>`
         } else if (which == 3){
             getShareModalImg()
