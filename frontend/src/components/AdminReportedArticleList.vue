@@ -78,12 +78,10 @@
         reportInfo.size =  res.data.size,
         reportInfo.start =  res.data.start,
         reportInfo.totalPage = res.data.totalPag
-        console.log(res);
     })  
     }
     axios.post(store.state.axiosLinkAdmin+"/api/admin/reportmanagement", { page:1 }, { headers })
     .then(function(res){
-        console.log(res);
         reportInfo.dtoList =  res.data.dtoList,
         reportInfo.end =  res.data.end,
         reportInfo.next =  res.data.next,

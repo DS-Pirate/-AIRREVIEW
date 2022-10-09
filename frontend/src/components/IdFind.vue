@@ -39,7 +39,6 @@ export default {
       const body = {email : state.email};
       axios.post(url, body, {headers}).then(function (res){
         if(res.data != ''){
-          console.log(typeof(res.data));
           alert('존재하는 이메일입니다!');
         } else {
           alert('존재하지 않는 이메일입니다');

@@ -69,7 +69,7 @@ function introNull(intro){
   } return props.card.airName + "님은 아직 등록된 자기소개가 없습니다."
 }
 
-console.log(props.card);
+
 
 //구독유무
 function getSub(){
@@ -83,11 +83,8 @@ function getSub(){
     userid: store.state.userid,
     aid: props.card.userid
   }
-  console.log(body);
   state.following =  '';
   axios.post(url, body, {headers}).then(function (res) {
-    console.log("구독유무");
-    console.log(res.data);
     state.following = res.data;
   })
 }
@@ -105,8 +102,6 @@ async function followClick(){
     aid: props.card.userid
   }
   await axios.post(url, body, {headers}).then(function (res) {
-    console.log("구독취소유무");
-    console.log(res.data);
     if(res.data == "구독취소"){
       alert("구독을 취소하였습니다!")
     } else {
@@ -122,7 +117,6 @@ async function readMore(a) {
   await router.push(`/mypage?channel=${a}`);
   router.go(0)
 }
-console.log(props.card)
 </script>
 
 <style scoped>

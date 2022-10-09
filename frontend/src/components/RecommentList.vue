@@ -35,7 +35,6 @@ import axios from "axios";
                 element.images[0]= element.images[0].replace(/['|"|<|>|]|&lt|&gt/g, "")
                 state.hashInfo.push(element)
                 state.tmpList.push(element.aid)
-                console.log(state);
             }
         }
 

@@ -60,7 +60,6 @@
         state.questionlist = "";
         axios.post(url, body, { headers }).then(function (res) {
             state.questionlist = JSON.parse(JSON.stringify(res.data));
-            console.log(res);
         });
         body.pageNum = reqNum
     }

@@ -61,11 +61,9 @@ import AdminQaModal from "./AdminQaModal.vue";
     function getUserList(page) {
         axios.post(store.state.axiosLinkAdmin+"/api/admin/questionmanagement", { page: page }, { headers }).then(function (res) {
             (questionInfo.dtoList = res.data.dtoList), (questionInfo.end = res.data.end), (questionInfo.next = res.data.next), (questionInfo.page = res.data.page), (questionInfo.pageList = res.data.pageList), (questionInfo.prev = res.data.prev), (questionInfo.size = res.data.size), (questionInfo.start = res.data.start), (questionInfo.totalPage = res.data.totalPag);
-            console.log(res);
         });
     }
     axios.post(store.state.axiosLinkAdmin+"/api/admin/questionmanagement", { page: 1 }, { headers }).then(function (res) {
-        console.log(res);
         (questionInfo.dtoList = res.data.dtoList), (questionInfo.end = res.data.end), (questionInfo.next = res.data.next), (questionInfo.page = res.data.page), (questionInfo.pageList = res.data.pageList), (questionInfo.prev = res.data.prev), (questionInfo.size = res.data.size), (questionInfo.start = res.data.start), (questionInfo.totalPage = res.data.totalPag);
     });
 </script>

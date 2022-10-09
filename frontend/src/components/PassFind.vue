@@ -102,8 +102,6 @@ export default {
       } else if (state.qtype === 'q3'){
         state.q3 = state.answer
       }
-
-      console.log(state.qtype);
       const url = store.state.axiosLink+'/member/findpass'
       const headers = {
         "Content-Type": "application/json",
@@ -116,10 +114,8 @@ export default {
       }
       axios.post(url, body, {headers}).then(function (res){
         if(res.data != null && typeof(res.data) != "string"){
-          state.findid = res.data;
-            console.log(typeof(res.data));
+          state.findid = res.data
               alert('비밀번호 찾기에 성공하셨습니다.');
-              console.log(state.findid);
         } else {
           alert('비밀번호 찾기에 실패하셨습니다!');
         }
@@ -148,8 +144,7 @@ export default {
         passwd : state.pass,
       }
 
-      axios.post(url, bodyTwo, {headers}).then(function (res){
-        console.log(res.data);
+      axios.post(url, bodyTwo, {headers}).then(function (){
         alert("비밀번호를 변경하였습니다.")
         router.push('/login');
       })

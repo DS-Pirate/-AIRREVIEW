@@ -71,7 +71,6 @@ const router = useRouter()
 
     async function routing (){
       await router.push(`/mypage?channel=${id}&search=${state.context}`)
-      console.log("이동(app)")
       await router.go(0)
     }
     routing();
@@ -79,10 +78,8 @@ const router = useRouter()
 
     function change(which) {
         state.form = which;
-        console.log(state.form);
       async function routinglist (){
         await router.push(`/mypage?channel=${id}`)
-        console.log("이동(app)")
         await router.go(0)
       }
         if(which == "list"){
@@ -100,7 +97,6 @@ const router = useRouter()
         });
     }
 
-    console.log("현재채널" + id);
 
     async function followsubmit(){
       const url = store.state.axiosLink+`/api/follow`;
@@ -114,8 +110,6 @@ const router = useRouter()
         aid: id
       }
       await axios.post(url, body, {headers}).then(function (res) {
-        console.log("구독취소유무");
-        console.log(res.data);
         if(res.data == "구독취소"){
           router.go(0);
           alert("구독을 취소하였습니다!")
@@ -139,10 +133,8 @@ const router = useRouter()
         userid: store.state.userid,
         aid: id
       }
-      console.log(body);
       state.following =  '';
       axios.post(url, body, {headers}).then(function (res) {
-        console.log(res.data);
         state.following = res.data;
       })
     }
@@ -155,10 +147,7 @@ const router = useRouter()
       const body = {
         userid: id
       }
-      console.log(body);
       axios.post(url, body, {headers}).then(function (res) {
-        console.log("이거 숫자");
-        console.log(res.data);
         state.followingCount = res.data.following;
         state.followerCount = res.data.follower;
       })

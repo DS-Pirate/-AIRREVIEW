@@ -204,9 +204,7 @@ export default {
         email: state.email, passwd: state.password, airName: state.name, birthDay: birthDay,
         gender: state.gender, q1: state.q1, q2: state.q2, q3: state.q3
       };
-      console.log(body)
       const response = await axios.post(url, body, { headers })
-      console.log(response)
       if (response.status == 200) {
         alert('회원가입이 완료되었습니다.')
         router.push(`/login`)

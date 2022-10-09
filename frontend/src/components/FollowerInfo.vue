@@ -29,7 +29,6 @@ async function getSub(){
     reqPage: state.reqPage
   }
   if(body.reqPage == 0) state.cards = null;
-  console.log("body :" + body);
   await axios.post(url, body, {headers}).then(function (res) {
     if (body.reqPage == 0) {
       state.cards = res.data;

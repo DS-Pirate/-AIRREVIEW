@@ -85,7 +85,6 @@
         };
         await axios
             .post(store.state.axiosLink+"/api/article/comment/add/rating/", body, { headers })
-            .then((res) => console.log("레이팅들어간다아아아아", res))
             .catch((e) => console.log(e));
         router.go(0);
     }
@@ -114,7 +113,6 @@
         };
         await axios
             .post(store.state.axiosLink+"/api/article/comment/add/reply", body, { headers })
-            .then((res) => console.log("대댓들어간다아아아", res))
             .catch((e) => console.log(e));
         router.go(0);
     }

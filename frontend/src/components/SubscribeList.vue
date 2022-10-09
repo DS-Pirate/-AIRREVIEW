@@ -32,8 +32,6 @@ import {defineProps, reactive} from 'vue';
       aid: props.subsinfo.userid
     }
     await axios.post(url, body, {headers}).then(function (res) {
-      console.log("구독취소유무");
-      console.log(res.data);
       if(res.data == "구독취소"){
         alert("구독을 취소하였습니다!")
         state.show=false;

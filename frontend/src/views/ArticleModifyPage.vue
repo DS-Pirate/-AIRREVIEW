@@ -94,7 +94,6 @@
                     userid: store.state.userid,
                 };
                 await axios.post(store.state.axiosLink + "/api/article/modify/check", body, { headers }).then(function (res) {
-                    console.log(res);
                     context = res.data.context;
                     title = res.data.atitle;
                     tags = res.data.tags;
@@ -180,11 +179,9 @@
                     userid: store.state.userid,
                 };
                 const body = result;
-                console.log(page);
                 await axios
                     .post(url, body, { headers })
                     .then(function (res) {
-                        console.log(res);
                         sessionStorage.setItem("aid", res.data);
                         async function routerPush(){
                             await router.push(`/read?article=${res.data}`)
@@ -195,7 +192,6 @@
                     .catch((e) => {
                         console.log(e + "통신실패");
                     })
-                    .then(console.log("통신 끝"));
             },
         },
     };

@@ -54,7 +54,6 @@ export default {
     //getCards
     async function getCardsInformation(){
       let orderword = new URLSearchParams(window.location.search).get("order");
-      console.log("1. order : " + orderword);
       const url= `${store.state.axiosLink}/article/search`
       const headers = {
         "Content-Type": "application/json; charset=utf-8",
@@ -64,10 +63,8 @@ export default {
         order: orderword,
         reqPage: state.reqPage
       }
-      console.log(body)
       if (state.reqPage == 0) state.cards = null;
       await axios.post(url, body, {headers}).then(function (res){
-        console.log(res.data);
         state.pageTotalCount = res.data.pageTotalCount;
         if (body.reqPage == 0) {
           state.cards = res.data.articles;
