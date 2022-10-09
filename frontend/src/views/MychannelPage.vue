@@ -1,7 +1,7 @@
 <template>
     <div class="channelpage">
         <div class="chimg p-3 m-0 shadow-sm bg-white">
-            <img :src="store.state.axiosLink+'/images/read/ch/' + id" class="ch_img w-100" alt="" />
+            <img :src="'https://hyns.co.kr/airreview/images/read/ch/' + id" class="ch_img w-100" alt="" />
             <input type="file" v-on:change="fileUpload($event)" class="w-100 h-100 fileinput form-control" id="formFile" v-if="store.state.userid==id"/>
         </div>
         <div class="chcategory p-1 my-3 shadow-sm bg-white d-flex justify-content-center">

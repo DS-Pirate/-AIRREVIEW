@@ -108,6 +108,7 @@ export default {
     }
     const { meta } = useMeta({
                 title:  ':: 에어리뷰',
+                image: `https://hyns.co.kr/airreview/images/read/basic.png`,
             })
     function getRankingList(){
       axios.post(`${store.state.axiosLink}/ranking/list`, { headers }).then(function(res){

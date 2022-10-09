@@ -3,8 +3,9 @@
       <li class="nav-item d-flex m-0 p-0">
         <button class="me-2 border border-0 bg-white" @click="unfollowsubmit()">x</button>
           <a :href="'/mypage?channel=' + props.subsinfo.userid" class="nav-link d-flex justify-content-center align-items-left" aria-current="page">
-            <img  :src="store.state.axiosLink+'/images/read/'+props.subsinfo.fileName" width="25" height="25"  style="border-radius: 50%;" class="me-1" alt="">
+            <img  :src="'https://hyns.co.kr/airreview/images/read/'+`${props.subsinfo.fileName!=null?props.subsinfo.fileName:'basic.png'}`" width="25" height="25"  style="border-radius: 50%;" class="me-1" alt="">
             <span>{{props.subsinfo.airName}}</span>
+            
           </a>
       </li>
   </ul>

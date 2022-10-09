@@ -9,7 +9,7 @@
             <div class="col d-flex flex-column align-items-center">
                 <div class="iconDiv" >
                     <div class="iconDivDiv">
-                        <img :src="store.state.axiosLink+'/images/read/userid/'+id" alt="icon" class="img-fluid iconCircle">
+                        <img :src="'https://hyns.co.kr/airreview/images/read/ch/'+id" alt="icon" class="img-fluid iconCircle">
                     </div>
                 </div>
             </div>

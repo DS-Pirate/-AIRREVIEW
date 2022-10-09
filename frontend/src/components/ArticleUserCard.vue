@@ -48,7 +48,8 @@
         await axios
             .post(store.state.axiosLink + "/article/read/subcard", body, { headers })
             .then(function (res) {
-                IuserIMG.value.src = res.data.articleUserImg;
+                console.log(res.data.articleUserImg);
+                IuserIMG.value.src = "https://hyns.co.kr/airreview"+res.data.articleUserImg.substr(1);
                 IairName.value.textContent = res.data.articleUserName;
 
                 //나중에 유효성검사할때 천, 만, 십만, 백만단위 생각

@@ -1,7 +1,7 @@
 <template>
     <div class="col maincards">
         <div class="card-1 card border-0 w-100 mb-5">
-            <div class="wrapper" :style="'background-image: url(' + store.state.axiosLink + '/images/read/' + converter(3, props.info.filename) + '); background-size:cover;'">
+            <div class="wrapper" :style="'background-image: url(' + 'https://hyns.co.kr/airreview/images/read/' + converter(3, props.info.filename) + '); background-size:cover;'">
                 <div class="date">
                     <span class="day">{{ converter(1, props.info.regdate) }}</span>
                     <span class="month">{{ converter(2, props.info.regdate) }}</span>
@@ -30,7 +30,6 @@
 
 <script setup>
     import router from "@/router";
-    import store from "@/store";
     import { defineProps } from "vue";
 
     let props = defineProps(["info"]);

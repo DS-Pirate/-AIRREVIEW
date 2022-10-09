@@ -5,7 +5,7 @@
       구독중
     </div>
     <div class="position-relative">
-      <img  :src="store.state.axiosLink+'/images/read/'+image" alt="">
+      <img  :src="'https://hyns.co.kr/airreview/images/read/'+image" alt="">
     </div>
   </div>
   <div class="meta-contener">

@@ -47,7 +47,7 @@ public interface UserRepository extends JpaRepository<airUser, Long> {
     Long findUserIdByEmailAndQ(String email, String q1, String q2, String q3);
 
     @Query("SELECT air.userIntro as userIntro, air.airName as airName, uf.fileName as fileName, air.birthDay as birthDay "+
-    "FROM airUser as air left join uImagesList as uf on air.userid=uf.airuser WHERE air.userid=:userid")
+    "FROM airUser as air left join uImagesList as uf on air.userid=uf.airuser WHERE air.userid=:userid and uf.idx=99")
     Optional<UserIntroPage> getUserInfoByUserId(Long userid);
 
     public interface UserIntroPage {
