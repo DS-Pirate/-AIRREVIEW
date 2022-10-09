@@ -5,8 +5,6 @@
       구독중
     </div>
     <div class="position-relative">
-
-<!--    <img  src="../assets/pngwing.com.png" alt="">-->
       <img  :src="store.state.axiosLink+'/images/read/'+image" alt="">
     </div>
   </div>

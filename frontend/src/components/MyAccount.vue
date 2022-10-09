@@ -8,7 +8,7 @@
           <input type="file" id="ex_file" />
         </form>
       </div>
-      <img class="imgIcon" :src="`./images/read/${state.userImgName}`" />
+      <img class="imgIcon" :src="`${store.state.axiosLink}/images/read/${state.userImgName}`" />
     </div>
     <div class="nameDiv mt-2">
       <span class="fs-4 name">{{state.name}}</span>
