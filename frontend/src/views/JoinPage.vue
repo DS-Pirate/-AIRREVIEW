@@ -23,7 +23,6 @@ export default {
             }else if(a=='false'){
                 state.form = false
             }
-            console.log(state.form);
         }
 		return {state, changeform};
 	},

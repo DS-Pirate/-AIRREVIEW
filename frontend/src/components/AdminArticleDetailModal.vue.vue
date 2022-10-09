@@ -41,7 +41,6 @@
     import store from "@/store";
     import axios from "axios";
     import { defineProps, reactive } from "vue";
-    console.log(props.info);
 
     let info = reactive({});
     info = props.info;

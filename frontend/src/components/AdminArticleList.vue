@@ -78,7 +78,6 @@
         ArticleInfo.size =  res.data.size,
         ArticleInfo.start =  res.data.start,
         ArticleInfo.totalPage = res.data.totalPag
-        console.log(res);
     })  
     }
     axios.post(store.state.axiosLinkAdmin+"/api/admin/articlemanagement", { page:1 }, { headers })
@@ -97,7 +96,6 @@
     function getSearchingList() {
         axios.post(store.state.axiosLinkAdmin+"/api/admin/articlemanagement", { page: 1, keyword: serchingInfo.keyword, type: serchingInfo.type }, { headers }).then(function (res) {
             (ArticleInfo.dtoList = res.data.dtoList), (ArticleInfo.end = res.data.end), (ArticleInfo.next = res.data.next), (ArticleInfo.page = res.data.page), (ArticleInfo.pageList = res.data.pageList), (ArticleInfo.prev = res.data.prev), (ArticleInfo.size = res.data.size), (ArticleInfo.start = res.data.start), (ArticleInfo.totalPage = res.data.totalPag);
-            console.log(res);
         });
     }
 </script>

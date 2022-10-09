@@ -31,7 +31,6 @@ const headers = {
 
 axios.post(`${store.state.axiosLink}/api/subs`, body, {headers} ).then(function(res) {
     subs.value.Info = res.data;
-    console.log(res.data);
 })
 </script>
 <style lang="">

@@ -50,7 +50,7 @@ export default {
 				state.cards = res.data.card;
 				state.usernames = res.data.username;
         state.imageLists = res.data.imageList;
-				console.log(res);
+
         if (state.cards.length == 0){
           state.notSavedPage = true;
         } else state.notSavedPage = false;

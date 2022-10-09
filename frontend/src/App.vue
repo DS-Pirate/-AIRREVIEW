@@ -102,7 +102,6 @@ export default {
 
       async function routing (){
         await router.push(`/search?cards=${search.context}&order=new`)
-        console.log("이동(app)")
         await router.go(0)
       }
     routing();
@@ -131,11 +130,10 @@ export default {
     async function mypage(){
       let id = new URLSearchParams(window.location.search).get("channel");
       await router.push("/mypage?channel="+store.state.userid);
-      console.log("id"+id)
       if (id == null){
-        console.log("mypage")
+        console.log("")
       } else if (id !== null){
-        console.log("mypagee")
+        console.log("")
         await router.go(0)
       }
     }

@@ -29,7 +29,7 @@
     </div>
 </template>
 <script setup>
-    // import router from "@/router";
+    import router from "@/router";
     import store from "@/store";
     import axios from "axios";
     import { defineProps, reactive } from "vue";
@@ -43,9 +43,8 @@
     };
 
     function addAnswer() {
-        axios.post(store.state.axiosLinkAdmin+"/api/admin/questionanswer", info, { headers }).then(function (res) {
-            console.log(res);
-            // router.go(0)
+        axios.post(store.state.axiosLinkAdmin+"/api/admin/questionanswer", info, { headers }).then(function () {
+            router.go(0)
         });
     }
 </script>

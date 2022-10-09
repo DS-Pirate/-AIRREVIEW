@@ -31,7 +31,6 @@ import { defineProps } from "vue";
 import store from '@/store';
 import router from "@/router";
 let props = defineProps(["card", "name", "imageList"]);
-console.log(props.imageList.fileName);
 
 
 function read() {
