@@ -2,13 +2,13 @@
   <div class="subnav">
     <div class="navbar container-fluid d-flex flex-column justify-content-center align-items-start sticky-top">
       <section class="navlogo">
-        <router-link to="/"><h1 class="mb-5 fw-bold my-2"  style="font-family: PyeongChangPeace-Bold; font-size: 35px;" @click="btnclick(false,false,false,false)">AIR
+        <router-link to="/"><h1 class="mb-5 fw-bold my-2"  style="font-family: PyeongChangPeace-Bold; font-size: 35px;" @click="logo()">AIR
           <br>REVIEW</h1></router-link>
       </section>
       <div class="navarea" v-if="toggle.nav =='true'">
         <div class="navbody my-2">
           <ul class="list-group list-group-flush">
-            <router-link to="/"><li class="list-group-item my-1" :class="{btnclick: state.home === true }" @click="btnclick(true,false,false,false)">HOME</li></router-link>
+            <router-link to="/"><li class="list-group-item my-1" :class="{btnclick: state.home === true }" @click="btnclick(true,false,false,false);scrollToTop()">HOME</li> </router-link>
             <router-link to="/fav"><li class="list-group-item my-1" v-if="$store.state.token" :class="{btnclick: state.fav === true }" @click="btnclick(false,true,false,false)">FAVORITE</li></router-link>
             <router-link to="/save"><li class="list-group-item my-1" v-if="$store.state.token" :class="{btnclick: state.saved === true }" @click="btnclick(false,false,true,false)">SAVED</li></router-link>
             <router-link to="/recent"><li class="list-group-item my-1" v-if="$store.state.token" :class="{btnclick: state.recently === true }" @click="btnclick(false,false,false,true)">RECENTLY</li></router-link>
@@ -48,6 +48,7 @@
 <script>
 import SubscribeOffcanvas from './SubscribeOffcanvas.vue';
 import {reactive, onMounted} from 'vue'
+import router from "@/router";
 export default {
   components: { SubscribeOffcanvas },
   setup(){
@@ -80,7 +81,16 @@ export default {
     const toggle=reactive({
       nav:"true"
     })
-    return{ toggle, state,btnclick }
+    async function logo(){
+    await router.push("/");
+    await btnclick(false,false,false,false);
+    await router.go(0);
+    }
+
+    function scrollToTop() {
+        window.scrollTo(0,0);
+    }
+    return{ toggle, state,btnclick,logo,scrollToTop }
   }
 };
 </script>
