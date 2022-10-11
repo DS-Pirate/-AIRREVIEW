@@ -26,7 +26,7 @@
         <div class="input-group idsection px-5 my-2">
             <input class="form-control" type="text" name="name" id="year" v-model="state.year" placeholder="년" required>
             <select class="form-select"  aria-label="Default select example" v-model="state.month" name="select" id="select">
-                <option selected>월</option>
+                <option value="" selected>월</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -45,7 +45,7 @@
 
         <div class="input-group idsection px-5 my-2">
             <select class="form-select" aria-label="Default select example"  v-model="state.gender" name="select" id="select">
-                <option selected>성별</option>
+                <option value="" selected>성별</option>
                 <option value="1">남자</option>
                 <option value="2">여자</option>
             </select>
@@ -229,6 +229,8 @@ export default {
 
 
 
-<style lang="">
-    
+<style lang="scss">
+  select option[value=""][disabled] {
+	display: none;
+}
 </style>
