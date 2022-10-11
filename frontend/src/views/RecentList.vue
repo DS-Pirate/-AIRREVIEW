@@ -37,6 +37,7 @@
         }
         body.reqPage=pageNum
         axios.post(`${store.state.axiosLink}/api/recent/list`, body, { headers }).then(function (res) {
+            console.log(res.data);
             res.data
             state.articles.push(...JSON.parse(JSON.stringify(res.data.cardInfo)));
             state.totalPage = JSON.parse(JSON.stringify(res.data.totalPage));
