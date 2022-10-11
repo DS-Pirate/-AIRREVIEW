@@ -92,7 +92,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="modal-btn border-0 m-0">복사</button>
+                    <button type="button" class="modal-btn border-0 m-0" data-bs-dismiss="modal" aria-label="Close">닫기</button>
                 </div>
             </div>
         </div>

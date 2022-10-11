@@ -48,7 +48,6 @@
                 <option selected>성별</option>
                 <option value="1">남자</option>
                 <option value="2">여자</option>
-                <option value="3">하남자</option>
             </select>
         </div>
 
