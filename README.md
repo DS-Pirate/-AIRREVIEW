@@ -3,6 +3,8 @@
 > [에어리뷰 홈페이지로 이동하기](http://hyns.co.kr)
 
 > [프로젝트 세팅, 기술 상세페이지로 이동하기](https://github.com/DS-Pirate/-AIRREVIEW/wiki)
+
+> [발표용 자료](https://www.miricanvas.com/v/11amz47)
 ---
 ### 에어리뷰란?
 > -   모든 리뷰를 한 곳에서 관리할 수 있는 사이트를 지향합니다
